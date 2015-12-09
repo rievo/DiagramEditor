@@ -24,4 +24,9 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)createNewDiagram:(id)sender {
+}
+
+- (IBAction)openOldDiagram:(id)sender {
+}
 @end

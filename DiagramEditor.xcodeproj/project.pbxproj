@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F1685E9F1C1827FB0094097E /* ConfigureDiagramViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685E9E1C1827FB0094097E /* ConfigureDiagramViewController.m */; };
 		F18510781C1824C8004EC4C8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F18510771C1824C8004EC4C8 /* main.m */; };
 		F185107B1C1824C8004EC4C8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F185107A1C1824C8004EC4C8 /* AppDelegate.m */; };
 		F185107E1C1824C8004EC4C8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F185107D1C1824C8004EC4C8 /* ViewController.m */; };
@@ -16,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F1685E9D1C1827FB0094097E /* ConfigureDiagramViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigureDiagramViewController.h; sourceTree = "<group>"; };
+		F1685E9E1C1827FB0094097E /* ConfigureDiagramViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigureDiagramViewController.m; sourceTree = "<group>"; };
 		F18510731C1824C8004EC4C8 /* DiagramEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiagramEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F18510771C1824C8004EC4C8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F18510791C1824C8004EC4C8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -63,6 +66,8 @@
 				F185107C1C1824C8004EC4C8 /* ViewController.h */,
 				F185107D1C1824C8004EC4C8 /* ViewController.m */,
 				F185107F1C1824C8004EC4C8 /* Main.storyboard */,
+				F1685E9D1C1827FB0094097E /* ConfigureDiagramViewController.h */,
+				F1685E9E1C1827FB0094097E /* ConfigureDiagramViewController.m */,
 				F18510821C1824C8004EC4C8 /* Assets.xcassets */,
 				F18510841C1824C8004EC4C8 /* LaunchScreen.storyboard */,
 				F18510871C1824C8004EC4C8 /* Info.plist */,
@@ -110,6 +115,7 @@
 				TargetAttributes = {
 					F18510721C1824C8004EC4C8 = {
 						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = ZYL4LPJD6J;
 					};
 				};
 			};
@@ -151,6 +157,7 @@
 			files = (
 				F185107E1C1824C8004EC4C8 /* ViewController.m in Sources */,
 				F185107B1C1824C8004EC4C8 /* AppDelegate.m in Sources */,
+				F1685E9F1C1827FB0094097E /* ConfigureDiagramViewController.m in Sources */,
 				F18510781C1824C8004EC4C8 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -263,10 +270,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = DiagramEditor/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.rievo.DiagramEditor;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rievo.DiagramEditor1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -274,10 +285,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = DiagramEditor/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.rievo.DiagramEditor;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rievo.DiagramEditor1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -300,6 +315,7 @@
 				F185108C1C1824C8004EC4C8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

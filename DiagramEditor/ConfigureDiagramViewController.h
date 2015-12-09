@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  ConfigureDiagramViewController.h
 //  DiagramEditor
 //
 //  Created by Diego Vaquero Melchor on 9/12/15.
@@ -8,13 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController{
-    
-    
-}
-
-- (IBAction)createNewDiagram:(id)sender;
-- (IBAction)openOldDiagram:(id)sender;
+@interface ConfigureDiagramViewController : UIViewController
 
 @end
-

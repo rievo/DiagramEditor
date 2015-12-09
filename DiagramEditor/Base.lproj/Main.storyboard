@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -15,11 +17,67 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kww-j4-hhl">
+                                <rect key="frame" x="246" y="123" width="108" height="75"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="108" id="aGe-7J-Kzx"/>
+                                    <constraint firstAttribute="height" constant="75" id="nmb-Sa-uSw"/>
+                                </constraints>
+                                <state key="normal" title="New"/>
+                                <connections>
+                                    <action selector="createNewDiagram:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6Oa-ZD-1ER"/>
+                                    <segue destination="rN5-PV-uVv" kind="show" id="HhN-Nf-e9r"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h4R-eO-Epp">
+                                <rect key="frame" x="246" y="285" width="108" height="68"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="68" id="BlE-Hn-e29"/>
+                                    <constraint firstAttribute="width" constant="108" id="xXd-Gi-2xB"/>
+                                </constraints>
+                                <state key="normal" title="Open old"/>
+                                <connections>
+                                    <action selector="openOldDiagram:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jtm-Mo-nRH"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="h4R-eO-Epp" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="226" id="Cba-Tt-Y3q"/>
+                            <constraint firstItem="kww-j4-hhl" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="226" id="Iwx-Q8-pUs"/>
+                            <constraint firstItem="h4R-eO-Epp" firstAttribute="top" secondItem="kww-j4-hhl" secondAttribute="bottom" constant="87" id="Kme-5g-gdh"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="h4R-eO-Epp" secondAttribute="trailing" constant="226" id="M5y-oR-6Et"/>
+                            <constraint firstItem="kww-j4-hhl" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="103" id="m0O-vK-ces"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="kww-j4-hhl" secondAttribute="trailing" constant="226" id="t25-gz-SwV"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="245" y="327"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="thf-TP-TtJ">
+            <objects>
+                <viewController id="rN5-PV-uVv" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Oza-78-sY5"/>
+                        <viewControllerLayoutGuide type="bottom" id="aHo-aq-TeB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="iEf-WE-QBC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VCm-yz-EkS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="926" y="327"/>
         </scene>
     </scenes>
 </document>
