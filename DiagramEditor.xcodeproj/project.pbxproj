@@ -11,6 +11,7 @@
 		F1685EA21C18289E0094097E /* EditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685EA11C18289E0094097E /* EditorViewController.m */; };
 		F1685EA51C18294A0094097E /* Component.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685EA41C18294A0094097E /* Component.m */; };
 		F1685EA81C1829F00094097E /* Canvas.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685EA71C1829F00094097E /* Canvas.m */; };
+		F1685EAB1C182B7D0094097E /* Connection.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685EAA1C182B7D0094097E /* Connection.m */; };
 		F18510781C1824C8004EC4C8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F18510771C1824C8004EC4C8 /* main.m */; };
 		F185107B1C1824C8004EC4C8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F185107A1C1824C8004EC4C8 /* AppDelegate.m */; };
 		F185107E1C1824C8004EC4C8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F185107D1C1824C8004EC4C8 /* ViewController.m */; };
@@ -28,6 +29,8 @@
 		F1685EA41C18294A0094097E /* Component.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Component.m; sourceTree = "<group>"; };
 		F1685EA61C1829F00094097E /* Canvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Canvas.h; sourceTree = "<group>"; };
 		F1685EA71C1829F00094097E /* Canvas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Canvas.m; sourceTree = "<group>"; };
+		F1685EA91C182B7D0094097E /* Connection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Connection.h; sourceTree = "<group>"; };
+		F1685EAA1C182B7D0094097E /* Connection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Connection.m; sourceTree = "<group>"; };
 		F18510731C1824C8004EC4C8 /* DiagramEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiagramEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F18510771C1824C8004EC4C8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F18510791C1824C8004EC4C8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -81,6 +84,8 @@
 				F1685EA11C18289E0094097E /* EditorViewController.m */,
 				F1685EA31C18294A0094097E /* Component.h */,
 				F1685EA41C18294A0094097E /* Component.m */,
+				F1685EA91C182B7D0094097E /* Connection.h */,
+				F1685EAA1C182B7D0094097E /* Connection.m */,
 				F1685EA61C1829F00094097E /* Canvas.h */,
 				F1685EA71C1829F00094097E /* Canvas.m */,
 				F18510821C1824C8004EC4C8 /* Assets.xcassets */,
@@ -177,6 +182,7 @@
 				F1685EA51C18294A0094097E /* Component.m in Sources */,
 				F1685EA21C18289E0094097E /* EditorViewController.m in Sources */,
 				F18510781C1824C8004EC4C8 /* main.m in Sources */,
+				F1685EAB1C182B7D0094097E /* Connection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

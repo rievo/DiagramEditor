@@ -120,18 +120,29 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6fG-B6-5S9" customClass="Canvas">
-                                <rect key="frame" x="20" y="20" width="560" height="560"/>
+                                <rect key="frame" x="20" y="20" width="560" height="433"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.90342929079673739" green="1" blue="0.84505176750441513" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KOd-BW-gdm">
+                                <rect key="frame" x="20" y="461" width="560" height="119"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.88891875485549698" green="0.89134947036643075" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="119" id="uJV-qN-Wqm"/>
+                                </constraints>
+                            </scrollView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="6fG-B6-5S9" secondAttribute="trailing" id="DdN-FP-RQg"/>
-                            <constraint firstItem="bKe-dJ-Azz" firstAttribute="top" secondItem="6fG-B6-5S9" secondAttribute="bottom" constant="20" id="Km9-9h-lb7"/>
                             <constraint firstAttribute="leadingMargin" secondItem="6fG-B6-5S9" secondAttribute="leading" id="RsL-q7-oCy"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="KOd-BW-gdm" secondAttribute="leading" id="UPq-md-j0I"/>
                             <constraint firstItem="6fG-B6-5S9" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" id="YIl-hg-Bij"/>
+                            <constraint firstItem="KOd-BW-gdm" firstAttribute="top" secondItem="6fG-B6-5S9" secondAttribute="bottom" constant="8" id="ho1-lB-7jQ"/>
+                            <constraint firstItem="bKe-dJ-Azz" firstAttribute="top" secondItem="KOd-BW-gdm" secondAttribute="bottom" constant="20" id="xn6-tT-zLi"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="KOd-BW-gdm" secondAttribute="trailing" id="y3G-Dy-Jln"/>
                         </constraints>
                     </view>
                 </viewController>

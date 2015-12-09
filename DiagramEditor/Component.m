@@ -44,7 +44,22 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         
         connections = [[NSMutableArray alloc] init];
         
-
+        
+        
+        //ShapeLayer
+        backgroundLayer = [[CAShapeLayer alloc] init];
+        UIBezierPath * backPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds
+                                                        byRoundingCorners:UIRectCornerAllCorners
+                                                              cornerRadii:CGSizeMake(7.0, 7.0)];
+        backgroundLayer.frame = self.bounds;
+        backgroundLayer.path = backPath.CGPath;
+        backgroundLayer.fillColor = [UIColor whiteColor].CGColor;
+        backgroundLayer.strokeColor = [UIColor blackColor].CGColor;
+        backgroundLayer.lineWidth = 2.0;
+        [self.layer addSublayer:backgroundLayer];
+        
+        
+        
     }
     return self;
 }
@@ -189,7 +204,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
 - (void)drawRect:(CGRect)rect {
     // Drawing code
     
-    CGContextRef context = UIGraphicsGetCurrentContext();
+    /*CGContextRef context = UIGraphicsGetCurrentContext();
 
     
     
@@ -218,7 +233,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     [bez moveToPoint:CGPointMake(0, strSize.height +10)];
     [bez addLineToPoint:CGPointMake(self.frame.size.width, strSize.height + 10) ];
     [[UIColor blackColor]setStroke];
-    [bez stroke];
+    [bez stroke];*/
     
 
 }

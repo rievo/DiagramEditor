@@ -20,6 +20,11 @@
     UIFont * font;
     AppDelegate * dele;
 
+    
+    CATextLayer * textLayer;
+    CAShapeLayer * backgroundLayer;
+    
+    
 }
 
 
@@ -27,7 +32,6 @@
 @property NSMutableArray * connections;
 
 
--(void)changeEditing: (BOOL) ed;
 -(CGPoint)getTopAnchorPoint;
 -(CGPoint)getBotAnchorPoint;
 -(CGPoint)getLeftAnchorPoint;
