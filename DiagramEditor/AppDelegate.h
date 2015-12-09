@@ -7,11 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+@class Canvas;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
+
+@property NSMutableArray * connections;
+@property NSMutableArray * components;
+
+@property Canvas * can;
 
 @end
 

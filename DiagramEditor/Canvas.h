@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AppDelegate.h"
+@class AppDelegate;
 #import "Component.h"
 
 @interface Canvas : UIView{

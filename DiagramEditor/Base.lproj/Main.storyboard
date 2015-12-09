@@ -107,6 +107,25 @@
             </objects>
             <point key="canvasLocation" x="985" y="327"/>
         </scene>
+        <!--Component Details View Controller-->
+        <scene sceneID="2iR-AK-kce">
+            <objects>
+                <viewController id="hki-WO-fa3" customClass="ComponentDetailsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ZpY-Yk-LTT"/>
+                        <viewControllerLayoutGuide type="bottom" id="VjZ-uC-lRB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="GXR-hk-Cfh">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2tL-1l-Wu2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1637" y="1064"/>
+        </scene>
         <!--Editor View Controller-->
         <scene sceneID="Uvc-A9-8hW">
             <objects>
@@ -124,8 +143,18 @@
                                 <animations/>
                                 <color key="backgroundColor" red="0.90342929079673739" green="1" blue="0.84505176750441513" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KOd-BW-gdm">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KOd-BW-gdm">
                                 <rect key="frame" x="20" y="461" width="560" height="119"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LHn-ok-s8S">
+                                        <rect key="frame" x="8" y="8" width="123" height="103"/>
+                                        <animations/>
+                                        <state key="normal" title="Button"/>
+                                        <connections>
+                                            <action selector="addElement:" destination="b9M-0K-SdS" eventType="touchUpInside" id="vO1-w8-JAF"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <animations/>
                                 <color key="backgroundColor" red="0.88891875485549698" green="0.89134947036643075" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -145,6 +174,10 @@
                             <constraint firstAttribute="trailingMargin" secondItem="KOd-BW-gdm" secondAttribute="trailing" id="y3G-Dy-Jln"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="canvas" destination="6fG-B6-5S9" id="uxJ-ul-BMA"/>
+                        <segue destination="hki-WO-fa3" kind="show" identifier="showComponentDetails" id="LBG-E8-PBk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iCm-7L-Aey" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

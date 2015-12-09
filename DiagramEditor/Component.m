@@ -50,7 +50,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         backgroundLayer = [[CAShapeLayer alloc] init];
         UIBezierPath * backPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds
                                                         byRoundingCorners:UIRectCornerAllCorners
-                                                              cornerRadii:CGSizeMake(7.0, 7.0)];
+                                                              cornerRadii:CGSizeMake(5.0, 5.0)];
         backgroundLayer.frame = self.bounds;
         backgroundLayer.path = backPath.CGPath;
         backgroundLayer.fillColor = [UIColor whiteColor].CGColor;
@@ -58,6 +58,19 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         backgroundLayer.lineWidth = 2.0;
         [self.layer addSublayer:backgroundLayer];
         
+        
+        
+        //NameLayer
+        textLayer.string = name;
+        CGRect rect = CGRectMake(0, self.frame.size.height, self.frame.size.width,20);
+        textLayer.frame = rect;
+        textLayer.contentsScale = [UIScreen mainScreen].scale;
+        [textLayer setFont:@"Helvetica-Bold"];
+        [textLayer setFontSize:14];
+        textLayer.alignmentMode = kCAAlignmentCenter;
+        [self.layer addSublayer:textLayer];
+        
+        [self setNeedsDisplay];
         
         
     }
@@ -100,7 +113,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
 
 -  (void)handleLongPress:(UILongPressGestureRecognizer*)sender {
     
-    /*CGPoint translatedPoint =  [sender locationInView: dele.can];
+    CGPoint translatedPoint =  [sender locationInView: dele.can];
     
     
     if (sender.state == UIGestureRecognizerStateEnded) {
@@ -116,8 +129,8 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         Component * selected = nil;
         Component * temp = nil;
         
-        for(int i = 0; i< [dele.componentsArray count]; i++){
-            temp = [dele.componentsArray objectAtIndex:i];
+        for(int i = 0; i< [dele.components count]; i++){
+            temp = [dele.components objectAtIndex:i];
             //if(temp != self){
 
                 if(CGRectContainsPoint(temp.frame, translatedPoint)){
@@ -128,23 +141,9 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         
         if(selected == nil){
             //No hay ningún componente en ese punto, no hacemos nada
-            //NSLog(@"Ha dado en vacío");
         }else{
             //Hay un componente, los unimos
-            //NSLog(@"Ha dado en un componente :D");
-            
 
-            //TODO: Create here the connection object
-            
-            Connection * conn = [[Connection alloc] init];
-            conn.fromComponent = self;
-            conn.toComponent = selected;
-            conn.name = @"test";
-            
-            
-            [connections addObject:conn];
-            
-            //[selected.connections addObject:self];
         }
      
         
@@ -160,13 +159,13 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         [dele.can setXArrowEnd:translatedPoint.x];
         [dele.can setYArrowEnd:translatedPoint.y];
         [dele.can setNeedsDisplay];
-    }*/
+    }
 }
 
 
 -(void)handlePanComp:(UIPanGestureRecognizer *)sender{
     
-    /*CGPoint translatedPoint =  [sender locationInView: dele.can];
+    CGPoint translatedPoint =  [sender locationInView: dele.can];
     
     if(sender.state == UIGestureRecognizerStateBegan){
         
@@ -194,9 +193,8 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         self.center = translatedPoint;
         
     }else if(sender.state == UIGestureRecognizerStateEnded){
-        [dele setComponentAsEditing:self];
         [dele.can setNeedsDisplay];
-    }*/
+    }
 }
 
 

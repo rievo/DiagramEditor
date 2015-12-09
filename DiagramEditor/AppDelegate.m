@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "Canvas.h"
 
 @interface AppDelegate ()
 
@@ -14,9 +15,14 @@
 
 @implementation AppDelegate
 
+@synthesize components, connections;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    connections = [[NSMutableArray alloc] init];
+    components = [[NSMutableArray alloc] init];
+    
+    
     return YES;
 }
 

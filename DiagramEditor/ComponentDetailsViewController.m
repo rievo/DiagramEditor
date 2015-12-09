@@ -1,27 +1,22 @@
 //
-//  EditorViewController.m
+//  ComponentDetailsViewController.m
 //  DiagramEditor
 //
 //  Created by Diego Vaquero Melchor on 9/12/15.
 //  Copyright © 2015 Diego Vaquero Melchor. All rights reserved.
 //
 
-#import "EditorViewController.h"
+#import "ComponentDetailsViewController.h"
 
-@interface EditorViewController ()
+@interface ComponentDetailsViewController ()
 
 @end
 
-@implementation EditorViewController
-
-@synthesize canvas;
+@implementation ComponentDetailsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    dele = [[UIApplication sharedApplication]delegate];
-    dele.can = canvas;
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -39,11 +34,4 @@
 }
 */
 
-
-//Just for test purposing
-- (IBAction)addElement:(id)sender {
-    Component * temp = [[Component alloc] initWithFrame:CGRectMake(50, 50, 40, 40)];
-    [dele.components addObject:temp];
-    [canvas addSubview:temp];
-}
 @end
