@@ -7,13 +7,13 @@
 //
 
 #import "Component.h"
-#import "Connection.h"
+
 #import "Canvas.h"
 
 @implementation Component
 
 
-@synthesize name, editing, connections;
+@synthesize name, connections;
 
 
 NSString* const SHOW_INSPECTOR = @"ShowInspector";
