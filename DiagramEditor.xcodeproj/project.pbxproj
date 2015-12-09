@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F1685E9F1C1827FB0094097E /* ConfigureDiagramViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685E9E1C1827FB0094097E /* ConfigureDiagramViewController.m */; };
+		F1685EA21C18289E0094097E /* EditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685EA11C18289E0094097E /* EditorViewController.m */; };
 		F18510781C1824C8004EC4C8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F18510771C1824C8004EC4C8 /* main.m */; };
 		F185107B1C1824C8004EC4C8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F185107A1C1824C8004EC4C8 /* AppDelegate.m */; };
 		F185107E1C1824C8004EC4C8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F185107D1C1824C8004EC4C8 /* ViewController.m */; };
@@ -19,6 +20,8 @@
 /* Begin PBXFileReference section */
 		F1685E9D1C1827FB0094097E /* ConfigureDiagramViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigureDiagramViewController.h; sourceTree = "<group>"; };
 		F1685E9E1C1827FB0094097E /* ConfigureDiagramViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigureDiagramViewController.m; sourceTree = "<group>"; };
+		F1685EA01C18289E0094097E /* EditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorViewController.h; sourceTree = "<group>"; };
+		F1685EA11C18289E0094097E /* EditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditorViewController.m; sourceTree = "<group>"; };
 		F18510731C1824C8004EC4C8 /* DiagramEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiagramEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F18510771C1824C8004EC4C8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F18510791C1824C8004EC4C8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -68,6 +71,8 @@
 				F185107F1C1824C8004EC4C8 /* Main.storyboard */,
 				F1685E9D1C1827FB0094097E /* ConfigureDiagramViewController.h */,
 				F1685E9E1C1827FB0094097E /* ConfigureDiagramViewController.m */,
+				F1685EA01C18289E0094097E /* EditorViewController.h */,
+				F1685EA11C18289E0094097E /* EditorViewController.m */,
 				F18510821C1824C8004EC4C8 /* Assets.xcassets */,
 				F18510841C1824C8004EC4C8 /* LaunchScreen.storyboard */,
 				F18510871C1824C8004EC4C8 /* Info.plist */,
@@ -158,6 +163,7 @@
 				F185107E1C1824C8004EC4C8 /* ViewController.m in Sources */,
 				F185107B1C1824C8004EC4C8 /* AppDelegate.m in Sources */,
 				F1685E9F1C1827FB0094097E /* ConfigureDiagramViewController.m in Sources */,
+				F1685EA21C18289E0094097E /* EditorViewController.m in Sources */,
 				F18510781C1824C8004EC4C8 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

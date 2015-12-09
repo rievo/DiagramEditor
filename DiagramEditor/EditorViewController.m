@@ -1,18 +1,18 @@
 //
-//  ConfigureDiagramViewController.m
+//  EditorViewController.m
 //  DiagramEditor
 //
 //  Created by Diego Vaquero Melchor on 9/12/15.
 //  Copyright © 2015 Diego Vaquero Melchor. All rights reserved.
 //
 
-#import "ConfigureDiagramViewController.h"
+#import "EditorViewController.h"
 
-@interface ConfigureDiagramViewController ()
+@interface EditorViewController ()
 
 @end
 
-@implementation ConfigureDiagramViewController
+@implementation EditorViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -33,7 +33,5 @@
     // Pass the selected object to the new view controller.
 }
 */
-- (IBAction)showEditor:(id)sender {
-}
 
 @end
