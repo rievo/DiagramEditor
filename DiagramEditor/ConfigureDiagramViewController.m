@@ -34,6 +34,7 @@
 }
 */
 - (IBAction)showEditor:(id)sender {
+    [self performSegueWithIdentifier:@"showEditor" sender:self];
 }
 
 @end

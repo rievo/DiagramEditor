@@ -72,17 +72,32 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fem-NR-cIc">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fem-NR-cIc">
                                 <rect key="frame" x="492" y="524" width="80" height="56"/>
                                 <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="fZ0-ck-5OG"/>
+                                    <constraint firstAttribute="width" constant="80" id="qA4-wt-gZN"/>
+                                </constraints>
                                 <state key="normal" title="Ok"/>
                                 <connections>
                                     <action selector="showEditor:" destination="rN5-PV-uVv" eventType="touchUpInside" id="olY-7G-aiJ"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Here goes all diagram configuration" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="58j-1e-lIn">
+                                <rect key="frame" x="164" y="205" width="273" height="116"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="Fem-NR-cIc" secondAttribute="trailing" constant="8" id="QVx-5h-XgW"/>
+                            <constraint firstItem="aHo-aq-TeB" firstAttribute="top" secondItem="Fem-NR-cIc" secondAttribute="bottom" constant="20" id="xKq-Vs-ssh"/>
+                        </constraints>
                     </view>
                     <connections>
                         <segue destination="b9M-0K-SdS" kind="show" identifier="showEditor" id="Lt7-do-8lc"/>
@@ -92,10 +107,10 @@
             </objects>
             <point key="canvasLocation" x="985" y="327"/>
         </scene>
-        <!--View Controller-->
+        <!--Editor View Controller-->
         <scene sceneID="Uvc-A9-8hW">
             <objects>
-                <viewController id="b9M-0K-SdS" sceneMemberID="viewController">
+                <viewController id="b9M-0K-SdS" customClass="EditorViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7bh-UT-OeV"/>
                         <viewControllerLayoutGuide type="bottom" id="bKe-dJ-Azz"/>
