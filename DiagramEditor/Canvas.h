@@ -12,6 +12,8 @@
 
 @interface Canvas : UIView{
     AppDelegate * dele;
+    
+    UITapGestureRecognizer * tapGR;
 }
 
 @property double xArrowStart;

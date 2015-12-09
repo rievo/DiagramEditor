@@ -7,9 +7,12 @@
 //
 
 #import "Connection.h"
+#import "Component.h"
 
 @implementation Connection
 
+
+@synthesize name, source, target, touchRect, arrowPath;
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -17,5 +20,19 @@
     // Drawing code
 }
 */
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        source = nil;
+        target = nil;
+        arrowPath = nil;
+        name = @"---";
+    }
+    return self;
+}
+
+
 
 @end

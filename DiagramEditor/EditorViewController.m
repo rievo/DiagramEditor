@@ -7,6 +7,7 @@
 //
 
 #import "EditorViewController.h"
+#import "ComponentDetailsViewController.h"
 
 @interface EditorViewController ()
 
@@ -20,13 +21,28 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     dele = [[UIApplication sharedApplication]delegate];
+    [canvas prepareCanvas];
     dele.can = canvas;
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showComponentDetails:)
+                                                 name:@"showCompNot"
+                                               object:nil];
     
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+-(void)showComponentDetails:(NSNotification *)not{
+    NSLog(@"Showing component's details");
+    Component * temp = not.object;
+
+    [self performSegueWithIdentifier:@"showComponentDetails" sender:temp];
 }
 
 /*
@@ -45,5 +61,17 @@
     Component * temp = [[Component alloc] initWithFrame:CGRectMake(50, 50, 40, 40)];
     [dele.components addObject:temp];
     [canvas addSubview:temp];
+}
+
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([[segue identifier] isEqualToString:@"showComponentDetails"])
+    {
+        // Get reference to the destination view controller
+        ComponentDetailsViewController *vc = [segue destinationViewController];
+        vc.comp = sender;
+        // Pass any objects to the view controller here, like...
+        //[vc setMyObjectHere:object];
+    }
 }
 @end

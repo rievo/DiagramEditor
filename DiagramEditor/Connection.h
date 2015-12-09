@@ -7,7 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+@class Component;
 
 @interface Connection : UIView
+
+
+@property NSString * name;
+@property Component * source;
+@property Component * target;
+
+@property CGRect touchRect;
+@property UIBezierPath * arrowPath;
 
 @end

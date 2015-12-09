@@ -7,13 +7,13 @@
 //
 
 #import "Component.h"
-
+#import "Connection.h"
 #import "Canvas.h"
 
 @implementation Component
 
 
-@synthesize name, connections;
+@synthesize name, connections, textLayer;
 
 
 NSString* const SHOW_INSPECTOR = @"ShowInspector";
@@ -61,13 +61,16 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         
         
         //NameLayer
+        textLayer = [[CATextLayer alloc] init];
         textLayer.string = name;
-        CGRect rect = CGRectMake(0, self.frame.size.height, self.frame.size.width,20);
+        textLayer.foregroundColor = [UIColor blackColor].CGColor;
+        CGRect rect = CGRectMake(0 - self.bounds.size.width /2, self.frame.size.height, self.frame.size.width * 2,20);
         textLayer.frame = rect;
         textLayer.contentsScale = [UIScreen mainScreen].scale;
         [textLayer setFont:@"Helvetica-Bold"];
         [textLayer setFontSize:14];
         textLayer.alignmentMode = kCAAlignmentCenter;
+        textLayer.truncationMode = kCATruncationEnd;
         [self.layer addSublayer:textLayer];
         
         [self setNeedsDisplay];
@@ -108,6 +111,10 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
 -(void)handleTap:(UITapGestureRecognizer *)recog{
     
     //Show info popup (edge, node)
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"showCompNot"
+                                                        object:self
+                                                      userInfo:nil];
 }
 
 
@@ -143,7 +150,16 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
             //No hay ningún componente en ese punto, no hacemos nada
         }else{
             //Hay un componente, los unimos
-
+            //Los componentes serán self = selected
+            //Self = source   selected = target
+            Connection * conn = [[Connection alloc] init];
+            conn.source = self;
+            conn.target = selected;
+            
+            [dele.connections addObject:conn];
+            
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+            
         }
      
         

@@ -7,6 +7,7 @@
 //
 
 #import "ComponentDetailsViewController.h"
+#import "Component.h"
 
 @interface ComponentDetailsViewController ()
 
@@ -14,9 +15,17 @@
 
 @implementation ComponentDetailsViewController
 
+@synthesize comp;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    nameTextField.text = comp.name;
+    previewComponent = comp;
+    [previewComponent setNeedsDisplay];
+    
+    nameTextField.delegate = self;
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -33,5 +42,25 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark UITextField delegate methods
+-(void)textFieldDidEndEditing:(UITextField *)textField{
+    
+    if(textField.text.length >0){
+        comp.name = textField.text;
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+    }else{
+        
+    }
+}
+
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    NSString * new = [nameTextField.text stringByReplacingCharactersInRange:range withString:string];
+    NSLog(@"%@", new);
+    if(new.length > 0)
+        return YES;
+    else
+        return NO;
+}
 
 @end

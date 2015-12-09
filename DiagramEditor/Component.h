@@ -21,7 +21,7 @@
     AppDelegate * dele;
 
     
-    CATextLayer * textLayer;
+
     CAShapeLayer * backgroundLayer;
     
     
@@ -30,6 +30,7 @@
 
 @property NSString * name;
 @property NSMutableArray * connections;
+@property CATextLayer * textLayer;
 
 
 -(CGPoint)getTopAnchorPoint;
