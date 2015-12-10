@@ -8,9 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "Connection.h"
+@class AppDelegate;
 
+@interface ConnectionDetailsViewController : UIViewController<UITextFieldDelegate>{
+    
 
-@interface ConnectionDetailsViewController : UIViewController
+    __weak IBOutlet UITextField *nameTextField;
+    AppDelegate * dele;
+}
 
 
 @property Connection * conn;

@@ -198,9 +198,42 @@
                     <view key="view" contentMode="scaleToFill" id="cQt-ve-CB2">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fBo-su-zfq">
+                                <rect key="frame" x="550" y="28" width="30" height="30"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="5JY-Vh-KSP"/>
+                                    <constraint firstAttribute="height" constant="30" id="vEe-S8-sAR"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="minus-512.png"/>
+                                <connections>
+                                    <action selector="removeCurrentConnection:" destination="ssG-up-C3Z" eventType="touchUpInside" id="jKt-Wp-3eF"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="name" borderStyle="bezel" placeholder="name" textAlignment="center" minimumFontSize="30" translatesAutoresizingMaskIntoConstraints="NO" id="hl1-uz-7ie">
+                                <rect key="frame" x="20" y="66" width="560" height="56"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="1XS-HR-qzk"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="33"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
+                            </textField>
+                        </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.71764707565307617" green="0.76862746477127075" blue="0.89411765336990356" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="fBo-su-zfq" secondAttribute="trailing" id="9n9-Hb-zij"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="hl1-uz-7ie" secondAttribute="trailing" id="Ru7-fV-Ol0"/>
+                            <constraint firstItem="hl1-uz-7ie" firstAttribute="top" secondItem="fBo-su-zfq" secondAttribute="bottom" constant="8" id="UIU-Au-eAi"/>
+                            <constraint firstItem="fBo-su-zfq" firstAttribute="top" secondItem="Ih0-Lk-Jo9" secondAttribute="bottom" constant="8" id="iZL-8G-PL6"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="hl1-uz-7ie" secondAttribute="leading" id="qG3-sl-uio"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="nameTextField" destination="hl1-uz-7ie" id="rKA-GR-sZC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="77i-lW-QAE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -150,19 +150,7 @@
             CGPoint sourceAnchor = [self getBestAnchorForComponent:conn.source toPoint:conn.target.center];
             CGPoint targetAnchor = [self getBestAnchorForComponent:conn.target toPoint:conn.source.center];
             
-            /*
-            UIBezierPath * path = [[UIBezierPath alloc] init];
-            [[UIColor blackColor] setStroke];
-            
-            [path setLineWidth:2.0];
-            
-            [path moveToPoint:outAnchor];
-            [path addLineToPoint:insAnchor];
-            
-            [path stroke];
-            
-            conn.arrowPath = path;*/
-            
+
             UIBezierPath * path = [[UIBezierPath alloc] init];
             [[UIColor blackColor] setStroke];
             [path setLineWidth:2.0];
@@ -179,11 +167,9 @@
             CGPoint right;
             
             if(sourceAnchor.x < targetAnchor.x){
-                //out está a la izquierda
                 left = sourceAnchor;
                 right = targetAnchor;
             }else{
-                //ins está a la izquierda
                 left = targetAnchor;
                 right = sourceAnchor;
             }

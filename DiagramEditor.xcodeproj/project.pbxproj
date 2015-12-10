@@ -22,6 +22,7 @@
 		F18510861C1824C8004EC4C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F18510841C1824C8004EC4C8 /* LaunchScreen.storyboard */; };
 		F1A20A791C1977430037C05D /* minus-512.png in Resources */ = {isa = PBXBuildFile; fileRef = F1A20A781C1977430037C05D /* minus-512.png */; };
 		F1A20A7B1C19789D0037C05D /* design.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F1A20A7A1C19789D0037C05D /* design.graphicR */; };
+		F1A20A7E1C1981290037C05D /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A20A7D1C1981290037C05D /* XMLDictionary.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,8 @@
 		F18510871C1824C8004EC4C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F1A20A781C1977430037C05D /* minus-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "minus-512.png"; sourceTree = "<group>"; };
 		F1A20A7A1C19789D0037C05D /* design.graphicR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = design.graphicR; sourceTree = "<group>"; };
+		F1A20A7C1C1981290037C05D /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDictionary.h; sourceTree = "<group>"; };
+		F1A20A7D1C1981290037C05D /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLDictionary.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +87,8 @@
 			isa = PBXGroup;
 			children = (
 				F1A20A7A1C19789D0037C05D /* design.graphicR */,
+				F1A20A7C1C1981290037C05D /* XMLDictionary.h */,
+				F1A20A7D1C1981290037C05D /* XMLDictionary.m */,
 				F18510791C1824C8004EC4C8 /* AppDelegate.h */,
 				F185107A1C1824C8004EC4C8 /* AppDelegate.m */,
 				F185107C1C1824C8004EC4C8 /* ViewController.h */,
@@ -200,6 +205,7 @@
 				F1685E9F1C1827FB0094097E /* ConfigureDiagramViewController.m in Sources */,
 				F1685EA51C18294A0094097E /* Component.m in Sources */,
 				F1685EA21C18289E0094097E /* EditorViewController.m in Sources */,
+				F1A20A7E1C1981290037C05D /* XMLDictionary.m in Sources */,
 				F1166BE41C187269009A2AAA /* ConnectionDetailsViewController.m in Sources */,
 				F18510781C1824C8004EC4C8 /* main.m in Sources */,
 				F1685EAB1C182B7D0094097E /* Connection.m in Sources */,
