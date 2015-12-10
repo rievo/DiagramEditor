@@ -147,8 +147,11 @@
             //outComp.center
             //insideComp.center
             
-            CGPoint sourceAnchor = [self getBestAnchorForComponent:conn.source toPoint:conn.target.center];
-            CGPoint targetAnchor = [self getBestAnchorForComponent:conn.target toPoint:conn.source.center];
+            //CGPoint sourceAnchor = [self getBestAnchorForComponent:conn.source toPoint:conn.target.center];
+            //CGPoint targetAnchor = [self getBestAnchorForComponent:conn.target toPoint:conn.source.center];
+            
+            CGPoint sourceAnchor = conn.source.center;
+            CGPoint targetAnchor = conn.target.center;
             
 
             UIBezierPath * path = [[UIBezierPath alloc] init];

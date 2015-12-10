@@ -31,11 +31,15 @@
 @property NSString * name;
 @property NSMutableArray * connections;
 @property CATextLayer * textLayer;
+@property NSString * type;
+@property NSString * shapeType;
 
 
 -(CGPoint)getTopAnchorPoint;
 -(CGPoint)getBotAnchorPoint;
 -(CGPoint)getLeftAnchorPoint;
 -(CGPoint)getRightAnchorPoint;
+
+-(void)updateNameLabel;
 
 @end

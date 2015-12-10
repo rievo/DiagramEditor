@@ -11,6 +11,7 @@
 #import "ConnectionDetailsViewController.h"
 #import "Connection.h"
 #import "Palette.h"
+#import "PaletteItem.h"
 
 @interface EditorViewController ()
 
@@ -42,6 +43,14 @@
     //Load palette
     [palette preparePalette];
     
+    //Añadimos a los items de la paleta el gestor de gestos para poder arrastrarlos
+    for(int i  =0; i< dele.paletteItems.count; i++){
+        PaletteItem * item = [dele.paletteItems objectAtIndex:i];
+        
+        UIPanGestureRecognizer * panGr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+        [item addGestureRecognizer:panGr];
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -63,16 +72,52 @@
     [self performSegueWithIdentifier:@"showConnectionDetails" sender:temp];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void)handlePan:(UILongPressGestureRecognizer *)recog{
+    PaletteItem * sender = (PaletteItem *)recog.view;
+    
+    CGPoint p = [recog locationInView:self.view];
+    
+    if(recog.state == UIGestureRecognizerStateBegan){
+        //Creamos el icono temporal
+        tempIcon = [[PaletteItem alloc] init];
+        tempIcon.type = sender.type;
+        tempIcon.dialog = sender.dialog;
+        tempIcon.width = sender.width;
+        tempIcon.height = sender.height;
+        tempIcon.shapeType = sender.shapeType;
+        [tempIcon setFrame:sender.frame];
+        [tempIcon setAlpha:0.7];
+        tempIcon.center = p;
+        tempIcon.backgroundColor = [UIColor clearColor];
+        [self.view addSubview:tempIcon];
+    }else if(recog.state == UIGestureRecognizerStateChanged){
+        //Movemos el icono temporal
+        tempIcon.center = p;
+    }else if(recog.state == UIGestureRecognizerStateEnded){
+        //Retiramos el icono temporal
+        [tempIcon removeFromSuperview];
+        tempIcon = nil;
+        
+        //Añadimos un Component al lienzo
+        if([sender.type isEqualToString:@"graphicR:Node"]){
+            //It is a node
+            NSLog(@"Creating a node");
+            
+            Component * comp = [[Component alloc] initWithFrame:CGRectMake(0, 0, sender.width.floatValue, sender.height.floatValue)];
+            comp.center = p;
+            comp.name = sender.dialog;
+            comp.type = sender.type;
+            comp.shapeType = sender.shapeType;
+            [dele.components addObject:comp];
+            [comp updateNameLabel];
+            [canvas addSubview:comp];
+            
+        }else{
+            //It is an edge
+            NSLog(@"Creating a relation");
+        }
+    }
 }
-*/
-
 
 //Just for test purposing
 - (IBAction)addElement:(id)sender {

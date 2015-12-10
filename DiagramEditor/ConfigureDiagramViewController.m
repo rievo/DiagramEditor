@@ -16,7 +16,7 @@
 #define defaultwidth 50
 #define defaultheight 50
 
-#define scale 100
+#define scale 10
 
 #define xmargin 10
 

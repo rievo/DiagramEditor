@@ -20,7 +20,6 @@
 
 - (void)drawRect:(CGRect)rect {
     
-    CGContextRef context = UIGraphicsGetCurrentContext();
     float lw = 4.0;
     CGRect fixed = CGRectMake(2*lw, 2*lw , rect.size.width - 4*lw , rect.size.height - 4*lw);
     
@@ -48,6 +47,14 @@
         
     }
 }
+
+
+#pragma mark NSCopying
+/*
+-(id)copyWithZone:(NSZone *)zone{
+    PaletteItem * copy = [[PaletteItem allocWithZone:zone] init];
+    copy set
+}*/
 
 
 @end

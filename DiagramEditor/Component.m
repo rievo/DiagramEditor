@@ -13,7 +13,7 @@
 @implementation Component
 
 
-@synthesize name, connections, textLayer;
+@synthesize name, connections, textLayer, type, shapeType;
 
 
 NSString* const SHOW_INSPECTOR = @"ShowInspector";
@@ -44,8 +44,9 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         
         connections = [[NSMutableArray alloc] init];
         
+        self.backgroundColor = [UIColor clearColor];
         
-        
+        /*
         //ShapeLayer
         backgroundLayer = [[CAShapeLayer alloc] init];
         UIBezierPath * backPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds
@@ -56,7 +57,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         backgroundLayer.fillColor = [UIColor whiteColor].CGColor;
         backgroundLayer.strokeColor = [UIColor blackColor].CGColor;
         backgroundLayer.lineWidth = 2.0;
-        [self.layer addSublayer:backgroundLayer];
+        [self.layer addSublayer:backgroundLayer];*/
         
         
         
@@ -70,7 +71,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         [textLayer setFont:@"Helvetica-Bold"];
         [textLayer setFontSize:14];
         textLayer.alignmentMode = kCAAlignmentCenter;
-        textLayer.truncationMode = kCATruncationEnd;
+        textLayer.truncationMode = kCATruncationStart;
         [self.layer addSublayer:textLayer];
         
         [self setNeedsDisplay];
@@ -216,39 +217,33 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
 
 #pragma mark drawRect method
 - (void)drawRect:(CGRect)rect {
-    // Drawing code
     
-    /*CGContextRef context = UIGraphicsGetCurrentContext();
-
+    float lw = 4.0;
+    CGRect fixed = CGRectMake(2*lw, 2*lw , rect.size.width - 4*lw , rect.size.height - 4*lw);
     
-    
-    CGPathRef path = CGPathCreateWithRect(rect, NULL);
-    [[UIColor whiteColor] setFill];
-    
-
-    
-    CGContextAddPath(context, path);
-    CGContextDrawPath(context, kCGPathFillStroke);
-    
-    //Draw the name
-
-    
-    UIColor * color = [UIColor redColor];
-    UIFont * font = [UIFont fontWithName:@"Helvetica" size:10.0];
-    NSDictionary * dic = @{NSForegroundColorAttributeName: color, NSFontAttributeName: font};
-    NSAttributedString * str = [[NSAttributedString alloc] initWithString:name attributes:dic];
-    
-    CGSize strSize = [str size];
-    float z = (self.frame.size.width - strSize.width)/2;
-    
-    [str drawAtPoint:CGPointMake(z, 5)];
-    
-    UIBezierPath * bez = [[UIBezierPath alloc] init];
-    [bez moveToPoint:CGPointMake(0, strSize.height +10)];
-    [bez addLineToPoint:CGPointMake(self.frame.size.width, strSize.height + 10) ];
-    [[UIColor blackColor]setStroke];
-    [bez stroke];*/
-    
+    if([shapeType isEqualToString:@"graphicR:Ellipse"]){
+        
+        UIBezierPath * path = [UIBezierPath bezierPathWithOvalInRect:fixed];
+        [[UIColor blackColor] setStroke];
+        [[UIColor whiteColor] setFill];
+        [path setLineWidth:lw];
+        
+        
+        [path fill];
+        [path stroke];
+        
+    }else if([shapeType isEqualToString:@"graphicR:Edge"]){
+        
+        UIBezierPath * path = [[UIBezierPath alloc]init];
+        [[UIColor blackColor]setStroke];
+        [path setLineWidth:lw];
+        [path moveToPoint:CGPointMake(2*lw, rect.size.height /2)];
+        [path addLineToPoint:CGPointMake(rect.size.width - 2* lw, rect.size.height /2)];
+        
+        [path stroke];
+    }else{
+        
+    }
 
 }
 
@@ -284,7 +279,9 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
 }
 
 
-
+-(void)updateNameLabel{
+    textLayer.string = name;
+}
 
 
 
