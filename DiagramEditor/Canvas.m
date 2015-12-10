@@ -145,10 +145,10 @@
             //outComp.center
             //insideComp.center
             
-            CGPoint outAnchor = [self getBestAnchorForComponent:conn.source toPoint:conn.target.center];
-            CGPoint insAnchor = [self getBestAnchorForComponent:conn.target toPoint:conn.source.center];
+            CGPoint sourceAnchor = [self getBestAnchorForComponent:conn.source toPoint:conn.target.center];
+            CGPoint targetAnchor = [self getBestAnchorForComponent:conn.target toPoint:conn.source.center];
             
-            
+            /*
             UIBezierPath * path = [[UIBezierPath alloc] init];
             [[UIColor blackColor] setStroke];
             
@@ -159,19 +159,31 @@
             
             [path stroke];
             
+            conn.arrowPath = path;*/
+            
+            UIBezierPath * path = [[UIBezierPath alloc] init];
+            [[UIColor blackColor] setStroke];
+            [path setLineWidth:2.0];
+            [path moveToPoint: sourceAnchor];
+            CGPoint mid = CGPointMake((sourceAnchor.x + targetAnchor.x)/2.0, (sourceAnchor.y + targetAnchor.y)/2.0);
+            //mid.x = mid.x -50;
+            //mid.y = mid.y -50;
+            [path addQuadCurveToPoint:targetAnchor controlPoint:mid];
+            [path stroke];
             conn.arrowPath = path;
+
             
             CGPoint left;
             CGPoint right;
             
-            if(outAnchor.x < insAnchor.x){
+            if(sourceAnchor.x < targetAnchor.x){
                 //out está a la izquierda
-                left = outAnchor;
-                right = insAnchor;
+                left = sourceAnchor;
+                right = targetAnchor;
             }else{
                 //ins está a la izquierda
-                left = insAnchor;
-                right = outAnchor;
+                left = targetAnchor;
+                right = sourceAnchor;
             }
             
             UIColor * color =nil;

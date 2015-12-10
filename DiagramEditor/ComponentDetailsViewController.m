@@ -65,8 +65,10 @@
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     NSString * new = [nameTextField.text stringByReplacingCharactersInRange:range withString:string];
     NSLog(@"%@", new);
-    if(new.length > 0)
+    if(new.length > 0){
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
         return YES;
+    }
     else
         return NO;
 }
