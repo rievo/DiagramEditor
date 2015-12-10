@@ -92,22 +92,53 @@
                                     <action selector="showEditor:" destination="rN5-PV-uVv" eventType="touchUpInside" id="olY-7G-aiJ"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Here goes all diagram configuration" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="58j-1e-lIn">
-                                <rect key="frame" x="164" y="205" width="273" height="116"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Here goes all diagram configuration" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="58j-1e-lIn">
+                                <rect key="frame" x="164" y="28" width="273" height="116"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.71764705880000002" green="0.76862745099999996" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rDy-wQ-BXK">
+                                <rect key="frame" x="180" y="271" width="240" height="58"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cn7-28-AaA">
+                                        <rect key="frame" x="8" y="8" width="224" height="42"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                        <color key="textColor" red="0.047058824449777603" green="0.090196080505847931" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <animations/>
+                                <color key="backgroundColor" red="0.32156863808631897" green="0.40392157435417175" blue="0.57647061347961426" alpha="0.0" colorSpace="calibratedRGB"/>
+                            </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pzm-22-k2O">
+                                <rect key="frame" x="20" y="152" width="560" height="128"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.71764707565307617" green="0.76862746477127075" blue="0.89411765336990356" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="tkv-sC-Urj"/>
+                                </constraints>
+                            </scrollView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.13725490200000001" green="0.21176470589999999" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="58j-1e-lIn" firstAttribute="top" secondItem="Oza-78-sY5" secondAttribute="bottom" constant="8" id="1E7-Hl-mBH"/>
+                            <constraint firstItem="pzm-22-k2O" firstAttribute="top" secondItem="iEf-WE-QBC" secondAttribute="top" constant="152" id="C3V-Xl-UIU"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="pzm-22-k2O" secondAttribute="trailing" id="HUj-YN-Yif"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="pzm-22-k2O" secondAttribute="leading" id="Hfi-0r-C3d"/>
+                            <constraint firstItem="pzm-22-k2O" firstAttribute="centerX" secondItem="58j-1e-lIn" secondAttribute="centerX" id="OGV-Up-d4Q"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Fem-NR-cIc" secondAttribute="trailing" constant="8" id="QVx-5h-XgW"/>
+                            <constraint firstItem="pzm-22-k2O" firstAttribute="top" secondItem="58j-1e-lIn" secondAttribute="bottom" constant="8" id="k4U-ye-6KL"/>
                             <constraint firstItem="aHo-aq-TeB" firstAttribute="top" secondItem="Fem-NR-cIc" secondAttribute="bottom" constant="20" id="xKq-Vs-ssh"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="infoLabel" destination="Cn7-28-AaA" id="JQt-Yb-Ftc"/>
+                        <outlet property="infoView" destination="rDy-wQ-BXK" id="spW-E1-URa"/>
+                        <outlet property="scrollView" destination="pzm-22-k2O" id="raY-6G-pJf"/>
                         <segue destination="b9M-0K-SdS" kind="show" identifier="showEditor" id="Lt7-do-8lc"/>
                     </connections>
                 </viewController>

@@ -17,6 +17,8 @@
 @property NSMutableArray * connections;
 @property NSMutableArray * components;
 
+@property NSMutableArray * paletteItems;
+
 @property Canvas * can;
 
 @end

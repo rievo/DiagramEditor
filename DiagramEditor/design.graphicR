@@ -4,6 +4,7 @@
     xmlns:xmi="http://www.omg.org/XMI"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:graphicR="http://mondo.org/graphic_representation/1.0.3">
+
   <allGraphicRepresentation
       extension="state">
     <root>
@@ -47,7 +48,7 @@
               href="WT_DesignPatterns.diagram#/1/DocumentElt/name"/>
         </node_elements>
         <node_shape
-            xsi:type="graphicR:Ellipse"/>
+            xsi:type="graphicR:Ellipse" horizontalDiameter="5" verticalDiameter="5"/>
       </elements>
       <elements
           xsi:type="graphicR:Node">
@@ -62,7 +63,7 @@
               href="WT_DesignPatterns.diagram#/1/DocumentElt/name"/>
         </node_elements>
         <node_shape
-            xsi:type="graphicR:Ellipse"/>
+             xsi:type="graphicR:Ellipse" horizontalDiameter="5" verticalDiameter="5"/>
       </elements>
     </layers>
   </allGraphicRepresentation>

@@ -36,6 +36,9 @@
                                              selector:@selector(showConnectionDetails:)
                                                  name:@"showConnNot"
                                                object:nil];
+    
+    
+    //Load palette
 }
 
 - (void)didReceiveMemoryWarning {

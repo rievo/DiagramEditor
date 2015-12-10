@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F1166BE41C187269009A2AAA /* ConnectionDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1166BE31C187269009A2AAA /* ConnectionDetailsViewController.m */; };
+		F1587B041C19BC4600E963BE /* Palette.m in Sources */ = {isa = PBXBuildFile; fileRef = F1587B031C19BC4600E963BE /* Palette.m */; };
 		F1685E9F1C1827FB0094097E /* ConfigureDiagramViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685E9E1C1827FB0094097E /* ConfigureDiagramViewController.m */; };
 		F1685EA21C18289E0094097E /* EditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685EA11C18289E0094097E /* EditorViewController.m */; };
 		F1685EA51C18294A0094097E /* Component.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685EA41C18294A0094097E /* Component.m */; };
@@ -21,13 +22,16 @@
 		F18510831C1824C8004EC4C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F18510821C1824C8004EC4C8 /* Assets.xcassets */; };
 		F18510861C1824C8004EC4C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F18510841C1824C8004EC4C8 /* LaunchScreen.storyboard */; };
 		F1A20A791C1977430037C05D /* minus-512.png in Resources */ = {isa = PBXBuildFile; fileRef = F1A20A781C1977430037C05D /* minus-512.png */; };
-		F1A20A7B1C19789D0037C05D /* design.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F1A20A7A1C19789D0037C05D /* design.graphicR */; };
 		F1A20A7E1C1981290037C05D /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A20A7D1C1981290037C05D /* XMLDictionary.m */; };
+		F1A20A821C1989530037C05D /* design.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F1A20A811C1989530037C05D /* design.graphicR */; };
+		F1A20A851C198A540037C05D /* PaletteItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A20A841C198A540037C05D /* PaletteItem.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		F1166BE21C187269009A2AAA /* ConnectionDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionDetailsViewController.h; sourceTree = "<group>"; };
 		F1166BE31C187269009A2AAA /* ConnectionDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionDetailsViewController.m; sourceTree = "<group>"; };
+		F1587B021C19BC4600E963BE /* Palette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Palette.h; sourceTree = "<group>"; };
+		F1587B031C19BC4600E963BE /* Palette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Palette.m; sourceTree = "<group>"; };
 		F1685E9D1C1827FB0094097E /* ConfigureDiagramViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigureDiagramViewController.h; sourceTree = "<group>"; };
 		F1685E9E1C1827FB0094097E /* ConfigureDiagramViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigureDiagramViewController.m; sourceTree = "<group>"; };
 		F1685EA01C18289E0094097E /* EditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorViewController.h; sourceTree = "<group>"; };
@@ -51,9 +55,11 @@
 		F18510851C1824C8004EC4C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F18510871C1824C8004EC4C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F1A20A781C1977430037C05D /* minus-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "minus-512.png"; sourceTree = "<group>"; };
-		F1A20A7A1C19789D0037C05D /* design.graphicR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = design.graphicR; sourceTree = "<group>"; };
 		F1A20A7C1C1981290037C05D /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDictionary.h; sourceTree = "<group>"; };
 		F1A20A7D1C1981290037C05D /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLDictionary.m; sourceTree = "<group>"; };
+		F1A20A811C1989530037C05D /* design.graphicR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = design.graphicR; sourceTree = "<group>"; };
+		F1A20A831C198A540037C05D /* PaletteItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaletteItem.h; sourceTree = "<group>"; };
+		F1A20A841C198A540037C05D /* PaletteItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaletteItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,7 +92,7 @@
 		F18510751C1824C8004EC4C8 /* DiagramEditor */ = {
 			isa = PBXGroup;
 			children = (
-				F1A20A7A1C19789D0037C05D /* design.graphicR */,
+				F1A20A811C1989530037C05D /* design.graphicR */,
 				F1A20A7C1C1981290037C05D /* XMLDictionary.h */,
 				F1A20A7D1C1981290037C05D /* XMLDictionary.m */,
 				F18510791C1824C8004EC4C8 /* AppDelegate.h */,
@@ -109,6 +115,10 @@
 				F1685EAD1C1831840094097E /* ComponentDetailsViewController.m */,
 				F1166BE21C187269009A2AAA /* ConnectionDetailsViewController.h */,
 				F1166BE31C187269009A2AAA /* ConnectionDetailsViewController.m */,
+				F1A20A831C198A540037C05D /* PaletteItem.h */,
+				F1A20A841C198A540037C05D /* PaletteItem.m */,
+				F1587B021C19BC4600E963BE /* Palette.h */,
+				F1587B031C19BC4600E963BE /* Palette.m */,
 				F18510821C1824C8004EC4C8 /* Assets.xcassets */,
 				F18510841C1824C8004EC4C8 /* LaunchScreen.storyboard */,
 				F18510871C1824C8004EC4C8 /* Info.plist */,
@@ -183,10 +193,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F1A20A7B1C19789D0037C05D /* design.graphicR in Resources */,
 				F18510861C1824C8004EC4C8 /* LaunchScreen.storyboard in Resources */,
 				F1A20A791C1977430037C05D /* minus-512.png in Resources */,
 				F18510831C1824C8004EC4C8 /* Assets.xcassets in Resources */,
+				F1A20A821C1989530037C05D /* design.graphicR in Resources */,
 				F18510811C1824C8004EC4C8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -204,6 +214,8 @@
 				F1685EAE1C1831840094097E /* ComponentDetailsViewController.m in Sources */,
 				F1685E9F1C1827FB0094097E /* ConfigureDiagramViewController.m in Sources */,
 				F1685EA51C18294A0094097E /* Component.m in Sources */,
+				F1A20A851C198A540037C05D /* PaletteItem.m in Sources */,
+				F1587B041C19BC4600E963BE /* Palette.m in Sources */,
 				F1685EA21C18289E0094097E /* EditorViewController.m in Sources */,
 				F1A20A7E1C1981290037C05D /* XMLDictionary.m in Sources */,
 				F1166BE41C187269009A2AAA /* ConnectionDetailsViewController.m in Sources */,

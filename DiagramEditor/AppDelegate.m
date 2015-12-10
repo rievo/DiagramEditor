@@ -15,13 +15,14 @@
 
 @implementation AppDelegate
 
-@synthesize components, connections;
+@synthesize components, connections, paletteItems;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     connections = [[NSMutableArray alloc] init];
     components = [[NSMutableArray alloc] init];
     
+    paletteItems = [[NSMutableArray alloc] init];
     
     return YES;
 }
