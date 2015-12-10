@@ -50,7 +50,9 @@
     [self setUserInteractionEnabled:YES];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(repaintCanvas:) name:@"repaintCanvas" object:nil];
+                                             selector:@selector(repaintCanvas:)
+                                                 name:@"repaintCanvas" object:nil];
+
     
     tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [self addGestureRecognizer:tapGR];

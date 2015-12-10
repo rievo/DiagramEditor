@@ -8,6 +8,9 @@
 
 #import "ComponentDetailsViewController.h"
 #import "Component.h"
+#import "AppDelegate.h"
+#import "Connection.h"
+
 
 @interface ComponentDetailsViewController ()
 
@@ -25,6 +28,7 @@
     [previewComponent setNeedsDisplay];
     
     nameTextField.delegate = self;
+    dele = [[UIApplication sharedApplication]delegate];
     /*
     UIBlurEffect * eff = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
     UIVisualEffectView * blur = [[UIVisualEffectView alloc] initWithEffect:eff];
@@ -72,5 +76,35 @@
     else
         return NO;
 }
+
+
+- (IBAction)deleteCurrentComponent:(id)sender {
+    
+    //Remove all connections for this element
+    Connection * conn = nil;
+    NSMutableArray * connsToRemove = [[NSMutableArray alloc] init];
+    for(int i = 0; i<dele.connections.count; i++){
+        conn = [dele.connections objectAtIndex:i];
+        
+        if(conn.target == comp || conn.source == comp){
+            //Remove this connection
+            [connsToRemove addObject:conn ];
+        }
+    }
+    
+    for(int i = 0; i<connsToRemove.count; i++){
+        conn = [connsToRemove objectAtIndex:i];
+        [dele.connections removeObject:conn];
+    }
+    
+    
+    //Remove this component
+    [comp removeFromSuperview];
+    [dele.components removeObject:comp];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+}
+
 
 @end

@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 @class Component;
+@class AppDelegate;
 @interface ComponentDetailsViewController : UIViewController<UITextFieldDelegate>{
     
     __weak IBOutlet Component *previewComponent;
     __weak IBOutlet UITextField *nameTextField;
+    
+    AppDelegate * dele;
 }
 
 

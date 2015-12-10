@@ -20,6 +20,8 @@
 		F18510811C1824C8004EC4C8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F185107F1C1824C8004EC4C8 /* Main.storyboard */; };
 		F18510831C1824C8004EC4C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F18510821C1824C8004EC4C8 /* Assets.xcassets */; };
 		F18510861C1824C8004EC4C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F18510841C1824C8004EC4C8 /* LaunchScreen.storyboard */; };
+		F1A20A791C1977430037C05D /* minus-512.png in Resources */ = {isa = PBXBuildFile; fileRef = F1A20A781C1977430037C05D /* minus-512.png */; };
+		F1A20A7B1C19789D0037C05D /* design.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F1A20A7A1C19789D0037C05D /* design.graphicR */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +49,8 @@
 		F18510821C1824C8004EC4C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F18510851C1824C8004EC4C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F18510871C1824C8004EC4C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F1A20A781C1977430037C05D /* minus-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "minus-512.png"; sourceTree = "<group>"; };
+		F1A20A7A1C19789D0037C05D /* design.graphicR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = design.graphicR; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,10 +83,12 @@
 		F18510751C1824C8004EC4C8 /* DiagramEditor */ = {
 			isa = PBXGroup;
 			children = (
+				F1A20A7A1C19789D0037C05D /* design.graphicR */,
 				F18510791C1824C8004EC4C8 /* AppDelegate.h */,
 				F185107A1C1824C8004EC4C8 /* AppDelegate.m */,
 				F185107C1C1824C8004EC4C8 /* ViewController.h */,
 				F185107D1C1824C8004EC4C8 /* ViewController.m */,
+				F1A20A781C1977430037C05D /* minus-512.png */,
 				F185107F1C1824C8004EC4C8 /* Main.storyboard */,
 				F1685E9D1C1827FB0094097E /* ConfigureDiagramViewController.h */,
 				F1685E9E1C1827FB0094097E /* ConfigureDiagramViewController.m */,
@@ -172,7 +178,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1A20A7B1C19789D0037C05D /* design.graphicR in Resources */,
 				F18510861C1824C8004EC4C8 /* LaunchScreen.storyboard in Resources */,
+				F1A20A791C1977430037C05D /* minus-512.png in Resources */,
 				F18510831C1824C8004EC4C8 /* Assets.xcassets in Resources */,
 				F18510811C1824C8004EC4C8 /* Main.storyboard in Resources */,
 			);

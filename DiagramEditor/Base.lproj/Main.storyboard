@@ -137,7 +137,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l81-rR-gem">
-                                <rect key="frame" x="135" y="28" width="50" height="21"/>
+                                <rect key="frame" x="135" y="82" width="50" height="21"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.71764705880000002" green="0.76862745099999996" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -145,19 +145,33 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aJ7-Kh-egu">
-                                <rect key="frame" x="193" y="24" width="387" height="30"/>
+                                <rect key="frame" x="193" y="78" width="387" height="30"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.71764705880000002" green="0.76862745099999996" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MDx-5v-0dQ">
+                                <rect key="frame" x="550" y="28" width="30" height="30"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="SxK-w5-yjK"/>
+                                    <constraint firstAttribute="height" constant="30" id="ms4-uE-JNH"/>
+                                </constraints>
+                                <state key="normal" image="minus-512.png"/>
+                                <connections>
+                                    <action selector="deleteCurrentComponent:" destination="hki-WO-fa3" eventType="touchUpInside" id="Mt9-tI-8eQ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.71764705880000002" green="0.76862745099999996" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="aJ7-Kh-egu" firstAttribute="top" secondItem="ZpY-Yk-LTT" secondAttribute="bottom" constant="4" id="B3R-6q-kup"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="MDx-5v-0dQ" secondAttribute="trailing" id="5ly-no-gaZ"/>
+                            <constraint firstItem="aJ7-Kh-egu" firstAttribute="top" secondItem="ZpY-Yk-LTT" secondAttribute="bottom" constant="58" id="B3R-6q-kup"/>
                             <constraint firstItem="aJ7-Kh-egu" firstAttribute="leading" secondItem="l81-rR-gem" secondAttribute="trailing" constant="8" id="CDn-Su-Zas"/>
-                            <constraint firstItem="l81-rR-gem" firstAttribute="top" secondItem="ZpY-Yk-LTT" secondAttribute="bottom" constant="8" id="VyI-WH-UCc"/>
+                            <constraint firstItem="l81-rR-gem" firstAttribute="top" secondItem="ZpY-Yk-LTT" secondAttribute="bottom" constant="62" id="VyI-WH-UCc"/>
+                            <constraint firstItem="MDx-5v-0dQ" firstAttribute="top" secondItem="ZpY-Yk-LTT" secondAttribute="bottom" constant="8" id="cwE-g4-agf"/>
                             <constraint firstItem="ibC-ea-Yqs" firstAttribute="top" secondItem="ZpY-Yk-LTT" secondAttribute="bottom" constant="8" id="gut-kK-p6H"/>
                             <constraint firstAttribute="leadingMargin" secondItem="ibC-ea-Yqs" secondAttribute="leading" id="l0y-sF-4u4"/>
                             <constraint firstItem="l81-rR-gem" firstAttribute="leading" secondItem="ibC-ea-Yqs" secondAttribute="trailing" constant="35" id="oGA-ul-aBD"/>
@@ -280,4 +294,7 @@
             <point key="canvasLocation" x="1722" y="354"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="minus-512.png" width="512" height="512"/>
+    </resources>
 </document>
