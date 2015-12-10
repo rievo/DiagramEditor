@@ -8,6 +8,8 @@
 
 #import "EditorViewController.h"
 #import "ComponentDetailsViewController.h"
+#import "ConnectionDetailsViewController.h"
+#import "Connection.h"
 
 @interface EditorViewController ()
 
@@ -30,6 +32,10 @@
                                                  name:@"showCompNot"
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showConnectionDetails:)
+                                                 name:@"showConnNot"
+                                               object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -43,6 +49,12 @@
     Component * temp = not.object;
 
     [self performSegueWithIdentifier:@"showComponentDetails" sender:temp];
+}
+
+
+-(void)showConnectionDetails:(NSNotification *)not{
+    Connection * temp = not.object;
+    [self performSegueWithIdentifier:@"showConnectionDetails" sender:temp];
 }
 
 /*
@@ -72,6 +84,9 @@
         vc.comp = sender;
         // Pass any objects to the view controller here, like...
         //[vc setMyObjectHere:object];
+    }else if([[segue identifier] isEqualToString:@"showConnectionDetails"]){
+        ConnectionDetailsViewController * vc = [segue destinationViewController];
+        vc.conn = sender;
     }
 }
 @end

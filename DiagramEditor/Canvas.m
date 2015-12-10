@@ -65,8 +65,10 @@
     for(int i = 0; i< dele.connections.count; i++){
         conn = [dele.connections objectAtIndex:i];
         //if([conn.arrowPath containsPoint:p]){
-        if([self isPoint:p withinDistance:10.0 ofPath:conn.arrowPath.CGPath])
+        if([self isPoint:p withinDistance:10.0 ofPath:conn.arrowPath.CGPath]){
             NSLog(@"TOCADOOO ACHO");
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"showConnNot" object: conn];
+        }
     }
     }
 

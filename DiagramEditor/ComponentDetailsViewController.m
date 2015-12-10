@@ -25,6 +25,14 @@
     [previewComponent setNeedsDisplay];
     
     nameTextField.delegate = self;
+    /*
+    UIBlurEffect * eff = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    UIVisualEffectView * blur = [[UIVisualEffectView alloc] initWithEffect:eff];
+    blur.frame = self.view.frame;
+    blur.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+
+    [self.view addSubview:blur];*/
+    //[self.view sendSubviewToBack:blur];
     
 }
 

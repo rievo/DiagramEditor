@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F1166BE41C187269009A2AAA /* ConnectionDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1166BE31C187269009A2AAA /* ConnectionDetailsViewController.m */; };
 		F1685E9F1C1827FB0094097E /* ConfigureDiagramViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685E9E1C1827FB0094097E /* ConfigureDiagramViewController.m */; };
 		F1685EA21C18289E0094097E /* EditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685EA11C18289E0094097E /* EditorViewController.m */; };
 		F1685EA51C18294A0094097E /* Component.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685EA41C18294A0094097E /* Component.m */; };
@@ -22,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F1166BE21C187269009A2AAA /* ConnectionDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionDetailsViewController.h; sourceTree = "<group>"; };
+		F1166BE31C187269009A2AAA /* ConnectionDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionDetailsViewController.m; sourceTree = "<group>"; };
 		F1685E9D1C1827FB0094097E /* ConfigureDiagramViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigureDiagramViewController.h; sourceTree = "<group>"; };
 		F1685E9E1C1827FB0094097E /* ConfigureDiagramViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigureDiagramViewController.m; sourceTree = "<group>"; };
 		F1685EA01C18289E0094097E /* EditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorViewController.h; sourceTree = "<group>"; };
@@ -93,6 +96,8 @@
 				F1685EA71C1829F00094097E /* Canvas.m */,
 				F1685EAC1C1831840094097E /* ComponentDetailsViewController.h */,
 				F1685EAD1C1831840094097E /* ComponentDetailsViewController.m */,
+				F1166BE21C187269009A2AAA /* ConnectionDetailsViewController.h */,
+				F1166BE31C187269009A2AAA /* ConnectionDetailsViewController.m */,
 				F18510821C1824C8004EC4C8 /* Assets.xcassets */,
 				F18510841C1824C8004EC4C8 /* LaunchScreen.storyboard */,
 				F18510871C1824C8004EC4C8 /* Info.plist */,
@@ -187,6 +192,7 @@
 				F1685E9F1C1827FB0094097E /* ConfigureDiagramViewController.m in Sources */,
 				F1685EA51C18294A0094097E /* Component.m in Sources */,
 				F1685EA21C18289E0094097E /* EditorViewController.m in Sources */,
+				F1166BE41C187269009A2AAA /* ConnectionDetailsViewController.m in Sources */,
 				F18510781C1824C8004EC4C8 /* main.m in Sources */,
 				F1685EAB1C182B7D0094097E /* Connection.m in Sources */,
 			);
