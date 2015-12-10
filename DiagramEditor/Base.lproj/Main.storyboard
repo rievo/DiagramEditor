@@ -113,7 +113,7 @@
                                 <animations/>
                                 <color key="backgroundColor" red="0.32156863808631897" green="0.40392157435417175" blue="0.57647061347961426" alpha="0.0" colorSpace="calibratedRGB"/>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pzm-22-k2O">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pzm-22-k2O" customClass="Palette">
                                 <rect key="frame" x="20" y="152" width="560" height="128"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.71764707565307617" green="0.76862746477127075" blue="0.89411765336990356" alpha="1" colorSpace="calibratedRGB"/>
@@ -138,6 +138,7 @@
                     <connections>
                         <outlet property="infoLabel" destination="Cn7-28-AaA" id="JQt-Yb-Ftc"/>
                         <outlet property="infoView" destination="rDy-wQ-BXK" id="spW-E1-URa"/>
+                        <outlet property="palette" destination="pzm-22-k2O" id="OQL-N0-QdW"/>
                         <outlet property="scrollView" destination="pzm-22-k2O" id="raY-6G-pJf"/>
                         <segue destination="b9M-0K-SdS" kind="show" identifier="showEditor" id="Lt7-do-8lc"/>
                     </connections>
@@ -301,32 +302,12 @@
                                     <constraint firstAttribute="bottom" secondItem="v6p-1A-i0f" secondAttribute="bottom" constant="206" id="JdH-QU-ozt"/>
                                 </constraints>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KOd-BW-gdm">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KOd-BW-gdm" customClass="Palette">
                                 <rect key="frame" x="20" y="461" width="560" height="119"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LHn-ok-s8S">
-                                        <rect key="frame" x="8" y="8" width="122" height="103"/>
-                                        <animations/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="103" id="0Wp-zl-1Pn"/>
-                                            <constraint firstAttribute="width" constant="122" id="hZH-rL-kik"/>
-                                        </constraints>
-                                        <state key="normal" title="Button">
-                                            <color key="titleColor" red="0.71764705880000002" green="0.76862745099999996" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="addElement:" destination="b9M-0K-SdS" eventType="touchUpInside" id="vO1-w8-JAF"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
                                 <animations/>
                                 <color key="backgroundColor" red="0.32156862749999998" green="0.4039215686" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="LHn-ok-s8S" secondAttribute="bottom" constant="8" id="Oa3-wC-Us3"/>
-                                    <constraint firstItem="LHn-ok-s8S" firstAttribute="leading" secondItem="KOd-BW-gdm" secondAttribute="leading" constant="8" id="ohS-ju-gd0"/>
-                                    <constraint firstItem="LHn-ok-s8S" firstAttribute="top" secondItem="KOd-BW-gdm" secondAttribute="top" constant="8" id="pz6-PV-fkI"/>
                                     <constraint firstAttribute="height" constant="119" id="uJV-qN-Wqm"/>
-                                    <constraint firstAttribute="trailing" secondItem="LHn-ok-s8S" secondAttribute="trailing" constant="430" id="zIc-oJ-iWv"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
@@ -345,6 +326,7 @@
                     </view>
                     <connections>
                         <outlet property="canvas" destination="6fG-B6-5S9" id="uxJ-ul-BMA"/>
+                        <outlet property="palette" destination="KOd-BW-gdm" id="frF-Rk-gkH"/>
                         <segue destination="hki-WO-fa3" kind="popoverPresentation" identifier="showComponentDetails" popoverAnchorView="v6p-1A-i0f" id="LBG-E8-PBk">
                             <popoverArrowDirection key="popoverArrowDirection" right="YES"/>
                         </segue>

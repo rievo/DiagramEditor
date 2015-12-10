@@ -10,6 +10,7 @@
 #import "ComponentDetailsViewController.h"
 #import "ConnectionDetailsViewController.h"
 #import "Connection.h"
+#import "Palette.h"
 
 @interface EditorViewController ()
 
@@ -39,6 +40,8 @@
     
     
     //Load palette
+    [palette preparePalette];
+    
 }
 
 - (void)didReceiveMemoryWarning {

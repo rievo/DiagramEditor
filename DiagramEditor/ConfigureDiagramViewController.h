@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @class AppDelegate;
+@class Palette;
 
 
 @interface ConfigureDiagramViewController : UIViewController<UIScrollViewDelegate, UIGestureRecognizerDelegate>{
@@ -18,6 +19,7 @@
     __weak IBOutlet UILabel *infoLabel;
     
     CGRect initialInfoPosition;
+    __weak IBOutlet Palette *palette;
 }
 
 @end

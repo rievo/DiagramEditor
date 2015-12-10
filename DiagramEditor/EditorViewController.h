@@ -10,9 +10,11 @@
 #import "Component.h"
 #import "AppDelegate.h"
 #import "Canvas.h"
+@class Palette;
 
 @interface EditorViewController : UIViewController{
     AppDelegate * dele;
+    __weak IBOutlet Palette *palette;
 }
 
 @property (weak, nonatomic) IBOutlet Canvas *canvas;

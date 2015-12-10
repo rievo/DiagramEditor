@@ -10,6 +10,7 @@
 #import "XMLDictionary.h"
 #import "PaletteItem.h"
 #import "AppDelegate.h"
+#import "Palette.h"
 
 
 #define defaultwidth 50
@@ -104,40 +105,25 @@
         
         [dele.paletteItems addObject:item];
         
-        
+        /*
         //GestureRecognizer
         UILongPressGestureRecognizer * gr = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
         gr.delegate = self;
         gr.minimumPressDuration = 0.0;
-        [item addGestureRecognizer:gr];
+        [item addGestureRecognizer:gr];*/
     }
     
     
-    //Prepare scrollview with those items
-    scrollView.contentSize = CGSizeMake(0, scrollView.bounds.size.height);
-
-    for(int i = 0; i< dele.paletteItems.count; i++){
-        PaletteItem * temp = [dele.paletteItems objectAtIndex:i];
-        
-        float a = 10;
-        
-        CGFloat x  = i* scrollView.contentSize.height + xmargin;
-        
-        CGRect insideRect = CGRectMake(x, a, scrollView.contentSize.height -2*a, scrollView.contentSize.height -2*a);
-        
-        
-        temp.frame = insideRect;
-        
-        CGFloat hue = ( arc4random() % 256 / 256.0 );  //  0.0 to 1.0
-        CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from white
-        CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from black
-        UIColor *color = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
-        temp.backgroundColor =color;
-        
-        //temp.backgroundColor = [UIColor clearColor];
-        
-        [scrollView addSubview:temp];
-        scrollView.contentSize = CGSizeMake(scrollView.contentSize.width + temp.frame.size.width, scrollView.contentSize.height);
+    [palette preparePalette];
+    
+    
+    //Add longPressGestureRecognizer in order to show palette dialog
+    for(int i = 0; i<dele.paletteItems.count; i++){
+        PaletteItem * item = [dele.paletteItems objectAtIndex:i];
+        UILongPressGestureRecognizer * gr = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
+        gr.delegate = self;
+        gr.minimumPressDuration = 0.0;
+        [item addGestureRecognizer:gr];
     }
     
 }

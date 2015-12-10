@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+@class AppDelegate;
+@interface Palette : UIScrollView{
+    AppDelegate * dele;
+}
 
-@interface Palette : UIScrollView
+
+-(void)preparePalette;
+
 
 @end
