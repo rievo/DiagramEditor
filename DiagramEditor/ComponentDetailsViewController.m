@@ -22,21 +22,64 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+    outConnectionsTable.delegate = self;
+    outConnectionsTable.dataSource = self;
+    
     // Do any additional setup after loading the view.
     nameTextField.text = comp.name;
-    previewComponent = comp;
-    [previewComponent setNeedsDisplay];
+    
+    CGRect oldFrame = previewComponent.frame;
+    temp = [[Component alloc] initWithFrame:CGRectMake(0, 0, oldFrame.size.width, oldFrame.size.height)];
+    temp.name = comp.name;
+    [temp updateNameLabel];
+    temp.connections = [NSMutableArray arrayWithArray:comp.connections];
+    temp.type = comp.type;
+    temp.shapeType = comp.shapeType;
+    
+    for (UIGestureRecognizer *recognizer in temp.gestureRecognizers) {
+        [temp removeGestureRecognizer:recognizer];
+    }
+    for (UIGestureRecognizer *recognizer in previewComponent.gestureRecognizers) {
+        [previewComponent removeGestureRecognizer:recognizer];
+    }
+    
+    [previewComponent addSubview:temp];
+    
+    [temp setNeedsDisplay];
     
     nameTextField.delegate = self;
     dele = [[UIApplication sharedApplication]delegate];
 
     typeLabel.text = comp.type;
     
+    Connection * tc = nil;
+    connections = [[NSMutableArray alloc] init];
+    for(int i = 0; i< dele.connections.count; i++){
+        tc = [dele.connections objectAtIndex:i];
+        if(tc.source == comp)
+           [connections addObject:tc];
+    }
+    
+    [outConnectionsTable reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)updateLocalConenctions{
+    Connection * tc = nil;
+    connections = [[NSMutableArray alloc] init];
+    for(int i = 0; i< dele.connections.count; i++){
+        tc = [dele.connections objectAtIndex:i];
+        if(tc.source == comp)
+            [connections addObject:tc];
+    }
+    
+    [outConnectionsTable reloadData];
 }
 
 /*
@@ -54,6 +97,8 @@
     
     if(textField.text.length >0){
         comp.name = textField.text;
+        temp.name = textField.text;
+        [temp updateNameLabel];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
     }else{
         
@@ -65,6 +110,8 @@
     if(new.length > 0){
         [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
         comp.name = new;
+        temp.name = new;
+        [temp updateNameLabel];
         return YES;
     }
     else
@@ -101,4 +148,58 @@
 }
 
 
+
+
+#pragma mark UITableView Delegate methods
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;    //count of section
+}
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return connections.count;
+}
+
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *MyIdentifier = @"MyIdentifier";
+    
+    Connection * c = [connections objectAtIndex:indexPath.row];
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+    
+    if (cell == nil)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                       reuseIdentifier:MyIdentifier] ;
+    }
+    cell.backgroundColor = [UIColor clearColor];
+
+    cell.textLabel.text = c.name;
+    return cell;
+}
+
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return YES if you want the specified item to be editable.
+    return YES;
+}
+
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        //add code here for when you hit delete
+        Connection * toDelete = [connections objectAtIndex:indexPath.row];
+        
+        [dele.connections removeObject:toDelete];
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+        [self updateLocalConenctions];
+    }
+}
 @end
