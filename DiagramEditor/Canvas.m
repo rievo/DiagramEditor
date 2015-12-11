@@ -126,10 +126,8 @@
     
     if(xArrowStart> 0 && yArrowStart> 0){
         //Dibujo la línea
-        
         CGContextSetLineWidth(context, 2.0);
-        CGContextSetStrokeColorWithColor(context, [UIColor
-                                                   blueColor].CGColor);
+        CGContextSetStrokeColorWithColor(context, dele.blue4 .CGColor);
         CGContextMoveToPoint(context, xArrowStart, yArrowStart);
         CGContextAddLineToPoint(context, xArrowEnd , yArrowEnd);
         CGContextStrokePath(context);
@@ -155,7 +153,8 @@
             
 
             UIBezierPath * path = [[UIBezierPath alloc] init];
-            [[UIColor blackColor] setStroke];
+            //[[UIColor blackColor] setStroke];
+            [dele.blue4 setStroke];
             [path setLineWidth:2.0];
             [path moveToPoint: sourceAnchor];
             CGPoint mid = CGPointMake((sourceAnchor.x + targetAnchor.x)/2.0, (sourceAnchor.y + targetAnchor.y)/2.0);

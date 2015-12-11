@@ -28,7 +28,7 @@
         source = nil;
         target = nil;
         arrowPath = nil;
-        name = @"---";
+        name = @" -";
     }
     return self;
 }
