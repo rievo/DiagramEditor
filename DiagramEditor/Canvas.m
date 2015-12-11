@@ -12,6 +12,8 @@
 #define xmargin 15
 #define ymargin 10
 
+
+#define curveMove 60
 @implementation Canvas
 
 
@@ -158,8 +160,8 @@
             [path setLineWidth:2.0];
             [path moveToPoint: sourceAnchor];
             CGPoint mid = CGPointMake((sourceAnchor.x + targetAnchor.x)/2.0, (sourceAnchor.y + targetAnchor.y)/2.0);
-            //mid.x = mid.x -50;
-            //mid.y = mid.y -50;
+            mid.x = mid.x - curveMove;
+            mid.y = mid.y - curveMove;
             [path addQuadCurveToPoint:targetAnchor controlPoint:mid];
             [path stroke];
             conn.arrowPath = path;
