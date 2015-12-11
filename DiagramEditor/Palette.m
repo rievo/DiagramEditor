@@ -10,18 +10,10 @@
 #import "AppDelegate.h"
 #import "PaletteItem.h"
 
-#define xmargin 10
+#define xmargin 20
 
 
 @implementation Palette
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
 
 
 -(void)preparePalette{
@@ -55,8 +47,9 @@
         //temp.backgroundColor = [UIColor clearColor];
         
         [self addSubview:temp];
-        self.contentSize = CGSizeMake(self.contentSize.width + temp.frame.size.width, self.contentSize.height);
+        self.contentSize = CGSizeMake(self.contentSize.width + temp.frame.size.width + xmargin, self.contentSize.height);
     }
+    self.contentSize = CGSizeMake(self.contentSize.width + xmargin, self.contentSize.height);
 
 }
 

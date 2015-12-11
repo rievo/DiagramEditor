@@ -195,6 +195,20 @@
                                     <action selector="deleteCurrentComponent:" destination="hki-WO-fa3" eventType="touchUpInside" id="Mt9-tI-8eQ"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Type:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hrQ-Hu-TFN">
+                                <rect key="frame" x="20" y="129" width="43" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uso-F4-xPq">
+                                <rect key="frame" x="71" y="129" width="509" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.71764705880000002" green="0.76862745099999996" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -213,6 +227,7 @@
                     <connections>
                         <outlet property="nameTextField" destination="aJ7-Kh-egu" id="mxt-Dn-tuD"/>
                         <outlet property="previewComponent" destination="ibC-ea-Yqs" id="BOo-uh-d52"/>
+                        <outlet property="typeLabel" destination="uso-F4-xPq" id="Toa-x5-bS8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2tL-1l-Wu2" userLabel="First Responder" sceneMemberID="firstResponder"/>

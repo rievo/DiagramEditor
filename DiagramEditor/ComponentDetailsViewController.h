@@ -13,6 +13,7 @@
     
     __weak IBOutlet Component *previewComponent;
     __weak IBOutlet UITextField *nameTextField;
+    __weak IBOutlet UILabel *typeLabel;
     
     AppDelegate * dele;
 }
