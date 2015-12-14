@@ -38,6 +38,6 @@
 +(UIColor *)darkPurple;
 +(UIColor *)darkRed;
 +(UIColor *)darkYellow;
-
++(UIColor *)darkGreen;
 
 @end

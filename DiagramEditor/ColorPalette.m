@@ -12,6 +12,67 @@
 @implementation ColorPalette
 
 
++(UIColor *)colorForString:(NSString *)str{
+    UIColor * temp = nil;
+    
+    if([str isEqualToString:@"white"]){
+        return [ColorPalette white];
+    }else if([str isEqualToString:@"black"]){
+        return [ColorPalette black];
+    }else if([str isEqualToString:@"blue"]){
+        return [ColorPalette blue];
+    }else if([str isEqualToString:@"chocolate"]){
+        return [ColorPalette chocolate];
+    }else if([str isEqualToString:@"gray"]){
+        return [ColorPalette gray];
+    }else if([str isEqualToString:@"green"]){
+        return [ColorPalette green];
+    }else if([str isEqualToString:@"orange"]){
+        return [ColorPalette orange];
+    }else if([str isEqualToString:@"purple"]){
+        return [ColorPalette purple];
+    }else if([str isEqualToString:@"red"]){
+        return [ColorPalette red];
+    }else if([str isEqualToString:@"yellow"]){
+        return [ColorPalette yellow];
+    }else if([str isEqualToString:@"light_blue"]){
+        return [ColorPalette lightBlue];
+    }else if([str isEqualToString:@"light_chocolate"]){
+        return [ColorPalette lightChocolate];
+    }else if([str isEqualToString:@"light_gray"]){
+        return [ColorPalette lightGray];
+    }else if([str isEqualToString:@"light_green"]){
+        return [ColorPalette lightGreen];
+    }else if([str isEqualToString:@"light_orange"]){
+        return [ColorPalette lightOrange];
+    }else if([str isEqualToString:@"light_purple"]){
+        return [ColorPalette lightPurple];
+    }else if([str isEqualToString:@"light_red"]){
+        return [ColorPalette lightRed];
+    }else if([str isEqualToString:@"light_yellow"]){
+        return [ColorPalette lightYellow];
+    }else if([str isEqualToString:@"dark_blue"]){
+        return [ColorPalette darkBlue];
+    }else if([str isEqualToString:@"dark_chocolate"]){
+        return [ColorPalette darkChocolate];
+    }else if([str isEqualToString:@"dark_gray"]){
+        return [ColorPalette darkGray];
+    }else if([str isEqualToString:@"dark_green"]){
+        return [ColorPalette darkGreen];
+    }else if([str isEqualToString:@"dark_orange"]){
+        return [ColorPalette darkOrange];
+    }else if([str isEqualToString:@"dark_purple"]){
+        return [ColorPalette darkPurple];
+    }else if([str isEqualToString:@"dark_red"]){
+        return [ColorPalette darkRed];
+    }else if([str isEqualToString:@"dark_yellow"]){
+        return [ColorPalette darkYellow];
+    }else{
+        return nil;
+    }
+    
+    return temp;
+}
 
 +(UIColor *)white{
     return [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0];
@@ -120,6 +181,13 @@
 
 +(UIColor *)darkYellow{
     return [UIColor colorWithRed:214.0/255.0 green:197.0/255.0 blue:66.0/255.0 alpha:1.0];
+}
+
+
+
+
++(UIColor *)darkGreen{
+    return [UIColor colorWithRed:77.0/255.0 green:137.0/255.0 blue:20.0/255.0 alpha:1.0];
 }
 
 
