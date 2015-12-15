@@ -218,7 +218,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
 #pragma mark drawRect method
 - (void)drawRect:(CGRect)rect {
     
-    float lw = 4.0;
+    float lw = 2.0;
     CGRect fixed = CGRectMake(2*lw, 2*lw , rect.size.width - 4*lw , rect.size.height - 4*lw);
     
     if([shapeType isEqualToString:@"graphicR:Ellipse"]){
