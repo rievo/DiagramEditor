@@ -122,12 +122,5 @@
 }
 
 
-#pragma mark NSCopying
-/*
--(id)copyWithZone:(NSZone *)zone{
-    PaletteItem * copy = [[PaletteItem allocWithZone:zone] init];
-    copy set
-}*/
-
 
 @end
