@@ -33,6 +33,7 @@
     CGRect oldFrame = previewComponent.frame;
     temp = [[Component alloc] initWithFrame:CGRectMake(0, 0, oldFrame.size.width, oldFrame.size.height)];
     temp.name = comp.name;
+    temp.fillColor = comp.fillColor;
     [temp updateNameLabel];
     temp.connections = [NSMutableArray arrayWithArray:comp.connections];
     temp.type = comp.type;
