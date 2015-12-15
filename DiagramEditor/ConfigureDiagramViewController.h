@@ -11,7 +11,7 @@
 @class Palette;
 
 
-@interface ConfigureDiagramViewController : UIViewController<UIScrollViewDelegate, UIGestureRecognizerDelegate>{
+@interface ConfigureDiagramViewController : UIViewController<UIScrollViewDelegate, UIGestureRecognizerDelegate, UITableViewDataSource, UITableViewDelegate>{
     NSDictionary * configuration;
     AppDelegate * dele;
     __weak IBOutlet UIScrollView *scrollView;
@@ -20,6 +20,10 @@
     
     CGRect initialInfoPosition;
     __weak IBOutlet Palette *palette;
+    __weak IBOutlet UITableView *palettesTable;
+    
+
+    NSMutableArray * palettes;
 }
 
 @end

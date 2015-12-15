@@ -10,10 +10,11 @@
 @class AppDelegate;
 @interface Palette : UIScrollView{
     AppDelegate * dele;
+    
 }
 
 
 -(void)preparePalette;
-
-
+@property NSMutableArray * paletteItems;
+@property NSString * name;
 @end

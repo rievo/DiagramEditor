@@ -41,6 +41,7 @@
     
     
     //Load palette
+    palette.paletteItems = [[NSMutableArray alloc] initWithArray:dele.paletteItems];
     [palette preparePalette];
     
     //Añadimos a los items de la paleta el gestor de gestos para poder arrastrarlos

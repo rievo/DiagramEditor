@@ -121,16 +121,39 @@
                                     <constraint firstAttribute="height" constant="128" id="tkv-sC-Urj"/>
                                 </constraints>
                             </scrollView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Palettes on file" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hPn-4M-2P3">
+                                <rect key="frame" x="244" y="327" width="113" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.71764707565307617" green="0.76862746477127075" blue="0.89411765336990356" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Rcu-8g-tKj">
+                                <rect key="frame" x="180" y="356" width="240" height="164"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="240" id="Zv9-Ip-1iJ"/>
+                                    <constraint firstAttribute="width" constant="240" id="mgf-tH-r0q"/>
+                                </constraints>
+                            </tableView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.13725490200000001" green="0.21176470589999999" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="58j-1e-lIn" firstAttribute="top" secondItem="Oza-78-sY5" secondAttribute="bottom" constant="8" id="1E7-Hl-mBH"/>
+                            <constraint firstItem="Rcu-8g-tKj" firstAttribute="leading" secondItem="iEf-WE-QBC" secondAttribute="leadingMargin" constant="160" id="1uK-dT-SRe"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="hPn-4M-2P3" secondAttribute="trailing" constant="223" id="3tm-mg-d2x"/>
+                            <constraint firstItem="hPn-4M-2P3" firstAttribute="top" secondItem="pzm-22-k2O" secondAttribute="bottom" constant="47" id="89h-bc-VFA"/>
                             <constraint firstItem="pzm-22-k2O" firstAttribute="top" secondItem="iEf-WE-QBC" secondAttribute="top" constant="152" id="C3V-Xl-UIU"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Rcu-8g-tKj" secondAttribute="trailing" constant="160" id="CJf-HR-Rlq"/>
+                            <constraint firstItem="aHo-aq-TeB" firstAttribute="top" secondItem="Rcu-8g-tKj" secondAttribute="bottom" constant="80" id="DIp-3y-EE0"/>
                             <constraint firstAttribute="trailingMargin" secondItem="pzm-22-k2O" secondAttribute="trailing" id="HUj-YN-Yif"/>
                             <constraint firstAttribute="leadingMargin" secondItem="pzm-22-k2O" secondAttribute="leading" id="Hfi-0r-C3d"/>
                             <constraint firstItem="pzm-22-k2O" firstAttribute="centerX" secondItem="58j-1e-lIn" secondAttribute="centerX" id="OGV-Up-d4Q"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Fem-NR-cIc" secondAttribute="trailing" constant="8" id="QVx-5h-XgW"/>
+                            <constraint firstItem="hPn-4M-2P3" firstAttribute="leading" secondItem="iEf-WE-QBC" secondAttribute="leadingMargin" constant="224" id="Vid-z5-3nG"/>
+                            <constraint firstItem="Rcu-8g-tKj" firstAttribute="top" secondItem="hPn-4M-2P3" secondAttribute="bottom" constant="8" id="bZ0-Ia-hoy"/>
                             <constraint firstItem="pzm-22-k2O" firstAttribute="top" secondItem="58j-1e-lIn" secondAttribute="bottom" constant="8" id="k4U-ye-6KL"/>
                             <constraint firstItem="aHo-aq-TeB" firstAttribute="top" secondItem="Fem-NR-cIc" secondAttribute="bottom" constant="20" id="xKq-Vs-ssh"/>
                         </constraints>
@@ -139,6 +162,7 @@
                         <outlet property="infoLabel" destination="Cn7-28-AaA" id="JQt-Yb-Ftc"/>
                         <outlet property="infoView" destination="rDy-wQ-BXK" id="spW-E1-URa"/>
                         <outlet property="palette" destination="pzm-22-k2O" id="OQL-N0-QdW"/>
+                        <outlet property="palettesTable" destination="Rcu-8g-tKj" id="diB-EO-kyB"/>
                         <outlet property="scrollView" destination="pzm-22-k2O" id="raY-6G-pJf"/>
                         <segue destination="b9M-0K-SdS" kind="show" identifier="showEditor" id="Lt7-do-8lc"/>
                     </connections>

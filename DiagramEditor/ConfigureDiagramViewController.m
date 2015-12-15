@@ -43,7 +43,16 @@
     
     
     dele = [UIApplication sharedApplication].delegate;
-    // Do any additional setup after loading the view.
+    
+    
+    palettes = [[NSMutableArray alloc] init];
+    [palettesTable setDataSource:self];
+    [palettesTable setDelegate:self];
+    
+    
+    
+    
+    //Read file and proccess
     
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"design" ofType:@"graphicR"];
     configuration = [NSDictionary dictionaryWithXMLFile:filePath];
@@ -51,7 +60,16 @@
     NSArray * allGraphicRepresentations = [configuration objectForKey:@"allGraphicRepresentation"];
     
     for(int gr = 0; gr < allGraphicRepresentations.count; gr++){
+        
+        
+        //Create a temp palette
+        Palette * tempPalete = [[Palette alloc] init];
+        [tempPalete preparePalette];
+        
         NSDictionary * allGraphicRepresentation = [allGraphicRepresentations objectAtIndex:gr];
+        
+        NSString * paletteName = [allGraphicRepresentation objectForKey:@"_extension"];
+        tempPalete.name = paletteName;
         
         NSDictionary * layers = [allGraphicRepresentation objectForKey:@"layers"];
         NSArray * elements = [layers objectForKey:@"elements"];
@@ -129,19 +147,15 @@
                 item.frame = CGRectMake(0, 0, defaultwidth, defaultheight);
             }
             
-            //Set frame just for here. On the canvas they will have their dimensions
-            //item.frame = CGRectMake(0, 0, scrollView.bounds.size.height, scrollView.bounds.size.height);
             
             
-            [dele.paletteItems addObject:item];
+            //[dele.paletteItems addObject:item];
+            [tempPalete.paletteItems addObject:item];
             
-            /*
-             //GestureRecognizer
-             UILongPressGestureRecognizer * gr = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
-             gr.delegate = self;
-             gr.minimumPressDuration = 0.0;
-             [item addGestureRecognizer:gr];*/
+
         }
+        
+        [palettes addObject:tempPalete];
     }
     
     
@@ -149,8 +163,8 @@
     
     
     //Add longPressGestureRecognizer in order to show palette dialog
-    for(int i = 0; i<dele.paletteItems.count; i++){
-        PaletteItem * item = [dele.paletteItems objectAtIndex:i];
+    for(int i = 0; i<palette.paletteItems.count; i++){
+        PaletteItem * item = [palette.paletteItems objectAtIndex:i];
         UILongPressGestureRecognizer * gr = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
         gr.delegate = self;
         gr.minimumPressDuration = 0.0;
@@ -189,8 +203,56 @@
 }
 
 
+#pragma mark Show editor
 - (IBAction)showEditor:(id)sender {
+    dele.paletteItems = [[NSMutableArray alloc] initWithArray:palette.paletteItems];
+    
     [self performSegueWithIdentifier:@"showEditor" sender:self];
+}
+
+
+
+#pragma mark UItableView delegate methods
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;    //count of section
+}
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    return [palettes count];    //count number of row from counting array hear cataGorry is An Array
+}
+
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *MyIdentifier = @"MyIdentifier";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+    
+    if (cell == nil)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                       reuseIdentifier:MyIdentifier] ;
+    }
+
+    Palette * temp = [palettes objectAtIndex:indexPath.row];
+    cell.textLabel.text = temp.name;
+    return cell;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+   
+    Palette * selected = [palettes objectAtIndex:indexPath.row];
+    //[selected setFrame:palette.frame];
+    palette.paletteItems = selected.paletteItems;
+    [palette preparePalette];
+    [palette setNeedsDisplay];
+    
 }
 
 @end

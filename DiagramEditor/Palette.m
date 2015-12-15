@@ -15,14 +15,19 @@
 
 @implementation Palette
 
+@synthesize paletteItems,name;
+
 
 -(void)preparePalette{
     self.contentSize = CGSizeMake(0, self.bounds.size.height);
     
     dele = [UIApplication sharedApplication].delegate;
     
-    for(int i = 0; i< dele.paletteItems.count; i++){
-        PaletteItem * temp = [dele.paletteItems objectAtIndex:i];
+    if(paletteItems == nil)
+        paletteItems = [[NSMutableArray alloc] init];
+    
+    for(int i = 0; i< paletteItems.count; i++){
+        PaletteItem * temp = [paletteItems objectAtIndex:i];
         
         //Remove all gesture recognizers
         for (UIGestureRecognizer *recognizer in temp.gestureRecognizers) {
