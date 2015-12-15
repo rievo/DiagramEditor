@@ -16,5 +16,6 @@
 @property NSNumber * width;
 @property NSNumber * height;
 @property NSString * shapeType;
+@property UIColor * fillColor;
 
 @end

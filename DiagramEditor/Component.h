@@ -33,6 +33,7 @@
 @property CATextLayer * textLayer;
 @property NSString * type;
 @property NSString * shapeType;
+@property UIColor * fillColor;
 
 
 -(CGPoint)getTopAnchorPoint;

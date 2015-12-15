@@ -11,7 +11,7 @@
 
 @interface ColorPalette : NSObject
 
-
++(UIColor *)colorForString:(NSString *)str;
 
 +(UIColor *)white;
 +(UIColor *)black;

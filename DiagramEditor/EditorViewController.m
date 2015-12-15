@@ -108,6 +108,7 @@
             comp.name = sender.dialog;
             comp.type = sender.type;
             comp.shapeType = sender.shapeType;
+            comp.fillColor = sender.fillColor;
             [dele.components addObject:comp];
             [comp updateNameLabel];
             [canvas addSubview:comp];

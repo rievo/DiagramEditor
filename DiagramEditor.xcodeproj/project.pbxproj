@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F10F0FA31C1AF67000165561 /* ColorPalette.m in Sources */ = {isa = PBXBuildFile; fileRef = F10F0FA21C1AF67000165561 /* ColorPalette.m */; };
+		F10F0FA51C1ED77A00165561 /* design.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F10F0FA41C1ED77A00165561 /* design.graphicR */; };
 		F1166BE41C187269009A2AAA /* ConnectionDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1166BE31C187269009A2AAA /* ConnectionDetailsViewController.m */; };
 		F1587B041C19BC4600E963BE /* Palette.m in Sources */ = {isa = PBXBuildFile; fileRef = F1587B031C19BC4600E963BE /* Palette.m */; };
 		F1685E9F1C1827FB0094097E /* ConfigureDiagramViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685E9E1C1827FB0094097E /* ConfigureDiagramViewController.m */; };
@@ -23,11 +25,13 @@
 		F18510861C1824C8004EC4C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F18510841C1824C8004EC4C8 /* LaunchScreen.storyboard */; };
 		F1A20A791C1977430037C05D /* minus-512.png in Resources */ = {isa = PBXBuildFile; fileRef = F1A20A781C1977430037C05D /* minus-512.png */; };
 		F1A20A7E1C1981290037C05D /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A20A7D1C1981290037C05D /* XMLDictionary.m */; };
-		F1A20A821C1989530037C05D /* design.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F1A20A811C1989530037C05D /* design.graphicR */; };
 		F1A20A851C198A540037C05D /* PaletteItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A20A841C198A540037C05D /* PaletteItem.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F10F0FA11C1AF67000165561 /* ColorPalette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPalette.h; sourceTree = "<group>"; };
+		F10F0FA21C1AF67000165561 /* ColorPalette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorPalette.m; sourceTree = "<group>"; };
+		F10F0FA41C1ED77A00165561 /* design.graphicR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = design.graphicR; sourceTree = "<group>"; };
 		F1166BE21C187269009A2AAA /* ConnectionDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionDetailsViewController.h; sourceTree = "<group>"; };
 		F1166BE31C187269009A2AAA /* ConnectionDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionDetailsViewController.m; sourceTree = "<group>"; };
 		F1587B021C19BC4600E963BE /* Palette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Palette.h; sourceTree = "<group>"; };
@@ -57,7 +61,6 @@
 		F1A20A781C1977430037C05D /* minus-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "minus-512.png"; sourceTree = "<group>"; };
 		F1A20A7C1C1981290037C05D /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDictionary.h; sourceTree = "<group>"; };
 		F1A20A7D1C1981290037C05D /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLDictionary.m; sourceTree = "<group>"; };
-		F1A20A811C1989530037C05D /* design.graphicR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = design.graphicR; sourceTree = "<group>"; };
 		F1A20A831C198A540037C05D /* PaletteItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaletteItem.h; sourceTree = "<group>"; };
 		F1A20A841C198A540037C05D /* PaletteItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaletteItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -92,7 +95,7 @@
 		F18510751C1824C8004EC4C8 /* DiagramEditor */ = {
 			isa = PBXGroup;
 			children = (
-				F1A20A811C1989530037C05D /* design.graphicR */,
+				F10F0FA41C1ED77A00165561 /* design.graphicR */,
 				F1A20A7C1C1981290037C05D /* XMLDictionary.h */,
 				F1A20A7D1C1981290037C05D /* XMLDictionary.m */,
 				F18510791C1824C8004EC4C8 /* AppDelegate.h */,
@@ -123,6 +126,8 @@
 				F18510841C1824C8004EC4C8 /* LaunchScreen.storyboard */,
 				F18510871C1824C8004EC4C8 /* Info.plist */,
 				F18510761C1824C8004EC4C8 /* Supporting Files */,
+				F10F0FA11C1AF67000165561 /* ColorPalette.h */,
+				F10F0FA21C1AF67000165561 /* ColorPalette.m */,
 			);
 			path = DiagramEditor;
 			sourceTree = "<group>";
@@ -193,10 +198,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F10F0FA51C1ED77A00165561 /* design.graphicR in Resources */,
 				F18510861C1824C8004EC4C8 /* LaunchScreen.storyboard in Resources */,
 				F1A20A791C1977430037C05D /* minus-512.png in Resources */,
 				F18510831C1824C8004EC4C8 /* Assets.xcassets in Resources */,
-				F1A20A821C1989530037C05D /* design.graphicR in Resources */,
 				F18510811C1824C8004EC4C8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -221,6 +226,7 @@
 				F1166BE41C187269009A2AAA /* ConnectionDetailsViewController.m in Sources */,
 				F18510781C1824C8004EC4C8 /* main.m in Sources */,
 				F1685EAB1C182B7D0094097E /* Connection.m in Sources */,
+				F10F0FA31C1AF67000165561 /* ColorPalette.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

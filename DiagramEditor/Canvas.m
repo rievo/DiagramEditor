@@ -160,7 +160,7 @@
             [path setLineWidth:2.0];
             [path moveToPoint: sourceAnchor];
             CGPoint mid = CGPointMake((sourceAnchor.x + targetAnchor.x)/2.0, (sourceAnchor.y + targetAnchor.y)/2.0);
-            mid.x = mid.x - curveMove;
+            //mid.x = mid.x - curveMove;
             mid.y = mid.y - curveMove;
             [path addQuadCurveToPoint:targetAnchor controlPoint:mid];
             [path stroke];
