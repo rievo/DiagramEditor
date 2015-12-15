@@ -87,7 +87,7 @@
         tempIcon.height = sender.height;
         tempIcon.shapeType = sender.shapeType;
         [tempIcon setFrame:sender.frame];
-        [tempIcon setAlpha:0.7];
+        [tempIcon setAlpha:0.4];
         tempIcon.center = p;
         tempIcon.backgroundColor = [UIColor clearColor];
         [self.view addSubview:tempIcon];
