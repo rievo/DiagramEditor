@@ -54,7 +54,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(repaintCanvas:)
                                                  name:@"repaintCanvas" object:nil];
-
+    
     
     tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [self addGestureRecognizer:tapGR];
@@ -65,16 +65,15 @@
     Connection * conn;
     
     CGPoint p = [recog locationInView:self];
-    //NSLog(@"x: %.2f  y: %.2f", p.x, p.y);
+    
     for(int i = 0; i< dele.connections.count; i++){
         conn = [dele.connections objectAtIndex:i];
-        //if([conn.arrowPath containsPoint:p]){
+        
         if([self isPoint:p withinDistance:10.0 ofPath:conn.arrowPath.CGPath]){
-            NSLog(@"TOCADOOO ACHO");
             [[NSNotificationCenter defaultCenter]postNotificationName:@"showConnNot" object: conn];
         }
     }
-    }
+}
 
 
 -(CGPoint) getBestAnchorForComponent: (Component *)c
@@ -127,7 +126,7 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     if(xArrowStart> 0 && yArrowStart> 0){
-
+        
         UIBezierPath * line = [[UIBezierPath alloc] init];
         [line setLineWidth:2.0];
         [dele.blue4 setStroke];
@@ -154,24 +153,24 @@
             CGPoint targetAnchor = [self getBestAnchorForComponent:conn.target toPoint:conn.source.center];
             
             /*
-            CGPoint sourceAnchor = conn.source.center;
-            CGPoint targetAnchor = conn.target.center;*/
+             CGPoint sourceAnchor = conn.source.center;
+             CGPoint targetAnchor = conn.target.center;*/
             
             /*
-            CGPoint sb = CGPointMake(conn.target.center.x - conn.source.center.x, conn.target.center.y - conn.source.center.y);
-            CGPoint bs = CGPointMake(conn.source.center.x - conn.target.center.x, conn.source.center.y -conn.target.center.y );
-            float factor = 1.0/5.0;
-            CGPoint sourceMove = CGPointMake((bs.x +conn.source.center.x)*factor, (bs.y + conn.source.center.y)*factor);
-            CGPoint targetMove = CGPointMake((sb.x +conn.target.center.x)*factor, (sb.y + conn.target.center.y)*factor);
-            
-            CGPoint sourceAnchor = CGPointMake(conn.source.center.x - sourceMove.x, conn.source.center.y - sourceMove.y);
-            CGPoint targetAnchor = CGPointMake(conn.target.center.x - targetMove.x, conn.target.center.y - targetMove.y );
-            
-            [[UIColor redColor]setFill];
-            UIBezierPath * testC = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(sourceAnchor.x -10, sourceAnchor.y -10, 20, 20)];
-            [testC fill];
-            testC = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(targetAnchor.x -10, targetAnchor.y -10, 20, 20)];
-            [testC fill];*/
+             CGPoint sb = CGPointMake(conn.target.center.x - conn.source.center.x, conn.target.center.y - conn.source.center.y);
+             CGPoint bs = CGPointMake(conn.source.center.x - conn.target.center.x, conn.source.center.y -conn.target.center.y );
+             float factor = 1.0/5.0;
+             CGPoint sourceMove = CGPointMake((bs.x +conn.source.center.x)*factor, (bs.y + conn.source.center.y)*factor);
+             CGPoint targetMove = CGPointMake((sb.x +conn.target.center.x)*factor, (sb.y + conn.target.center.y)*factor);
+             
+             CGPoint sourceAnchor = CGPointMake(conn.source.center.x - sourceMove.x, conn.source.center.y - sourceMove.y);
+             CGPoint targetAnchor = CGPointMake(conn.target.center.x - targetMove.x, conn.target.center.y - targetMove.y );
+             
+             [[UIColor redColor]setFill];
+             UIBezierPath * testC = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(sourceAnchor.x -10, sourceAnchor.y -10, 20, 20)];
+             [testC fill];
+             testC = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(targetAnchor.x -10, targetAnchor.y -10, 20, 20)];
+             [testC fill];*/
             
             
             //Draw line
@@ -184,11 +183,11 @@
             [path stroke];
             conn.arrowPath = path;
             /*CGPoint mid = CGPointMake((sourceAnchor.x + targetAnchor.x)/2.0, (sourceAnchor.y + targetAnchor.y)/2.0);
-            //mid.x = mid.x - curveMove;
-            mid.y = mid.y - curveMove;
-            [path addQuadCurveToPoint:targetAnchor controlPoint:mid];
-            [path stroke];
-            conn.arrowPath = path;*/
+             //mid.x = mid.x - curveMove;
+             mid.y = mid.y - curveMove;
+             [path addQuadCurveToPoint:targetAnchor controlPoint:mid];
+             [path stroke];
+             conn.arrowPath = path;*/
             
             //Draw arrow
             UIBezierPath * arrow = [[UIBezierPath alloc] init];
@@ -213,7 +212,7 @@
             [arrow closePath];
             [arrow fill];
             [arrow stroke];
-
+            
             
             CGPoint left;
             CGPoint right;
@@ -231,7 +230,7 @@
             
             color = [UIColor blackColor];
             font = [UIFont fontWithName:@"Helvetica" size:12.0];
- 
+            
             
             NSDictionary * dic = @{NSForegroundColorAttributeName: color, NSFontAttributeName: font};
             NSAttributedString * str = [[NSAttributedString alloc] initWithString:conn.name attributes:dic];
@@ -264,7 +263,7 @@
             
             [str drawAtPoint:CGPointMake(left.x +b + xmargin, y + e - ymargin)];
             
-         
+            
             
             CGRect strRect = CGRectMake(left.x + b + xmargin, y+e -ymargin, str.size.width, str.size.height);
             
@@ -273,7 +272,7 @@
             
         }
     }
-  }
+}
 
 - (void) repaintCanvas : (NSNotification *) notification {
     

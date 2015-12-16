@@ -162,6 +162,10 @@
     [palette preparePalette];
     
     
+
+}
+
+-(void)addRecognizers{
     //Add longPressGestureRecognizer in order to show palette dialog
     for(int i = 0; i<palette.paletteItems.count; i++){
         PaletteItem * item = [palette.paletteItems objectAtIndex:i];
@@ -176,20 +180,14 @@
 -(void)handleLongPress:(UILongPressGestureRecognizer *)gesture{
     PaletteItem * owner = (PaletteItem *)gesture.view;
     
-    CGPoint p = [gesture locationInView:self.view];
+    CGPoint p = [gesture locationInView:gesture.view];
     
     
     if(gesture.state == UIGestureRecognizerStateBegan){
         infoLabel.text = owner.dialog;
         
-        ///p.y = p.y - 2 * infoView.bounds.size.height;
-        
-        //infoView.center = p;
-        CGRect newRect = CGRectMake(p.x , p.y - 50, infoView.frame.size.width, infoView.frame.size.height);
-        NSLog(@"x: %f  y:%f", newRect.origin.x, newRect.origin.y);
-        [infoView setFrame:newRect];
-        
         [infoView setHidden:NO];
+        [infoView setCenter:CGPointMake(p.x, p.y -50)];
     }else if(gesture.state == UIGestureRecognizerStateEnded){
         infoLabel.text = @"";
         [infoView setHidden:YES];
@@ -252,6 +250,8 @@
     palette.paletteItems = selected.paletteItems;
     [palette preparePalette];
     [palette setNeedsDisplay];
+    
+    [self addRecognizers];
     
 }
 
