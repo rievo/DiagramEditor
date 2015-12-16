@@ -63,7 +63,7 @@
 -(void)showComponentDetails:(NSNotification *)not{
     NSLog(@"Showing component's details");
     Component * temp = not.object;
-
+    
     [self performSegueWithIdentifier:@"showComponentDetails" sender:temp];
 }
 
@@ -99,25 +99,33 @@
         [tempIcon removeFromSuperview];
         tempIcon = nil;
         
-        //Añadimos un Component al lienzo
-        if([sender.type isEqualToString:@"graphicR:Node"]){
-            //It is a node
-            NSLog(@"Creating a node");
-            
-            Component * comp = [[Component alloc] initWithFrame:CGRectMake(0, 0, sender.width.floatValue, sender.height.floatValue)];
-            comp.center = p;
-            comp.name = sender.dialog;
-            comp.type = sender.type;
-            comp.shapeType = sender.shapeType;
-            comp.fillColor = sender.fillColor;
-            [dele.components addObject:comp];
-            [comp updateNameLabel];
-            [canvas addSubview:comp];
-            
+        //Check if point is inside canvas.
+        
+        if(CGRectContainsPoint(canvas.frame, p)){
+            //Añadimos un Component al lienzo
+            if([sender.type isEqualToString:@"graphicR:Node"]){
+                //It is a node
+                NSLog(@"Creating a node");
+                
+                Component * comp = [[Component alloc] initWithFrame:CGRectMake(0, 0, sender.width.floatValue, sender.height.floatValue)];
+                comp.center = p;
+                comp.name = sender.dialog;
+                comp.type = sender.type;
+                comp.shapeType = sender.shapeType;
+                comp.fillColor = sender.fillColor;
+                [dele.components addObject:comp];
+                [comp updateNameLabel];
+                [canvas addSubview:comp];
+                
+            }else{
+                //It is an edge
+                NSLog(@"Creating a relation");
+            }
         }else{
-            //It is an edge
-            NSLog(@"Creating a relation");
+            NSLog(@"Nanai, soltado fuera");
         }
+        
+        
     }
 }
 

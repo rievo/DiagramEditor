@@ -127,12 +127,14 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     if(xArrowStart> 0 && yArrowStart> 0){
-        //Dibujo la línea
-        CGContextSetLineWidth(context, 2.0);
-        CGContextSetStrokeColorWithColor(context, dele.blue4 .CGColor);
-        CGContextMoveToPoint(context, xArrowStart, yArrowStart);
-        CGContextAddLineToPoint(context, xArrowEnd , yArrowEnd);
-        CGContextStrokePath(context);
+
+        UIBezierPath * line = [[UIBezierPath alloc] init];
+        [line setLineWidth:2.0];
+        [dele.blue4 setStroke];
+        [line moveToPoint:CGPointMake(xArrowStart, yArrowStart)];
+        [line addLineToPoint:CGPointMake(xArrowEnd, yArrowEnd)];
+        [line stroke];
+        
     }
     
     
@@ -147,24 +149,70 @@
             //outComp.center
             //insideComp.center
             
-            //CGPoint sourceAnchor = [self getBestAnchorForComponent:conn.source toPoint:conn.target.center];
-            //CGPoint targetAnchor = [self getBestAnchorForComponent:conn.target toPoint:conn.source.center];
             
+            CGPoint sourceAnchor = [self getBestAnchorForComponent:conn.source toPoint:conn.target.center];
+            CGPoint targetAnchor = [self getBestAnchorForComponent:conn.target toPoint:conn.source.center];
+            
+            /*
             CGPoint sourceAnchor = conn.source.center;
-            CGPoint targetAnchor = conn.target.center;
+            CGPoint targetAnchor = conn.target.center;*/
             
-
+            /*
+            CGPoint sb = CGPointMake(conn.target.center.x - conn.source.center.x, conn.target.center.y - conn.source.center.y);
+            CGPoint bs = CGPointMake(conn.source.center.x - conn.target.center.x, conn.source.center.y -conn.target.center.y );
+            float factor = 1.0/5.0;
+            CGPoint sourceMove = CGPointMake((bs.x +conn.source.center.x)*factor, (bs.y + conn.source.center.y)*factor);
+            CGPoint targetMove = CGPointMake((sb.x +conn.target.center.x)*factor, (sb.y + conn.target.center.y)*factor);
+            
+            CGPoint sourceAnchor = CGPointMake(conn.source.center.x - sourceMove.x, conn.source.center.y - sourceMove.y);
+            CGPoint targetAnchor = CGPointMake(conn.target.center.x - targetMove.x, conn.target.center.y - targetMove.y );
+            
+            [[UIColor redColor]setFill];
+            UIBezierPath * testC = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(sourceAnchor.x -10, sourceAnchor.y -10, 20, 20)];
+            [testC fill];
+            testC = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(targetAnchor.x -10, targetAnchor.y -10, 20, 20)];
+            [testC fill];*/
+            
+            
+            //Draw line
             UIBezierPath * path = [[UIBezierPath alloc] init];
             //[[UIColor blackColor] setStroke];
             [dele.blue4 setStroke];
             [path setLineWidth:2.0];
             [path moveToPoint: sourceAnchor];
-            CGPoint mid = CGPointMake((sourceAnchor.x + targetAnchor.x)/2.0, (sourceAnchor.y + targetAnchor.y)/2.0);
+            [path addLineToPoint:targetAnchor];
+            [path stroke];
+            conn.arrowPath = path;
+            /*CGPoint mid = CGPointMake((sourceAnchor.x + targetAnchor.x)/2.0, (sourceAnchor.y + targetAnchor.y)/2.0);
             //mid.x = mid.x - curveMove;
             mid.y = mid.y - curveMove;
             [path addQuadCurveToPoint:targetAnchor controlPoint:mid];
             [path stroke];
-            conn.arrowPath = path;
+            conn.arrowPath = path;*/
+            
+            //Draw arrow
+            UIBezierPath * arrow = [[UIBezierPath alloc] init];
+            [dele.blue4 setStroke];
+            [arrow setLineWidth:2.0];
+            float phi = atan2(targetAnchor.y -sourceAnchor.y, targetAnchor.x - sourceAnchor.x);
+            float angle =  M_PI / 6;
+            float tip1angle = phi  - angle;
+            float tip2angle = phi + angle;
+            float h = 20;
+            float x3 = targetAnchor.x - h * cos(tip1angle);
+            float x4 = targetAnchor.x - h * cos(tip2angle);
+            float y3 = targetAnchor.y - h * sin(tip1angle);
+            float y4 = targetAnchor.y - h * sin(tip2angle);
+            
+            CGPoint tip1 = CGPointMake(x3, y3);
+            CGPoint tip2 = CGPointMake(x4, y4);
+            
+            [arrow moveToPoint:targetAnchor];
+            [arrow addLineToPoint:tip1];
+            [arrow addLineToPoint:tip2];
+            [arrow closePath];
+            [arrow fill];
+            [arrow stroke];
 
             
             CGPoint left;
@@ -195,7 +243,7 @@
             
             //[str drawAtPoint:CGPointMake(z, 5)];
             double w = fabs(right.x - left.x);
-            double h;
+            h = 0;
             
             //if(left.y < right.y)
             //   h = abs(right.y - left.y);
