@@ -26,6 +26,7 @@
 		F1A20A791C1977430037C05D /* minus-512.png in Resources */ = {isa = PBXBuildFile; fileRef = F1A20A781C1977430037C05D /* minus-512.png */; };
 		F1A20A7E1C1981290037C05D /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A20A7D1C1981290037C05D /* XMLDictionary.m */; };
 		F1A20A851C198A540037C05D /* PaletteItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A20A841C198A540037C05D /* PaletteItem.m */; };
+		F1AB3B161C22B19800EDBB1D /* resize.png in Resources */ = {isa = PBXBuildFile; fileRef = F1AB3B151C22B19800EDBB1D /* resize.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +64,7 @@
 		F1A20A7D1C1981290037C05D /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLDictionary.m; sourceTree = "<group>"; };
 		F1A20A831C198A540037C05D /* PaletteItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaletteItem.h; sourceTree = "<group>"; };
 		F1A20A841C198A540037C05D /* PaletteItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaletteItem.m; sourceTree = "<group>"; };
+		F1AB3B151C22B19800EDBB1D /* resize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resize.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 				F185107C1C1824C8004EC4C8 /* ViewController.h */,
 				F185107D1C1824C8004EC4C8 /* ViewController.m */,
 				F1A20A781C1977430037C05D /* minus-512.png */,
+				F1AB3B151C22B19800EDBB1D /* resize.png */,
 				F185107F1C1824C8004EC4C8 /* Main.storyboard */,
 				F1685E9D1C1827FB0094097E /* ConfigureDiagramViewController.h */,
 				F1685E9E1C1827FB0094097E /* ConfigureDiagramViewController.m */,
@@ -198,6 +201,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1AB3B161C22B19800EDBB1D /* resize.png in Resources */,
 				F10F0FA51C1ED77A00165561 /* design.graphicR in Resources */,
 				F18510861C1824C8004EC4C8 /* LaunchScreen.storyboard in Resources */,
 				F1A20A791C1977430037C05D /* minus-512.png in Resources */,

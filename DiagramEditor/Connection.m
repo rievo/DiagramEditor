@@ -12,7 +12,7 @@
 @implementation Connection
 
 
-@synthesize name, source, target, touchRect, arrowPath;
+@synthesize name, source, target, touchRect, arrowPath,controlPoint;
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -29,6 +29,7 @@
         target = nil;
         arrowPath = nil;
         name = @" -";
+        controlPoint = CGPointMake(0, 0);
     }
     return self;
 }
