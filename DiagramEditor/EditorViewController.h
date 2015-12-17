@@ -21,6 +21,8 @@
     __weak IBOutlet Palette *palette;
     
     PaletteItem * tempIcon;
+    __weak IBOutlet UIButton *newDiagram;
+    __weak IBOutlet UIButton *saveDiagram;
 }
 
 @property (weak, nonatomic) IBOutlet Canvas *canvas;

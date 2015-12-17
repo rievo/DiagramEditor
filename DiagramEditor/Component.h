@@ -20,11 +20,11 @@
     UIFont * font;
     AppDelegate * dele;
 
-    
+    UIPanGestureRecognizer * resizeGr;
 
     CAShapeLayer * backgroundLayer;
     
-    
+    UIView * resizeView;
 }
 
 

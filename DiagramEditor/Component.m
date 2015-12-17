@@ -10,6 +10,8 @@
 #import "Connection.h"
 #import "Canvas.h"
 
+
+#define resizeW 40
 @implementation Component
 
 
@@ -38,6 +40,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         [self addTapGestureRecognizer];
         [self addLongPressGestureRecognizer];
         [self addPanGestureRecognizer];
+
         
         dele = [[UIApplication sharedApplication]delegate];
         
@@ -65,7 +68,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         textLayer = [[CATextLayer alloc] init];
         textLayer.string = name;
         textLayer.foregroundColor = [UIColor blackColor].CGColor;
-        CGRect rect = CGRectMake(0 - self.bounds.size.width /2, self.frame.size.height, self.frame.size.width * 2,20);
+        CGRect rect = CGRectMake(0 - self.bounds.size.width /2, 0-20, self.frame.size.width * 2,20);
         textLayer.frame = rect;
         textLayer.contentsScale = [UIScreen mainScreen].scale;
         [textLayer setFont:@"Helvetica-Bold"];
@@ -76,6 +79,14 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         
         [self setNeedsDisplay];
         
+        /*
+        //Add resizeView
+        resizeView  = [[UIView alloc] initWithFrame:CGRectMake(self.bounds.size.width, self.bounds.size.height, resizeW, resizeW)];
+        resizeView.backgroundColor = [UIColor redColor];
+        [self addSubview:resizeView];
+        
+        resizeGr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleResize:)];
+        [resizeView addGestureRecognizer:resizeGr];*/
         
     }
     return self;
@@ -86,29 +97,48 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
 
 -(void)addTapGestureRecognizer{
     tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    tapGR.delegate = self;
     [self addGestureRecognizer:tapGR];
-    
+
 }
 
 
 -(void)addLongPressGestureRecognizer{
     longGR = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
-    
+    longGR.delegate = self;
     [longGR setMinimumPressDuration:0.5];
     [self addGestureRecognizer:longGR];
+
 }
 
 
 -(void)addPanGestureRecognizer{
     panGR = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanComp:)];
+    panGR.delegate = self;
     [self addGestureRecognizer:panGR];
 }
 
-
 #pragma mark Handle gestures
 
-//Show info
-//Set editing (appDelegate) and enable moving (if not)
+
+-(void)handleResize:(UIPanGestureRecognizer *)recog{
+
+    CGPoint newPoint = [recog locationInView:self];
+    
+    if(recog.state == UIGestureRecognizerStateBegan){
+        
+    }else if(recog.state == UIGestureRecognizerStateChanged){
+        //recog.view.transform = CGAffineTransformScale(recog.view.transform, recog.scale, recog.scale);
+        [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, newPoint.x - resizeW/2, newPoint.y-resizeW/2)];
+        [self setNeedsDisplay];
+    }else if(recog.state == UIGestureRecognizerStateEnded){
+        
+    }
+    
+    
+
+}
+
 -(void)handleTap:(UITapGestureRecognizer *)recog{
     
     //Show info popup (edge, node)

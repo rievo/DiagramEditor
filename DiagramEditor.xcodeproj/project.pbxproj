@@ -17,6 +17,9 @@
 		F1685EA81C1829F00094097E /* Canvas.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685EA71C1829F00094097E /* Canvas.m */; };
 		F1685EAB1C182B7D0094097E /* Connection.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685EAA1C182B7D0094097E /* Connection.m */; };
 		F1685EAE1C1831840094097E /* ComponentDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685EAD1C1831840094097E /* ComponentDetailsViewController.m */; };
+		F17B75A51C22C89700AB1B57 /* fillDiamond.gif in Resources */ = {isa = PBXBuildFile; fileRef = F17B75A41C22C89700AB1B57 /* fillDiamond.gif */; };
+		F17B75A91C22D6E100AB1B57 /* newDocument.png in Resources */ = {isa = PBXBuildFile; fileRef = F17B75A81C22D6E100AB1B57 /* newDocument.png */; };
+		F17B75AB1C22D79F00AB1B57 /* save.png in Resources */ = {isa = PBXBuildFile; fileRef = F17B75AA1C22D79F00AB1B57 /* save.png */; };
 		F18510781C1824C8004EC4C8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F18510771C1824C8004EC4C8 /* main.m */; };
 		F185107B1C1824C8004EC4C8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F185107A1C1824C8004EC4C8 /* AppDelegate.m */; };
 		F185107E1C1824C8004EC4C8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F185107D1C1824C8004EC4C8 /* ViewController.m */; };
@@ -49,6 +52,9 @@
 		F1685EAA1C182B7D0094097E /* Connection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Connection.m; sourceTree = "<group>"; };
 		F1685EAC1C1831840094097E /* ComponentDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComponentDetailsViewController.h; sourceTree = "<group>"; };
 		F1685EAD1C1831840094097E /* ComponentDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComponentDetailsViewController.m; sourceTree = "<group>"; };
+		F17B75A41C22C89700AB1B57 /* fillDiamond.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = fillDiamond.gif; sourceTree = "<group>"; };
+		F17B75A81C22D6E100AB1B57 /* newDocument.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newDocument.png; sourceTree = "<group>"; };
+		F17B75AA1C22D79F00AB1B57 /* save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = save.png; sourceTree = "<group>"; };
 		F18510731C1824C8004EC4C8 /* DiagramEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiagramEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F18510771C1824C8004EC4C8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F18510791C1824C8004EC4C8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -106,6 +112,8 @@
 				F185107D1C1824C8004EC4C8 /* ViewController.m */,
 				F1A20A781C1977430037C05D /* minus-512.png */,
 				F1AB3B151C22B19800EDBB1D /* resize.png */,
+				F17B75AA1C22D79F00AB1B57 /* save.png */,
+				F17B75A81C22D6E100AB1B57 /* newDocument.png */,
 				F185107F1C1824C8004EC4C8 /* Main.storyboard */,
 				F1685E9D1C1827FB0094097E /* ConfigureDiagramViewController.h */,
 				F1685E9E1C1827FB0094097E /* ConfigureDiagramViewController.m */,
@@ -116,6 +124,7 @@
 				F1685EA91C182B7D0094097E /* Connection.h */,
 				F1685EAA1C182B7D0094097E /* Connection.m */,
 				F1685EA61C1829F00094097E /* Canvas.h */,
+				F17B75A41C22C89700AB1B57 /* fillDiamond.gif */,
 				F1685EA71C1829F00094097E /* Canvas.m */,
 				F1685EAC1C1831840094097E /* ComponentDetailsViewController.h */,
 				F1685EAD1C1831840094097E /* ComponentDetailsViewController.m */,
@@ -205,8 +214,11 @@
 				F10F0FA51C1ED77A00165561 /* design.graphicR in Resources */,
 				F18510861C1824C8004EC4C8 /* LaunchScreen.storyboard in Resources */,
 				F1A20A791C1977430037C05D /* minus-512.png in Resources */,
+				F17B75A91C22D6E100AB1B57 /* newDocument.png in Resources */,
 				F18510831C1824C8004EC4C8 /* Assets.xcassets in Resources */,
 				F18510811C1824C8004EC4C8 /* Main.storyboard in Resources */,
+				F17B75A51C22C89700AB1B57 /* fillDiamond.gif in Resources */,
+				F17B75AB1C22D79F00AB1B57 /* save.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

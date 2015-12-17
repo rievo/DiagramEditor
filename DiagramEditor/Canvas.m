@@ -14,6 +14,11 @@
 
 
 #define curveMove 60
+
+
+#define radius 30
+
+
 @implementation Canvas
 
 
@@ -76,6 +81,29 @@
     }
 
 
+-(CGPoint) getAnchorPointFromComponent: (Component *)c1
+                           toComponent: (Component *)c2
+                             andRadius: (float)r{
+    CGPoint temp;
+    
+
+    CGPoint sourcep = c1.center;
+    CGPoint targetp = c2.center;
+    
+    double angle = atan2(targetp.y- sourcep.y, targetp.x - sourcep.x);
+    
+    double x = r * cos(angle);
+    double y = r * sin(angle);
+    
+    x =  c1.center.x  +x ;
+    y =  c1.center.y  +y ;
+    
+    temp.x = x;
+    temp.y = y;
+    
+    return temp;
+}
+
 -(CGPoint) getBestAnchorForComponent: (Component *)c
                              toPoint: (CGPoint)p{
     CGPoint temp;
@@ -125,18 +153,7 @@
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-    if(xArrowStart> 0 && yArrowStart> 0){
 
-        UIBezierPath * line = [[UIBezierPath alloc] init];
-        [line setLineWidth:2.0];
-        [dele.blue4 setStroke];
-        [line moveToPoint:CGPointMake(xArrowStart, yArrowStart)];
-        [line addLineToPoint:CGPointMake(xArrowEnd, yArrowEnd)];
-        [line stroke];
-        
-    }
-    
-    
     Connection * conn = nil;
     for(int i = 0; i< dele.connections.count; i++){
         conn = [dele.connections objectAtIndex:i];
@@ -149,29 +166,17 @@
             //insideComp.center
             
             
-            CGPoint sourceAnchor = [self getBestAnchorForComponent:conn.source toPoint:conn.target.center];
-            CGPoint targetAnchor = [self getBestAnchorForComponent:conn.target toPoint:conn.source.center];
+            //CGPoint sourceAnchor = [self getBestAnchorForComponent:conn.source toPoint:conn.target.center];
+            //CGPoint targetAnchor = [self getBestAnchorForComponent:conn.target toPoint:conn.source.center];
+            
+            CGPoint sourceAnchor = [self getAnchorPointFromComponent:conn.source toComponent:conn.target andRadius:radius];
+            CGPoint targetAnchor = [self getAnchorPointFromComponent:conn.target toComponent:conn.source andRadius:radius];
             
             /*
             CGPoint sourceAnchor = conn.source.center;
             CGPoint targetAnchor = conn.target.center;*/
             
-            /*
-            CGPoint sb = CGPointMake(conn.target.center.x - conn.source.center.x, conn.target.center.y - conn.source.center.y);
-            CGPoint bs = CGPointMake(conn.source.center.x - conn.target.center.x, conn.source.center.y -conn.target.center.y );
-            float factor = 1.0/5.0;
-            CGPoint sourceMove = CGPointMake((bs.x +conn.source.center.x)*factor, (bs.y + conn.source.center.y)*factor);
-            CGPoint targetMove = CGPointMake((sb.x +conn.target.center.x)*factor, (sb.y + conn.target.center.y)*factor);
-            
-            CGPoint sourceAnchor = CGPointMake(conn.source.center.x - sourceMove.x, conn.source.center.y - sourceMove.y);
-            CGPoint targetAnchor = CGPointMake(conn.target.center.x - targetMove.x, conn.target.center.y - targetMove.y );
-            
-            [[UIColor redColor]setFill];
-            UIBezierPath * testC = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(sourceAnchor.x -10, sourceAnchor.y -10, 20, 20)];
-            [testC fill];
-            testC = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(targetAnchor.x -10, targetAnchor.y -10, 20, 20)];
-            [testC fill];*/
-            
+
             
             //Draw line
             UIBezierPath * path = [[UIBezierPath alloc] init];
@@ -189,7 +194,10 @@
             [path stroke];
             conn.arrowPath = path;*/
             
+            //Draw decorator
+            
             //Draw arrow
+            
             UIBezierPath * arrow = [[UIBezierPath alloc] init];
             [dele.blue4 setStroke];
             [arrow setLineWidth:2.0];
@@ -203,6 +211,7 @@
             float y3 = targetAnchor.y - h * sin(tip1angle);
             float y4 = targetAnchor.y - h * sin(tip2angle);
             
+            
             CGPoint tip1 = CGPointMake(x3, y3);
             CGPoint tip2 = CGPointMake(x4, y4);
             
@@ -212,7 +221,11 @@
             [arrow closePath];
             [arrow fill];
             [arrow stroke];
-
+            
+            
+            
+            //Draw diamond on targetAnchorpoint
+   
             
             CGPoint left;
             CGPoint right;
@@ -272,6 +285,19 @@
             
         }
     }
+    
+    if(xArrowStart> 0 && yArrowStart> 0){
+        
+        UIBezierPath * line = [[UIBezierPath alloc] init];
+        [line setLineWidth:2.0];
+        [dele.blue4 setStroke];
+        [line moveToPoint:CGPointMake(xArrowStart, yArrowStart)];
+        [line addLineToPoint:CGPointMake(xArrowEnd, yArrowEnd)];
+        [line stroke];
+        
+    }
+    
+    
   }
 
 - (void) repaintCanvas : (NSNotification *) notification {
