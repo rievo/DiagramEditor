@@ -28,5 +28,8 @@
 @property (weak, nonatomic) IBOutlet Canvas *canvas;
 
 - (IBAction)addElement:(id)sender;
+- (IBAction)showComponentList:(id)sender;
+- (IBAction)showActionsList:(id)sender;
+- (IBAction)createNewDiagram:(id)sender;
 
 @end

@@ -17,9 +17,11 @@
 		F1685EA81C1829F00094097E /* Canvas.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685EA71C1829F00094097E /* Canvas.m */; };
 		F1685EAB1C182B7D0094097E /* Connection.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685EAA1C182B7D0094097E /* Connection.m */; };
 		F1685EAE1C1831840094097E /* ComponentDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685EAD1C1831840094097E /* ComponentDetailsViewController.m */; };
-		F17B75A51C22C89700AB1B57 /* fillDiamond.gif in Resources */ = {isa = PBXBuildFile; fileRef = F17B75A41C22C89700AB1B57 /* fillDiamond.gif */; };
 		F17B75A91C22D6E100AB1B57 /* newDocument.png in Resources */ = {isa = PBXBuildFile; fileRef = F17B75A81C22D6E100AB1B57 /* newDocument.png */; };
 		F17B75AB1C22D79F00AB1B57 /* save.png in Resources */ = {isa = PBXBuildFile; fileRef = F17B75AA1C22D79F00AB1B57 /* save.png */; };
+		F17B75AD1C22D9CC00AB1B57 /* list.png in Resources */ = {isa = PBXBuildFile; fileRef = F17B75AC1C22D9CC00AB1B57 /* list.png */; };
+		F17B75B01C22DA7200AB1B57 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = F17B75AF1C22DA7200AB1B57 /* arrow.png */; };
+		F17B75B31C22DBFE00AB1B57 /* ComponentsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F17B75B21C22DBFE00AB1B57 /* ComponentsListViewController.m */; };
 		F18510781C1824C8004EC4C8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F18510771C1824C8004EC4C8 /* main.m */; };
 		F185107B1C1824C8004EC4C8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F185107A1C1824C8004EC4C8 /* AppDelegate.m */; };
 		F185107E1C1824C8004EC4C8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F185107D1C1824C8004EC4C8 /* ViewController.m */; };
@@ -52,9 +54,12 @@
 		F1685EAA1C182B7D0094097E /* Connection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Connection.m; sourceTree = "<group>"; };
 		F1685EAC1C1831840094097E /* ComponentDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComponentDetailsViewController.h; sourceTree = "<group>"; };
 		F1685EAD1C1831840094097E /* ComponentDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComponentDetailsViewController.m; sourceTree = "<group>"; };
-		F17B75A41C22C89700AB1B57 /* fillDiamond.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = fillDiamond.gif; sourceTree = "<group>"; };
 		F17B75A81C22D6E100AB1B57 /* newDocument.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newDocument.png; sourceTree = "<group>"; };
 		F17B75AA1C22D79F00AB1B57 /* save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = save.png; sourceTree = "<group>"; };
+		F17B75AC1C22D9CC00AB1B57 /* list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = list.png; sourceTree = "<group>"; };
+		F17B75AF1C22DA7200AB1B57 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
+		F17B75B11C22DBFE00AB1B57 /* ComponentsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComponentsListViewController.h; sourceTree = "<group>"; };
+		F17B75B21C22DBFE00AB1B57 /* ComponentsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComponentsListViewController.m; sourceTree = "<group>"; };
 		F18510731C1824C8004EC4C8 /* DiagramEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiagramEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F18510771C1824C8004EC4C8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F18510791C1824C8004EC4C8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -84,6 +89,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F17B75AE1C22D9D500AB1B57 /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				F1A20A781C1977430037C05D /* minus-512.png */,
+				F1AB3B151C22B19800EDBB1D /* resize.png */,
+				F17B75AA1C22D79F00AB1B57 /* save.png */,
+				F17B75A81C22D6E100AB1B57 /* newDocument.png */,
+				F17B75AF1C22DA7200AB1B57 /* arrow.png */,
+				F17B75AC1C22D9CC00AB1B57 /* list.png */,
+			);
+			name = Icons;
+			sourceTree = "<group>";
+		};
 		F185106A1C1824C8004EC4C8 = {
 			isa = PBXGroup;
 			children = (
@@ -103,6 +121,7 @@
 		F18510751C1824C8004EC4C8 /* DiagramEditor */ = {
 			isa = PBXGroup;
 			children = (
+				F17B75AE1C22D9D500AB1B57 /* Icons */,
 				F10F0FA41C1ED77A00165561 /* design.graphicR */,
 				F1A20A7C1C1981290037C05D /* XMLDictionary.h */,
 				F1A20A7D1C1981290037C05D /* XMLDictionary.m */,
@@ -110,10 +129,6 @@
 				F185107A1C1824C8004EC4C8 /* AppDelegate.m */,
 				F185107C1C1824C8004EC4C8 /* ViewController.h */,
 				F185107D1C1824C8004EC4C8 /* ViewController.m */,
-				F1A20A781C1977430037C05D /* minus-512.png */,
-				F1AB3B151C22B19800EDBB1D /* resize.png */,
-				F17B75AA1C22D79F00AB1B57 /* save.png */,
-				F17B75A81C22D6E100AB1B57 /* newDocument.png */,
 				F185107F1C1824C8004EC4C8 /* Main.storyboard */,
 				F1685E9D1C1827FB0094097E /* ConfigureDiagramViewController.h */,
 				F1685E9E1C1827FB0094097E /* ConfigureDiagramViewController.m */,
@@ -124,7 +139,6 @@
 				F1685EA91C182B7D0094097E /* Connection.h */,
 				F1685EAA1C182B7D0094097E /* Connection.m */,
 				F1685EA61C1829F00094097E /* Canvas.h */,
-				F17B75A41C22C89700AB1B57 /* fillDiamond.gif */,
 				F1685EA71C1829F00094097E /* Canvas.m */,
 				F1685EAC1C1831840094097E /* ComponentDetailsViewController.h */,
 				F1685EAD1C1831840094097E /* ComponentDetailsViewController.m */,
@@ -134,6 +148,8 @@
 				F1A20A841C198A540037C05D /* PaletteItem.m */,
 				F1587B021C19BC4600E963BE /* Palette.h */,
 				F1587B031C19BC4600E963BE /* Palette.m */,
+				F17B75B11C22DBFE00AB1B57 /* ComponentsListViewController.h */,
+				F17B75B21C22DBFE00AB1B57 /* ComponentsListViewController.m */,
 				F18510821C1824C8004EC4C8 /* Assets.xcassets */,
 				F18510841C1824C8004EC4C8 /* LaunchScreen.storyboard */,
 				F18510871C1824C8004EC4C8 /* Info.plist */,
@@ -216,8 +232,9 @@
 				F1A20A791C1977430037C05D /* minus-512.png in Resources */,
 				F17B75A91C22D6E100AB1B57 /* newDocument.png in Resources */,
 				F18510831C1824C8004EC4C8 /* Assets.xcassets in Resources */,
+				F17B75AD1C22D9CC00AB1B57 /* list.png in Resources */,
 				F18510811C1824C8004EC4C8 /* Main.storyboard in Resources */,
-				F17B75A51C22C89700AB1B57 /* fillDiamond.gif in Resources */,
+				F17B75B01C22DA7200AB1B57 /* arrow.png in Resources */,
 				F17B75AB1C22D79F00AB1B57 /* save.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -237,6 +254,7 @@
 				F1685EA51C18294A0094097E /* Component.m in Sources */,
 				F1A20A851C198A540037C05D /* PaletteItem.m in Sources */,
 				F1587B041C19BC4600E963BE /* Palette.m in Sources */,
+				F17B75B31C22DBFE00AB1B57 /* ComponentsListViewController.m in Sources */,
 				F1685EA21C18289E0094097E /* EditorViewController.m in Sources */,
 				F1A20A7E1C1981290037C05D /* XMLDictionary.m in Sources */,
 				F1166BE41C187269009A2AAA /* ConnectionDetailsViewController.m in Sources */,

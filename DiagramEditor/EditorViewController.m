@@ -136,6 +136,19 @@
     [canvas addSubview:temp];
 }
 
+- (IBAction)showComponentList:(id)sender {
+    [self performSegueWithIdentifier:@"showComponentsView" sender:self];
+}
+
+- (IBAction)showActionsList:(id)sender {
+}
+
+- (IBAction)createNewDiagram:(id)sender {
+    dele.components = [[NSMutableArray alloc] init];
+    dele.connections = [[NSMutableArray alloc] init];
+    [canvas prepareCanvas];
+}
+
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([[segue identifier] isEqualToString:@"showComponentDetails"])

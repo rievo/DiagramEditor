@@ -240,6 +240,7 @@
     Palette * temp = [palettes objectAtIndex:indexPath.row];
     cell.textLabel.text = temp.name;
     cell.backgroundColor = [UIColor clearColor];
+    cell.textLabel.textColor = dele.blue4;
     return cell;
 }
 

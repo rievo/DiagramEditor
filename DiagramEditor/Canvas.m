@@ -63,6 +63,14 @@
     
     tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [self addGestureRecognizer:tapGR];
+
+    
+    NSArray *viewsToRemove = [self subviews];
+    for (UIView *v in viewsToRemove) {
+        [v removeFromSuperview];
+    }
+    
+    [self setNeedsDisplay];
 }
 
 
