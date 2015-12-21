@@ -15,8 +15,9 @@
 @class Palette;
 @class PaletteItem;
 
+#import <MessageUI/MFMailComposeViewController.h>
 
-@interface EditorViewController : UIViewController{
+@interface EditorViewController : UIViewController<MFMailComposeViewControllerDelegate>{
     AppDelegate * dele;
     __weak IBOutlet Palette *palette;
     
@@ -27,6 +28,8 @@
     
     __weak IBOutlet UIView *sureCloseView;
     UIView * backSure;
+    
+    MFMailComposeViewController* controller ;
 }
 
 @property (weak, nonatomic) IBOutlet Canvas *canvas;

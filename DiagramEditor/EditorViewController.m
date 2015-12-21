@@ -12,6 +12,9 @@
 #import "Connection.h"
 #import "Palette.h"
 #import "PaletteItem.h"
+#import "XMLWriter.h"
+
+
 
 @import Foundation;
 
@@ -178,7 +181,51 @@
 
 - (IBAction)saveCurrentDiagram:(id)sender {
     //Generate XML
+    XMLWriter * writer = [[XMLWriter alloc] init];
+    [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [writer writeStartElement:@"Diagram"];
+    
+    [writer writeStartElement:@"Nodes"];
+    Component * temp = nil;
+    for(int i = 0; i< dele.components.count; i++){
+        temp = [dele.components objectAtIndex:i];
+        [writer writeStartElement:@"node"];
+        [writer writeAttribute:@"name" value:temp.name];
+        [writer writeAttribute:@"shape_type" value:temp.shapeType];
+        //[writer writeAttribute:@"fill_color" value:temp.fillCo]
+        [writer writeAttribute:@"x" value: [[NSNumber numberWithFloat:temp.center.x]description]];
+        [writer writeAttribute:@"y" value: [[NSNumber numberWithFloat:temp.center.y]description]];
+        [writer writeAttribute:@"id" value: [[NSNumber numberWithInt:(int)temp ]description]];
+        [writer writeEndElement];
+    }
+    [writer writeEndElement];//Close nodes
+    
+    
+    [writer writeStartElement:@"Edges"];
+    Connection * c = nil;
+    for(int i = 0; i<dele.connections.count; i++){
+        c = [dele.connections objectAtIndex:i];
+        [writer writeStartElement:@"edge"];
+        [writer writeAttribute:@"name" value:c.name];
+        [writer writeAttribute:@"source" value:[[NSNumber numberWithInt:(int)c.source]description]];
+        [writer writeAttribute:@"target" value:[[NSNumber numberWithInt:(int)c.target]description]];
+        [writer writeEndElement];
+    }
+    [writer writeEndElement];
+    
+    [writer writeEndElement];//Close diagram
+    [writer writeEndDocument];
+    
+    NSString * xml = [writer toString];
 
+    
+    controller = [[MFMailComposeViewController alloc] init];
+    controller.mailComposeDelegate = self;
+    [controller setSubject:@"Diagram test"];
+    //[controller setMessageBody:@"Hello there." isHTML:NO];
+    [controller setMessageBody:xml isHTML:NO];
+    [self presentViewController:controller animated:YES completion:nil];
+    
 }
 
 
@@ -194,5 +241,20 @@
         ConnectionDetailsViewController * vc = [segue destinationViewController];
         vc.conn = sender;
     }
+}
+
+
+
+
+#pragma mark MFMailComposeViewController delegate methods
+- (void)mailComposeController:(MFMailComposeViewController*)controller
+          didFinishWithResult:(MFMailComposeResult)result
+                        error:(NSError*)error;
+{
+    if (result == MFMailComposeResultSent) {
+        NSLog(@"It's away!");
+    }
+    //[self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 @end
