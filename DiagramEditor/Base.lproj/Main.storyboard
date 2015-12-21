@@ -380,13 +380,15 @@
                                 <color key="textColor" red="0.047058824449777603" green="0.090196080505847931" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="jDB-wF-i44">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="jDB-wF-i44">
                                 <rect key="frame" x="16" y="53" width="268" height="327"/>
                                 <animations/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="327" id="7GS-rr-tza"/>
                                 </constraints>
+                                <color key="separatorColor" red="0.13725490868091583" green="0.21176470816135406" blue="0.37647059559822083" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="sectionIndexColor" red="0.047058824449777603" green="0.090196080505847931" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
                             </tableView>
                         </subviews>
                         <animations/>
@@ -559,6 +561,18 @@
                                     <constraint firstAttribute="trailing" secondItem="x0s-7L-C3a" secondAttribute="trailing" constant="8" id="xmc-1V-2m2"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uUY-Bf-x28">
+                                <rect key="frame" x="548" y="20" width="32" height="32"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="32" id="Oq8-0h-2NQ"/>
+                                    <constraint firstAttribute="height" constant="32" id="kvq-0D-wI7"/>
+                                </constraints>
+                                <state key="normal" image="camera.png"/>
+                                <connections>
+                                    <action selector="exportCanvasToImage:" destination="b9M-0K-SdS" eventType="touchUpInside" id="SOm-Y8-mVs"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.13725490200000001" green="0.21176470589999999" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -573,10 +587,12 @@
                             <constraint firstAttribute="trailingMargin" secondItem="cyy-TN-oLg" secondAttribute="trailing" constant="130" id="Pdf-wu-SXf"/>
                             <constraint firstAttribute="leadingMargin" secondItem="6fG-B6-5S9" secondAttribute="leading" id="RsL-q7-oCy"/>
                             <constraint firstAttribute="leadingMargin" secondItem="KOd-BW-gdm" secondAttribute="leading" id="UPq-md-j0I"/>
+                            <constraint firstItem="uUY-Bf-x28" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" id="VP6-1q-6LP"/>
                             <constraint firstItem="6fG-B6-5S9" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="40" id="YIl-hg-Bij"/>
                             <constraint firstItem="cyy-TN-oLg" firstAttribute="leading" secondItem="j52-t0-ne9" secondAttribute="leadingMargin" constant="130" id="ab1-7c-Lky"/>
                             <constraint firstItem="KOd-BW-gdm" firstAttribute="top" secondItem="6fG-B6-5S9" secondAttribute="bottom" constant="8" id="ho1-lB-7jQ"/>
                             <constraint firstAttribute="leadingMargin" secondItem="YCF-FE-eUA" secondAttribute="leading" id="nKB-xX-hLx"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="uUY-Bf-x28" secondAttribute="trailing" id="obf-Z6-RKB"/>
                             <constraint firstItem="npt-04-keg" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" id="oku-eb-F7h"/>
                             <constraint firstItem="L72-M5-gdo" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" id="piz-Es-EmJ"/>
                             <constraint firstItem="PyO-ue-whg" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" id="tUn-Vf-f7v"/>
@@ -591,7 +607,7 @@
                         <outlet property="saveDiagram" destination="L72-M5-gdo" id="E3S-B7-bXL"/>
                         <outlet property="sureCloseView" destination="cyy-TN-oLg" id="svX-Mq-Sq1"/>
                         <segue destination="hki-WO-fa3" kind="popoverPresentation" identifier="showComponentDetails" popoverAnchorView="v6p-1A-i0f" id="LBG-E8-PBk">
-                            <popoverArrowDirection key="popoverArrowDirection" right="YES"/>
+                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>
                         <segue destination="ssG-up-C3Z" kind="popoverPresentation" identifier="showConnectionDetails" popoverAnchorView="v6p-1A-i0f" id="I3P-Xb-vho">
                             <popoverArrowDirection key="popoverArrowDirection" right="YES"/>
@@ -603,11 +619,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iCm-7L-Aey" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1297" y="472"/>
+            <point key="canvasLocation" x="1307" y="489"/>
         </scene>
     </scenes>
     <resources>
         <image name="arrow.png" width="100" height="100"/>
+        <image name="camera.png" width="100" height="100"/>
         <image name="list.png" width="100" height="100"/>
         <image name="minus-512.png" width="512" height="512"/>
         <image name="newDocument.png" width="100" height="100"/>

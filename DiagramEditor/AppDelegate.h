@@ -22,5 +22,7 @@
 
 @property Canvas * can;
 
+
+
 @end
 

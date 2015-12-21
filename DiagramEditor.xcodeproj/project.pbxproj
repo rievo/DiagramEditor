@@ -33,6 +33,7 @@
 		F1A20A7E1C1981290037C05D /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A20A7D1C1981290037C05D /* XMLDictionary.m */; };
 		F1A20A851C198A540037C05D /* PaletteItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A20A841C198A540037C05D /* PaletteItem.m */; };
 		F1AB3B161C22B19800EDBB1D /* resize.png in Resources */ = {isa = PBXBuildFile; fileRef = F1AB3B151C22B19800EDBB1D /* resize.png */; };
+		F1C6347B1C2842C30072912D /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C6347A1C2842C30072912D /* camera.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,6 +80,7 @@
 		F1A20A831C198A540037C05D /* PaletteItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaletteItem.h; sourceTree = "<group>"; };
 		F1A20A841C198A540037C05D /* PaletteItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaletteItem.m; sourceTree = "<group>"; };
 		F1AB3B151C22B19800EDBB1D /* resize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resize.png; sourceTree = "<group>"; };
+		F1C6347A1C2842C30072912D /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 		F17B75AE1C22D9D500AB1B57 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				F1C6347A1C2842C30072912D /* camera.png */,
 				F1A20A781C1977430037C05D /* minus-512.png */,
 				F1AB3B151C22B19800EDBB1D /* resize.png */,
 				F17B75AA1C22D79F00AB1B57 /* save.png */,
@@ -246,6 +249,7 @@
 				F17B75A91C22D6E100AB1B57 /* newDocument.png in Resources */,
 				F18510831C1824C8004EC4C8 /* Assets.xcassets in Resources */,
 				F17B75AD1C22D9CC00AB1B57 /* list.png in Resources */,
+				F1C6347B1C2842C30072912D /* camera.png in Resources */,
 				F18510811C1824C8004EC4C8 /* Main.storyboard in Resources */,
 				F17B75B01C22DA7200AB1B57 /* arrow.png in Resources */,
 				F17B75AB1C22D79F00AB1B57 /* save.png in Resources */,

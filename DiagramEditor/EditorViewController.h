@@ -42,4 +42,5 @@
 - (IBAction)notSureCreateNew:(id)sender;
 
 - (IBAction)saveCurrentDiagram:(id)sender;
+- (IBAction)exportCanvasToImage:(id)sender;
 @end

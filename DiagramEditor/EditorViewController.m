@@ -154,6 +154,7 @@
 }
 
 - (IBAction)showActionsList:(id)sender {
+
 }
 
 - (IBAction)createNewDiagram:(id)sender {
@@ -226,6 +227,23 @@
     [controller setMessageBody:xml isHTML:NO];
     [self presentViewController:controller animated:YES completion:nil];
     
+}
+
+- (IBAction)exportCanvasToImage:(id)sender {
+    UIGraphicsBeginImageContext(canvas.frame.size);
+    [canvas.layer renderInContext:UIGraphicsGetCurrentContext()];
+    
+    UIImage * image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    NSData * data = UIImagePNGRepresentation(image);
+    
+    controller = [[MFMailComposeViewController alloc] init];
+    controller.mailComposeDelegate = self;
+    [controller setSubject:@"Digram image text"];
+    [controller addAttachmentData:data mimeType:@"image/png" fileName:@"photo"];
+    [self presentViewController:controller animated:YES completion:nil];
+
 }
 
 

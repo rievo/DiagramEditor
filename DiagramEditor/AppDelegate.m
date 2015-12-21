@@ -26,8 +26,12 @@
     
     blue4 = [[UIColor alloc]initWithRed:183/256.0 green:196/256.0 blue:229/256.0 alpha:1.0];
     
+    
     return YES;
 }
+
+
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
