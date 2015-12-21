@@ -23,6 +23,10 @@
     PaletteItem * tempIcon;
     __weak IBOutlet UIButton *newDiagram;
     __weak IBOutlet UIButton *saveDiagram;
+    
+    
+    __weak IBOutlet UIView *sureCloseView;
+    UIView * backSure;
 }
 
 @property (weak, nonatomic) IBOutlet Canvas *canvas;
@@ -31,5 +35,8 @@
 - (IBAction)showComponentList:(id)sender;
 - (IBAction)showActionsList:(id)sender;
 - (IBAction)createNewDiagram:(id)sender;
+- (IBAction)sureCreateNew:(id)sender;
+- (IBAction)notSureCreateNew:(id)sender;
 
+- (IBAction)saveCurrentDiagram:(id)sender;
 @end

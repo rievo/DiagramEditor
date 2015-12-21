@@ -11,6 +11,7 @@
 		F10F0FA51C1ED77A00165561 /* design.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F10F0FA41C1ED77A00165561 /* design.graphicR */; };
 		F1166BE41C187269009A2AAA /* ConnectionDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1166BE31C187269009A2AAA /* ConnectionDetailsViewController.m */; };
 		F1587B041C19BC4600E963BE /* Palette.m in Sources */ = {isa = PBXBuildFile; fileRef = F1587B031C19BC4600E963BE /* Palette.m */; };
+		F15A96051C27F49E00ACA6FA /* GDataXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = F15A96041C27F49E00ACA6FA /* GDataXMLNode.m */; };
 		F1685E9F1C1827FB0094097E /* ConfigureDiagramViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685E9E1C1827FB0094097E /* ConfigureDiagramViewController.m */; };
 		F1685EA21C18289E0094097E /* EditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685EA11C18289E0094097E /* EditorViewController.m */; };
 		F1685EA51C18294A0094097E /* Component.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685EA41C18294A0094097E /* Component.m */; };
@@ -42,6 +43,8 @@
 		F1166BE31C187269009A2AAA /* ConnectionDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionDetailsViewController.m; sourceTree = "<group>"; };
 		F1587B021C19BC4600E963BE /* Palette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Palette.h; sourceTree = "<group>"; };
 		F1587B031C19BC4600E963BE /* Palette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Palette.m; sourceTree = "<group>"; };
+		F15A96031C27F49E00ACA6FA /* GDataXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataXMLNode.h; sourceTree = "<group>"; };
+		F15A96041C27F49E00ACA6FA /* GDataXMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDataXMLNode.m; sourceTree = "<group>"; };
 		F1685E9D1C1827FB0094097E /* ConfigureDiagramViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigureDiagramViewController.h; sourceTree = "<group>"; };
 		F1685E9E1C1827FB0094097E /* ConfigureDiagramViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigureDiagramViewController.m; sourceTree = "<group>"; };
 		F1685EA01C18289E0094097E /* EditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorViewController.h; sourceTree = "<group>"; };
@@ -89,6 +92,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F15A96061C27F4A900ACA6FA /* XML Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				F1A20A7C1C1981290037C05D /* XMLDictionary.h */,
+				F1A20A7D1C1981290037C05D /* XMLDictionary.m */,
+				F15A96031C27F49E00ACA6FA /* GDataXMLNode.h */,
+				F15A96041C27F49E00ACA6FA /* GDataXMLNode.m */,
+			);
+			name = "XML Utilities";
+			sourceTree = "<group>";
+		};
 		F17B75AE1C22D9D500AB1B57 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
@@ -121,10 +135,9 @@
 		F18510751C1824C8004EC4C8 /* DiagramEditor */ = {
 			isa = PBXGroup;
 			children = (
+				F15A96061C27F4A900ACA6FA /* XML Utilities */,
 				F17B75AE1C22D9D500AB1B57 /* Icons */,
 				F10F0FA41C1ED77A00165561 /* design.graphicR */,
-				F1A20A7C1C1981290037C05D /* XMLDictionary.h */,
-				F1A20A7D1C1981290037C05D /* XMLDictionary.m */,
 				F18510791C1824C8004EC4C8 /* AppDelegate.h */,
 				F185107A1C1824C8004EC4C8 /* AppDelegate.m */,
 				F185107C1C1824C8004EC4C8 /* ViewController.h */,
@@ -247,6 +260,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F185107E1C1824C8004EC4C8 /* ViewController.m in Sources */,
+				F15A96051C27F49E00ACA6FA /* GDataXMLNode.m in Sources */,
 				F1685EA81C1829F00094097E /* Canvas.m in Sources */,
 				F185107B1C1824C8004EC4C8 /* AppDelegate.m in Sources */,
 				F1685EAE1C1831840094097E /* ComponentDetailsViewController.m in Sources */,

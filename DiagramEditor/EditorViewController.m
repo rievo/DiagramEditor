@@ -13,6 +13,8 @@
 #import "Palette.h"
 #import "PaletteItem.h"
 
+@import Foundation;
+
 @interface EditorViewController ()
 
 @end
@@ -51,6 +53,14 @@
         UIPanGestureRecognizer * panGr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
         [item addGestureRecognizer:panGr];
     }
+    
+    backSure = [[UIView alloc] initWithFrame:self.view.frame];
+    [self.view addSubview:backSure];
+    backSure.backgroundColor = [UIColor blackColor];
+    backSure.alpha = 0.6;
+    [backSure setHidden:YES];
+    [sureCloseView setHidden:YES];
+    [self.view bringSubviewToFront:sureCloseView];
     
 }
 
@@ -144,9 +154,31 @@
 }
 
 - (IBAction)createNewDiagram:(id)sender {
-    dele.components = [[NSMutableArray alloc] init];
-    dele.connections = [[NSMutableArray alloc] init];
-    [canvas prepareCanvas];
+    [backSure setHidden:NO];
+    [sureCloseView setHidden:NO];
+
+}
+
+- (IBAction)sureCreateNew:(id)sender {
+    [self resetAll];
+    [backSure setHidden:YES];
+    [sureCloseView setHidden:YES];
+}
+
+- (IBAction)notSureCreateNew:(id)sender {
+    [backSure setHidden:YES];
+    [sureCloseView setHidden:YES];
+}
+
+-(void)resetAll{
+     dele.components = [[NSMutableArray alloc] init];
+     dele.connections = [[NSMutableArray alloc] init];
+     [canvas prepareCanvas];
+}
+
+- (IBAction)saveCurrentDiagram:(id)sender {
+    //Generate XML
+
 }
 
 
