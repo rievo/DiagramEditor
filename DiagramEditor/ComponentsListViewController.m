@@ -22,6 +22,11 @@
     componentsTable.delegate = self;
     componentsTable.dataSource = self;
     dele = [[UIApplication sharedApplication]delegate];
+    
+    filteredArray = [[NSMutableArray alloc] init];
+    searchBar.delegate = self;
+    
+    isFiltered = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -49,7 +54,13 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return [dele.components count];    //count number of row from counting array hear cataGorry is An Array
+    NSInteger rows = 0;
+    
+    if(isFiltered)
+        rows = filteredArray.count;
+    else
+        rows = dele.components.count;
+    return rows;
 }
 
 
@@ -67,10 +78,18 @@
                                       reuseIdentifier:MyIdentifier] ;
     }
     
-    Component * temp = [dele.components objectAtIndex:indexPath.row];
+    Component * temp = nil;
+    
+    if(isFiltered){
+        temp = [filteredArray objectAtIndex:indexPath.row];
+    }else{
+        temp = [dele.components objectAtIndex:indexPath.row];
+    }
+    
+    
     cell.textLabel.text = temp.name;
     cell.backgroundColor = [UIColor clearColor];
-    //cell.textLabel.textColor = dele.blue4;
+
     return cell;
 }
 
@@ -84,5 +103,23 @@
 }*/
 
 
-
+#pragma  mark UISearchBarDelegate
+-(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)text{
+    if(text.length == 0){
+        isFiltered = NO;
+    }else{
+        isFiltered = YES;
+        filteredArray = [[NSMutableArray alloc] init];
+        
+        for(Component * com in dele.components){
+            NSRange nameRange = [com.name rangeOfString:text options:NSCaseInsensitiveSearch];
+            
+            if(nameRange.location != NSNotFound)
+            {
+                [filteredArray addObject:com];
+            }
+        }
+    }
+    [componentsTable reloadData];
+}
 @end

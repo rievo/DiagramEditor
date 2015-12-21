@@ -10,12 +10,15 @@
 @class AppDelegate;
 
 
-@interface ComponentsListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>{
+@interface ComponentsListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>{
     
     AppDelegate * dele;
     __weak IBOutlet UITableView *componentsTable;
     
+    __weak IBOutlet UISearchBar *searchBar;
     
+    NSMutableArray * filteredArray;
+    BOOL isFiltered;
 }
 
 @end

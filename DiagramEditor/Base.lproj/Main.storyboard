@@ -381,32 +381,44 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="jDB-wF-i44">
-                                <rect key="frame" x="16" y="53" width="268" height="327"/>
+                                <rect key="frame" x="12" y="99" width="276" height="281"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="327" id="7GS-rr-tza"/>
+                                    <constraint firstAttribute="height" constant="281" id="7GS-rr-tza"/>
                                 </constraints>
                                 <color key="separatorColor" red="0.13725490868091583" green="0.21176470816135406" blue="0.37647059559822083" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="sectionIndexColor" red="0.047058824449777603" green="0.090196080505847931" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
                             </tableView>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="aXa-NZ-KW1">
+                                <rect key="frame" x="16" y="45" width="268" height="44"/>
+                                <animations/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.71764707565307617" green="0.76862746477127075" blue="0.89411765336990356" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="jDB-wF-i44" secondAttribute="trailing" id="3fo-Ls-Wgd"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="jDB-wF-i44" secondAttribute="trailing" constant="-4" id="3fo-Ls-Wgd"/>
                             <constraint firstItem="3zS-9h-l3Z" firstAttribute="top" secondItem="jDB-wF-i44" secondAttribute="bottom" constant="20" id="4nH-pn-Thp"/>
-                            <constraint firstItem="jDB-wF-i44" firstAttribute="top" secondItem="W7A-8f-2Y4" secondAttribute="bottom" constant="8" id="98s-nJ-r5O"/>
                             <constraint firstAttribute="trailingMargin" secondItem="W7A-8f-2Y4" secondAttribute="trailing" constant="48" id="9te-r5-AVm"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="jDB-wF-i44" secondAttribute="leading" id="KDC-qM-CAG"/>
+                            <constraint firstItem="jDB-wF-i44" firstAttribute="top" secondItem="UmI-Vx-rVk" secondAttribute="bottom" constant="79" id="Hhh-Yi-43y"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="aXa-NZ-KW1" secondAttribute="leading" id="Jar-ST-xKD"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="jDB-wF-i44" secondAttribute="leading" constant="4" id="KDC-qM-CAG"/>
+                            <constraint firstItem="jDB-wF-i44" firstAttribute="top" secondItem="aXa-NZ-KW1" secondAttribute="bottom" constant="10" id="RYG-tg-GKl"/>
+                            <constraint firstItem="jDB-wF-i44" firstAttribute="leading" secondItem="ynT-3M-0lz" secondAttribute="leadingMargin" constant="-4" id="aPz-5u-nIa"/>
                             <constraint firstItem="W7A-8f-2Y4" firstAttribute="top" secondItem="UmI-Vx-rVk" secondAttribute="bottom" id="dCP-iw-iBl"/>
                             <constraint firstItem="W7A-8f-2Y4" firstAttribute="leading" secondItem="ynT-3M-0lz" secondAttribute="leadingMargin" constant="48" id="e3j-gd-vGp"/>
+                            <constraint firstItem="aXa-NZ-KW1" firstAttribute="top" secondItem="W7A-8f-2Y4" secondAttribute="bottom" id="qDd-ec-SGa"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="aXa-NZ-KW1" secondAttribute="trailing" id="uPz-J2-cED"/>
+                            <constraint firstItem="aXa-NZ-KW1" firstAttribute="top" secondItem="UmI-Vx-rVk" secondAttribute="bottom" constant="25" id="w1A-hd-W2K"/>
                         </constraints>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="300" height="400"/>
                     <connections>
                         <outlet property="componentsTable" destination="jDB-wF-i44" id="aem-X8-V1e"/>
+                        <outlet property="searchBar" destination="aXa-NZ-KW1" id="rvm-6B-ej1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G48-er-0Dk" userLabel="First Responder" sceneMemberID="firstResponder"/>
