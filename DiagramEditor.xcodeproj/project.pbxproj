@@ -94,6 +94,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F10BE4341C29663E0053A7F9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F1A20A831C198A540037C05D /* PaletteItem.h */,
+				F1A20A841C198A540037C05D /* PaletteItem.m */,
+				F1685EA31C18294A0094097E /* Component.h */,
+				F1685EA41C18294A0094097E /* Component.m */,
+				F1685EA91C182B7D0094097E /* Connection.h */,
+				F1685EAA1C182B7D0094097E /* Connection.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		F15A96061C27F4A900ACA6FA /* XML Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -138,6 +151,7 @@
 		F18510751C1824C8004EC4C8 /* DiagramEditor */ = {
 			isa = PBXGroup;
 			children = (
+				F10BE4341C29663E0053A7F9 /* Model */,
 				F15A96061C27F4A900ACA6FA /* XML Utilities */,
 				F17B75AE1C22D9D500AB1B57 /* Icons */,
 				F10F0FA41C1ED77A00165561 /* design.graphicR */,
@@ -150,18 +164,12 @@
 				F1685E9E1C1827FB0094097E /* ConfigureDiagramViewController.m */,
 				F1685EA01C18289E0094097E /* EditorViewController.h */,
 				F1685EA11C18289E0094097E /* EditorViewController.m */,
-				F1685EA31C18294A0094097E /* Component.h */,
-				F1685EA41C18294A0094097E /* Component.m */,
-				F1685EA91C182B7D0094097E /* Connection.h */,
-				F1685EAA1C182B7D0094097E /* Connection.m */,
 				F1685EA61C1829F00094097E /* Canvas.h */,
 				F1685EA71C1829F00094097E /* Canvas.m */,
 				F1685EAC1C1831840094097E /* ComponentDetailsViewController.h */,
 				F1685EAD1C1831840094097E /* ComponentDetailsViewController.m */,
 				F1166BE21C187269009A2AAA /* ConnectionDetailsViewController.h */,
 				F1166BE31C187269009A2AAA /* ConnectionDetailsViewController.m */,
-				F1A20A831C198A540037C05D /* PaletteItem.h */,
-				F1A20A841C198A540037C05D /* PaletteItem.m */,
 				F1587B021C19BC4600E963BE /* Palette.h */,
 				F1587B031C19BC4600E963BE /* Palette.m */,
 				F17B75B11C22DBFE00AB1B57 /* ComponentsListViewController.h */,
