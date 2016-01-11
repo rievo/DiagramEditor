@@ -451,25 +451,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6fG-B6-5S9" customClass="Canvas">
-                                <rect key="frame" x="20" y="60" width="560" height="393"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v6p-1A-i0f">
-                                        <rect key="frame" x="540" y="167" width="20" height="20"/>
-                                        <animations/>
-                                        <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="20" id="UDR-W2-IDl"/>
-                                            <constraint firstAttribute="height" constant="20" id="mr5-az-502"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
-                                <animations/>
-                                <color key="backgroundColor" red="0.32156862749999998" green="0.4039215686" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="v6p-1A-i0f" secondAttribute="bottom" constant="206" id="JdH-QU-ozt"/>
-                                </constraints>
-                            </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KOd-BW-gdm" customClass="Palette">
                                 <rect key="frame" x="20" y="461" width="560" height="119"/>
                                 <animations/>
@@ -599,6 +580,37 @@
                                     <action selector="exportCanvasToImage:" destination="b9M-0K-SdS" eventType="touchUpInside" id="SOm-Y8-mVs"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3b3-aY-7QT">
+                                <rect key="frame" x="294" y="20" width="32" height="32"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="Z5V-RO-z9V"/>
+                                    <constraint firstAttribute="width" constant="32" id="lPD-yO-ygu"/>
+                                </constraints>
+                                <state key="normal" image="palette.png"/>
+                                <connections>
+                                    <action selector="willChangePalette:" destination="b9M-0K-SdS" eventType="touchUpInside" id="fHk-Zz-9rp"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6fG-B6-5S9" customClass="Canvas">
+                                <rect key="frame" x="20" y="60" width="560" height="393"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v6p-1A-i0f">
+                                        <rect key="frame" x="540" y="167" width="20" height="20"/>
+                                        <animations/>
+                                        <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="20" id="UDR-W2-IDl"/>
+                                            <constraint firstAttribute="height" constant="20" id="mr5-az-502"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <animations/>
+                                <color key="backgroundColor" red="0.32156862749999998" green="0.4039215686" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="v6p-1A-i0f" secondAttribute="bottom" constant="206" id="JdH-QU-ozt"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.13725490200000001" green="0.21176470589999999" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -606,6 +618,7 @@
                             <constraint firstItem="PyO-ue-whg" firstAttribute="leading" secondItem="npt-04-keg" secondAttribute="trailing" constant="16" id="0n2-TL-mm5"/>
                             <constraint firstItem="YCF-FE-eUA" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" id="5Ua-zr-SQb"/>
                             <constraint firstAttribute="bottom" secondItem="KOd-BW-gdm" secondAttribute="bottom" constant="20" symbolic="YES" id="8Jz-mn-X8m"/>
+                            <constraint firstItem="3b3-aY-7QT" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" id="DR5-KW-dLy"/>
                             <constraint firstAttribute="trailingMargin" secondItem="6fG-B6-5S9" secondAttribute="trailing" id="DdN-FP-RQg"/>
                             <constraint firstItem="npt-04-keg" firstAttribute="leading" secondItem="L72-M5-gdo" secondAttribute="trailing" constant="81" id="DgR-Pk-Nom"/>
                             <constraint firstItem="L72-M5-gdo" firstAttribute="leading" secondItem="YCF-FE-eUA" secondAttribute="trailing" constant="14" id="Gas-lu-aNO"/>
@@ -616,6 +629,7 @@
                             <constraint firstItem="uUY-Bf-x28" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" id="VP6-1q-6LP"/>
                             <constraint firstItem="6fG-B6-5S9" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="40" id="YIl-hg-Bij"/>
                             <constraint firstItem="cyy-TN-oLg" firstAttribute="leading" secondItem="j52-t0-ne9" secondAttribute="leadingMargin" constant="130" id="ab1-7c-Lky"/>
+                            <constraint firstItem="3b3-aY-7QT" firstAttribute="leading" secondItem="PyO-ue-whg" secondAttribute="trailing" constant="35" id="gad-ns-yBM"/>
                             <constraint firstItem="KOd-BW-gdm" firstAttribute="top" secondItem="6fG-B6-5S9" secondAttribute="bottom" constant="8" id="ho1-lB-7jQ"/>
                             <constraint firstAttribute="leadingMargin" secondItem="YCF-FE-eUA" secondAttribute="leading" id="nKB-xX-hLx"/>
                             <constraint firstAttribute="trailingMargin" secondItem="uUY-Bf-x28" secondAttribute="trailing" id="obf-Z6-RKB"/>
@@ -645,7 +659,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iCm-7L-Aey" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1307" y="489"/>
+            <point key="canvasLocation" x="1309" y="497"/>
         </scene>
     </scenes>
     <resources>
@@ -655,6 +669,7 @@
         <image name="list.png" width="100" height="100"/>
         <image name="minus-512.png" width="512" height="512"/>
         <image name="newDocument.png" width="100" height="100"/>
+        <image name="palette.png" width="100" height="100"/>
         <image name="save.png" width="100" height="100"/>
     </resources>
 </document>

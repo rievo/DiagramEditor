@@ -229,6 +229,14 @@
     
 }
 
+
+- (IBAction)willChangePalette:(id)sender {
+    
+}
+
+
+
+
 - (IBAction)exportCanvasToImage:(id)sender {
     UIGraphicsBeginImageContext(canvas.frame.size);
     [canvas.layer renderInContext:UIGraphicsGetCurrentContext()];
