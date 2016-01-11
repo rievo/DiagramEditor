@@ -24,6 +24,7 @@
 @property UIColor * blue4;
 
 @property Canvas * can;
+@property CGRect originalCanvasRect;
 
 
 

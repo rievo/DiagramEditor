@@ -33,9 +33,10 @@
     dele = [[UIApplication sharedApplication]delegate];
     
     canvas = [[Canvas alloc] initWithFrame:CGRectMake(0, 0, canvasW, canvasW)];
-    canvas.backgroundColor = [UIColor clearColor];
+    canvas.backgroundColor = [dele blue4];
     [canvas prepareCanvas];
     dele.can = canvas;
+    dele.originalCanvasRect = canvas.frame;
     
     //Add canvas to scrollView contents
     [scrollView addSubview:canvas];
@@ -125,14 +126,16 @@
         
         //Check if point is inside canvas.
         
-        if(CGRectContainsPoint(canvas.frame, p)){
+        CGPoint pointInSV = [self.view convertPoint:p toView:canvas];
+        
+        if(CGRectContainsPoint(scrollView.frame, p)){
             //Añadimos un Component al lienzo
             if([sender.type isEqualToString:@"graphicR:Node"]){
                 //It is a node
                 NSLog(@"Creating a node");
                 
                 Component * comp = [[Component alloc] initWithFrame:CGRectMake(0, 0, sender.width.floatValue, sender.height.floatValue)];
-                comp.center = p;
+                comp.center = pointInSV;
                 comp.name = sender.dialog;
                 comp.type = sender.type;
                 comp.shapeType = sender.shapeType;

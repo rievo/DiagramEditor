@@ -644,7 +644,7 @@
                         <outlet property="scrollView" destination="9YV-kE-mug" id="hAn-7K-qvv"/>
                         <outlet property="sureCloseView" destination="cyy-TN-oLg" id="svX-Mq-Sq1"/>
                         <segue destination="hki-WO-fa3" kind="popoverPresentation" identifier="showComponentDetails" popoverAnchorView="KEc-Zc-HGD" id="LBG-E8-PBk">
-                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                            <popoverArrowDirection key="popoverArrowDirection" right="YES"/>
                         </segue>
                         <segue destination="ssG-up-C3Z" kind="popoverPresentation" identifier="showConnectionDetails" popoverAnchorView="KEc-Zc-HGD" id="I3P-Xb-vho">
                             <popoverArrowDirection key="popoverArrowDirection" right="YES"/>

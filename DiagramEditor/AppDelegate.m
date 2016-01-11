@@ -15,7 +15,7 @@
 
 @implementation AppDelegate
 
-@synthesize components, connections, paletteItems, blue4, blue3;
+@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.

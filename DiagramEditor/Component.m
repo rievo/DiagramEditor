@@ -229,13 +229,13 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         
         if(translatedPoint.x <  halfW)
             translatedPoint.x = halfW;
-        if(translatedPoint.x > dele.can.frame.size.width - halfW)
-            translatedPoint.x = dele.can.frame.size.width - halfW;
+        if(translatedPoint.x > dele.originalCanvasRect.size.width - halfW)
+            translatedPoint.x = dele.originalCanvasRect.size.width - halfW;
         
         if(translatedPoint.y < halfh)
             translatedPoint.y = halfh;
-        if(translatedPoint.y > dele.can.frame.size.height - halfh)
-            translatedPoint.y = dele.can.frame.size.height - halfh;
+        if(translatedPoint.y > dele.originalCanvasRect.size.height - halfh)
+            translatedPoint.y = dele.originalCanvasRect.size.height - halfh;
         
         self.center = translatedPoint;
         
