@@ -17,7 +17,7 @@
 
 #import <MessageUI/MFMailComposeViewController.h>
 
-@interface EditorViewController : UIViewController<MFMailComposeViewControllerDelegate>{
+@interface EditorViewController : UIViewController<MFMailComposeViewControllerDelegate, UIScrollViewDelegate>{
     AppDelegate * dele;
     __weak IBOutlet Palette *palette;
     

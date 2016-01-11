@@ -296,7 +296,7 @@
         
         UIBezierPath * line = [[UIBezierPath alloc] init];
         [line setLineWidth:2.0];
-        [dele.blue4 setStroke];
+        [dele.blue3 setStroke];
         [line moveToPoint:CGPointMake(xArrowStart, yArrowStart)];
         [line addLineToPoint:CGPointMake(xArrowEnd, yArrowEnd)];
         [line stroke];

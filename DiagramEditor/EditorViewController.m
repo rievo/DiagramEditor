@@ -40,6 +40,9 @@
     //Add canvas to scrollView contents
     [scrollView addSubview:canvas];
     scrollView.contentSize = CGSizeMake(canvas.frame.size.width, canvas.frame.size.height);
+    scrollView.minimumZoomScale = 0.5;
+    scrollView.maximumZoomScale = 6.0;
+    scrollView.delegate = self;
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -290,5 +293,11 @@
     }
     //[self dismissModalViewControllerAnimated:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+#pragma mark UIScrollViewDelegate
+-(UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
+    return canvas;
 }
 @end
