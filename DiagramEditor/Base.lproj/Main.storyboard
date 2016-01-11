@@ -604,7 +604,7 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9YV-kE-mug">
                                 <rect key="frame" x="20" y="60" width="560" height="393"/>
                                 <animations/>
-                                <color key="backgroundColor" red="0.71764707565307617" green="0.76862746477127075" blue="0.89411765336990356" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.71764707565307617" green="0.76862746477127075" blue="0.89411765336990356" alpha="0.0" colorSpace="calibratedRGB"/>
                             </scrollView>
                         </subviews>
                         <animations/>

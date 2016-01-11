@@ -28,7 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    canvasW = 2000;
+    canvasW = 1500;
     
     dele = [[UIApplication sharedApplication]delegate];
     
@@ -40,9 +40,12 @@
     
     //Add canvas to scrollView contents
     [scrollView addSubview:canvas];
+    [scrollView setScrollEnabled:YES];
+    [scrollView setContentSize:CGSizeMake(canvas.frame.size.width, canvas.frame.size.height)];
+    [scrollView setBounces:NO];
     scrollView.contentSize = CGSizeMake(canvas.frame.size.width, canvas.frame.size.height);
-    scrollView.minimumZoomScale = 0.5;
-    scrollView.maximumZoomScale = 6.0;
+    scrollView.minimumZoomScale = 0.3;
+    scrollView.maximumZoomScale = 4.0;
     scrollView.delegate = self;
     
     
@@ -255,7 +258,22 @@
     UIGraphicsBeginImageContext(canvas.frame.size);
     [canvas.layer renderInContext:UIGraphicsGetCurrentContext()];
     
-    UIImage * image = UIGraphicsGetImageFromCurrentImageContext();
+    UIImage* image = nil;
+    
+    UIGraphicsBeginImageContext(scrollView.contentSize);
+    {
+        CGPoint savedContentOffset = scrollView.contentOffset;
+        CGRect savedFrame = scrollView.frame;
+        
+        scrollView.contentOffset = CGPointZero;
+        scrollView.frame = CGRectMake(0, 0, scrollView.contentSize.width, scrollView.contentSize.height);
+        
+        [scrollView.layer renderInContext: UIGraphicsGetCurrentContext()];
+        image = UIGraphicsGetImageFromCurrentImageContext();
+        
+        scrollView.contentOffset = savedContentOffset;
+        scrollView.frame = savedFrame;
+    }
     UIGraphicsEndImageContext();
     
     NSData * data = UIImagePNGRepresentation(image);
@@ -302,5 +320,38 @@
 #pragma mark UIScrollViewDelegate
 -(UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
     return canvas;
+}
+
+-(void)scrollViewDidEndZooming:(UIScrollView *)sv withView:(UIView *)view atScale:(CGFloat)scale{
+    [sv setContentSize:CGSizeMake(dele.originalCanvasRect.size.width * scale, dele.originalCanvasRect.size.height * scale)];
+}
+
+
+
+- (void)zoomToPoint:(CGPoint)zoomPoint withScale: (CGFloat)scale animated: (BOOL)animated
+{
+    //Normalize current content size back to content scale of 1.0f
+    CGSize contentSize;
+    contentSize.width = (scrollView.contentSize.width / scrollView.zoomScale);
+    contentSize.height = (scrollView.contentSize.height / scrollView.zoomScale);
+    
+    //translate the zoom point to relative to the content rect
+    zoomPoint.x = (zoomPoint.x / scrollView.bounds.size.width) * contentSize.width;
+    zoomPoint.y = (zoomPoint.y / scrollView.bounds.size.height) * contentSize.height;
+    
+    //derive the size of the region to zoom to
+    CGSize zoomSize;
+    zoomSize.width = scrollView.bounds.size.width / scale;
+    zoomSize.height = scrollView.bounds.size.height / scale;
+    
+    //offset the zoom rect so the actual zoom point is in the middle of the rectangle
+    CGRect zoomRect;
+    zoomRect.origin.x = zoomPoint.x - zoomSize.width / 2.0f;
+    zoomRect.origin.y = zoomPoint.y - zoomSize.height / 2.0f;
+    zoomRect.size.width = zoomSize.width;
+    zoomRect.size.height = zoomSize.height;
+    
+    //apply the resize
+    [scrollView zoomToRect: zoomRect animated: animated];
 }
 @end
