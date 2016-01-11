@@ -103,6 +103,8 @@
 				F1685EA41C18294A0094097E /* Component.m */,
 				F1685EA91C182B7D0094097E /* Connection.h */,
 				F1685EAA1C182B7D0094097E /* Connection.m */,
+				F10F0FA11C1AF67000165561 /* ColorPalette.h */,
+				F10F0FA21C1AF67000165561 /* ColorPalette.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -178,8 +180,6 @@
 				F18510841C1824C8004EC4C8 /* LaunchScreen.storyboard */,
 				F18510871C1824C8004EC4C8 /* Info.plist */,
 				F18510761C1824C8004EC4C8 /* Supporting Files */,
-				F10F0FA11C1AF67000165561 /* ColorPalette.h */,
-				F10F0FA21C1AF67000165561 /* ColorPalette.m */,
 			);
 			path = DiagramEditor;
 			sourceTree = "<group>";

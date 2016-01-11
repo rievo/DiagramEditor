@@ -203,9 +203,19 @@
 
 #pragma mark Show editor
 - (IBAction)showEditor:(id)sender {
-    dele.paletteItems = [[NSMutableArray alloc] initWithArray:palette.paletteItems];
     
-    [self performSegueWithIdentifier:@"showEditor" sender:self];
+    if(palette.paletteItems.count != 0){
+        dele.paletteItems = [[NSMutableArray alloc] initWithArray:palette.paletteItems];
+        [self performSegueWithIdentifier:@"showEditor" sender:self];
+    }else{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"Any palette must be selected in order to perform this action."
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+
+    }
 }
 
 
