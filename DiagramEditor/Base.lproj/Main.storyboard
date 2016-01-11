@@ -592,25 +592,21 @@
                                     <action selector="willChangePalette:" destination="b9M-0K-SdS" eventType="touchUpInside" id="fHk-Zz-9rp"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6fG-B6-5S9" customClass="Canvas">
-                                <rect key="frame" x="20" y="60" width="560" height="393"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v6p-1A-i0f">
-                                        <rect key="frame" x="540" y="167" width="20" height="20"/>
-                                        <animations/>
-                                        <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="20" id="UDR-W2-IDl"/>
-                                            <constraint firstAttribute="height" constant="20" id="mr5-az-502"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KEc-Zc-HGD" userLabel="Anchor">
+                                <rect key="frame" x="570" y="295" width="10" height="10"/>
                                 <animations/>
-                                <color key="backgroundColor" red="0.32156862749999998" green="0.4039215686" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="v6p-1A-i0f" secondAttribute="bottom" constant="206" id="JdH-QU-ozt"/>
+                                    <constraint firstAttribute="width" constant="10" id="Evc-QU-MFL"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="10" id="dFV-Tf-TrK"/>
+                                    <constraint firstAttribute="height" constant="10" id="oo4-nd-bQy"/>
                                 </constraints>
                             </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9YV-kE-mug">
+                                <rect key="frame" x="20" y="60" width="560" height="393"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.71764707565307617" green="0.76862746477127075" blue="0.89411765336990356" alpha="1" colorSpace="calibratedRGB"/>
+                            </scrollView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.13725490200000001" green="0.21176470589999999" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -618,38 +614,40 @@
                             <constraint firstItem="PyO-ue-whg" firstAttribute="leading" secondItem="npt-04-keg" secondAttribute="trailing" constant="16" id="0n2-TL-mm5"/>
                             <constraint firstItem="YCF-FE-eUA" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" id="5Ua-zr-SQb"/>
                             <constraint firstAttribute="bottom" secondItem="KOd-BW-gdm" secondAttribute="bottom" constant="20" symbolic="YES" id="8Jz-mn-X8m"/>
+                            <constraint firstItem="9YV-kE-mug" firstAttribute="top" secondItem="L72-M5-gdo" secondAttribute="bottom" constant="8" id="BjD-0q-P6Z"/>
                             <constraint firstItem="3b3-aY-7QT" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" id="DR5-KW-dLy"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="6fG-B6-5S9" secondAttribute="trailing" id="DdN-FP-RQg"/>
                             <constraint firstItem="npt-04-keg" firstAttribute="leading" secondItem="L72-M5-gdo" secondAttribute="trailing" constant="81" id="DgR-Pk-Nom"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="9YV-kE-mug" secondAttribute="leading" id="FpZ-39-V54"/>
                             <constraint firstItem="L72-M5-gdo" firstAttribute="leading" secondItem="YCF-FE-eUA" secondAttribute="trailing" constant="14" id="Gas-lu-aNO"/>
+                            <constraint firstItem="KOd-BW-gdm" firstAttribute="top" secondItem="9YV-kE-mug" secondAttribute="bottom" constant="8" id="LNG-aa-lvM"/>
                             <constraint firstItem="cyy-TN-oLg" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="155" id="Lqb-1O-Bvc"/>
                             <constraint firstAttribute="trailingMargin" secondItem="cyy-TN-oLg" secondAttribute="trailing" constant="130" id="Pdf-wu-SXf"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="6fG-B6-5S9" secondAttribute="leading" id="RsL-q7-oCy"/>
+                            <constraint firstItem="KEc-Zc-HGD" firstAttribute="leading" secondItem="j52-t0-ne9" secondAttribute="leadingMargin" constant="550" id="UDN-eX-stO"/>
                             <constraint firstAttribute="leadingMargin" secondItem="KOd-BW-gdm" secondAttribute="leading" id="UPq-md-j0I"/>
                             <constraint firstItem="uUY-Bf-x28" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" id="VP6-1q-6LP"/>
-                            <constraint firstItem="6fG-B6-5S9" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="40" id="YIl-hg-Bij"/>
                             <constraint firstItem="cyy-TN-oLg" firstAttribute="leading" secondItem="j52-t0-ne9" secondAttribute="leadingMargin" constant="130" id="ab1-7c-Lky"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="9YV-kE-mug" secondAttribute="trailing" id="e4p-Ar-RIi"/>
                             <constraint firstItem="3b3-aY-7QT" firstAttribute="leading" secondItem="PyO-ue-whg" secondAttribute="trailing" constant="35" id="gad-ns-yBM"/>
-                            <constraint firstItem="KOd-BW-gdm" firstAttribute="top" secondItem="6fG-B6-5S9" secondAttribute="bottom" constant="8" id="ho1-lB-7jQ"/>
                             <constraint firstAttribute="leadingMargin" secondItem="YCF-FE-eUA" secondAttribute="leading" id="nKB-xX-hLx"/>
                             <constraint firstAttribute="trailingMargin" secondItem="uUY-Bf-x28" secondAttribute="trailing" id="obf-Z6-RKB"/>
                             <constraint firstItem="npt-04-keg" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" id="oku-eb-F7h"/>
                             <constraint firstItem="L72-M5-gdo" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" id="piz-Es-EmJ"/>
                             <constraint firstItem="PyO-ue-whg" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" id="tUn-Vf-f7v"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="v6p-1A-i0f" secondAttribute="trailing" id="tv6-JO-Mnd"/>
+                            <constraint firstItem="bKe-dJ-Azz" firstAttribute="top" secondItem="KEc-Zc-HGD" secondAttribute="bottom" constant="295" id="vAr-xk-lQg"/>
                             <constraint firstAttribute="trailingMargin" secondItem="KOd-BW-gdm" secondAttribute="trailing" id="y3G-Dy-Jln"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="KEc-Zc-HGD" secondAttribute="trailing" id="yij-Uq-4l7"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="canvas" destination="6fG-B6-5S9" id="uxJ-ul-BMA"/>
                         <outlet property="newDiagram" destination="YCF-FE-eUA" id="yt6-v6-sNy"/>
                         <outlet property="palette" destination="KOd-BW-gdm" id="frF-Rk-gkH"/>
                         <outlet property="saveDiagram" destination="L72-M5-gdo" id="E3S-B7-bXL"/>
+                        <outlet property="scrollView" destination="9YV-kE-mug" id="hAn-7K-qvv"/>
                         <outlet property="sureCloseView" destination="cyy-TN-oLg" id="svX-Mq-Sq1"/>
-                        <segue destination="hki-WO-fa3" kind="popoverPresentation" identifier="showComponentDetails" popoverAnchorView="v6p-1A-i0f" id="LBG-E8-PBk">
+                        <segue destination="hki-WO-fa3" kind="popoverPresentation" identifier="showComponentDetails" popoverAnchorView="KEc-Zc-HGD" id="LBG-E8-PBk">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>
-                        <segue destination="ssG-up-C3Z" kind="popoverPresentation" identifier="showConnectionDetails" popoverAnchorView="v6p-1A-i0f" id="I3P-Xb-vho">
+                        <segue destination="ssG-up-C3Z" kind="popoverPresentation" identifier="showConnectionDetails" popoverAnchorView="KEc-Zc-HGD" id="I3P-Xb-vho">
                             <popoverArrowDirection key="popoverArrowDirection" right="YES"/>
                         </segue>
                         <segue destination="uka-zo-c1V" kind="popoverPresentation" identifier="showComponentsView" popoverAnchorView="npt-04-keg" id="NXG-Cd-7Kc">

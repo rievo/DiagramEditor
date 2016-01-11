@@ -15,7 +15,6 @@
 #import "XMLWriter.h"
 
 
-
 @import Foundation;
 
 @interface EditorViewController ()
@@ -24,14 +23,23 @@
 
 @implementation EditorViewController
 
-@synthesize canvas;
+@synthesize scrollView;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    canvasW = 2000;
+    
     dele = [[UIApplication sharedApplication]delegate];
+    
+    canvas = [[Canvas alloc] initWithFrame:CGRectMake(0, 0, canvasW, canvasW)];
+    canvas.backgroundColor = [UIColor clearColor];
     [canvas prepareCanvas];
     dele.can = canvas;
+    
+    //Add canvas to scrollView contents
+    [scrollView addSubview:canvas];
+    scrollView.contentSize = CGSizeMake(canvas.frame.size.width, canvas.frame.size.height);
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self

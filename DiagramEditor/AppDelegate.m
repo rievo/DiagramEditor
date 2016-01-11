@@ -15,7 +15,7 @@
 
 @implementation AppDelegate
 
-@synthesize components, connections, paletteItems, blue4;
+@synthesize components, connections, paletteItems, blue4, blue3;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -24,6 +24,7 @@
     
     paletteItems = [[NSMutableArray alloc] init];
     
+    blue3 = [[UIColor alloc]initWithRed:82/256.0 green:103/256.0 blue:147/256.0 alpha:1.0];
     blue4 = [[UIColor alloc]initWithRed:183/256.0 green:196/256.0 blue:229/256.0 alpha:1.0];
     
     

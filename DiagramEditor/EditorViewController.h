@@ -30,9 +30,14 @@
     UIView * backSure;
     
     MFMailComposeViewController* controller ;
+    
+    
+    Canvas *canvas;
+    
+    int canvasW;
+    
 }
-
-@property (weak, nonatomic) IBOutlet Canvas *canvas;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 - (IBAction)addElement:(id)sender;
 - (IBAction)showComponentList:(id)sender;

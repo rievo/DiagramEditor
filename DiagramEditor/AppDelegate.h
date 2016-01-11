@@ -18,6 +18,9 @@
 @property NSMutableArray * components;
 
 @property NSMutableArray * paletteItems;
+
+
+@property UIColor * blue3;
 @property UIColor * blue4;
 
 @property Canvas * can;

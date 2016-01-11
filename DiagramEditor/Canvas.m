@@ -159,8 +159,6 @@
 
 - (void)drawRect:(CGRect)rect {
     
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
 
     Connection * conn = nil;
     for(int i = 0; i< dele.connections.count; i++){
@@ -189,7 +187,7 @@
             //Draw line
             UIBezierPath * path = [[UIBezierPath alloc] init];
             //[[UIColor blackColor] setStroke];
-            [dele.blue4 setStroke];
+            [dele.blue3 setStroke];
             [path setLineWidth:2.0];
             [path moveToPoint: sourceAnchor];
             [path addLineToPoint:targetAnchor];
