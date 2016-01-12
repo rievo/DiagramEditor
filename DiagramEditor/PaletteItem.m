@@ -14,7 +14,7 @@
 @implementation PaletteItem
 
 
-@synthesize type, dialog, width, height, shapeType, fillColor;
+@synthesize type, dialog, width, height, shapeType, fillColor, isImage, image;
 
 
 
@@ -116,7 +116,12 @@
         [path stroke];
         
 
-    }else{
+    }else if(isImage){
+        [image drawInRect:rect];
+        [[UIColor clearColor]setFill];
+        UIBezierPath * path = [UIBezierPath bezierPathWithRect:rect];
+        [path fill];
+    }else {
         
     }
 }

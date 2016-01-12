@@ -44,7 +44,7 @@
     [scrollView setContentSize:CGSizeMake(canvas.frame.size.width, canvas.frame.size.height)];
     [scrollView setBounces:NO];
     scrollView.contentSize = CGSizeMake(canvas.frame.size.width, canvas.frame.size.height);
-    scrollView.minimumZoomScale = 0.3;
+    scrollView.minimumZoomScale = 0.6;
     scrollView.maximumZoomScale = 4.0;
     scrollView.delegate = self;
     
@@ -61,6 +61,7 @@
     
     
     //Load palette
+    /*
     palette.paletteItems = [[NSMutableArray alloc] initWithArray:dele.paletteItems];
     [palette preparePalette];
     
@@ -70,7 +71,7 @@
         
         UIPanGestureRecognizer * panGr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
         [item addGestureRecognizer:panGr];
-    }
+    }*/
     
     backSure = [[UIView alloc] initWithFrame:self.view.frame];
     [self.view addSubview:backSure];
@@ -87,6 +88,19 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+-(void)viewWillAppear:(BOOL)animated{
+    palette.paletteItems = [[NSMutableArray alloc] initWithArray:dele.paletteItems];
+    [palette preparePalette];
+    
+    //Añadimos a los items de la paleta el gestor de gestos para poder arrastrarlos
+    for(int i  =0; i< palette.paletteItems.count; i++){
+        PaletteItem * item = [palette.paletteItems objectAtIndex:i];
+        
+        UIPanGestureRecognizer * panGr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+        [item addGestureRecognizer:panGr];
+    }
+}
 
 -(void)showComponentDetails:(NSNotification *)not{
     NSLog(@"Showing component's details");
@@ -115,9 +129,9 @@
         tempIcon.height = sender.height;
         tempIcon.shapeType = sender.shapeType;
         [tempIcon setFrame:sender.frame];
-        [tempIcon setAlpha:0.4];
+        [tempIcon setAlpha:0.2];
         tempIcon.center = p;
-        tempIcon.backgroundColor = [UIColor clearColor];
+        tempIcon.backgroundColor = [UIColor blackColor];
         [self.view addSubview:tempIcon];
     }else if(recog.state == UIGestureRecognizerStateChanged){
         //Movemos el icono temporal
@@ -143,6 +157,14 @@
                 comp.type = sender.type;
                 comp.shapeType = sender.shapeType;
                 comp.fillColor = sender.fillColor;
+                
+                if(sender.isImage){
+                    comp.isImage = YES;
+                    comp.image = sender.image;
+                }else{
+                    comp.isImage = NO;
+                }
+                
                 [dele.components addObject:comp];
                 [comp updateNameLabel];
                 [canvas addSubview:comp];

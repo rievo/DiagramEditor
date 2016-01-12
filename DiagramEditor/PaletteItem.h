@@ -17,5 +17,7 @@
 @property NSNumber * height;
 @property NSString * shapeType;
 @property UIColor * fillColor;
+@property UIImage * image;
+@property BOOL isImage;
 
 @end

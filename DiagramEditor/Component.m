@@ -15,7 +15,7 @@
 @implementation Component
 
 
-@synthesize name, connections, textLayer, type, shapeType, fillColor;
+@synthesize name, connections, textLayer, type, shapeType, fillColor, image, isImage;
 
 
 NSString* const SHOW_INSPECTOR = @"ShowInspector";
@@ -344,6 +344,11 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         [path stroke];
         
         
+    }else if(isImage){
+        [image drawInRect:rect];
+        [[UIColor clearColor]setFill];
+        UIBezierPath * path = [UIBezierPath bezierPathWithRect:rect];
+        [path fill];
     }else{
         
     }

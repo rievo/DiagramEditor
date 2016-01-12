@@ -34,6 +34,8 @@
 @property NSString * type;
 @property NSString * shapeType;
 @property UIColor * fillColor;
+@property UIImage * image;
+@property BOOL isImage;
 
 
 -(CGPoint)getTopAnchorPoint;

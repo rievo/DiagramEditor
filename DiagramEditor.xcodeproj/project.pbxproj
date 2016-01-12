@@ -36,6 +36,8 @@
 		F1A20A851C198A540037C05D /* PaletteItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A20A841C198A540037C05D /* PaletteItem.m */; };
 		F1AB3B161C22B19800EDBB1D /* resize.png in Resources */ = {isa = PBXBuildFile; fileRef = F1AB3B151C22B19800EDBB1D /* resize.png */; };
 		F1C6347B1C2842C30072912D /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C6347A1C2842C30072912D /* camera.png */; };
+		F1E9EFD51C4521DA007E227D /* PItemEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E9EFD41C4521DA007E227D /* PItemEditor.m */; };
+		F1E9EFD81C4524CD007E227D /* PaletteItemCreatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E9EFD71C4524CD007E227D /* PaletteItemCreatorViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,6 +87,10 @@
 		F1A20A841C198A540037C05D /* PaletteItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaletteItem.m; sourceTree = "<group>"; };
 		F1AB3B151C22B19800EDBB1D /* resize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resize.png; sourceTree = "<group>"; };
 		F1C6347A1C2842C30072912D /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
+		F1E9EFD31C4521DA007E227D /* PItemEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PItemEditor.h; sourceTree = "<group>"; };
+		F1E9EFD41C4521DA007E227D /* PItemEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PItemEditor.m; sourceTree = "<group>"; };
+		F1E9EFD61C4524CD007E227D /* PaletteItemCreatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaletteItemCreatorViewController.h; sourceTree = "<group>"; };
+		F1E9EFD71C4524CD007E227D /* PaletteItemCreatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaletteItemCreatorViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +192,10 @@
 				F18510841C1824C8004EC4C8 /* LaunchScreen.storyboard */,
 				F18510871C1824C8004EC4C8 /* Info.plist */,
 				F18510761C1824C8004EC4C8 /* Supporting Files */,
+				F1E9EFD31C4521DA007E227D /* PItemEditor.h */,
+				F1E9EFD41C4521DA007E227D /* PItemEditor.m */,
+				F1E9EFD61C4524CD007E227D /* PaletteItemCreatorViewController.h */,
+				F1E9EFD71C4524CD007E227D /* PaletteItemCreatorViewController.m */,
 			);
 			path = DiagramEditor;
 			sourceTree = "<group>";
@@ -284,6 +294,7 @@
 				F185107B1C1824C8004EC4C8 /* AppDelegate.m in Sources */,
 				F1685EAE1C1831840094097E /* ComponentDetailsViewController.m in Sources */,
 				F15A96091C27F69100ACA6FA /* XMLWriter.m in Sources */,
+				F1E9EFD51C4521DA007E227D /* PItemEditor.m in Sources */,
 				F1685E9F1C1827FB0094097E /* ConfigureDiagramViewController.m in Sources */,
 				F1685EA51C18294A0094097E /* Component.m in Sources */,
 				F1A20A851C198A540037C05D /* PaletteItem.m in Sources */,
@@ -292,6 +303,7 @@
 				F1685EA21C18289E0094097E /* EditorViewController.m in Sources */,
 				F1A20A7E1C1981290037C05D /* XMLDictionary.m in Sources */,
 				F1166BE41C187269009A2AAA /* ConnectionDetailsViewController.m in Sources */,
+				F1E9EFD81C4524CD007E227D /* PaletteItemCreatorViewController.m in Sources */,
 				F18510781C1824C8004EC4C8 /* main.m in Sources */,
 				F1685EAB1C182B7D0094097E /* Connection.m in Sources */,
 				F10F0FA31C1AF67000165561 /* ColorPalette.m in Sources */,
