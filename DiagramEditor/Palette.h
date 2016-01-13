@@ -15,6 +15,9 @@
 
 
 -(void)preparePalette;
+-(void)resetPalette;
+
+
 @property NSMutableArray * paletteItems;
 @property NSString * name;
 @end

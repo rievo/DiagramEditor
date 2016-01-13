@@ -20,8 +20,16 @@
     
     CGRect initialInfoPosition;
     __weak IBOutlet Palette *palette;
+    
+    
+    
     __weak IBOutlet UITableView *palettesTable;
     
+    __weak IBOutlet UITableView *localFilesTable;
+    NSMutableArray * localFilesArray;
+    
+    __weak IBOutlet UITableView *serverFilesTable;
+    NSMutableArray * serverFilesArray;
 
     NSMutableArray * palettes;
 }

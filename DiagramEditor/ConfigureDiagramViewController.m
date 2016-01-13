@@ -13,6 +13,8 @@
 #import "Palette.h"
 #import "ColorPalette.h"
 
+#import "PaletteFile.h"
+
 
 #define defaultwidth 50
 #define defaultheight 50
@@ -20,6 +22,8 @@
 #define scale 15
 
 #define xmargin 10
+
+#define getPalettes @"http://150.244.56.31:8080/palettes?json=true"
 
 @interface ConfigureDiagramViewController ()
 
@@ -50,12 +54,75 @@
     [palettesTable setDelegate:self];
     
     
+    //Local files table
+    localFilesArray = [[NSMutableArray alloc] init];
+    [localFilesTable setDataSource:self];
+    [localFilesTable setDelegate:self];
     
     
-    //Read file and proccess
+    //Server files table
+    serverFilesArray = [[NSMutableArray alloc] init];
+    [serverFilesTable setDataSource:self];
+    [serverFilesTable setDelegate:self];
     
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"design" ofType:@"graphicR"];
-    configuration = [NSDictionary dictionaryWithXMLFile:filePath];
+    
+    //Load files from server
+    NSThread * thread = [[NSThread alloc] initWithTarget:self
+                                                selector:@selector(loadFilesFromServer)
+                                                  object:nil];
+    [thread start];
+}
+
+
+-(void)loadFilesFromServer{
+    NSURL *url = [NSURL URLWithString:getPalettes];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response,
+                                               NSData *data, NSError *connectionError)
+     {
+         if (data.length > 0 && connectionError == nil)
+         {
+             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data
+                                                                 options:0
+                                                                   error:NULL];
+             NSLog(@"%@", dic);
+             
+             NSString * code = [dic objectForKey:@"code"];
+             
+             if([code isEqualToString:@"200"]){
+                 NSArray * array = [dic objectForKey:@"array"];
+                 
+                 for(int i = 0; i< [array count]; i++){
+                     NSDictionary * ins = [array objectAtIndex:i];
+                     PaletteFile * pf = [[PaletteFile alloc] init];
+                     pf.name = [ins objectForKey:@"name"];
+                     pf.content = [ins objectForKey:@"content"];
+                     
+                     [serverFilesArray addObject:pf];
+                 }
+                 
+                 
+                 [serverFilesTable reloadData];
+                 
+             }else{
+                 NSLog(@"error");
+             }
+             
+         }
+     }];
+}
+
+/*  Read file and proccess  */
+
+-(void)extractPalettesForContentsOfFile: (NSString *)text{
+    
+    [palettes removeAllObjects];
+    
+    //NSString *filePath = [[NSBundle mainBundle] pathForResource:@"design" ofType:@"graphicR"];
+    //configuration = [NSDictionary dictionaryWithXMLFile:filePath];
+    configuration = [NSDictionary dictionaryWithXMLString:text];
     
     NSArray * allGraphicRepresentations = [configuration objectForKey:@"allGraphicRepresentation"];
     
@@ -152,17 +219,14 @@
             //[dele.paletteItems addObject:item];
             [tempPalete.paletteItems addObject:item];
             
-
+            
         }
         
         [palettes addObject:tempPalete];
     }
     
-    
+    [palettesTable reloadData];
     [palette preparePalette];
-    
-    
-
 }
 
 -(void)addRecognizers{
@@ -214,7 +278,7 @@
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];
-
+        
     }
 }
 
@@ -229,7 +293,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return [palettes count];    //count number of row from counting array hear cataGorry is An Array
+    if(tableView == palettesTable)
+        return [palettes count];
+    else if(tableView == serverFilesTable)
+        return [serverFilesArray count];
+    else
+        return 0;
 }
 
 
@@ -244,35 +313,49 @@
     if (cell == nil)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                       reuseIdentifier:MyIdentifier] ;
+                                      reuseIdentifier:MyIdentifier] ;
     }
-
-    Palette * temp = [palettes objectAtIndex:indexPath.row];
-    cell.textLabel.text = temp.name;
-    cell.backgroundColor = [UIColor clearColor];
-    cell.textLabel.textColor = dele.blue4;
+    
+    if(tableView == palettesTable){
+        
+        Palette * temp = [palettes objectAtIndex:indexPath.row];
+        cell.textLabel.text = temp.name;
+        //cell.backgroundColor = [UIColor clearColor];
+        cell.textLabel.textColor = dele.blue3;
+    }else if(tableView == serverFilesTable){
+        PaletteFile * pf = [serverFilesArray objectAtIndex:indexPath.row];
+        cell.textLabel.text = pf.name;
+        cell.textLabel.textColor = dele.blue3;
+    }
     return cell;
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-   
-    Palette * selected = [palettes objectAtIndex:indexPath.row];
-    //[selected setFrame:palette.frame];
-    palette.paletteItems = selected.paletteItems;
-    [palette preparePalette];
-    [palette setNeedsDisplay];
     
-    [self addRecognizers];
+    if(tableView == palettesTable){
+        Palette * selected = [palettes objectAtIndex:indexPath.row];
+        //[selected setFrame:palette.frame];
+        palette.paletteItems = selected.paletteItems;
+        [palette preparePalette];
+        [palette setNeedsDisplay];
+        
+        [self addRecognizers];
+    }else if(tableView == serverFilesTable){
+        [palette resetPalette];
+        PaletteFile * file = [serverFilesArray objectAtIndex:indexPath.row];
+        
+        [self extractPalettesForContentsOfFile:file.content];
+    }
     
 }
 
 
 
 - (IBAction)dismissConfigureView:(id)sender {
-
+    
     [self dismissViewControllerAnimated:YES completion:nil];
-
+    
 }
 
 @end

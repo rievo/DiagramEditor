@@ -35,6 +35,7 @@
 		F1A20A7E1C1981290037C05D /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A20A7D1C1981290037C05D /* XMLDictionary.m */; };
 		F1A20A851C198A540037C05D /* PaletteItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A20A841C198A540037C05D /* PaletteItem.m */; };
 		F1AB3B161C22B19800EDBB1D /* resize.png in Resources */ = {isa = PBXBuildFile; fileRef = F1AB3B151C22B19800EDBB1D /* resize.png */; };
+		F1B4861E1C46604700752157 /* PaletteFile.m in Sources */ = {isa = PBXBuildFile; fileRef = F1B4861D1C46604700752157 /* PaletteFile.m */; };
 		F1C6347B1C2842C30072912D /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C6347A1C2842C30072912D /* camera.png */; };
 		F1E9EFD51C4521DA007E227D /* PItemEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E9EFD41C4521DA007E227D /* PItemEditor.m */; };
 		F1E9EFD81C4524CD007E227D /* PaletteItemCreatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E9EFD71C4524CD007E227D /* PaletteItemCreatorViewController.m */; };
@@ -86,6 +87,8 @@
 		F1A20A831C198A540037C05D /* PaletteItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaletteItem.h; sourceTree = "<group>"; };
 		F1A20A841C198A540037C05D /* PaletteItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaletteItem.m; sourceTree = "<group>"; };
 		F1AB3B151C22B19800EDBB1D /* resize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resize.png; sourceTree = "<group>"; };
+		F1B4861C1C46604700752157 /* PaletteFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaletteFile.h; sourceTree = "<group>"; };
+		F1B4861D1C46604700752157 /* PaletteFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaletteFile.m; sourceTree = "<group>"; };
 		F1C6347A1C2842C30072912D /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
 		F1E9EFD31C4521DA007E227D /* PItemEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PItemEditor.h; sourceTree = "<group>"; };
 		F1E9EFD41C4521DA007E227D /* PItemEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PItemEditor.m; sourceTree = "<group>"; };
@@ -115,6 +118,8 @@
 				F1685EAA1C182B7D0094097E /* Connection.m */,
 				F10F0FA11C1AF67000165561 /* ColorPalette.h */,
 				F10F0FA21C1AF67000165561 /* ColorPalette.m */,
+				F1B4861C1C46604700752157 /* PaletteFile.h */,
+				F1B4861D1C46604700752157 /* PaletteFile.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -300,6 +305,7 @@
 				F1A20A851C198A540037C05D /* PaletteItem.m in Sources */,
 				F1587B041C19BC4600E963BE /* Palette.m in Sources */,
 				F17B75B31C22DBFE00AB1B57 /* ComponentsListViewController.m in Sources */,
+				F1B4861E1C46604700752157 /* PaletteFile.m in Sources */,
 				F1685EA21C18289E0094097E /* EditorViewController.m in Sources */,
 				F1A20A7E1C1981290037C05D /* XMLDictionary.m in Sources */,
 				F1166BE41C187269009A2AAA /* ConnectionDetailsViewController.m in Sources */,

@@ -59,4 +59,7 @@
 }
 
 
+-(void)resetPalette{
+        paletteItems = [[NSMutableArray alloc] init];
+}
 @end
