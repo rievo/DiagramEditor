@@ -36,6 +36,7 @@
 		F1A20A851C198A540037C05D /* PaletteItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A20A841C198A540037C05D /* PaletteItem.m */; };
 		F1AB3B161C22B19800EDBB1D /* resize.png in Resources */ = {isa = PBXBuildFile; fileRef = F1AB3B151C22B19800EDBB1D /* resize.png */; };
 		F1B4861E1C46604700752157 /* PaletteFile.m in Sources */ = {isa = PBXBuildFile; fileRef = F1B4861D1C46604700752157 /* PaletteFile.m */; };
+		F1B486211C47A31C00752157 /* WT_DesignPatterns (2).graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F1B486201C47A31C00752157 /* WT_DesignPatterns (2).graphicR */; };
 		F1C6347B1C2842C30072912D /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C6347A1C2842C30072912D /* camera.png */; };
 		F1E9EFD51C4521DA007E227D /* PItemEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E9EFD41C4521DA007E227D /* PItemEditor.m */; };
 		F1E9EFD81C4524CD007E227D /* PaletteItemCreatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E9EFD71C4524CD007E227D /* PaletteItemCreatorViewController.m */; };
@@ -89,6 +90,7 @@
 		F1AB3B151C22B19800EDBB1D /* resize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resize.png; sourceTree = "<group>"; };
 		F1B4861C1C46604700752157 /* PaletteFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaletteFile.h; sourceTree = "<group>"; };
 		F1B4861D1C46604700752157 /* PaletteFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaletteFile.m; sourceTree = "<group>"; };
+		F1B486201C47A31C00752157 /* WT_DesignPatterns (2).graphicR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "WT_DesignPatterns (2).graphicR"; sourceTree = "<group>"; };
 		F1C6347A1C2842C30072912D /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
 		F1E9EFD31C4521DA007E227D /* PItemEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PItemEditor.h; sourceTree = "<group>"; };
 		F1E9EFD41C4521DA007E227D /* PItemEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PItemEditor.m; sourceTree = "<group>"; };
@@ -170,10 +172,10 @@
 		F18510751C1824C8004EC4C8 /* DiagramEditor */ = {
 			isa = PBXGroup;
 			children = (
+				F1B4861F1C47A2DD00752157 /* palettes */,
 				F10BE4341C29663E0053A7F9 /* Model */,
 				F15A96061C27F4A900ACA6FA /* XML Utilities */,
 				F17B75AE1C22D9D500AB1B57 /* Icons */,
-				F10F0FA41C1ED77A00165561 /* design.graphicR */,
 				F18510791C1824C8004EC4C8 /* AppDelegate.h */,
 				F185107A1C1824C8004EC4C8 /* AppDelegate.m */,
 				F185107C1C1824C8004EC4C8 /* ViewController.h */,
@@ -211,6 +213,15 @@
 				F18510771C1824C8004EC4C8 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F1B4861F1C47A2DD00752157 /* palettes */ = {
+			isa = PBXGroup;
+			children = (
+				F1B486201C47A31C00752157 /* WT_DesignPatterns (2).graphicR */,
+				F10F0FA41C1ED77A00165561 /* design.graphicR */,
+			);
+			name = palettes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -271,6 +282,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1B486211C47A31C00752157 /* WT_DesignPatterns (2).graphicR in Resources */,
 				F1AB3B161C22B19800EDBB1D /* resize.png in Resources */,
 				F10F0FA51C1ED77A00165561 /* design.graphicR in Resources */,
 				F18510861C1824C8004EC4C8 /* LaunchScreen.storyboard in Resources */,

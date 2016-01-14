@@ -36,6 +36,9 @@
     
     int canvasW;
     
+    
+    //Button outlets
+    __weak IBOutlet UIButton *saveButton;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 

@@ -23,6 +23,8 @@
 
 #define xmargin 10
 
+#define getPalettesWifi @"http://172.16.177.45:8080/palettes?json=true"
+
 #define getPalettes @"http://150.244.56.31:8080/palettes?json=true"
 
 @interface ConfigureDiagramViewController ()
@@ -244,14 +246,16 @@
 -(void)handleLongPress:(UILongPressGestureRecognizer *)gesture{
     PaletteItem * owner = (PaletteItem *)gesture.view;
     
-    CGPoint p = [gesture locationInView:gesture.view];
+    CGPoint p = [gesture locationInView:self.view];
     
     
     if(gesture.state == UIGestureRecognizerStateBegan){
         infoLabel.text = owner.dialog;
         
         [infoView setHidden:NO];
-        [infoView setCenter:CGPointMake(p.x, p.y -50)];
+        //[infoView setCenter:CGPointMake(p.x, p.y -50)];
+        [infoView setFrame:CGRectMake(p.x - initialInfoPosition.size.width/2, p.y -50 -initialInfoPosition.size.height/2, initialInfoPosition.size.width, initialInfoPosition.size.height)];
+        [infoView setNeedsDisplay];
     }else if(gesture.state == UIGestureRecognizerStateEnded){
         infoLabel.text = @"";
         [infoView setHidden:YES];

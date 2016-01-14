@@ -44,7 +44,7 @@
     [scrollView setContentSize:CGSizeMake(canvas.frame.size.width, canvas.frame.size.height)];
     [scrollView setBounces:NO];
     scrollView.contentSize = CGSizeMake(canvas.frame.size.width, canvas.frame.size.height);
-    scrollView.minimumZoomScale = 0.6;
+    scrollView.minimumZoomScale = 0.7;
     scrollView.maximumZoomScale = 4.0;
     scrollView.delegate = self;
     
@@ -220,6 +220,53 @@
 }
 
 - (IBAction)saveCurrentDiagram:(id)sender {
+    
+    
+    UIAlertController * ac  = [UIAlertController alertControllerWithTitle:nil
+                                                                  message:nil
+                                                           preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction * sendemail = [UIAlertAction actionWithTitle:@"Send email"
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * _Nonnull action) {
+                                                           
+                                                           NSString * txt = [self generateXML];
+                                                           
+                                                           controller = [[MFMailComposeViewController alloc] init];
+                                                           controller.mailComposeDelegate = self;
+                                                           [controller setSubject:@"Diagram test"];
+                                                           //[controller setMessageBody:@"Hello there." isHTML:NO];
+                                                           [controller setMessageBody:txt isHTML:NO];
+                                                           [self presentViewController:controller animated:YES completion:nil];
+                                                       }];
+    
+    UIAlertAction * saveondevice = [UIAlertAction actionWithTitle:@"Local save"
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * _Nonnull action) {
+                                                              
+                                                          }];
+    
+    UIAlertAction * cancel = [UIAlertAction actionWithTitle:@"Cancel"
+                                                      style:UIAlertActionStyleCancel
+                                                    handler:^(UIAlertAction * _Nonnull action) {
+                                                        
+                                                    }];
+    
+    [ac addAction:sendemail];
+    [ac addAction:saveondevice];
+    [ac addAction:cancel];
+    
+    
+    UIPopoverPresentationController * popover = ac.popoverPresentationController;
+    if(popover){
+        popover.sourceView = saveButton;
+        //popover.sourceRect = sender.bounds;
+        popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
+    }
+    
+    [self presentViewController:ac animated:YES completion:nil];
+}
+
+-(NSString *)generateXML{
     //Generate XML
     XMLWriter * writer = [[XMLWriter alloc] init];
     [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
@@ -257,15 +304,7 @@
     [writer writeEndDocument];
     
     NSString * xml = [writer toString];
-
-    
-    controller = [[MFMailComposeViewController alloc] init];
-    controller.mailComposeDelegate = self;
-    [controller setSubject:@"Diagram test"];
-    //[controller setMessageBody:@"Hello there." isHTML:NO];
-    [controller setMessageBody:xml isHTML:NO];
-    [self presentViewController:controller animated:YES completion:nil];
-    
+    return xml;
 }
 
 
