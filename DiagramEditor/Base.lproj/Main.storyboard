@@ -1,71 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="rN5-PV-uVv">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
-            <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kww-j4-hhl">
-                                <rect key="frame" x="246" y="123" width="108" height="75"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="108" id="aGe-7J-Kzx"/>
-                                    <constraint firstAttribute="height" constant="75" id="nmb-Sa-uSw"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                <state key="normal" title="New">
-                                    <color key="titleColor" red="0.71764705880000002" green="0.76862745099999996" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="createNewDiagram:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6Oa-ZD-1ER"/>
-                                    <segue destination="rN5-PV-uVv" kind="show" id="HhN-Nf-e9r"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h4R-eO-Epp">
-                                <rect key="frame" x="246" y="285" width="108" height="68"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="68" id="BlE-Hn-e29"/>
-                                    <constraint firstAttribute="width" constant="108" id="xXd-Gi-2xB"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                <state key="normal" title="Open old">
-                                    <color key="titleColor" red="0.71764705880000002" green="0.76862745099999996" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="openOldDiagram:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jtm-Mo-nRH"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <animations/>
-                        <color key="backgroundColor" red="0.13725490200000001" green="0.21176470589999999" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="h4R-eO-Epp" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="226" id="Cba-Tt-Y3q"/>
-                            <constraint firstItem="kww-j4-hhl" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="226" id="Iwx-Q8-pUs"/>
-                            <constraint firstItem="h4R-eO-Epp" firstAttribute="top" secondItem="kww-j4-hhl" secondAttribute="bottom" constant="87" id="Kme-5g-gdh"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="h4R-eO-Epp" secondAttribute="trailing" constant="226" id="M5y-oR-6Et"/>
-                            <constraint firstItem="kww-j4-hhl" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="103" id="m0O-vK-ces"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="kww-j4-hhl" secondAttribute="trailing" constant="226" id="t25-gz-SwV"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="245" y="327"/>
-        </scene>
         <!--Configure Diagram View Controller-->
         <scene sceneID="thf-TP-TtJ">
             <objects>
@@ -131,18 +71,6 @@
                                     <constraint firstItem="Cn7-28-AaA" firstAttribute="trailing" secondItem="rDy-wQ-BXK" secondAttribute="trailingMargin" id="hVC-Zf-2OE"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YMc-Ga-ahG">
-                                <rect key="frame" x="20" y="20" width="40" height="40"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="40" id="kFf-d4-t2R"/>
-                                    <constraint firstAttribute="height" constant="40" id="tEJ-cF-2Nd"/>
-                                </constraints>
-                                <state key="normal" image="back.png"/>
-                                <connections>
-                                    <action selector="dismissConfigureView:" destination="rN5-PV-uVv" eventType="touchUpInside" id="uq8-EH-gaH"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Server palettes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ccd-Ta-Xu9">
                                 <rect key="frame" x="242" y="84" width="116" height="21"/>
                                 <animations/>
@@ -198,7 +126,6 @@
                             <constraint firstItem="pzm-22-k2O" firstAttribute="top" secondItem="VzF-XD-cEL" secondAttribute="bottom" constant="26" id="40G-iJ-Jxg"/>
                             <constraint firstItem="aHo-aq-TeB" firstAttribute="top" secondItem="rDy-wQ-BXK" secondAttribute="bottom" constant="30" id="6fl-su-MP4"/>
                             <constraint firstItem="pzm-22-k2O" firstAttribute="top" secondItem="Rcu-8g-tKj" secondAttribute="bottom" constant="26" id="83U-mi-euL"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="YMc-Ga-ahG" secondAttribute="leading" id="8in-BS-QgE"/>
                             <constraint firstItem="pzm-22-k2O" firstAttribute="top" secondItem="lpV-Oy-DeW" secondAttribute="bottom" constant="26" id="9JA-db-RaR"/>
                             <constraint firstItem="Ccd-Ta-Xu9" firstAttribute="top" secondItem="Oza-78-sY5" secondAttribute="bottom" constant="64" id="AX6-jA-q3j"/>
                             <constraint firstItem="lpV-Oy-DeW" firstAttribute="top" secondItem="hPn-4M-2P3" secondAttribute="bottom" constant="8" id="JyY-2s-Vq6"/>
@@ -207,7 +134,6 @@
                             <constraint firstItem="rDy-wQ-BXK" firstAttribute="top" secondItem="iEf-WE-QBC" secondAttribute="top" constant="512" id="Sbx-mG-JIU"/>
                             <constraint firstAttribute="leadingMargin" secondItem="lpV-Oy-DeW" secondAttribute="leading" id="U9u-QU-4TG"/>
                             <constraint firstItem="VzF-XD-cEL" firstAttribute="top" secondItem="Ccd-Ta-Xu9" secondAttribute="bottom" constant="8" id="UMi-7f-Tb0"/>
-                            <constraint firstItem="YMc-Ga-ahG" firstAttribute="top" secondItem="Oza-78-sY5" secondAttribute="bottom" id="VIC-mT-g4e"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Rcu-8g-tKj" secondAttribute="trailing" id="VVT-dS-W8z"/>
                             <constraint firstAttribute="leadingMargin" secondItem="pzm-22-k2O" secondAttribute="leading" id="Vqc-vM-pCU"/>
                             <constraint firstItem="Rcu-8g-tKj" firstAttribute="top" secondItem="81O-6c-hrW" secondAttribute="bottom" constant="8" id="XSN-j4-bts"/>

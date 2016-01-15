@@ -174,7 +174,7 @@
                 NSLog(@"Creating a relation");
             }
         }else{
-            NSLog(@"Nanai, soltado fuera");
+            NSLog(@"There is no canvas on this point.");
         }
         
         

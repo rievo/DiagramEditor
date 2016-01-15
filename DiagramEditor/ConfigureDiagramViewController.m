@@ -27,6 +27,8 @@
 
 #define getPalettes @"http://150.244.56.31:8080/palettes?json=true"
 
+#define fileExtension @".graphicR"
+
 @interface ConfigureDiagramViewController ()
 
 @end
@@ -73,8 +75,34 @@
                                                 selector:@selector(loadFilesFromServer)
                                                   object:nil];
     [thread start];
+    
+    
+    //Load local files
+    NSThread * locThread = [[NSThread alloc] initWithTarget:self
+                                                selector:@selector(loadLocalFiles)
+                                                  object:nil];
+    [locThread start];
 }
 
+
+-(void)loadLocalFiles{
+    NSFileManager  *manager = [NSFileManager defaultManager];
+    // the preferred way to get the apps documents directory
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    
+    // grab all the files in the documents dir
+    NSArray *allFiles = [manager contentsOfDirectoryAtPath:documentsDirectory error:nil];
+    
+    // filter the array for only sqlite files
+    NSPredicate *fltr = [NSPredicate predicateWithFormat:@"self ENDSWITH '.graphicR'"];
+    NSArray *graphicRFiles = [allFiles filteredArrayUsingPredicate:fltr];
+    
+    for(NSString * str in graphicRFiles){
+        NSLog(@"   --> %@", str);
+    }
+
+}
 
 -(void)loadFilesFromServer{
     NSURL *url = [NSURL URLWithString:getPalettes];
@@ -354,12 +382,5 @@
     
 }
 
-
-
-- (IBAction)dismissConfigureView:(id)sender {
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
-}
 
 @end
