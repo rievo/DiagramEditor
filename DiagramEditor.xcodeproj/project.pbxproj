@@ -35,8 +35,8 @@
 		F1A20A851C198A540037C05D /* PaletteItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A20A841C198A540037C05D /* PaletteItem.m */; };
 		F1AB3B161C22B19800EDBB1D /* resize.png in Resources */ = {isa = PBXBuildFile; fileRef = F1AB3B151C22B19800EDBB1D /* resize.png */; };
 		F1B4861E1C46604700752157 /* PaletteFile.m in Sources */ = {isa = PBXBuildFile; fileRef = F1B4861D1C46604700752157 /* PaletteFile.m */; };
-		F1B486211C47A31C00752157 /* WT_DesignPatterns (2).graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F1B486201C47A31C00752157 /* WT_DesignPatterns (2).graphicR */; };
 		F1C6347B1C2842C30072912D /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C6347A1C2842C30072912D /* camera.png */; };
+		F1DAE7A71C4D023000ECDD34 /* DFAAutomaton.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F1DAE7A61C4D023000ECDD34 /* DFAAutomaton.graphicR */; };
 		F1E9EFD51C4521DA007E227D /* PItemEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E9EFD41C4521DA007E227D /* PItemEditor.m */; };
 		F1E9EFD81C4524CD007E227D /* PaletteItemCreatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E9EFD71C4524CD007E227D /* PaletteItemCreatorViewController.m */; };
 /* End PBXBuildFile section */
@@ -87,8 +87,8 @@
 		F1AB3B151C22B19800EDBB1D /* resize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resize.png; sourceTree = "<group>"; };
 		F1B4861C1C46604700752157 /* PaletteFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaletteFile.h; sourceTree = "<group>"; };
 		F1B4861D1C46604700752157 /* PaletteFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaletteFile.m; sourceTree = "<group>"; };
-		F1B486201C47A31C00752157 /* WT_DesignPatterns (2).graphicR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "WT_DesignPatterns (2).graphicR"; sourceTree = "<group>"; };
 		F1C6347A1C2842C30072912D /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
+		F1DAE7A61C4D023000ECDD34 /* DFAAutomaton.graphicR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = DFAAutomaton.graphicR; sourceTree = "<group>"; };
 		F1E9EFD31C4521DA007E227D /* PItemEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PItemEditor.h; sourceTree = "<group>"; };
 		F1E9EFD41C4521DA007E227D /* PItemEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PItemEditor.m; sourceTree = "<group>"; };
 		F1E9EFD61C4524CD007E227D /* PaletteItemCreatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaletteItemCreatorViewController.h; sourceTree = "<group>"; };
@@ -213,7 +213,7 @@
 		F1B4861F1C47A2DD00752157 /* palettes */ = {
 			isa = PBXGroup;
 			children = (
-				F1B486201C47A31C00752157 /* WT_DesignPatterns (2).graphicR */,
+				F1DAE7A61C4D023000ECDD34 /* DFAAutomaton.graphicR */,
 				F10F0FA41C1ED77A00165561 /* design.graphicR */,
 			);
 			name = palettes;
@@ -277,11 +277,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F1B486211C47A31C00752157 /* WT_DesignPatterns (2).graphicR in Resources */,
 				F1AB3B161C22B19800EDBB1D /* resize.png in Resources */,
 				F10F0FA51C1ED77A00165561 /* design.graphicR in Resources */,
 				F18510861C1824C8004EC4C8 /* LaunchScreen.storyboard in Resources */,
 				F19C258E1C43AB580002E490 /* back.png in Resources */,
+				F1DAE7A71C4D023000ECDD34 /* DFAAutomaton.graphicR in Resources */,
 				F1A20A791C1977430037C05D /* minus-512.png in Resources */,
 				F17B75A91C22D6E100AB1B57 /* newDocument.png in Resources */,
 				F19C25901C43AB8B0002E490 /* palette.png in Resources */,

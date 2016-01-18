@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ASCII"?>
+<graphicR:GraphicRepresentation xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:graphicR="http://mondo.org/graphic_representation/1.0.3">
+  <allGraphicRepresentation extension="automaton">
+    <root>
+      <anEClass href="DFAAutomaton.ecore#//Automaton"/>
+    </root>
+    <layers xsi:type="graphicR:DefaultLayer" name="Default Layer">
+      <elements xsi:type="graphicR:Node">
+        <anEClass href="DFAAutomaton.ecore#//AlphabetSymbol"/>
+        <diag_palette palette_name="Create AlphabetSymbol"/>
+        <containerReference href="DFAAutomaton.ecore#//Automaton/alphabet"/>
+        <node_elements>
+          <LabelanEAttribute>
+            <anEAttribute href="DFAAutomaton.ecore#//AlphabetSymbol/symbol"/>
+          </LabelanEAttribute>
+        </node_elements>
+        <node_shape xsi:type="graphicR:Ellipse" color="chocolate" borderStyle="dot" borderWidth="2"/>
+      </elements>
+      <elements xsi:type="graphicR:Node">
+        <anEClass href="DFAAutomaton.ecore#//State"/>
+        <diag_palette palette_name="Create State"/>
+        <containerReference href="DFAAutomaton.ecore#//Automaton/states"/>
+        <node_elements>
+          <LabelanEAttribute>
+            <anEAttribute href="DFAAutomaton.ecore#//State/name"/>
+          </LabelanEAttribute>
+        </node_elements>
+        <node_shape xsi:type="graphicR:Ellipse" color="dark_chocolate" borderStyle="dash" borderWidth="2"/>
+      </elements>
+      <elements xsi:type="graphicR:Edge">
+        <anEClass href="DFAAutomaton.ecore#//Transition"/>
+        <diag_palette palette_name="Create Transition"/>
+        <directions>
+          <sourceLink decoratorName="OutputArrow">
+            <anEReference href="DFAAutomaton.ecore#//Transition/from"/>
+          </sourceLink>
+          <targetLink decoratorName="InputArrow">
+            <anEReference href="DFAAutomaton.ecore#//Transition/to"/>
+          </targetLink>
+        </directions>
+        <edge_style color="dark_red"/>
+      </elements>
+    </layers>
+  </allGraphicRepresentation>
+</graphicR:GraphicRepresentation>
