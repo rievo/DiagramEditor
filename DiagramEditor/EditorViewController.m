@@ -48,6 +48,8 @@
     scrollView.maximumZoomScale = 4.0;
     scrollView.delegate = self;
     
+    [self setZoomForIntValue:0]; //No zoom
+    
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(showComponentDetails:)
@@ -60,18 +62,6 @@
                                                object:nil];
     
     
-    //Load palette
-    /*
-    palette.paletteItems = [[NSMutableArray alloc] initWithArray:dele.paletteItems];
-    [palette preparePalette];
-    
-    //Añadimos a los items de la paleta el gestor de gestos para poder arrastrarlos
-    for(int i  =0; i< dele.paletteItems.count; i++){
-        PaletteItem * item = [dele.paletteItems objectAtIndex:i];
-        
-        UIPanGestureRecognizer * panGr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
-        [item addGestureRecognizer:panGr];
-    }*/
     
     backSure = [[UIView alloc] initWithFrame:self.view.frame];
     [self.view addSubview:backSure];
@@ -88,6 +78,14 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+-(void)setZoomForIntValue:(int) val{
+    float minz = scrollView.minimumZoomScale;
+    float maxz = scrollView.maximumZoomScale;
+    
+    float current = val * minz / maxz;
+    [scrollView setZoomScale:current animated:YES];
+}
 
 -(void)viewWillAppear:(BOOL)animated{
     palette.paletteItems = [[NSMutableArray alloc] initWithArray:dele.paletteItems];

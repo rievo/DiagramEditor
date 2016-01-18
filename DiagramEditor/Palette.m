@@ -60,6 +60,11 @@
 
 
 -(void)resetPalette{
-        paletteItems = [[NSMutableArray alloc] init];
+    PaletteItem * pi = nil;
+    for(int i = 0; i< paletteItems.count; i++){
+        pi = [paletteItems objectAtIndex:i];
+        [pi removeFromSuperview];
+    }
+    paletteItems = [[NSMutableArray alloc] init];
 }
 @end

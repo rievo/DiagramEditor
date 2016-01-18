@@ -21,7 +21,7 @@
 
 #define scale 15
 
-#define xmargin 10
+#define xmargin 20
 
 #define getPalettesWifi @"http://172.16.177.45:8080/palettes?json=true"
 
@@ -69,6 +69,8 @@
     [serverFilesTable setDataSource:self];
     [serverFilesTable setDelegate:self];
     
+
+    
     
     //Load files from server
     NSThread * thread = [[NSThread alloc] initWithTarget:self
@@ -84,6 +86,7 @@
     [locThread start];
 }
 
+#pragma mark Recover files from server and local device
 
 -(void)loadLocalFiles{
     NSFileManager  *manager = [NSFileManager defaultManager];
@@ -101,7 +104,26 @@
     for(NSString * str in graphicRFiles){
         NSLog(@"   --> %@", str);
     }
-
+    
+    
+    //Load from bundle
+    
+    NSArray * bpaths = [[NSBundle mainBundle] pathsForResourcesOfType:@".graphicR" inDirectory:nil];
+    NSString * content = nil;
+    for(NSString * path in bpaths){
+        content = [NSString stringWithContentsOfFile:path
+                                            encoding:NSUTF8StringEncoding
+                                               error:nil];
+        PaletteFile * pf = [[PaletteFile alloc] init];
+        NSArray * components = [path componentsSeparatedByString:@"/"];
+        
+        pf.name = [components objectAtIndex:components.count -1];
+        pf.content = content;
+        
+        [localFilesArray addObject:pf];
+    }
+    
+    [localFilesTable reloadData];
 }
 
 -(void)loadFilesFromServer{
@@ -134,6 +156,7 @@
                  }
                  
                  
+                   NSLog(@"[NSThread isMainThread] = %d", [NSThread isMainThread]);
                  [serverFilesTable reloadData];
                  
              }else{
@@ -144,17 +167,26 @@
      }];
 }
 
+
+#pragma mark Read file/palette and proccess
+
 /*  Read file and proccess  */
 
 -(void)extractPalettesForContentsOfFile: (NSString *)text{
+    [palette resetPalette];
     
     [palettes removeAllObjects];
-    
-    //NSString *filePath = [[NSBundle mainBundle] pathForResource:@"design" ofType:@"graphicR"];
-    //configuration = [NSDictionary dictionaryWithXMLFile:filePath];
+
     configuration = [NSDictionary dictionaryWithXMLString:text];
     
-    NSArray * allGraphicRepresentations = [configuration objectForKey:@"allGraphicRepresentation"];
+    NSArray * allGraphicRepresentations = (NSArray *)[configuration objectForKey:@"allGraphicRepresentation"];
+    
+    
+    //Por si el fichero tiene un solo "allGraphicrepresentation
+    //En ese caso, la llamada a "dictionaryWithXMLString" devuelve un NSDictionary, que añadimos al array
+    if([allGraphicRepresentations isKindOfClass:[NSDictionary class]]){
+        allGraphicRepresentations = [[NSArray alloc] initWithObjects:[configuration objectForKey:@"allGraphicRepresentation"], nil];
+    }
     
     for(int gr = 0; gr < allGraphicRepresentations.count; gr++){
         
@@ -259,6 +291,8 @@
     [palette preparePalette];
 }
 
+#pragma mark UIGesture recognizer methods
+
 -(void)addRecognizers{
     //Add longPressGestureRecognizer in order to show palette dialog
     for(int i = 0; i<palette.paletteItems.count; i++){
@@ -276,13 +310,16 @@
     
     CGPoint p = [gesture locationInView:self.view];
     
+    NSLog(@"%@",[NSString stringWithFormat:@"(%.2f,%.2f)", p.x, p.y]);
+    
     
     if(gesture.state == UIGestureRecognizerStateBegan){
         infoLabel.text = owner.dialog;
         
         [infoView setHidden:NO];
+        [infoView setCenter:CGPointMake(100, 100)];
         //[infoView setCenter:CGPointMake(p.x, p.y -50)];
-        [infoView setFrame:CGRectMake(p.x - initialInfoPosition.size.width/2, p.y -50 -initialInfoPosition.size.height/2, initialInfoPosition.size.width, initialInfoPosition.size.height)];
+        //[infoView setFrame:CGRectMake(p.x - initialInfoPosition.size.width/2, p.y -50 -initialInfoPosition.size.height/2, initialInfoPosition.size.width, initialInfoPosition.size.height)];
         [infoView setNeedsDisplay];
     }else if(gesture.state == UIGestureRecognizerStateEnded){
         infoLabel.text = @"";
@@ -291,6 +328,8 @@
     }
 }
 
+
+#pragma mark Did receive memory warning
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -329,6 +368,8 @@
         return [palettes count];
     else if(tableView == serverFilesTable)
         return [serverFilesArray count];
+    else if(tableView == localFilesTable)
+        return [localFilesArray count];
     else
         return 0;
 }
@@ -358,6 +399,10 @@
         PaletteFile * pf = [serverFilesArray objectAtIndex:indexPath.row];
         cell.textLabel.text = pf.name;
         cell.textLabel.textColor = dele.blue3;
+    }else if(tableView == localFilesTable){
+        PaletteFile * pf = [localFilesArray objectAtIndex:indexPath.row];
+        cell.textLabel.text = pf.name;
+        cell.textLabel.textColor = dele.blue3;
     }
     return cell;
 }
@@ -366,9 +411,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if(tableView == palettesTable){
+        [palette resetPalette];
         Palette * selected = [palettes objectAtIndex:indexPath.row];
         //[selected setFrame:palette.frame];
         palette.paletteItems = selected.paletteItems;
+        
         [palette preparePalette];
         [palette setNeedsDisplay];
         
@@ -378,6 +425,10 @@
         PaletteFile * file = [serverFilesArray objectAtIndex:indexPath.row];
         
         [self extractPalettesForContentsOfFile:file.content];
+    }else if (tableView == localFilesTable){
+        [palette resetPalette];
+        PaletteFile * pf = [localFilesArray objectAtIndex:indexPath.row];
+        [self extractPalettesForContentsOfFile:pf.content];
     }
     
 }
