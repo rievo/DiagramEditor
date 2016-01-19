@@ -23,9 +23,7 @@
 
 #define xmargin 20
 
-#define getPalettesWifi @"http://172.16.177.45:8080/palettes?json=true"
-
-#define getPalettes @"http://150.244.56.31:8080/palettes?json=true"
+#define getPalettes @"https://diagrameditorserver.herokuapp.com/palettes?json=true"
 
 #define fileExtension @".graphicR"
 
