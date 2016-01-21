@@ -36,16 +36,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    initialInfoPosition = infoView.frame;
+    //initialInfoPosition = infoView.frame;
     [infoView setHidden:YES];
-    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+   /* UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
     UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
     blurEffectView.frame = infoView.bounds;
     blurEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     [infoView addSubview:blurEffectView];
     
-    [infoView sendSubviewToBack:blurEffectView];
+    [infoView sendSubviewToBack:blurEffectView]; */
     
     
     dele = [UIApplication sharedApplication].delegate;
@@ -322,17 +322,17 @@
     
     
     if(gesture.state == UIGestureRecognizerStateBegan){
+        [infoView setCenter:CGPointMake(p.x, p.y -70)];
         infoLabel.text = owner.dialog;
+        //[infoView setHidden:NO];
         
-        [infoView setHidden:NO];
-        [infoView setCenter:CGPointMake(100, 100)];
-        //[infoView setCenter:CGPointMake(p.x, p.y -50)];
-        //[infoView setFrame:CGRectMake(p.x - initialInfoPosition.size.width/2, p.y -50 -initialInfoPosition.size.height/2, initialInfoPosition.size.width, initialInfoPosition.size.height)];
-        [infoView setNeedsDisplay];
     }else if(gesture.state == UIGestureRecognizerStateEnded){
         infoLabel.text = @"";
         [infoView setHidden:YES];
-        [infoView setFrame:initialInfoPosition];
+    }else if(gesture.state == UIGestureRecognizerStateChanged){
+        [infoView setHidden:NO];
+        [infoView setCenter:CGPointMake(p.x, p.y-70)];
+        
     }
 }
 
