@@ -32,6 +32,8 @@
     NSMutableArray * serverFilesArray;
 
     NSMutableArray * palettes;
+    
+    NSTimer * refreshTimer;
 }
 
 @end

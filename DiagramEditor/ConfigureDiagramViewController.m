@@ -76,6 +76,12 @@
                                                   object:nil];
     [thread start];
     
+    refreshTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
+                                                    target:self
+                                                  selector:@selector(loadFilesFromServer)
+                                                  userInfo:nil
+                                                   repeats:YES];
+    
     
     //Load local files
     NSThread * locThread = [[NSThread alloc] initWithTarget:self
@@ -99,13 +105,7 @@
     NSPredicate *fltr = [NSPredicate predicateWithFormat:@"self ENDSWITH '.graphicR'"];
     NSArray *graphicRFiles = [allFiles filteredArrayUsingPredicate:fltr];
     
-    for(NSString * str in graphicRFiles){
-        NSLog(@"   --> %@", str);
-    }
-    
-    
     //Load from bundle
-    
     NSArray * bpaths = [[NSBundle mainBundle] pathsForResourcesOfType:@".graphicR" inDirectory:nil];
     NSString * content = nil;
     for(NSString * path in bpaths){
@@ -121,10 +121,15 @@
         [localFilesArray addObject:pf];
     }
     
-    [localFilesTable reloadData];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [localFilesTable reloadData];
+    });
+    
+    
 }
 
 -(void)loadFilesFromServer{
+    NSLog(@"Loading files from server");
     NSURL *url = [NSURL URLWithString:getPalettes];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request
@@ -137,7 +142,8 @@
              NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data
                                                                  options:0
                                                                    error:NULL];
-             NSLog(@"%@", dic);
+             
+             [serverFilesArray removeAllObjects];
              
              NSString * code = [dic objectForKey:@"code"];
              
@@ -154,8 +160,12 @@
                  }
                  
                  
-                   NSLog(@"[NSThread isMainThread] = %d", [NSThread isMainThread]);
-                 [serverFilesTable reloadData];
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [serverFilesTable reloadData];
+                 });
+                 
+                 
+                
                  
              }else{
                  NSLog(@"error");
