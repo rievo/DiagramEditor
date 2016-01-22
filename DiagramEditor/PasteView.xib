@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="PasteView">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HGY-Pd-7Ec">
+                    <rect key="frame" x="326" y="8" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="4Oq-EQ-D3z"/>
+                        <constraint firstAttribute="height" constant="50" id="RRq-YN-NnQ"/>
+                    </constraints>
+                    <state key="normal" image="ok.png"/>
+                    <connections>
+                        <action selector="ok:" destination="iN0-l3-epB" eventType="touchUpInside" id="k3g-jY-WbD"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ozv-gO-V6K">
+                    <rect key="frame" x="252" y="11" width="45" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="45" id="Sw3-Ho-XIk"/>
+                        <constraint firstAttribute="height" constant="44" id="WWn-Cp-cO6"/>
+                    </constraints>
+                    <state key="normal" image="cancel.png"/>
+                    <connections>
+                        <action selector="cancel:" destination="iN0-l3-epB" eventType="touchUpInside" id="4EH-1U-NXS"/>
+                    </connections>
+                </button>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EcU-6t-39b">
+                    <rect key="frame" x="8" y="63" width="584" height="529"/>
+                    <color key="backgroundColor" red="0.71764705882352942" green="0.76862745098039209" blue="0.89803921568627454" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="textColor" red="0.32156863808631897" green="0.40392157435417175" blue="0.57647061347961426" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textView>
+            </subviews>
+            <color key="backgroundColor" red="0.32156863808631897" green="0.40392157435417175" blue="0.57647061347961426" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="EcU-6t-39b" secondAttribute="bottom" constant="8" id="5Wf-cN-W2d"/>
+                <constraint firstItem="HGY-Pd-7Ec" firstAttribute="leading" secondItem="ozv-gO-V6K" secondAttribute="trailing" constant="29" id="JfY-8O-spp"/>
+                <constraint firstItem="EcU-6t-39b" firstAttribute="top" secondItem="ozv-gO-V6K" secondAttribute="bottom" constant="8" id="MSL-j8-XhA"/>
+                <constraint firstItem="EcU-6t-39b" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="YLo-bO-dbj"/>
+                <constraint firstItem="HGY-Pd-7Ec" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="d1Q-VE-vZL"/>
+                <constraint firstItem="ozv-gO-V6K" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="11" id="jZJ-rI-afy"/>
+                <constraint firstAttribute="trailing" secondItem="EcU-6t-39b" secondAttribute="trailing" constant="8" id="mXm-er-3Z5"/>
+                <constraint firstItem="ozv-gO-V6K" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="252" id="yN6-JO-Caw"/>
+            </constraints>
+            <connections>
+                <outlet property="textview" destination="EcU-6t-39b" id="Z5c-4B-Hm1"/>
+            </connections>
+        </view>
+    </objects>
+    <resources>
+        <image name="cancel.png" width="100" height="100"/>
+        <image name="ok.png" width="100" height="100"/>
+    </resources>
+</document>

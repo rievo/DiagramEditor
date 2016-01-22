@@ -14,6 +14,7 @@
 #import "ColorPalette.h"
 
 #import "PaletteFile.h"
+#import "PasteView.h"
 
 
 #define defaultwidth 50
@@ -38,14 +39,14 @@
     
     //initialInfoPosition = infoView.frame;
     [infoView setHidden:YES];
-   /* UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-    UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-    blurEffectView.frame = infoView.bounds;
-    blurEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    
-    [infoView addSubview:blurEffectView];
-    
-    [infoView sendSubviewToBack:blurEffectView]; */
+    /* UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+     UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+     blurEffectView.frame = infoView.bounds;
+     blurEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+     
+     [infoView addSubview:blurEffectView];
+     
+     [infoView sendSubviewToBack:blurEffectView]; */
     
     
     dele = [UIApplication sharedApplication].delegate;
@@ -67,7 +68,7 @@
     [serverFilesTable setDataSource:self];
     [serverFilesTable setDelegate:self];
     
-
+    
     
     
     //Load files from server
@@ -85,8 +86,8 @@
     
     //Load local files
     NSThread * locThread = [[NSThread alloc] initWithTarget:self
-                                                selector:@selector(loadLocalFiles)
-                                                  object:nil];
+                                                   selector:@selector(loadLocalFiles)
+                                                     object:nil];
     [locThread start];
 }
 
@@ -165,7 +166,7 @@
                  });
                  
                  
-                
+                 
                  
              }else{
                  NSLog(@"error");
@@ -184,7 +185,7 @@
     [palette resetPalette];
     
     [palettes removeAllObjects];
-
+    
     configuration = [NSDictionary dictionaryWithXMLString:text];
     
     NSArray * allGraphicRepresentations = (NSArray *)[configuration objectForKey:@"allGraphicRepresentation"];
@@ -324,7 +325,6 @@
     if(gesture.state == UIGestureRecognizerStateBegan){
         [infoView setCenter:CGPointMake(p.x, p.y -70)];
         infoLabel.text = owner.dialog;
-        //[infoView setHidden:NO];
         
     }else if(gesture.state == UIGestureRecognizerStateEnded){
         infoLabel.text = @"";
@@ -441,5 +441,93 @@
     
 }
 
+
+-(void)showOptionsPopup{
+    
+    UIAlertController * ac  = [UIAlertController alertControllerWithTitle:nil
+                                                                  message:nil
+                                                           preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    
+    
+    UIAlertAction * loadFromServer = [UIAlertAction actionWithTitle:@"Load from server"
+                                                              style:UIAlertActionStyleDefault
+                                                            handler:^(UIAlertAction * _Nonnull action) {
+                                                                
+                                                            }];
+    
+    UIAlertAction * pasteFromText = [UIAlertAction actionWithTitle:@"Paste from text"
+                                                             style:UIAlertActionStyleDefault
+                                                           handler:^(UIAlertAction * _Nonnull action) {
+                                                               
+                                                               
+                                                               rootView = [[[NSBundle mainBundle] loadNibNamed:@"PasteView"
+                                                                                                                 owner:self
+                                                                                                               options:nil] objectAtIndex:0];
+                                                               
+                                                               
+                                                               UIView * backView = [[UIView alloc] initWithFrame:self.view.frame];
+                                                               
+                                                               UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+                                                               UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+                                                               blurEffectView.frame = backView.frame;
+                                                               blurEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+                                                               
+                                                               [backView addSubview:blurEffectView];
+                                                               
+                                                               [backView sendSubviewToBack:blurEffectView];
+                                                               
+                                                               [backView addSubview:rootView];
+                                                               [rootView setCenter:backView.center];
+                                                               
+                                                               rootView.backView = backView;
+                                                               
+                                                               [rootView setDelegate:self];
+                                                               
+                                                               [self.view addSubview:backView];
+                                                           }];
+    UIAlertAction * loadFromLocal = [UIAlertAction actionWithTitle:@"Load a local file"
+                                                             style:UIAlertActionStyleDefault
+                                                           handler:^(UIAlertAction * _Nonnull action) {
+                                                               
+                                                           }];
+    
+    UIAlertAction * cancel = [UIAlertAction actionWithTitle:@"Cancel"
+                                                      style:UIAlertActionStyleCancel
+                                                    handler:^(UIAlertAction * _Nonnull action) {
+                                                        
+                                                    }];
+    
+    [ac addAction:loadFromServer];
+    [ac addAction:loadFromLocal];
+    [ac addAction:pasteFromText];
+    [ac addAction:cancel];
+    
+    
+    UIPopoverPresentationController * popover = ac.popoverPresentationController;
+    if(popover){
+        popover.sourceView = folder;
+        popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
+    }
+    
+    [self presentViewController:ac animated:YES completion:nil];
+}
+
+
+- (IBAction)openOldDiagram:(id)sender {
+    [self showOptionsPopup];
+}
+
+
+#pragma mark PasteViewDelegate
+
+-(void)saveTextFromPasteView: (PasteView *) pasteView{
+    NSString * text = [pasteView.textview text];
+    
+    //Open diagram with that text
+    
+    //We need palette name
+    
+}
 
 @end

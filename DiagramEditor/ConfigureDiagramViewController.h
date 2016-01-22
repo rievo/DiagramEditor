@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PasteView.h"
 @class AppDelegate;
 @class Palette;
 
 
-@interface ConfigureDiagramViewController : UIViewController<UIScrollViewDelegate, UIGestureRecognizerDelegate, UITableViewDataSource, UITableViewDelegate>{
+@interface ConfigureDiagramViewController : UIViewController<UIScrollViewDelegate, UIGestureRecognizerDelegate, UITableViewDataSource, UITableViewDelegate, PasteViewDelegate>{
     NSDictionary * configuration;
     AppDelegate * dele;
     __weak IBOutlet UIScrollView *scrollView;
@@ -34,6 +35,9 @@
     NSMutableArray * palettes;
     
     NSTimer * refreshTimer;
+    __weak IBOutlet UIButton *folder;
+    
+    PasteView *rootView ;
 }
 
 @end
