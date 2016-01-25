@@ -18,6 +18,8 @@
 
 #import "ClassAttribute.h"
 
+#import "ExploreFilesView.h"
+
 #define defaultwidth 50
 #define defaultheight 50
 
@@ -303,10 +305,19 @@
         [palettes addObject:tempPalete];
     }
     
+
     [palettesTable reloadData];
     [palette preparePalette];
     
     
+    if(palettes.count == 0){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
+                                                        message:@"This palette doesn't have items"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
     
 }
 
@@ -508,6 +519,14 @@
     UIAlertAction * loadFromLocal = [UIAlertAction actionWithTitle:@"Load a local file"
                                                              style:UIAlertActionStyleDefault
                                                            handler:^(UIAlertAction * _Nonnull action) {
+                                                               ExploreFilesView * efv = [[[NSBundle mainBundle] loadNibNamed:@"ExploreFilesView"
+                                                                                                                       owner:self
+                                                                                                                     options:nil] objectAtIndex:0];
+                                                               [efv setFrame:self.view.frame];
+                                                               [efv.background setFrame:self.view.frame];
+                                                               efv.delegate = self;
+                                                               
+                                                               [self.view addSubview:efv];
                                                                
                                                            }];
     
@@ -627,5 +646,13 @@
 
 -(void)parseJSONDiagram: (NSString *)text{
     
+}
+
+#pragma mark ExploreFilesView delegate
+-(void)reactToFile:(NSString *)path{
+    
+    //Tenemos el fichero del diagrama
+    //¿Necesitamos la paleta con la que se hizo?
+    NSLog(path);
 }
 @end

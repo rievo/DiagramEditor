@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "PasteView.h"
+#import "ExploreFilesView.h"
 @class AppDelegate;
 @class Palette;
 
 
-@interface ConfigureDiagramViewController : UIViewController<UIScrollViewDelegate, UIGestureRecognizerDelegate, UITableViewDataSource, UITableViewDelegate, PasteViewDelegate>{
+@interface ConfigureDiagramViewController : UIViewController<UIScrollViewDelegate, UIGestureRecognizerDelegate, UITableViewDataSource, UITableViewDelegate, PasteViewDelegate, ExploreFilesDelegate>{
     NSDictionary * configuration;
     AppDelegate * dele;
     __weak IBOutlet UIScrollView *scrollView;
