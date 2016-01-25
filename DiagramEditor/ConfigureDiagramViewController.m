@@ -428,16 +428,17 @@
         Palette * temp = [palettes objectAtIndex:indexPath.row];
         cell.textLabel.text = temp.name;
         //cell.backgroundColor = [UIColor clearColor];
-        cell.textLabel.textColor = dele.blue3;
     }else if(tableView == serverFilesTable){
         PaletteFile * pf = [serverFilesArray objectAtIndex:indexPath.row];
         cell.textLabel.text = pf.name;
-        cell.textLabel.textColor = dele.blue3;
+
     }else if(tableView == localFilesTable){
         PaletteFile * pf = [localFilesArray objectAtIndex:indexPath.row];
         cell.textLabel.text = pf.name;
-        cell.textLabel.textColor = dele.blue3;
+        
     }
+    cell.textLabel.textColor = dele.blue4;
+    cell.backgroundColor = [UIColor clearColor];
     return cell;
 }
 
