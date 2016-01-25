@@ -11,14 +11,16 @@
 #import "AppDelegate.h"
 #import "Canvas.h"
 #import "ComponentDetailsView.h"
+#import "SaveNameView.h"
 
 
 @class Palette;
 @class PaletteItem;
 @class ComponentDetailsView;
+
 #import <MessageUI/MFMailComposeViewController.h>
 
-@interface EditorViewController : UIViewController<MFMailComposeViewControllerDelegate, UIGestureRecognizerDelegate, UIScrollViewDelegate, ComponentDetailsViewDelegate>{
+@interface EditorViewController : UIViewController<MFMailComposeViewControllerDelegate, UIGestureRecognizerDelegate, UIScrollViewDelegate, ComponentDetailsViewDelegate, SaveNameDelegate>{
     AppDelegate * dele;
     __weak IBOutlet Palette *palette;
     
@@ -48,10 +50,16 @@
     ComponentDetailsView * compDetView;
     UIView * containerView;
     
+    UIView * saveBackgroundBlackView;
+    SaveNameView * snv;
+    
+    NSString * textToSave;
+    NSString * oldFileName;
+    
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
-- (IBAction)addElement:(id)sender;
+
 - (IBAction)showComponentList:(id)sender;
 - (IBAction)showActionsList:(id)sender;
 - (IBAction)createNewDiagram:(id)sender;

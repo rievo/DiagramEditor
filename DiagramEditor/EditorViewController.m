@@ -291,7 +291,7 @@
     UIAlertAction * saveondevice = [UIAlertAction actionWithTitle:@"Local save"
                                                             style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * _Nonnull action) {
-                                                              
+                                                              [self saveDiagramOnDevice];
                                                           }];
     
     UIAlertAction * cancel = [UIAlertAction actionWithTitle:@"Cancel"
@@ -313,6 +313,52 @@
     }
     
     [self presentViewController:ac animated:YES completion:nil];
+}
+
+-(void) saveDiagramOnDevice{
+    textToSave = [self generateXML];
+
+    [snv removeFromSuperview];
+    
+    [saveBackgroundBlackView removeFromSuperview];
+    saveBackgroundBlackView = [[UIView alloc] initWithFrame:self.view.frame];
+    [saveBackgroundBlackView setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5]];
+    
+    snv = [[[NSBundle mainBundle] loadNibNamed:@"SaveNameView"
+                                                        owner:self
+                                                      options:nil] objectAtIndex:0];
+    
+    if(oldFileName.length  > 0)
+        snv.textField.text = oldFileName;
+    snv.center = saveBackgroundBlackView.center;
+    [saveBackgroundBlackView addSubview:snv];
+    snv.delegate = self;
+    
+    [self.view addSubview:saveBackgroundBlackView];
+}
+
+-(void)writeFile: (NSString *)name{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
+    NSString *folderPath = [documentsDirectory stringByAppendingPathComponent:@"/diagrams"];
+    NSFileManager *fileManager  = [NSFileManager defaultManager];
+    
+    NSError *error = nil;
+    if (![fileManager fileExistsAtPath:folderPath])
+        [fileManager createDirectoryAtPath:folderPath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
+    
+    if(error){
+        NSLog([error description]);
+    }
+    
+    error = nil;
+    NSString *filePath = [folderPath stringByAppendingPathComponent:name];
+    [textToSave writeToFile:filePath atomically:NO encoding:NSUTF8StringEncoding error:&error];
+    
+    if(error){
+        NSLog([error description]);
+    }
+    
 }
 
 -(NSString *)generateXML{
@@ -543,4 +589,16 @@
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
     return  YES;
 }
+
+
+#pragma mark SaveNameDelegate
+-(void)saveName: (NSString *)name{
+    [self writeFile:name];
+    oldFileName = name;
+    [saveBackgroundBlackView setHidden:YES];
+}
+-(void)cancelSaving{
+    [saveBackgroundBlackView setHidden:YES];
+}
+
 @end

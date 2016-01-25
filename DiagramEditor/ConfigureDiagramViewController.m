@@ -550,7 +550,7 @@
 }
 
 
-#pragma mark Parse exported json
+#pragma mark Parse exported json / ecore
 -(void)completePaletteForJSONAttributes{
     //dele.paletteIttems
     //Para cada item de la paleta, tendré que rellenar el array de atributos
@@ -582,11 +582,8 @@
         
         
     }
-    
-    int res = 3;
+
 }
-
-
 -(NSMutableArray *)getAttributesForClass: (NSString *) key
                           onClassArray: (NSArray *)classArray{
     ClassAttribute * temp;
@@ -622,5 +619,13 @@
     }
     
     return attributes;
+}
+
+-(void)parseXMLDiagram: (NSString *)text{
+    
+}
+
+-(void)parseJSONDiagram: (NSString *)text{
+    
 }
 @end

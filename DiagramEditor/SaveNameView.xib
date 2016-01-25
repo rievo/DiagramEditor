@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="SaveNameView">
+            <rect key="frame" x="0.0" y="0.0" width="409" height="171"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter file name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4rQ-vB-IaC">
+                    <rect key="frame" x="32" y="43" width="119" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.71764707565307617" green="0.76862746477127075" blue="0.89803922176361084" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ynP-4t-IRj">
+                    <rect key="frame" x="159" y="39" width="217" height="30"/>
+                    <color key="backgroundColor" red="0.71764707565307617" green="0.76862746477127075" blue="0.89803922176361084" alpha="0.0" colorSpace="calibratedRGB"/>
+                    <color key="textColor" red="0.71764707565307617" green="0.76862746477127075" blue="0.89803922176361084" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BX4-eT-nDb">
+                    <rect key="frame" x="227" y="107" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="TMT-0T-buY"/>
+                        <constraint firstAttribute="height" constant="40" id="dzq-dl-rIJ"/>
+                    </constraints>
+                    <state key="normal" image="ok.png"/>
+                    <connections>
+                        <action selector="confirmSaving:" destination="iN0-l3-epB" eventType="touchUpInside" id="TSr-Mr-j2G"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CO8-IR-iu9">
+                    <rect key="frame" x="143" y="108" width="37" height="37"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="37" id="h5V-cn-a0I"/>
+                        <constraint firstAttribute="height" constant="37" id="uk7-cD-hSe"/>
+                    </constraints>
+                    <state key="normal" image="cancel.png"/>
+                    <connections>
+                        <action selector="cancelSaving:" destination="iN0-l3-epB" eventType="touchUpInside" id="pCI-y8-yIr"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.32156863808631897" green="0.40392157435417175" blue="0.57647061347961426" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="CO8-IR-iu9" firstAttribute="top" secondItem="ynP-4t-IRj" secondAttribute="bottom" constant="39" id="5uW-Gr-0Cv"/>
+                <constraint firstItem="BX4-eT-nDb" firstAttribute="top" secondItem="ynP-4t-IRj" secondAttribute="bottom" constant="38" id="DzI-3Q-ZrY"/>
+                <constraint firstAttribute="trailing" secondItem="ynP-4t-IRj" secondAttribute="trailing" constant="33" id="IsZ-kw-gR4"/>
+                <constraint firstItem="4rQ-vB-IaC" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="32" id="JJW-CF-PfZ"/>
+                <constraint firstItem="4rQ-vB-IaC" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="43" id="PJt-mV-bbW"/>
+                <constraint firstItem="ynP-4t-IRj" firstAttribute="leading" secondItem="4rQ-vB-IaC" secondAttribute="trailing" constant="8" id="dW5-uH-lwf"/>
+                <constraint firstItem="CO8-IR-iu9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="143" id="gFf-Cq-exo"/>
+                <constraint firstAttribute="trailing" secondItem="BX4-eT-nDb" secondAttribute="trailing" constant="142" id="j0u-NJ-FlF"/>
+                <constraint firstItem="ynP-4t-IRj" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="39" id="jhv-rK-Rsn"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="textField" destination="ynP-4t-IRj" id="fkF-bK-h37"/>
+            </connections>
+            <point key="canvasLocation" x="412.5" y="269.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="cancel.png" width="100" height="100"/>
+        <image name="ok.png" width="100" height="100"/>
+    </resources>
+</document>
