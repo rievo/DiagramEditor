@@ -51,6 +51,12 @@
         [previewComponent removeGestureRecognizer:recognizer];
     }
     
+    //Remove all previewComponents subviews
+    NSArray *viewsToRemove = [previewComponent subviews];
+    for (UIView *v in viewsToRemove) {
+        [v removeFromSuperview];
+    }
+    
     [previewComponent addSubview:temp];
     
     [temp setNeedsDisplay];

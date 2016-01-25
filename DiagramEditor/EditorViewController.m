@@ -48,7 +48,9 @@
     scrollView.maximumZoomScale = 4.0;
     scrollView.delegate = self;
     
-    [self setZoomForIntValue:0]; //No zoom
+    //[self setZoomForIntValue:0]; //No zoom
+    float nullZoom = [self getZoomScaleForIntValue:0];
+    [scrollView setZoomScale:nullZoom animated:YES];
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -100,6 +102,18 @@
     
     [self.view addSubview:containerView];
     
+    
+    
+    UITapGestureRecognizer * zoomTapGr = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                 action:@selector(doZoom:)];
+    
+    [zoomTapGr setNumberOfTapsRequired:2];
+    [scrollView setUserInteractionEnabled:YES];
+    [scrollView setCanCancelContentTouches:YES];
+    [scrollView addGestureRecognizer:zoomTapGr];
+    zoomTapGr.delegate = self;
+    zoomLevel = 0; //No zoom
+    
 }
 
 #pragma mark Show/Hide detailsView
@@ -112,15 +126,7 @@
 }
 
 
-#pragma mark UIScrollView methods
 
--(void)setZoomForIntValue:(int) val{
-    float minz = scrollView.minimumZoomScale;
-    float maxz = scrollView.maximumZoomScale;
-    
-    float current = val * minz / maxz;
-    [scrollView setZoomScale:current animated:YES];
-}
 
 -(void)viewWillAppear:(BOOL)animated{
     palette.paletteItems = [[NSMutableArray alloc] initWithArray:dele.paletteItems];
@@ -148,11 +154,8 @@
     
 }
 
+#pragma mark UIPanGestureRecognizer
 
--(void)showConnectionDetails:(NSNotification *)not{
-    Connection * temp = not.object;
-    [self performSegueWithIdentifier:@"showConnectionDetails" sender:temp];
-}
 
 -(void)handlePan:(UILongPressGestureRecognizer *)recog{
     PaletteItem * sender = (PaletteItem *)recog.view;
@@ -221,26 +224,8 @@
     }
 }
 
-//Just for test purposing
-- (IBAction)addElement:(id)sender {
-    Component * temp = [[Component alloc] initWithFrame:CGRectMake(50, 50, 40, 40)];
-    [dele.components addObject:temp];
-    [canvas addSubview:temp];
-}
 
-- (IBAction)showComponentList:(id)sender {
-    [self performSegueWithIdentifier:@"showComponentsView" sender:self];
-}
-
-- (IBAction)showActionsList:(id)sender {
-
-}
-
-- (IBAction)createNewDiagram:(id)sender {
-    [backSure setHidden:NO];
-    [sureCloseView setHidden:NO];
-
-}
+#pragma mark Are you sure? view
 
 - (IBAction)sureCreateNew:(id)sender {
     [self resetAll];
@@ -253,10 +238,34 @@
     [sureCloseView setHidden:YES];
 }
 
+
+
+#pragma mark Toolbar
+
+
+-(void)showConnectionDetails:(NSNotification *)not{
+    Connection * temp = not.object;
+    [self performSegueWithIdentifier:@"showConnectionDetails" sender:temp];
+}
+
+- (IBAction)showComponentList:(id)sender {
+    [self performSegueWithIdentifier:@"showComponentsView" sender:self];
+}
+
+- (IBAction)showActionsList:(id)sender {
+    
+}
+
+- (IBAction)createNewDiagram:(id)sender {
+    [backSure setHidden:NO];
+    [sureCloseView setHidden:NO];
+    
+}
+
 -(void)resetAll{
-     dele.components = [[NSMutableArray alloc] init];
-     dele.connections = [[NSMutableArray alloc] init];
-     [canvas prepareCanvas];
+    dele.components = [[NSMutableArray alloc] init];
+    dele.connections = [[NSMutableArray alloc] init];
+    [canvas prepareCanvas];
 }
 
 - (IBAction)saveCurrentDiagram:(id)sender {
@@ -388,15 +397,10 @@
 }
 
 
+
+#pragma mark Storyboard
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    /*if ([[segue identifier] isEqualToString:@"showComponentDetails"])
-    {
-        // Get reference to the destination view controller
-        ComponentDetailsViewController *vc = [segue destinationViewController];
-        vc.comp = sender;
-        // Pass any objects to the view controller here, like...
-        //[vc setMyObjectHere:object];
-    }else */if([[segue identifier] isEqualToString:@"showConnectionDetails"]){
+    if([[segue identifier] isEqualToString:@"showConnectionDetails"]){
         ConnectionDetailsViewController * vc = [segue destinationViewController];
         vc.conn = sender;
     }
@@ -418,7 +422,20 @@
 }
 
 
+
 #pragma mark UIScrollViewDelegate
+
+-(float)getZoomScaleForIntValue:(int) val{
+    float minz = scrollView.minimumZoomScale;
+    float maxz = scrollView.maximumZoomScale;
+    
+    //float current = val * minz / maxz;
+    float current = val * maxz / 2;
+    if(current <minz){
+        current = minz;
+    }
+    return current;
+}
 -(UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
     return canvas;
 }
@@ -428,7 +445,7 @@
 }
 
 
-
+/*
 - (void)zoomToPoint:(CGPoint)zoomPoint withScale: (CGFloat)scale animated: (BOOL)animated
 {
     //Normalize current content size back to content scale of 1.0f
@@ -454,6 +471,64 @@
     
     //apply the resize
     [scrollView zoomToRect: zoomRect animated: animated];
+}*/
+- (void)zoomToPoint:(CGPoint)zoomPoint withScale:(CGFloat)scale animated:(BOOL)animated
+{
+
+    
+    //`zoomToRect` works on the assumption that the input frame is in relation
+    //to the content view when zoomScale is 1.0
+    
+    //Work out in the current zoomScale, where on the contentView we are zooming
+    CGPoint translatedZoomPoint = CGPointZero;
+    translatedZoomPoint.x = zoomPoint.x + scrollView.contentOffset.x;
+    translatedZoomPoint.y = zoomPoint.y + scrollView.contentOffset.y;
+    
+    //Figure out what zoom scale we need to get back to default 1.0f
+    CGFloat zoomFactor = 1.0f / scrollView.zoomScale;
+    
+    //By multiplying by the zoom factor, we get where we're zooming to, at scale 1.0f;
+    translatedZoomPoint.x *= zoomFactor;
+    translatedZoomPoint.y *= zoomFactor;
+    
+    //work out the size of the rect to zoom to, and place it with the zoom point in the middle
+    CGRect destinationRect = CGRectZero;
+    destinationRect.size.width = CGRectGetWidth(scrollView.frame) / scale;
+    destinationRect.size.height = CGRectGetHeight(scrollView.frame) / scale;
+    destinationRect.origin.x = translatedZoomPoint.x - (CGRectGetWidth(destinationRect) * 0.5f);
+    destinationRect.origin.y = translatedZoomPoint.y - (CGRectGetHeight(destinationRect) * 0.5f);
+    
+  //  if (animated) {
+        [UIView animateWithDuration:0.55f delay:0.0f usingSpringWithDamping:1.0f initialSpringVelocity:0.6f options:UIViewAnimationOptionAllowUserInteraction animations:^{
+            [scrollView zoomToRect:destinationRect animated:NO];
+        } completion:^(BOOL completed) {
+            if ([scrollView.delegate respondsToSelector:@selector(scrollViewDidEndZooming:withView:atScale:)]) {
+                [scrollView.delegate scrollViewDidEndZooming:scrollView withView:[scrollView.delegate viewForZoomingInScrollView:scrollView] atScale:scale];
+            }
+        }];
+   // }
+   /* else {
+        [self zoomToRect:destinationRect animated:NO];
+    }*/
+}
+
+
+-(void)doZoom: (UITapGestureRecognizer * )tapRecognizer{
+    if(zoomLevel == 0){
+        zoomLevel = 1;
+    }else if(zoomLevel == 1){
+        zoomLevel = 2;
+    }else if(zoomLevel == 2){ //Full zoom to no zoom
+        zoomLevel = 0;
+    }
+    
+    CGPoint p = [tapRecognizer locationInView: self.view];
+    CGPoint pointInSV = [self.view convertPoint:p toView:canvas];
+    
+    float newScale = [self getZoomScaleForIntValue:zoomLevel];
+    
+    
+    [self zoomToPoint:pointInSV withScale:newScale animated:YES];
 }
 
 #pragma mark ComponentDetailsView delegate
@@ -462,4 +537,10 @@
     [containerView setHidden:YES];
 }
 
+
+
+#pragma mark UIGestureRecognizer
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
+    return  YES;
+}
 @end
