@@ -20,4 +20,9 @@
 @property UIImage * image;
 @property BOOL isImage;
 
+
+@property NSString * className;
+
+@property NSMutableArray * attributes;
+
 @end

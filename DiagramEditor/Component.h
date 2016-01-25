@@ -37,6 +37,8 @@
 @property UIImage * image;
 @property BOOL isImage;
 
+@property NSMutableArray * attributes;
+
 
 -(CGPoint)getTopAnchorPoint;
 -(CGPoint)getBotAnchorPoint;

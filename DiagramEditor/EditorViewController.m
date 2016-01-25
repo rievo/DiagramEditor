@@ -7,7 +7,7 @@
 //
 
 #import "EditorViewController.h"
-#import "ComponentDetailsViewController.h"
+#import "ComponentDetailsView.h"
 #import "ConnectionDetailsViewController.h"
 #import "Connection.h"
 #import "Palette.h"
@@ -62,6 +62,15 @@
                                                object:nil];
     
     
+    containerView = [[UIView alloc]initWithFrame:self.view.frame];
+    
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    blurEffectView.frame = self.view.bounds;
+    blurEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
+    [containerView addSubview:blurEffectView];
+    [containerView sendSubviewToBack:blurEffectView];
     
     backSure = [[UIView alloc] initWithFrame:self.view.frame];
     [self.view addSubview:backSure];
@@ -71,13 +80,39 @@
     [sureCloseView setHidden:YES];
     [self.view bringSubviewToFront:sureCloseView];
     
+    
+    compDetView = [[[NSBundle mainBundle] loadNibNamed:@"ComponentDetailsView"
+                                                 owner:self
+                                               options:nil] objectAtIndex:0];
+    
+    [compDetView setDelegate:self];
+    
+    [containerView addSubview:compDetView];
+    [compDetView setCenter:containerView.center];
+    [containerView bringSubviewToFront:compDetView];
+    
+    [containerView setHidden:YES];
+    
+    
+    //Add a UITapGR to containerview for closing
+    /*UITapGestureRecognizer * tgr = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideDetailsView)];
+    [containerView addGestureRecognizer:tgr];*/
+    
+    [self.view addSubview:containerView];
+    
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark Show/Hide detailsView
+-(void)showDetailsView{
+    [compDetView prepare];
+    [containerView setHidden:NO];
+}
+-(void)hideDetailsView{
+    [containerView setHidden:YES];
 }
 
+
+#pragma mark UIScrollView methods
 
 -(void)setZoomForIntValue:(int) val{
     float minz = scrollView.minimumZoomScale;
@@ -104,7 +139,13 @@
     NSLog(@"Showing component's details");
     Component * temp = not.object;
     
-    [self performSegueWithIdentifier:@"showComponentDetails" sender:temp];
+    //[self performSegueWithIdentifier:@"showComponentDetails" sender:temp];
+    
+    //Load component details view
+    compDetView.comp = temp;
+    [compDetView prepare];
+    [self showDetailsView];
+    
 }
 
 
@@ -155,6 +196,7 @@
                 comp.type = sender.type;
                 comp.shapeType = sender.shapeType;
                 comp.fillColor = sender.fillColor;
+                comp.attributes = sender.attributes;
                 
                 if(sender.isImage){
                     comp.isImage = YES;
@@ -347,14 +389,14 @@
 
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if ([[segue identifier] isEqualToString:@"showComponentDetails"])
+    /*if ([[segue identifier] isEqualToString:@"showComponentDetails"])
     {
         // Get reference to the destination view controller
         ComponentDetailsViewController *vc = [segue destinationViewController];
         vc.comp = sender;
         // Pass any objects to the view controller here, like...
         //[vc setMyObjectHere:object];
-    }else if([[segue identifier] isEqualToString:@"showConnectionDetails"]){
+    }else */if([[segue identifier] isEqualToString:@"showConnectionDetails"]){
         ConnectionDetailsViewController * vc = [segue destinationViewController];
         vc.conn = sender;
     }
@@ -413,4 +455,11 @@
     //apply the resize
     [scrollView zoomToRect: zoomRect animated: animated];
 }
+
+#pragma mark ComponentDetailsView delegate
+
+-(void)closeDetailsViewAndUpdateThings{
+    [containerView setHidden:YES];
+}
+
 @end

@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+
 @class Component;
 @class AppDelegate;
-@interface ComponentDetailsViewController : UIViewController<UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>{
+
+
+@interface ComponentDetailsView : UIView <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>{
     
     __weak IBOutlet Component *previewComponent;
     __weak IBOutlet UITextField *nameTextField;
@@ -19,11 +22,26 @@
     
     Component * temp;
     __weak IBOutlet UITableView *outConnectionsTable;
+    __weak IBOutlet UITableView *attributesTable;
     
     NSMutableArray * connections;
+    
+    id delegate;
 }
 
-
+@property (nonatomic, retain)id delegate;
 
 @property Component * comp;
+
+- (void)prepare;
+- (IBAction)closeDetailsViw:(id)sender;
+
+
+@end;
+
+@protocol ComponentDetailsViewDelegate
+
+@required
+-(void)closeDetailsViewAndUpdateThings;
+
 @end

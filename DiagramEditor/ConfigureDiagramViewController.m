@@ -16,6 +16,7 @@
 #import "PaletteFile.h"
 #import "PasteView.h"
 
+#import "ClassAttribute.h"
 
 #define defaultwidth 50
 #define defaultheight 50
@@ -222,6 +223,12 @@
             
             item.type = type;
             
+            NSDictionary * className = [dic objectForKey:@"anEClass"];
+            NSString * classStr = [className objectForKey:@"_href"];
+            NSArray * arraystr = [classStr componentsSeparatedByString:@"/"];
+            NSString * parsedClass = [arraystr objectAtIndex: arraystr.count -1];
+            item.className = parsedClass;
+            
             NSDictionary * diagPalette = [dic objectForKey:@"diag_palette"];
             NSString * paleteName = [diagPalette objectForKey:@"_palette_name"];
             NSLog(@"\n\ntype: %@     	\n name: %@", type, paleteName);
@@ -298,6 +305,9 @@
     
     [palettesTable reloadData];
     [palette preparePalette];
+    
+    
+    
 }
 
 #pragma mark UIGesture recognizer methods
@@ -349,6 +359,11 @@
     
     if(palette.paletteItems.count != 0){
         dele.paletteItems = [[NSMutableArray alloc] initWithArray:palette.paletteItems];
+        [refreshTimer invalidate];
+        
+        [self completePaletteForJSONAttributes];
+        
+        
         [self performSegueWithIdentifier:@"showEditor" sender:self];
     }else{
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
@@ -428,6 +443,10 @@
         [palette setNeedsDisplay];
         
         [self addRecognizers];
+        
+        
+        
+        
     }else if(tableView == serverFilesTable){
         [palette resetPalette];
         PaletteFile * file = [serverFilesArray objectAtIndex:indexPath.row];
@@ -530,4 +549,78 @@
     
 }
 
+
+#pragma mark Parse exported json
+-(void)completePaletteForJSONAttributes{
+    //dele.paletteIttems
+    //Para cada item de la paleta, tendré que rellenar el array de atributos
+    PaletteItem * pi = nil;
+    
+    //Pasamos el json a un nsdictionary
+    
+    NSString *filePath = [[NSBundle mainBundle]pathForResource:@"exported" ofType:@"json"];
+    NSString *jsonString = [[NSString alloc] initWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:NULL];
+    NSError *jsonError;
+    NSMutableDictionary *jsonDict = [NSJSONSerialization
+                                     JSONObjectWithData:[jsonString dataUsingEncoding:NSUTF8StringEncoding]
+                                                                    options:NSJSONReadingMutableContainers
+                                                                      error:&jsonError];
+    
+    NSArray * classes = [jsonDict objectForKey:@"classes"];
+    
+
+    
+    for(int i = 0; i< dele.paletteItems.count; i++){
+        pi = [dele.paletteItems objectAtIndex:i];
+        //pi.className tendrá el nombre de la clase
+        
+        pi.attributes = [[NSMutableArray alloc] init];
+        
+        
+        pi.attributes = [self getAttributesForClass:pi.className
+                                       onClassArray:classes];
+        
+        
+    }
+    
+    int res = 3;
+}
+
+
+-(NSMutableArray *)getAttributesForClass: (NSString *) key
+                          onClassArray: (NSArray *)classArray{
+    ClassAttribute * temp;
+    
+    NSDictionary * dic = nil;
+    NSString * name;
+    
+    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+    f.numberStyle = NSNumberFormatterDecimalStyle;
+    
+    NSMutableArray * attributes = [[NSMutableArray alloc] init];
+    
+    
+    for(int i = 0; i< classArray.count; i++){
+        dic = [classArray objectAtIndex:i];
+        name = [dic objectForKey:@"name"];
+        
+        if([name isEqualToString:key]){
+            
+            NSArray * attrs = [dic objectForKey:@"attributes"];
+            for(int a = 0; a < attrs.count; a++){
+                NSDictionary * atrDic = [attrs objectAtIndex:a];
+                temp = [[ClassAttribute alloc]init];
+                 temp.name = [atrDic objectForKey:@"name"];
+                 temp.type = [atrDic objectForKey:@"type"];
+                 temp.min = [f numberFromString:[atrDic objectForKey:@"min"]];
+                 temp.max = [f numberFromString:[atrDic objectForKey:@"max"]];
+                 temp.defaultValue = [atrDic objectForKey:@"default"];
+                
+                [attributes addObject:temp];
+            }
+        }
+    }
+    
+    return attributes;
+}
 @end

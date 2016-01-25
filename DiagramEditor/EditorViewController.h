@@ -10,14 +10,15 @@
 #import "Component.h"
 #import "AppDelegate.h"
 #import "Canvas.h"
+#import "ComponentDetailsView.h"
 
 
 @class Palette;
 @class PaletteItem;
-
+@class ComponentDetailsView;
 #import <MessageUI/MFMailComposeViewController.h>
 
-@interface EditorViewController : UIViewController<MFMailComposeViewControllerDelegate, UIScrollViewDelegate>{
+@interface EditorViewController : UIViewController<MFMailComposeViewControllerDelegate, UIScrollViewDelegate, ComponentDetailsViewDelegate>{
     AppDelegate * dele;
     __weak IBOutlet Palette *palette;
     
@@ -43,6 +44,10 @@
     
     
     int zoomLevel; //0-> No zoom     1-> mid zoom   2-> Full zoom
+    
+    ComponentDetailsView * compDetView;
+    UIView * containerView;
+    
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 

@@ -6,22 +6,26 @@
 //  Copyright © 2015 Diego Vaquero Melchor. All rights reserved.
 //
 
-#import "ComponentDetailsViewController.h"
+#import "ComponentDetailsView.h"
 #import "Component.h"
 #import "AppDelegate.h"
 #import "Connection.h"
+#import "StringAttributeTableViewCell.h"
+#import "BooleanAttributeTableViewCell.h"
+#import "ClassAttribute.h"
 
-
-@interface ComponentDetailsViewController ()
+@interface ComponentDetailsView ()
 
 @end
 
-@implementation ComponentDetailsViewController
+@implementation ComponentDetailsView
 
-@synthesize comp;
+@synthesize comp, delegate;
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+
+
+- (void)prepare {
+    
     
     
     outConnectionsTable.delegate = self;
@@ -52,7 +56,7 @@
     
     nameTextField.delegate = self;
     dele = [[UIApplication sharedApplication]delegate];
-
+    
     typeLabel.text = comp.type;
     
     Connection * tc = nil;
@@ -60,16 +64,21 @@
     for(int i = 0; i< dele.connections.count; i++){
         tc = [dele.connections objectAtIndex:i];
         if(tc.source == comp)
-           [connections addObject:tc];
+            [connections addObject:tc];
     }
     
     [outConnectionsTable reloadData];
+    
+    [attributesTable setDelegate:self];
+    [attributesTable setDataSource:self];
+    [attributesTable reloadData];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (IBAction)closeDetailsViw:(id)sender {
+     [delegate closeDetailsViewAndUpdateThings];
 }
+
+
 
 -(void)updateLocalConenctions{
     Connection * tc = nil;
@@ -83,15 +92,7 @@
     [outConnectionsTable reloadData];
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 #pragma mark UITextField delegate methods
 -(void)textFieldDidEndEditing:(UITextField *)textField{
@@ -144,8 +145,12 @@
     [comp removeFromSuperview];
     [dele.components removeObject:comp];
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    //[self dismissViewControllerAnimated:YES completion:nil];
     [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+    
+    
+    [delegate closeDetailsViewAndUpdateThings];
 }
 
 
@@ -160,7 +165,11 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return connections.count;
+    if(tableView == attributesTable){
+        return comp.attributes.count;
+    }else if(tableView == outConnectionsTable){
+        return connections.count;
+    }else return 0;
 }
 
 
@@ -170,28 +179,82 @@
 {
     static NSString *MyIdentifier = @"MyIdentifier";
     
-    Connection * c = [connections objectAtIndex:indexPath.row];
+    UITableViewCell *cell;
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
-    
-    if (cell == nil)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                       reuseIdentifier:MyIdentifier] ;
-    }
-    cell.backgroundColor = [UIColor clearColor];
+    if(tableView == outConnectionsTable){
+        
+        Connection * c = [connections objectAtIndex:indexPath.row];
+        
+        cell= [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+        
+        if (cell == nil)
+        {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                          reuseIdentifier:MyIdentifier] ;
+        }
+        cell.backgroundColor = [UIColor clearColor];
+        
+        cell.textLabel.text = c.name;
+        return cell;
 
-    cell.textLabel.text = c.name;
+    }else if(tableView == attributesTable){
+        
+        //Check component type
+        
+        ClassAttribute * attr = [comp.attributes objectAtIndex:indexPath.row];
+        NSString * type = attr.type;
+        
+        if([type isEqualToString:@"EString"]){
+            StringAttributeTableViewCell * atvc = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+            
+            if(atvc == nil){
+                NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"StringAttributeTableViewCell"
+                                                              owner:self
+                                                            options:nil];
+                atvc = [nib objectAtIndex:0];
+                atvc.attributeNameLabel.text = attr.name;
+                atvc.typeLabel.text = attr.type;
+            }
+            return atvc;
+            
+        }else if([type isEqualToString:@"EBoolean"]){
+            BooleanAttributeTableViewCell * batvc = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+            if(batvc == nil){
+                NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"BooleanAttributeTableViewCell"
+                                                              owner:self
+                                                            options:nil];
+                batvc = [nib objectAtIndex:0];
+                batvc.nameLabel.text = attr.name;
+                batvc.typeLabel.text = attr.type;
+                
+                
+            }
+            return batvc;
+        }else{
+            
+        }
+        
+        
+        
+        return nil;
+    }
+    
+    
+    
+    
     return cell;
 }
 
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return YES if you want the specified item to be editable.
-    return YES;
+    return NO;
 }
 
-// Override to support editing the table view.
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    return nil;
+}
+/*
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         //add code here for when you hit delete
@@ -202,5 +265,5 @@
         [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
         [self updateLocalConenctions];
     }
-}
+}*/
 @end

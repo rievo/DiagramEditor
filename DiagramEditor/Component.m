@@ -15,7 +15,7 @@
 @implementation Component
 
 
-@synthesize name, connections, textLayer, type, shapeType, fillColor, image, isImage;
+@synthesize name, connections, textLayer, type, shapeType, fillColor, image, isImage, attributes;
 
 
 NSString* const SHOW_INSPECTOR = @"ShowInspector";
