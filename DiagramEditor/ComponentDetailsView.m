@@ -12,6 +12,7 @@
 #import "Connection.h"
 #import "StringAttributeTableViewCell.h"
 #import "BooleanAttributeTableViewCell.h"
+#import "GenericAttributeTableViewCell.h"
 #import "ClassAttribute.h"
 
 @interface ComponentDetailsView ()
@@ -231,7 +232,15 @@
             }
             return batvc;
         }else{
-            
+            GenericAttributeTableViewCell * gatvc = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+            if(gatvc == nil){
+                NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"GenericAttributeTableViewCell"
+                                                              owner:self
+                                                            options:nil];
+                gatvc = [nib objectAtIndex:0];
+                gatvc.nameLabel.text = attr.name;
+                gatvc.typeLabel.text = attr.type;
+            }
         }
         
         
