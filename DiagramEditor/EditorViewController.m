@@ -8,7 +8,7 @@
 
 #import "EditorViewController.h"
 #import "ComponentDetailsView.h"
-#import "ConnectionDetailsViewController.h"
+
 #import "Connection.h"
 #import "Palette.h"
 #import "PaletteItem.h"
@@ -74,13 +74,7 @@
     [containerView addSubview:blurEffectView];
     [containerView sendSubviewToBack:blurEffectView];
     
-    backSure = [[UIView alloc] initWithFrame:self.view.frame];
-    [self.view addSubview:backSure];
-    backSure.backgroundColor = [UIColor blackColor];
-    backSure.alpha = 0.6;
-    [backSure setHidden:YES];
-    [sureCloseView setHidden:YES];
-    [self.view bringSubviewToFront:sureCloseView];
+    
     
     
     compDetView = [[[NSBundle mainBundle] loadNibNamed:@"ComponentDetailsView"
@@ -157,7 +151,7 @@
 #pragma mark UIPanGestureRecognizer
 
 
--(void)handlePan:(UILongPressGestureRecognizer *)recog{
+-(void)handlePan:(UIPanGestureRecognizer *)recog{
     PaletteItem * sender = (PaletteItem *)recog.view;
     
     CGPoint p = [recog locationInView:self.view];
@@ -212,9 +206,39 @@
                 [comp updateNameLabel];
                 [canvas addSubview:comp];
                 
-            }else{
+            }else if([sender.type isEqualToString:@"graphicR:Edge"]){
                 //It is an edge
-                NSLog(@"Creating a relation");
+                
+                //Comprobamos si hay alguna relación cerca
+                //En caso de que la haya, esa relación pasará a ser del tipo arrastrado
+                
+                //sender.attributes tiene los atributos
+                //
+                
+                Connection * con;
+                for(int  i = 0; i< dele.connections.count; i++){
+                    con = [dele.connections objectAtIndex:i];
+                    BOOL res = [canvas isPoint:pointInSV
+                                withinDistance:10.0
+                                        ofPath:con.arrowPath.CGPath];
+                    
+                    if(res == true){
+                        //Set that connection to sender
+                        //con.reference = sender;
+                        NSLog(@"Change reference type");
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
+                                                                        message:@"Changing connection type"
+                                                                       delegate:self
+                                                              cancelButtonTitle:@"OK"
+                                                              otherButtonTitles:nil];
+                        [alert show];
+                        
+                        con.attributes = sender.attributes;
+                        
+                    }else{
+                        //Nothing to do
+                    }
+                }
             }
         }else{
             NSLog(@"There is no canvas on this point.");
@@ -225,27 +249,27 @@
 }
 
 
-#pragma mark Are you sure? view
-
-- (IBAction)sureCreateNew:(id)sender {
-    [self resetAll];
-    [backSure setHidden:YES];
-    [sureCloseView setHidden:YES];
-}
-
-- (IBAction)notSureCreateNew:(id)sender {
-    [backSure setHidden:YES];
-    [sureCloseView setHidden:YES];
-}
-
-
 
 #pragma mark Toolbar
 
 
 -(void)showConnectionDetails:(NSNotification *)not{
     Connection * temp = not.object;
-    [self performSegueWithIdentifier:@"showConnectionDetails" sender:temp];
+    
+    
+    
+    //TODO: Show connection info view
+    ConnectionDetailsView * cdv = [[[NSBundle mainBundle] loadNibNamed:@"ConnectionDetailsView"
+                                                                 owner:self
+                                                               options:nil] objectAtIndex:0];
+    
+    //cdv.center = self.view.center;
+    cdv.connection = temp;
+    [cdv setFrame:self.view.frame];
+    [cdv prepare];
+    cdv.delegate = self;
+    [self.view addSubview:cdv];
+    [cdv setNeedsDisplay];
 }
 
 - (IBAction)showComponentList:(id)sender {
@@ -257,9 +281,13 @@
 }
 
 - (IBAction)createNewDiagram:(id)sender {
-    [backSure setHidden:NO];
-    [sureCloseView setHidden:NO];
-    
+    //TODO: show are you sure view
+    sureView = [[[NSBundle mainBundle] loadNibNamed:@"SureView"
+                                              owner:self
+                                            options:nil] objectAtIndex:0];
+    [self.view addSubview:sureView];
+    [sureView setFrame:self.view.frame];
+    sureView.delegate = self;
 }
 
 -(void)resetAll{
@@ -404,7 +432,7 @@
 
 
 - (IBAction)willChangePalette:(id)sender {
-    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
@@ -434,22 +462,65 @@
     
     NSData * data = UIImagePNGRepresentation(image);
     
+    
+    /*
     controller = [[MFMailComposeViewController alloc] init];
     controller.mailComposeDelegate = self;
     [controller setSubject:@"Digram image text"];
     [controller addAttachmentData:data mimeType:@"image/png" fileName:@"photo"];
     [self presentViewController:controller animated:YES completion:nil];
+     */
+    
+    UIAlertController * ac  = [UIAlertController alertControllerWithTitle:nil
+                                                                  message:nil
+                                                           preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction * sendemail = [UIAlertAction actionWithTitle:@"Send email"
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * _Nonnull action) {
+                                                           
+                                                           controller = [[MFMailComposeViewController alloc] init];
+                                                           controller.mailComposeDelegate = self;
+                                                           [controller setSubject:@"Digram image text"];
+                                                           [controller addAttachmentData:data mimeType:@"image/png" fileName:@"photo"];
+                                                           [self presentViewController:controller animated:YES completion:nil];
+                                                       }];
+    
+    UIAlertAction * saveondevice = [UIAlertAction actionWithTitle:@"Save on camera roll"
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * _Nonnull action) {
+                                                              [self saveImageOnCameraRoll:image];
+                                                          }];
+    
+    
+    [ac addAction:sendemail];
+    [ac addAction:saveondevice];
+    
+    
+    UIPopoverPresentationController * popover = ac.popoverPresentationController;
+    if(popover){
+        popover.sourceView = cameraOutlet;
+        popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
+    }
+    
+    [self presentViewController:ac animated:YES completion:nil];
+}
 
+-(void)saveImageOnCameraRoll: (UIImage *) image{
+    UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
+                                                    message:@"Image saved properly"
+                                                   delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
 }
 
 
 
 #pragma mark Storyboard
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if([[segue identifier] isEqualToString:@"showConnectionDetails"]){
-        ConnectionDetailsViewController * vc = [segue destinationViewController];
-        vc.conn = sender;
-    }
+
 }
 
 
@@ -476,7 +547,7 @@
     float maxz = scrollView.maximumZoomScale;
     
     //float current = val * minz / maxz;
-    float current = val * maxz / 2;
+    float current = val * maxz ;
     if(current <minz){
         current = minz;
     }
@@ -563,10 +634,11 @@
     if(zoomLevel == 0){
         zoomLevel = 1;
     }else if(zoomLevel == 1){
-        zoomLevel = 2;
-    }else if(zoomLevel == 2){ //Full zoom to no zoom
         zoomLevel = 0;
     }
+    //}else if(zoomLevel == 2){ //Full zoom to no zoom
+    //    zoomLevel = 0;
+    //}
     
     CGPoint p = [tapRecognizer locationInView: self.view];
     CGPoint pointInSV = [self.view convertPoint:p toView:canvas];
@@ -600,5 +672,35 @@
 -(void)cancelSaving{
     [saveBackgroundBlackView setHidden:YES];
 }
+
+
+#pragma mark Check integrity
+/*
+ Cuando el usuario suelte la conexión entre dos elementos: Siempre mirando el GraphicR
+ 1) Comprobar si del nodo origen puede salir alguna conexión
+ 2) En caso de que pueda salir conexión, mirar el nodo destino
+    2.1)Si no se pueden unir origen y destino, esto es, 0 conexiones posibles
+    2.2)Si se pueden unir origen y destino
+        2.2.1) Si solo hay una posible conexión en el graphicR, tomarla
+        2.2.2) Si hay más de una posible conexión, mostrar un popup para que el usuario elija cuál de ellas
+ */
+
+-(BOOL)checkIntegrityForSource: (Component *)source
+       andTarget: (Component *)target{
+    BOOL result = false;
+    
+    
+    return result;
+}
+
+
+#pragma mark ConnectionDetailsViewDelegate
+
+#pragma mark SureViewDelegate methods
+
+-(void)closeSureViewWithResult:(BOOL)res{
+    NSLog(@"closing sureviweWithResult: ");
+}
+
 
 @end

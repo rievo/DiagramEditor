@@ -24,4 +24,6 @@
 
 
 -(void)prepareCanvas;
+
+- (BOOL)isPoint:(CGPoint)p withinDistance:(CGFloat)distance ofPath:(CGPathRef)path;
 @end

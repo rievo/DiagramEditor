@@ -14,6 +14,8 @@
 #import "BooleanAttributeTableViewCell.h"
 #import "GenericAttributeTableViewCell.h"
 #import "ClassAttribute.h"
+#import "Reference.h"
+#import "ReferenceTableViewCell.h"
 
 @interface ComponentDetailsView ()
 
@@ -82,7 +84,7 @@
 }
 
 - (IBAction)closeDetailsViw:(id)sender {
-     [delegate closeDetailsViewAndUpdateThings];
+    [delegate closeDetailsViewAndUpdateThings];
 }
 
 
@@ -203,55 +205,73 @@
         
         cell.textLabel.text = c.name;
         return cell;
-
+        
     }else if(tableView == attributesTable){
         
         //Check component type
         
-        ClassAttribute * attr = [comp.attributes objectAtIndex:indexPath.row];
-        NSString * type = attr.type;
-        
-        if([type isEqualToString:@"EString"]){
-            StringAttributeTableViewCell * atvc = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+        if([[comp.attributes objectAtIndex:indexPath.row]isKindOfClass:[ClassAttribute class]]){
             
-            if(atvc == nil){
-                NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"StringAttributeTableViewCell"
-                                                              owner:self
-                                                            options:nil];
-                atvc = [nib objectAtIndex:0];
-                atvc.attributeNameLabel.text = attr.name;
-                atvc.typeLabel.text = attr.type;
-            }
-            return atvc;
+            ClassAttribute * attr = [comp.attributes objectAtIndex:indexPath.row];
+            NSString * type = attr.type;
             
-        }else if([type isEqualToString:@"EBoolean"]){
-            BooleanAttributeTableViewCell * batvc = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
-            if(batvc == nil){
-                NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"BooleanAttributeTableViewCell"
-                                                              owner:self
-                                                            options:nil];
-                batvc = [nib objectAtIndex:0];
-                batvc.nameLabel.text = attr.name;
-                batvc.typeLabel.text = attr.type;
+            if([type isEqualToString:@"EString"]){
+                StringAttributeTableViewCell * atvc = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
                 
+                if(atvc == nil){
+                    NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"StringAttributeTableViewCell"
+                                                                  owner:self
+                                                                options:nil];
+                    atvc = [nib objectAtIndex:0];
+                    atvc.attributeNameLabel.text = attr.name;
+                    atvc.typeLabel.text = attr.type;
+                }
+                return atvc;
                 
+            }else if([type isEqualToString:@"EBoolean"]){
+                BooleanAttributeTableViewCell * batvc = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+                if(batvc == nil){
+                    NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"BooleanAttributeTableViewCell"
+                                                                  owner:self
+                                                                options:nil];
+                    batvc = [nib objectAtIndex:0];
+                    batvc.nameLabel.text = attr.name;
+                    batvc.typeLabel.text = attr.type;
+                    
+                    
+                }
+                return batvc;
+            }else{
+                GenericAttributeTableViewCell * gatvc = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+                if(gatvc == nil){
+                    NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"GenericAttributeTableViewCell"
+                                                                  owner:self
+                                                                options:nil];
+                    gatvc = [nib objectAtIndex:0];
+                    gatvc.nameLabel.text = attr.name;
+                    gatvc.typeLabel.text = attr.type;
+                }
+                return gatvc;
             }
-            return batvc;
-        }else{
-            GenericAttributeTableViewCell * gatvc = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
-            if(gatvc == nil){
-                NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"GenericAttributeTableViewCell"
-                                                              owner:self
-                                                            options:nil];
-                gatvc = [nib objectAtIndex:0];
-                gatvc.nameLabel.text = attr.name;
-                gatvc.typeLabel.text = attr.type;
+            
+            
+            
+            return nil;
+        }else if([[comp.attributes objectAtIndex:indexPath.row] isKindOfClass:[Reference class]]){
+            Reference * ref = [comp.attributes objectAtIndex:indexPath.row];
+            ReferenceTableViewCell * rtvc = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+            if(rtvc == nil){
+                NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"ReferenceTableViewCell" owner:self options:nil];
+                rtvc = [nib objectAtIndex:0];
+                
+                rtvc.nameLabel.text = ref.name;
+                rtvc.targetLabel.text = ref.target;
+                rtvc.minLabel.text = [ref.min description];
+                rtvc.maxLabel.text = [ref.max description];
+                [rtvc.containmentSwitch setOn:ref.containment];
             }
+            return rtvc;
         }
-        
-        
-        
-        return nil;
     }
     
     
@@ -270,15 +290,15 @@
     return nil;
 }
 /*
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        //add code here for when you hit delete
-        Connection * toDelete = [connections objectAtIndex:indexPath.row];
-        
-        [dele.connections removeObject:toDelete];
-        
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
-        [self updateLocalConenctions];
-    }
-}*/
+ - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+ if (editingStyle == UITableViewCellEditingStyleDelete) {
+ //add code here for when you hit delete
+ Connection * toDelete = [connections objectAtIndex:indexPath.row];
+ 
+ [dele.connections removeObject:toDelete];
+ 
+ [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+ [self updateLocalConenctions];
+ }
+ }*/
 @end

@@ -25,6 +25,8 @@
     CAShapeLayer * backgroundLayer;
     
     UIView * resizeView;
+    
+    float prevPinchScale;
 }
 
 
@@ -38,6 +40,10 @@
 @property BOOL isImage;
 
 @property NSMutableArray * attributes;
+
+
+@property Component * parent;
+@property NSMutableArray * sons;
 
 
 -(CGPoint)getTopAnchorPoint;

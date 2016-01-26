@@ -14,7 +14,6 @@
 		F10AB80F1C50E9FB00DE6DCE /* PasteView.m in Sources */ = {isa = PBXBuildFile; fileRef = F10AB80E1C50E9FB00DE6DCE /* PasteView.m */; };
 		F10F0FA31C1AF67000165561 /* ColorPalette.m in Sources */ = {isa = PBXBuildFile; fileRef = F10F0FA21C1AF67000165561 /* ColorPalette.m */; };
 		F10F0FA51C1ED77A00165561 /* design.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F10F0FA41C1ED77A00165561 /* design.graphicR */; };
-		F1166BE41C187269009A2AAA /* ConnectionDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1166BE31C187269009A2AAA /* ConnectionDetailsViewController.m */; };
 		F1431E881C52330C006A45BC /* exported.json in Resources */ = {isa = PBXBuildFile; fileRef = F1431E871C52330C006A45BC /* exported.json */; };
 		F1431E8B1C524127006A45BC /* ClassAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = F1431E8A1C524127006A45BC /* ClassAttribute.m */; };
 		F1431E8E1C5249F7006A45BC /* ComponentDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1431E8D1C5249F7006A45BC /* ComponentDetailsView.xib */; };
@@ -26,6 +25,13 @@
 		F1685EA81C1829F00094097E /* Canvas.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685EA71C1829F00094097E /* Canvas.m */; };
 		F1685EAB1C182B7D0094097E /* Connection.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685EAA1C182B7D0094097E /* Connection.m */; };
 		F1685EAE1C1831840094097E /* ComponentDetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685EAD1C1831840094097E /* ComponentDetailsView.m */; };
+		F16C7DC11C577E9100CA9B25 /* Reference.m in Sources */ = {isa = PBXBuildFile; fileRef = F16C7DC01C577E9100CA9B25 /* Reference.m */; };
+		F16C7DC31C5781EB00CA9B25 /* ReferenceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F16C7DC21C5781EB00CA9B25 /* ReferenceTableViewCell.xib */; };
+		F16C7DC61C57821800CA9B25 /* ReferenceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F16C7DC51C57821800CA9B25 /* ReferenceTableViewCell.m */; };
+		F16C7DC81C578D3900CA9B25 /* ConnectionDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F16C7DC71C578D3900CA9B25 /* ConnectionDetailsView.xib */; };
+		F16C7DCB1C578D4B00CA9B25 /* ConnectionDetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F16C7DCA1C578D4B00CA9B25 /* ConnectionDetailsView.m */; };
+		F16C7DCD1C57AD2900CA9B25 /* SureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F16C7DCC1C57AD2900CA9B25 /* SureView.xib */; };
+		F16C7DD01C57AD4400CA9B25 /* SureView.m in Sources */ = {isa = PBXBuildFile; fileRef = F16C7DCF1C57AD4400CA9B25 /* SureView.m */; };
 		F1786DE51C561ADA00963663 /* BooleanAttributeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1786DE41C561ADA00963663 /* BooleanAttributeTableViewCell.xib */; };
 		F1786DE81C561AF200963663 /* BooleanAttributeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1786DE71C561AF200963663 /* BooleanAttributeTableViewCell.m */; };
 		F1786DEC1C56222B00963663 /* GenericAttributeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1786DEA1C56222B00963663 /* GenericAttributeTableViewCell.m */; };
@@ -69,8 +75,6 @@
 		F10F0FA11C1AF67000165561 /* ColorPalette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPalette.h; sourceTree = "<group>"; };
 		F10F0FA21C1AF67000165561 /* ColorPalette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorPalette.m; sourceTree = "<group>"; };
 		F10F0FA41C1ED77A00165561 /* design.graphicR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = design.graphicR; sourceTree = "<group>"; };
-		F1166BE21C187269009A2AAA /* ConnectionDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionDetailsViewController.h; sourceTree = "<group>"; };
-		F1166BE31C187269009A2AAA /* ConnectionDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionDetailsViewController.m; sourceTree = "<group>"; };
 		F1431E871C52330C006A45BC /* exported.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = exported.json; sourceTree = "<group>"; };
 		F1431E891C524127006A45BC /* ClassAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassAttribute.h; sourceTree = "<group>"; };
 		F1431E8A1C524127006A45BC /* ClassAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassAttribute.m; sourceTree = "<group>"; };
@@ -91,6 +95,17 @@
 		F1685EAA1C182B7D0094097E /* Connection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Connection.m; sourceTree = "<group>"; };
 		F1685EAC1C1831840094097E /* ComponentDetailsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComponentDetailsView.h; sourceTree = "<group>"; };
 		F1685EAD1C1831840094097E /* ComponentDetailsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComponentDetailsView.m; sourceTree = "<group>"; };
+		F16C7DBF1C577E9100CA9B25 /* Reference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reference.h; sourceTree = "<group>"; };
+		F16C7DC01C577E9100CA9B25 /* Reference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reference.m; sourceTree = "<group>"; };
+		F16C7DC21C5781EB00CA9B25 /* ReferenceTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReferenceTableViewCell.xib; sourceTree = "<group>"; };
+		F16C7DC41C57821800CA9B25 /* ReferenceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReferenceTableViewCell.h; sourceTree = "<group>"; };
+		F16C7DC51C57821800CA9B25 /* ReferenceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReferenceTableViewCell.m; sourceTree = "<group>"; };
+		F16C7DC71C578D3900CA9B25 /* ConnectionDetailsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConnectionDetailsView.xib; sourceTree = "<group>"; };
+		F16C7DC91C578D4B00CA9B25 /* ConnectionDetailsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionDetailsView.h; sourceTree = "<group>"; };
+		F16C7DCA1C578D4B00CA9B25 /* ConnectionDetailsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionDetailsView.m; sourceTree = "<group>"; };
+		F16C7DCC1C57AD2900CA9B25 /* SureView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SureView.xib; sourceTree = "<group>"; };
+		F16C7DCE1C57AD4400CA9B25 /* SureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SureView.h; sourceTree = "<group>"; };
+		F16C7DCF1C57AD4400CA9B25 /* SureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SureView.m; sourceTree = "<group>"; };
 		F1786DE41C561ADA00963663 /* BooleanAttributeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BooleanAttributeTableViewCell.xib; sourceTree = "<group>"; };
 		F1786DE61C561AF200963663 /* BooleanAttributeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BooleanAttributeTableViewCell.h; sourceTree = "<group>"; };
 		F1786DE71C561AF200963663 /* BooleanAttributeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BooleanAttributeTableViewCell.m; sourceTree = "<group>"; };
@@ -164,6 +179,8 @@
 				F1B4861D1C46604700752157 /* PaletteFile.m */,
 				F1431E891C524127006A45BC /* ClassAttribute.h */,
 				F1431E8A1C524127006A45BC /* ClassAttribute.m */,
+				F16C7DBF1C577E9100CA9B25 /* Reference.h */,
+				F16C7DC01C577E9100CA9B25 /* Reference.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -192,6 +209,12 @@
 				F1786DF31C56649B00963663 /* ExploreFilesView.xib */,
 				F1786DF51C5664AB00963663 /* ExploreFilesView.h */,
 				F1786DF61C5664AB00963663 /* ExploreFilesView.m */,
+				F16C7DC71C578D3900CA9B25 /* ConnectionDetailsView.xib */,
+				F16C7DC91C578D4B00CA9B25 /* ConnectionDetailsView.h */,
+				F16C7DCA1C578D4B00CA9B25 /* ConnectionDetailsView.m */,
+				F16C7DCE1C57AD4400CA9B25 /* SureView.h */,
+				F16C7DCF1C57AD4400CA9B25 /* SureView.m */,
+				F16C7DCC1C57AD2900CA9B25 /* SureView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -219,6 +242,9 @@
 				F1786DE91C56222B00963663 /* GenericAttributeTableViewCell.h */,
 				F1786DEA1C56222B00963663 /* GenericAttributeTableViewCell.m */,
 				F1786DEB1C56222B00963663 /* GenericAttributeTableViewCell.xib */,
+				F16C7DC21C5781EB00CA9B25 /* ReferenceTableViewCell.xib */,
+				F16C7DC41C57821800CA9B25 /* ReferenceTableViewCell.h */,
+				F16C7DC51C57821800CA9B25 /* ReferenceTableViewCell.m */,
 			);
 			name = AttributeCells;
 			sourceTree = "<group>";
@@ -276,8 +302,6 @@
 				F1685EA11C18289E0094097E /* EditorViewController.m */,
 				F1685EA61C1829F00094097E /* Canvas.h */,
 				F1685EA71C1829F00094097E /* Canvas.m */,
-				F1166BE21C187269009A2AAA /* ConnectionDetailsViewController.h */,
-				F1166BE31C187269009A2AAA /* ConnectionDetailsViewController.m */,
 				F1587B021C19BC4600E963BE /* Palette.h */,
 				F1587B031C19BC4600E963BE /* Palette.m */,
 				F17B75B11C22DBFE00AB1B57 /* ComponentsListViewController.h */,
@@ -371,6 +395,7 @@
 			files = (
 				F1853A001C52533E0015A9E0 /* StringAttributeTableViewCell.xib in Resources */,
 				F1AB3B161C22B19800EDBB1D /* resize.png in Resources */,
+				F16C7DC81C578D3900CA9B25 /* ConnectionDetailsView.xib in Resources */,
 				F1431E8E1C5249F7006A45BC /* ComponentDetailsView.xib in Resources */,
 				F10F0FA51C1ED77A00165561 /* design.graphicR in Resources */,
 				F18510861C1824C8004EC4C8 /* LaunchScreen.storyboard in Resources */,
@@ -379,6 +404,7 @@
 				F10AB8081C50E7E200DE6DCE /* PasteView.xib in Resources */,
 				F1786DED1C56222B00963663 /* GenericAttributeTableViewCell.xib in Resources */,
 				F1A20A791C1977430037C05D /* minus-512.png in Resources */,
+				F16C7DCD1C57AD2900CA9B25 /* SureView.xib in Resources */,
 				F1431E881C52330C006A45BC /* exported.json in Resources */,
 				F17B75A91C22D6E100AB1B57 /* newDocument.png in Resources */,
 				F1786DEF1C56410200963663 /* SaveNameView.xib in Resources */,
@@ -394,6 +420,7 @@
 				F10AB8061C50E53100DE6DCE /* open.png in Resources */,
 				F17B75B01C22DA7200AB1B57 /* arrow.png in Resources */,
 				F17B75AB1C22D79F00AB1B57 /* save.png in Resources */,
+				F16C7DC31C5781EB00CA9B25 /* ReferenceTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -405,7 +432,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				F1786DF21C56411300963663 /* SaveNameView.m in Sources */,
+				F16C7DC11C577E9100CA9B25 /* Reference.m in Sources */,
 				F1685EA81C1829F00094097E /* Canvas.m in Sources */,
+				F16C7DCB1C578D4B00CA9B25 /* ConnectionDetailsView.m in Sources */,
 				F185107B1C1824C8004EC4C8 /* AppDelegate.m in Sources */,
 				F1685EAE1C1831840094097E /* ComponentDetailsView.m in Sources */,
 				F1786DE81C561AF200963663 /* BooleanAttributeTableViewCell.m in Sources */,
@@ -414,6 +443,7 @@
 				F1431E8B1C524127006A45BC /* ClassAttribute.m in Sources */,
 				F1685E9F1C1827FB0094097E /* ConfigureDiagramViewController.m in Sources */,
 				F1786DEC1C56222B00963663 /* GenericAttributeTableViewCell.m in Sources */,
+				F16C7DC61C57821800CA9B25 /* ReferenceTableViewCell.m in Sources */,
 				F1685EA51C18294A0094097E /* Component.m in Sources */,
 				F1A20A851C198A540037C05D /* PaletteItem.m in Sources */,
 				F1587B041C19BC4600E963BE /* Palette.m in Sources */,
@@ -423,8 +453,8 @@
 				F1685EA21C18289E0094097E /* EditorViewController.m in Sources */,
 				F1A20A7E1C1981290037C05D /* XMLDictionary.m in Sources */,
 				F1853A031C5253740015A9E0 /* StringAttributeTableViewCell.m in Sources */,
-				F1166BE41C187269009A2AAA /* ConnectionDetailsViewController.m in Sources */,
 				F1E9EFD81C4524CD007E227D /* PaletteItemCreatorViewController.m in Sources */,
+				F16C7DD01C57AD4400CA9B25 /* SureView.m in Sources */,
 				F1786DF71C5664AB00963663 /* ExploreFilesView.m in Sources */,
 				F18510781C1824C8004EC4C8 /* main.m in Sources */,
 				F1685EAB1C182B7D0094097E /* Connection.m in Sources */,

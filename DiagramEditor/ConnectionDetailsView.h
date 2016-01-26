@@ -1,0 +1,40 @@
+//
+//  ConnectionDetailsView.h
+//  DiagramEditor
+//
+//  Created by Diego on 26/1/16.
+//  Copyright © 2016 Diego Vaquero Melchor. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@protocol ConnectionDetailsViewDelegate <NSObject>
+
+@required
+
+
+@end
+
+@class Connection;
+
+@interface ConnectionDetailsView : UIView<UITableViewDataSource, UITableViewDelegate>{
+    id delegate;
+}
+
+@property (nonatomic, retain) id delegate;
+
+@property (weak, nonatomic) IBOutlet UITextField *nameTextField;
+
+@property (weak, nonatomic) IBOutlet UILabel *sourceLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *targetLabel;
+
+@property (weak, nonatomic) IBOutlet UITableView *attributesTable;
+@property (weak, nonatomic) IBOutlet UIView *background;
+
+
+@property Connection * connection;
+
+
+-(void)prepare;
+@end

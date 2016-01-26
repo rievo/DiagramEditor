@@ -11,8 +11,9 @@
 #import "AppDelegate.h"
 #import "Canvas.h"
 #import "ComponentDetailsView.h"
+#import "ConnectionDetailsView.h"
 #import "SaveNameView.h"
-
+#import "SureView.h"
 
 @class Palette;
 @class PaletteItem;
@@ -20,17 +21,13 @@
 
 #import <MessageUI/MFMailComposeViewController.h>
 
-@interface EditorViewController : UIViewController<MFMailComposeViewControllerDelegate, UIGestureRecognizerDelegate, UIScrollViewDelegate, ComponentDetailsViewDelegate, SaveNameDelegate>{
+@interface EditorViewController : UIViewController<MFMailComposeViewControllerDelegate, UIGestureRecognizerDelegate, UIScrollViewDelegate, ComponentDetailsViewDelegate, SaveNameDelegate, ConnectionDetailsViewDelegate, SureViewDelegate>{
     AppDelegate * dele;
     __weak IBOutlet Palette *palette;
     
     PaletteItem * tempIcon;
     __weak IBOutlet UIButton *newDiagram;
     __weak IBOutlet UIButton *saveDiagram;
-    
-    
-    __weak IBOutlet UIView *sureCloseView;
-    UIView * backSure;
     
     MFMailComposeViewController* controller ;
     
@@ -56,6 +53,10 @@
     NSString * textToSave;
     NSString * oldFileName;
     
+    __weak IBOutlet UIButton *cameraOutlet;
+    
+    
+    SureView * sureView;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 

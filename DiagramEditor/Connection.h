@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Reference.h"
 @class Component;
 
 @interface Connection : UIView
@@ -20,4 +21,9 @@
 @property UIBezierPath * arrowPath;
 
 @property CGPoint controlPoint;
+
+@property NSString * className;
+
+@property NSMutableArray * attributes;
+
 @end

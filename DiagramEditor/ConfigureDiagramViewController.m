@@ -17,6 +17,7 @@
 #import "PasteView.h"
 
 #import "ClassAttribute.h"
+#import "Reference.h"
 
 #import "ExploreFilesView.h"
 
@@ -607,6 +608,7 @@
 -(NSMutableArray *)getAttributesForClass: (NSString *) key
                           onClassArray: (NSArray *)classArray{
     ClassAttribute * temp;
+    Reference * ref;
     
     NSDictionary * dic = nil;
     NSString * name;
@@ -623,6 +625,8 @@
         
         if([name isEqualToString:key]){
             
+            
+            //Sacamos los atributos
             NSArray * attrs = [dic objectForKey:@"attributes"];
             for(int a = 0; a < attrs.count; a++){
                 NSDictionary * atrDic = [attrs objectAtIndex:a];
@@ -634,6 +638,22 @@
                  temp.defaultValue = [atrDic objectForKey:@"default"];
                 
                 [attributes addObject:temp];
+            }
+            
+            
+            //Sacamos las references
+            NSArray * refs = [dic objectForKey:@"references"];
+            for(int a = 0; a < refs.count; a++){
+                NSDictionary * rdic = [refs objectAtIndex:a];
+                Reference * ref = [[Reference alloc]init];
+                ref.name = [rdic objectForKey:@"name"];
+                ref.max = [f numberFromString:[rdic objectForKey:@"max"]];
+                ref.min = [f numberFromString:[rdic objectForKey:@"min"]];
+                ref.containment = [rdic objectForKey:@"containment"];
+                ref.target = [rdic objectForKey:@"target"];
+                ref.opposite = [rdic objectForKey:@"opposite"];
+                
+                [attributes addObject: ref];
             }
         }
     }

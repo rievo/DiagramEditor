@@ -15,7 +15,7 @@
 @implementation Component
 
 
-@synthesize name, connections, textLayer, type, shapeType, fillColor, image, isImage, attributes;
+@synthesize name, connections, textLayer, type, shapeType, fillColor, image, isImage, attributes, parent, sons;
 
 
 NSString* const SHOW_INSPECTOR = @"ShowInspector";
@@ -71,7 +71,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         CGRect rect = CGRectMake(0 - self.bounds.size.width /2, 0-20, self.frame.size.width * 2,20);
         textLayer.frame = rect;
         textLayer.contentsScale = [UIScreen mainScreen].scale;
-        [textLayer setFont:@"Helvetica-Bold"];
+        [textLayer setFont:@"Helvetica-Light"];
         [textLayer setFontSize:14];
         textLayer.alignmentMode = kCAAlignmentCenter;
         textLayer.truncationMode = kCATruncationStart;
@@ -79,14 +79,26 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         
         [self setNeedsDisplay];
         
+        
         /*
         //Add resizeView
         resizeView  = [[UIView alloc] initWithFrame:CGRectMake(self.bounds.size.width, self.bounds.size.height, resizeW, resizeW)];
+        [resizeView setUserInteractionEnabled:YES];
         resizeView.backgroundColor = [UIColor redColor];
         [self addSubview:resizeView];
         
         resizeGr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleResize:)];
         [resizeView addGestureRecognizer:resizeGr];*/
+        
+        
+        parent = nil;
+        sons = [[NSMutableArray alloc] init];
+        
+        
+        //Add UIPinch
+        UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(scale:)];
+        pinchRecognizer.delegate = self;
+        [self addGestureRecognizer:pinchRecognizer];
         
     }
     return self;
@@ -120,19 +132,29 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
 
 #pragma mark Handle gestures
 
+-(void)scale:(UIPinchGestureRecognizer *)pinch{
+    if (pinch.state == UIGestureRecognizerStateBegan)
+        prevPinchScale = 1.0;
+    
+    float thisScale = 1 + (pinch.scale-prevPinchScale);
+    prevPinchScale = pinch.scale;
+    self.transform = CGAffineTransformScale(self.transform, thisScale, thisScale);
+}
 
 -(void)handleResize:(UIPanGestureRecognizer *)recog{
 
     CGPoint newPoint = [recog locationInView:self];
     
     if(recog.state == UIGestureRecognizerStateBegan){
+        NSLog(@"started");
         
     }else if(recog.state == UIGestureRecognizerStateChanged){
+        NSLog(@"Agrandaaando");
         //recog.view.transform = CGAffineTransformScale(recog.view.transform, recog.scale, recog.scale);
         [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, newPoint.x - resizeW/2, newPoint.y-resizeW/2)];
         [self setNeedsDisplay];
     }else if(recog.state == UIGestureRecognizerStateEnded){
-        
+        NSLog(@"Ended");
     }
     
     
