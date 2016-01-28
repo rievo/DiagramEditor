@@ -202,43 +202,50 @@
             NSLog(@"%@", [NSString stringWithFormat:@"count: %d    .count: %lu", count, (unsigned long)connectionsBetweenOutAndIns.count]);
             //En count tengo el nº de conexiones que hay
             //En connectionsBetweenOutAndIns tengo esas conexiones
+            CGPoint aux_sourceAnchor = [self getAnchorPointFromComponent:compOut toComponent:compIns andRadius:radius];
+            CGPoint aux_targetAnchor = [self getAnchorPointFromComponent:compIns toComponent:compOut andRadius:radius];
+            
+            //VPunto medio
+            float xm = (aux_sourceAnchor.x + aux_targetAnchor.x)/2 ;
+            float ym = (aux_sourceAnchor.y + aux_targetAnchor.y)/2 ;
+            
+            //vector v
+            float vx = xm -aux_sourceAnchor.x ;
+            float vy = ym -aux_sourceAnchor.y ;
+            
+            
+            
+            //vector n
+            float nx = -vy/2;
+            float ny = vx /2;
+            
+            
+            //point w
+            float wx =  nx +xm;
+            float wy =  ny +ym;
+            
+            
+            //point z
+            float zx = -nx +xm;
+            float zy = -ny +ym;
+            
+            
+            //Vector unitario, t va de w a z
+            float tx = zx -wx;
+            float ty = zy - wy;
+            
+            float modulet = sqrtf(pow(tx, 2) + pow(ty, 2));
+            float div = modulet / (count-1);
+            
             
             for(int c = 0; c < connectionsBetweenOutAndIns.count; c++){
                 conn = [connectionsBetweenOutAndIns objectAtIndex:c];
+               
+                
                 CGPoint sourceAnchor = [self getAnchorPointFromComponent:conn.source toComponent:conn.target andRadius:radius];
                 CGPoint targetAnchor = [self getAnchorPointFromComponent:conn.target toComponent:conn.source andRadius:radius];
+
                 
-                //VPunto medio
-                float xm = (sourceAnchor.x + targetAnchor.x)/2 ;
-                float ym = (sourceAnchor.y + targetAnchor.y)/2 ;
-                
-                //vector v
-                float vx = xm -sourceAnchor.x ;
-                float vy = ym -sourceAnchor.y ;
-                
-                
-                
-                //vector n
-                float nx = -vy/2;
-                float ny = vx /2;
-                
-                
-                //point w
-                float wx =  nx +xm;
-                float wy =  ny +ym;
-                
-                
-                //point z
-                float zx = -nx +xm;
-                float zy = -ny +ym;
-                
-                
-                //Vector unitario, t va de w a z
-                float tx = zx -wx;
-                float ty = zy - wy;
-                
-                float modulet = sqrtf(pow(tx, 2) + pow(ty, 2));
-                float div = modulet / (count-1);
                 
                 float px = wx + (tx*div*c/modulet);
                 float py = wy + (ty*div*c/modulet);
@@ -272,9 +279,7 @@
                 if(px > targetAnchor.x) {
                     angle += M_PI;
                 }
-                NSLog(@"%@", [NSString stringWithFormat:@"%.2f", angle]);
-
-                //float degrees = radiansToDegrees(angle);
+             
                 
                 //Rotamos test los ángulos que sean
                 test = [self imageRotatedByDegrees:test rads:angle];

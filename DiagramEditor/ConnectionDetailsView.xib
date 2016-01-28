@@ -58,7 +58,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kTJ-fW-Paz">
-                                    <rect key="frame" x="110" y="31" width="228" height="30"/>
+                                    <rect key="frame" x="110" y="31" width="189" height="30"/>
                                     <color key="backgroundColor" red="0.71764707565307617" green="0.76862746477127075" blue="0.89803922176361084" alpha="0.0" colorSpace="calibratedRGB"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
@@ -73,6 +73,17 @@
                                     <rect key="frame" x="38" y="178" width="300" height="243"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </tableView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g6v-Qp-JEp">
+                                    <rect key="frame" x="308" y="31" width="30" height="30"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="30" id="e8f-ad-e5u"/>
+                                        <constraint firstAttribute="height" constant="30" id="mxJ-l0-AXI"/>
+                                    </constraints>
+                                    <state key="normal" image="minus-512.png"/>
+                                    <connections>
+                                        <action selector="removeThisConnection:" destination="iN0-l3-epB" eventType="touchUpInside" id="iLi-pF-no6"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" red="0.71764707565307617" green="0.76862746477127075" blue="0.89803922176361084" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
@@ -81,9 +92,11 @@
                                 <constraint firstItem="kTJ-fW-Paz" firstAttribute="centerY" secondItem="c37-JV-WBo" secondAttribute="centerY" id="2Dc-tt-8OI"/>
                                 <constraint firstItem="qYI-qU-CsY" firstAttribute="top" secondItem="eeS-O2-UX6" secondAttribute="top" id="2df-NP-YJ4"/>
                                 <constraint firstItem="ydd-bU-AuO" firstAttribute="centerX" secondItem="dj3-Rm-B84" secondAttribute="centerX" id="Apo-R0-C3S"/>
-                                <constraint firstItem="kTJ-fW-Paz" firstAttribute="trailing" secondItem="qYI-qU-CsY" secondAttribute="trailing" id="DRA-pF-LJb"/>
+                                <constraint firstItem="kTJ-fW-Paz" firstAttribute="trailing" secondItem="qYI-qU-CsY" secondAttribute="trailing" constant="-39" id="DRA-pF-LJb"/>
                                 <constraint firstItem="ydd-bU-AuO" firstAttribute="top" secondItem="Ez3-kC-y71" secondAttribute="bottom" constant="17" id="F06-br-uRv"/>
+                                <constraint firstItem="g6v-Qp-JEp" firstAttribute="top" secondItem="dj3-Rm-B84" secondAttribute="top" constant="31" id="FcU-6D-ZhZ"/>
                                 <constraint firstItem="xcb-am-CbD" firstAttribute="top" secondItem="ydd-bU-AuO" secondAttribute="bottom" constant="8" id="OaU-mc-8Br"/>
+                                <constraint firstAttribute="trailing" secondItem="g6v-Qp-JEp" secondAttribute="trailing" constant="28" id="PvO-XK-d4z"/>
                                 <constraint firstAttribute="trailing" secondItem="Ez3-kC-y71" secondAttribute="trailing" constant="28" id="WXk-Xk-C0p"/>
                                 <constraint firstItem="qYI-qU-CsY" firstAttribute="leading" secondItem="kTJ-fW-Paz" secondAttribute="leading" id="Y0g-SO-SNz"/>
                                 <constraint firstItem="eeS-O2-UX6" firstAttribute="top" secondItem="c37-JV-WBo" secondAttribute="bottom" constant="26" id="ZEp-yl-qXE"/>
@@ -127,4 +140,7 @@
             <point key="canvasLocation" x="479.5" y="256"/>
         </view>
     </objects>
+    <resources>
+        <image name="minus-512.png" width="512" height="512"/>
+    </resources>
 </document>

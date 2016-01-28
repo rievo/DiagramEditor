@@ -35,6 +35,7 @@
 
 @property Connection * connection;
 
+- (IBAction)removeThisConnection:(id)sender;
 
 -(void)prepare;
 @end

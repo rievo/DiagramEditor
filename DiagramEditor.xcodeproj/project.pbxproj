@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F10580751C5905E4000497DE /* inputClosedArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = F10580721C5905E4000497DE /* inputClosedArrow.png */; };
+		F10580761C5905E4000497DE /* inputFillArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = F10580731C5905E4000497DE /* inputFillArrow.png */; };
+		F10580771C5905E4000497DE /* outputClosedArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = F10580741C5905E4000497DE /* outputClosedArrow.png */; };
 		F10AB8061C50E53100DE6DCE /* open.png in Resources */ = {isa = PBXBuildFile; fileRef = F10AB8051C50E53100DE6DCE /* open.png */; };
 		F10AB8081C50E7E200DE6DCE /* PasteView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F10AB8071C50E7E200DE6DCE /* PasteView.xib */; };
 		F10AB80B1C50E85100DE6DCE /* cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = F10AB8091C50E85100DE6DCE /* cancel.png */; };
@@ -66,6 +69,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F10580721C5905E4000497DE /* inputClosedArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inputClosedArrow.png; sourceTree = "<group>"; };
+		F10580731C5905E4000497DE /* inputFillArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inputFillArrow.png; sourceTree = "<group>"; };
+		F10580741C5905E4000497DE /* outputClosedArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = outputClosedArrow.png; sourceTree = "<group>"; };
 		F10AB8051C50E53100DE6DCE /* open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = open.png; sourceTree = "<group>"; };
 		F10AB8071C50E7E200DE6DCE /* PasteView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PasteView.xib; sourceTree = "<group>"; };
 		F10AB8091C50E85100DE6DCE /* cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel.png; sourceTree = "<group>"; };
@@ -164,6 +170,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F10580711C5905DA000497DE /* Decorators */ = {
+			isa = PBXGroup;
+			children = (
+				F10580721C5905E4000497DE /* inputClosedArrow.png */,
+				F10580731C5905E4000497DE /* inputFillArrow.png */,
+				F10580741C5905E4000497DE /* outputClosedArrow.png */,
+			);
+			name = Decorators;
+			sourceTree = "<group>";
+		};
 		F10BE4341C29663E0053A7F9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -252,6 +268,7 @@
 		F17B75AE1C22D9D500AB1B57 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				F10580711C5905DA000497DE /* Decorators */,
 				F10AB8091C50E85100DE6DCE /* cancel.png */,
 				F10AB80A1C50E85100DE6DCE /* ok.png */,
 				F10AB8051C50E53100DE6DCE /* open.png */,
@@ -394,9 +411,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F1853A001C52533E0015A9E0 /* StringAttributeTableViewCell.xib in Resources */,
+				F10580751C5905E4000497DE /* inputClosedArrow.png in Resources */,
 				F1AB3B161C22B19800EDBB1D /* resize.png in Resources */,
 				F16C7DC81C578D3900CA9B25 /* ConnectionDetailsView.xib in Resources */,
 				F1431E8E1C5249F7006A45BC /* ComponentDetailsView.xib in Resources */,
+				F10580761C5905E4000497DE /* inputFillArrow.png in Resources */,
 				F10F0FA51C1ED77A00165561 /* design.graphicR in Resources */,
 				F18510861C1824C8004EC4C8 /* LaunchScreen.storyboard in Resources */,
 				F19C258E1C43AB580002E490 /* back.png in Resources */,
@@ -405,6 +424,7 @@
 				F1786DED1C56222B00963663 /* GenericAttributeTableViewCell.xib in Resources */,
 				F1A20A791C1977430037C05D /* minus-512.png in Resources */,
 				F16C7DCD1C57AD2900CA9B25 /* SureView.xib in Resources */,
+				F10580771C5905E4000497DE /* outputClosedArrow.png in Resources */,
 				F1431E881C52330C006A45BC /* exported.json in Resources */,
 				F17B75A91C22D6E100AB1B57 /* newDocument.png in Resources */,
 				F1786DEF1C56410200963663 /* SaveNameView.xib in Resources */,

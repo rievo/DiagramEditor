@@ -9,21 +9,15 @@
 #import "ConnectionDetailsView.h"
 #import "Connection.h"
 #import "ReferenceTableViewCell.h"
+#import "AppDelegate.h"
 
 @implementation ConnectionDetailsView
 
-/*
- // Only override drawRect: if you perform custom drawing.
- // An empty implementation adversely affects performance during animation.
- - (void)drawRect:(CGRect)rect {
- // Drawing code
- }
- */
+
 
 @synthesize delegate, nameTextField, sourceLabel, targetLabel, attributesTable, background, connection;
 
 - (void)awakeFromNib {
-    //NSLog(@"cargando...");
     UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [background addGestureRecognizer:tapgr];
     
@@ -37,6 +31,14 @@
 
 -(void)closeConnectionDetailsView{
     [self removeFromSuperview];
+}
+
+- (IBAction)removeThisConnection:(id)sender {
+    
+    AppDelegate * dele = [[UIApplication sharedApplication] delegate];
+    [dele.connections removeObject:self.connection];
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+    [self closeConnectionDetailsView];
 }
 
 -(void)prepare{
@@ -85,6 +87,9 @@
         cell = [nib objectAtIndex:0];
         
         cell.nameLabel.text = ref.name;
+        [cell.containmentSwitch setOn:ref.containment];
+        [cell.containmentSwitch setEnabled:NO];
+        cell.targetLabel.text = ref.target;
         
     }
     cell.backgroundColor = [UIColor clearColor];

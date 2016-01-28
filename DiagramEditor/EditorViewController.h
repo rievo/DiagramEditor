@@ -64,8 +64,7 @@
 - (IBAction)showComponentList:(id)sender;
 - (IBAction)showActionsList:(id)sender;
 - (IBAction)createNewDiagram:(id)sender;
-- (IBAction)sureCreateNew:(id)sender;
-- (IBAction)notSureCreateNew:(id)sender;
+
 
 - (IBAction)saveCurrentDiagram:(id)sender;
 - (IBAction)exportCanvasToImage:(id)sender;

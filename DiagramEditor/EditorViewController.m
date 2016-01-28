@@ -92,7 +92,7 @@
     
     //Add a UITapGR to containerview for closing
     /*UITapGestureRecognizer * tgr = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideDetailsView)];
-    [containerView addGestureRecognizer:tgr];*/
+     [containerView addGestureRecognizer:tgr];*/
     
     [self.view addSubview:containerView];
     
@@ -345,7 +345,7 @@
 
 -(void) saveDiagramOnDevice{
     textToSave = [self generateXML];
-
+    
     [snv removeFromSuperview];
     
     [saveBackgroundBlackView removeFromSuperview];
@@ -353,8 +353,8 @@
     [saveBackgroundBlackView setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5]];
     
     snv = [[[NSBundle mainBundle] loadNibNamed:@"SaveNameView"
-                                                        owner:self
-                                                      options:nil] objectAtIndex:0];
+                                         owner:self
+                                       options:nil] objectAtIndex:0];
     
     if(oldFileName.length  > 0)
         snv.textField.text = oldFileName;
@@ -464,11 +464,11 @@
     
     
     /*
-    controller = [[MFMailComposeViewController alloc] init];
-    controller.mailComposeDelegate = self;
-    [controller setSubject:@"Digram image text"];
-    [controller addAttachmentData:data mimeType:@"image/png" fileName:@"photo"];
-    [self presentViewController:controller animated:YES completion:nil];
+     controller = [[MFMailComposeViewController alloc] init];
+     controller.mailComposeDelegate = self;
+     [controller setSubject:@"Digram image text"];
+     [controller addAttachmentData:data mimeType:@"image/png" fileName:@"photo"];
+     [self presentViewController:controller animated:YES completion:nil];
      */
     
     UIAlertController * ac  = [UIAlertController alertControllerWithTitle:nil
@@ -520,7 +520,7 @@
 
 #pragma mark Storyboard
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-
+    
 }
 
 
@@ -562,71 +562,36 @@
 }
 
 
-/*
-- (void)zoomToPoint:(CGPoint)zoomPoint withScale: (CGFloat)scale animated: (BOOL)animated
-{
-    //Normalize current content size back to content scale of 1.0f
-    CGSize contentSize;
-    contentSize.width = (scrollView.contentSize.width / scrollView.zoomScale);
-    contentSize.height = (scrollView.contentSize.height / scrollView.zoomScale);
-    
-    //translate the zoom point to relative to the content rect
-    zoomPoint.x = (zoomPoint.x / scrollView.bounds.size.width) * contentSize.width;
-    zoomPoint.y = (zoomPoint.y / scrollView.bounds.size.height) * contentSize.height;
-    
-    //derive the size of the region to zoom to
-    CGSize zoomSize;
-    zoomSize.width = scrollView.bounds.size.width / scale;
-    zoomSize.height = scrollView.bounds.size.height / scale;
-    
-    //offset the zoom rect so the actual zoom point is in the middle of the rectangle
-    CGRect zoomRect;
-    zoomRect.origin.x = zoomPoint.x - zoomSize.width / 2.0f;
-    zoomRect.origin.y = zoomPoint.y - zoomSize.height / 2.0f;
-    zoomRect.size.width = zoomSize.width;
-    zoomRect.size.height = zoomSize.height;
-    
-    //apply the resize
-    [scrollView zoomToRect: zoomRect animated: animated];
-}*/
 - (void)zoomToPoint:(CGPoint)zoomPoint withScale:(CGFloat)scale animated:(BOOL)animated
 {
-
     
-    //`zoomToRect` works on the assumption that the input frame is in relation
-    //to the content view when zoomScale is 1.0
     
-    //Work out in the current zoomScale, where on the contentView we are zooming
     CGPoint translatedZoomPoint = CGPointZero;
     translatedZoomPoint.x = zoomPoint.x + scrollView.contentOffset.x;
     translatedZoomPoint.y = zoomPoint.y + scrollView.contentOffset.y;
     
-    //Figure out what zoom scale we need to get back to default 1.0f
+    
     CGFloat zoomFactor = 1.0f / scrollView.zoomScale;
     
-    //By multiplying by the zoom factor, we get where we're zooming to, at scale 1.0f;
+    
     translatedZoomPoint.x *= zoomFactor;
     translatedZoomPoint.y *= zoomFactor;
     
-    //work out the size of the rect to zoom to, and place it with the zoom point in the middle
+    
     CGRect destinationRect = CGRectZero;
     destinationRect.size.width = CGRectGetWidth(scrollView.frame) / scale;
     destinationRect.size.height = CGRectGetHeight(scrollView.frame) / scale;
     destinationRect.origin.x = translatedZoomPoint.x - (CGRectGetWidth(destinationRect) * 0.5f);
     destinationRect.origin.y = translatedZoomPoint.y - (CGRectGetHeight(destinationRect) * 0.5f);
     
-  //  if (animated) {
-        [UIView animateWithDuration:0.55f delay:0.0f usingSpringWithDamping:1.0f initialSpringVelocity:0.6f options:UIViewAnimationOptionAllowUserInteraction animations:^{
-            [scrollView zoomToRect:destinationRect animated:NO];
-        } completion:^(BOOL completed) {
-            if ([scrollView.delegate respondsToSelector:@selector(scrollViewDidEndZooming:withView:atScale:)]) {
-                [scrollView.delegate scrollViewDidEndZooming:scrollView withView:[scrollView.delegate viewForZoomingInScrollView:scrollView] atScale:scale];
-            }
-        }];
-   // }
-   /* else {
-        [self zoomToRect:destinationRect animated:NO];
-    }*/
+    
+    [UIView animateWithDuration:0.55f delay:0.0f usingSpringWithDamping:1.0f initialSpringVelocity:0.6f options:UIViewAnimationOptionAllowUserInteraction animations:^{
+        [scrollView zoomToRect:destinationRect animated:NO];
+    } completion:^(BOOL completed) {
+        if ([scrollView.delegate respondsToSelector:@selector(scrollViewDidEndZooming:withView:atScale:)]) {
+            [scrollView.delegate scrollViewDidEndZooming:scrollView withView:[scrollView.delegate viewForZoomingInScrollView:scrollView] atScale:scale];
+        }
+    }];
 }
 
 
@@ -636,9 +601,7 @@
     }else if(zoomLevel == 1){
         zoomLevel = 0;
     }
-    //}else if(zoomLevel == 2){ //Full zoom to no zoom
-    //    zoomLevel = 0;
-    //}
+
     
     CGPoint p = [tapRecognizer locationInView: self.view];
     CGPoint pointInSV = [self.view convertPoint:p toView:canvas];
@@ -679,15 +642,16 @@
  Cuando el usuario suelte la conexión entre dos elementos: Siempre mirando el GraphicR
  1) Comprobar si del nodo origen puede salir alguna conexión
  2) En caso de que pueda salir conexión, mirar el nodo destino
-    2.1)Si no se pueden unir origen y destino, esto es, 0 conexiones posibles
-    2.2)Si se pueden unir origen y destino
-        2.2.1) Si solo hay una posible conexión en el graphicR, tomarla
-        2.2.2) Si hay más de una posible conexión, mostrar un popup para que el usuario elija cuál de ellas
+ 2.1)Si no se pueden unir origen y destino, esto es, 0 conexiones posibles
+ 2.2)Si se pueden unir origen y destino
+ 2.2.1) Si solo hay una posible conexión en el graphicR, tomarla
+ 2.2.2) Si hay más de una posible conexión, mostrar un popup para que el usuario elija cuál de ellas
  */
 
 -(BOOL)checkIntegrityForSource: (Component *)source
-       andTarget: (Component *)target{
+                     andTarget: (Component *)target{
     BOOL result = false;
+    
     
     
     return result;
@@ -699,7 +663,11 @@
 #pragma mark SureViewDelegate methods
 
 -(void)closeSureViewWithResult:(BOOL)res{
-    NSLog(@"closing sureviweWithResult: ");
+    if (res == YES){
+        [self resetAll];
+    }else{
+        
+    }
 }
 
 

@@ -12,15 +12,26 @@
 
 @synthesize delegate, background;
 
-
+- (void)awakeFromNib{
+    UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                             action:@selector(handleTap:)];
+    [background addGestureRecognizer:tapgr];
+}
 
 - (IBAction)sayNo:(UIButton *)sender {
-    [background removeFromSuperview];
+    [self removeFromSuperview];
     [delegate closeSureViewWithResult:NO];
 }
 
 - (IBAction)sayYes:(id)sender {
-    [background removeFromSuperview];
+    [self removeFromSuperview];
     [delegate closeSureViewWithResult:YES];
 }
+
+-(void)handleTap: (UITapGestureRecognizer *)recog{
+    [self removeFromSuperview];
+    [delegate closeSureViewWithResult:NO];
+}
+
+
 @end
