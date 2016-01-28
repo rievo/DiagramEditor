@@ -16,7 +16,9 @@
 #define curveMove 60
 
 
-#define radius 30
+#define radius 35
+
+#define radiansToDegrees( radians ) ( ( radians ) * ( 180.0 / M_PI ) )
 
 
 @implementation Canvas
@@ -59,11 +61,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(repaintCanvas:)
                                                  name:@"repaintCanvas" object:nil];
-
+    
     
     tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [self addGestureRecognizer:tapGR];
-
+    
     
     NSArray *viewsToRemove = [self subviews];
     for (UIView *v in viewsToRemove) {
@@ -81,12 +83,12 @@
     
     for(int i = 0; i< dele.connections.count; i++){
         conn = [dele.connections objectAtIndex:i];
-
+        
         if([self isPoint:p withinDistance:10.0 ofPath:conn.arrowPath.CGPath]){
             [[NSNotificationCenter defaultCenter]postNotificationName:@"showConnNot" object: conn];
         }
     }
-    }
+}
 
 
 -(CGPoint) getAnchorPointFromComponent: (Component *)c1
@@ -94,7 +96,7 @@
                              andRadius: (float)r{
     CGPoint temp;
     
-
+    
     CGPoint sourcep = c1.center;
     CGPoint targetp = c2.center;
     
@@ -159,139 +161,184 @@
 
 - (void)drawRect:(CGRect)rect {
     
-
+    
+    Component * compOut = nil;
+    Component * compIns = nil;
     Connection * conn = nil;
-    for(int i = 0; i< dele.connections.count; i++){
-        conn = [dele.connections objectAtIndex:i];
+    for(int i = 0; i< dele.components.count; i++){
+        compOut = [dele.components objectAtIndex:i];
         
-        if(conn.source == conn.target){
+        
+        for (int j = i+1; j<dele.components.count; j++){
+            compIns = [dele.components objectAtIndex:j];
             
-        }else{
-            //Get the best anchor for both Components
-            //outComp.center
-            //insideComp.center
+            //Tengo out & ins
+            //Recorro todas las conexiones contando
+            
+            NSMutableArray * connectionsBetweenOutAndIns = [[NSMutableArray alloc] init];
+            
+            int count = 0;
+            
+            for(int c = 0; c< dele.connections.count; c++){
+                conn = [dele.connections objectAtIndex:c];
+                BOOL flag = false;
+                
+                if((conn.source == compOut && conn.target == compIns)){
+                    flag = true;
+                    count ++;
+                }
+                
+                if((conn.source == compIns && conn.target == compOut)){
+                    flag = true;
+                    count ++;
+                }
+                
+                if(flag == true){
+                    [connectionsBetweenOutAndIns addObject:conn];
+                }
+            }
             
             
-            //CGPoint sourceAnchor = [self getBestAnchorForComponent:conn.source toPoint:conn.target.center];
-            //CGPoint targetAnchor = [self getBestAnchorForComponent:conn.target toPoint:conn.source.center];
+            NSLog(@"%@", [NSString stringWithFormat:@"count: %d    .count: %lu", count, (unsigned long)connectionsBetweenOutAndIns.count]);
+            //En count tengo el nº de conexiones que hay
+            //En connectionsBetweenOutAndIns tengo esas conexiones
             
-            CGPoint sourceAnchor = [self getAnchorPointFromComponent:conn.source toComponent:conn.target andRadius:radius];
-            CGPoint targetAnchor = [self getAnchorPointFromComponent:conn.target toComponent:conn.source andRadius:radius];
-            
-            /*
-            CGPoint sourceAnchor = conn.source.center;
-            CGPoint targetAnchor = conn.target.center;*/
-            
+            for(int c = 0; c < connectionsBetweenOutAndIns.count; c++){
+                conn = [connectionsBetweenOutAndIns objectAtIndex:c];
+                CGPoint sourceAnchor = [self getAnchorPointFromComponent:conn.source toComponent:conn.target andRadius:radius];
+                CGPoint targetAnchor = [self getAnchorPointFromComponent:conn.target toComponent:conn.source andRadius:radius];
+                
+                //VPunto medio
+                float xm = (sourceAnchor.x + targetAnchor.x)/2 ;
+                float ym = (sourceAnchor.y + targetAnchor.y)/2 ;
+                
+                //vector v
+                float vx = xm -sourceAnchor.x ;
+                float vy = ym -sourceAnchor.y ;
+                
+                
+                
+                //vector n
+                float nx = -vy/2;
+                float ny = vx /2;
+                
+                
+                //point w
+                float wx =  nx +xm;
+                float wy =  ny +ym;
+                
+                
+                //point z
+                float zx = -nx +xm;
+                float zy = -ny +ym;
+                
+                
+                //Vector unitario, t va de w a z
+                float tx = zx -wx;
+                float ty = zy - wy;
+                
+                float modulet = sqrtf(pow(tx, 2) + pow(ty, 2));
+                float div = modulet / (count-1);
+                
+                float px = wx + (tx*div*c/modulet);
+                float py = wy + (ty*div*c/modulet);
+                
+                if(count == 1){
+                    px = xm;
+                    py = ym;
+                }
+                
+                //El bezier path va a pasar por px, py
+                
+                UIBezierPath * line  = [[UIBezierPath alloc] init];
+                [line moveToPoint:sourceAnchor];
+                [line addQuadCurveToPoint:targetAnchor controlPoint:CGPointMake(px, py)];
+                [line setLineWidth:1.0];
+                [[UIColor blackColor]setStroke];
+                [line stroke];
+                conn.arrowPath = line;
+                
+                
+                
+                //Draw decorator
+                UIImage * test = [UIImage imageNamed:@"inputFillArrow"];
+                
+                test = [UIImage imageWithCGImage:[test CGImage]
+                                           scale:2.0
+                                     orientation:test.imageOrientation];
+                //Calculamos los grados entre el punto de control (px,py) y el target
+                
+                float angle = atanf((targetAnchor.y-py)/ (targetAnchor.x-px));
+                if(px > targetAnchor.x) {
+                    angle += M_PI;
+                }
+                NSLog(@"%@", [NSString stringWithFormat:@"%.2f", angle]);
 
-            
-            //Draw line
-            UIBezierPath * path = [[UIBezierPath alloc] init];
-            //[[UIColor blackColor] setStroke];
-            [dele.blue3 setStroke];
-            [path setLineWidth:2.0];
-            [path moveToPoint: sourceAnchor];
-            [path addLineToPoint:targetAnchor];
-            [path stroke];
-            conn.arrowPath = path;
-            /*CGPoint mid = CGPointMake((sourceAnchor.x + targetAnchor.x)/2.0, (sourceAnchor.y + targetAnchor.y)/2.0);
-            //mid.x = mid.x - curveMove;
-            mid.y = mid.y - curveMove;
-            [path addQuadCurveToPoint:targetAnchor controlPoint:mid];
-            [path stroke];
-            conn.arrowPath = path;*/
-            
-            //Draw decorator
-            
-            //Draw arrow
-            
-            UIBezierPath * arrow = [[UIBezierPath alloc] init];
-            [dele.blue4 setStroke];
-            [arrow setLineWidth:2.0];
-            float phi = atan2(targetAnchor.y -sourceAnchor.y, targetAnchor.x - sourceAnchor.x);
-            float angle =  M_PI / 6;
-            float tip1angle = phi  - angle;
-            float tip2angle = phi + angle;
-            float h = 20;
-            float x3 = targetAnchor.x - h * cos(tip1angle);
-            float x4 = targetAnchor.x - h * cos(tip2angle);
-            float y3 = targetAnchor.y - h * sin(tip1angle);
-            float y4 = targetAnchor.y - h * sin(tip2angle);
-            
-            
-            CGPoint tip1 = CGPointMake(x3, y3);
-            CGPoint tip2 = CGPointMake(x4, y4);
-            
-            [arrow moveToPoint:targetAnchor];
-            [arrow addLineToPoint:tip1];
-            [arrow addLineToPoint:tip2];
-            [arrow closePath];
-            [arrow fill];
-            [arrow stroke];
-            
-            
-            
-            //Draw diamond on targetAnchorpoint
-   
-            
-            CGPoint left;
-            CGPoint right;
-            
-            if(sourceAnchor.x < targetAnchor.x){
-                left = sourceAnchor;
-                right = targetAnchor;
-            }else{
-                left = targetAnchor;
-                right = sourceAnchor;
+                //float degrees = radiansToDegrees(angle);
+                
+                //Rotamos test los ángulos que sean
+                test = [self imageRotatedByDegrees:test rads:angle];
+                [test drawAtPoint:CGPointMake(targetAnchor.x - test.size.width/2 , targetAnchor.y -test.size.height/2 )];
+                
+                
+                //Dibujamos un punto amarillo solo para ver el targetanchor
+                UIBezierPath * point = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(targetAnchor.x-2, targetAnchor.y-2, 4, 4)];
+                [[UIColor redColor]setFill];
+                [point fill];
+                
             }
-            
-            UIColor * color =nil;
-            UIFont * font = nil;
-            
-            color = [UIColor blackColor];
-            font = [UIFont fontWithName:@"Helvetica" size:12.0];
- 
-            
-            NSDictionary * dic = @{NSForegroundColorAttributeName: color, NSFontAttributeName: font};
-            NSAttributedString * str = [[NSAttributedString alloc] initWithString:conn.name attributes:dic];
-            
-            
-            CGSize strSize = [str size];
-            
-            
-            
-            //[str drawAtPoint:CGPointMake(z, 5)];
-            double w = fabs(right.x - left.x);
-            h = 0;
-            
-            //if(left.y < right.y)
-            //   h = abs(right.y - left.y);
-            //else
-            h = left.y - right.y;
-            h = fabs(h);
-            
-            double b = (w - strSize.width)/2.0;
-            double e = (h - strSize.height)/2.0;
-            
-            double y;
-            if(left.y < right.y){
-                y = left.y;
-            }else{
-                y = right.y;
-            }
-            
-            
-            [str drawAtPoint:CGPointMake(left.x +b + xmargin, y + e - ymargin)];
-            
-         
-            
-            CGRect strRect = CGRectMake(left.x + b + xmargin, y+e -ymargin, str.size.width, str.size.height);
-            
-            conn.touchRect = strRect;
-            
             
         }
     }
     
+    
+    //
+    //            UIColor * color =nil;
+    //            UIFont * font = nil;
+    //
+    //            color = [UIColor blackColor];
+    //            font = [UIFont fontWithName:@"Helvetica" size:12.0];
+    //
+    //
+    //            NSDictionary * dic = @{NSForegroundColorAttributeName: color, NSFontAttributeName: font};
+    //            NSAttributedString * str = [[NSAttributedString alloc] initWithString:conn.name attributes:dic];
+    //
+    //
+    //            CGSize strSize = [str size];
+    //
+    //
+    //
+    //            //[str drawAtPoint:CGPointMake(z, 5)];
+    //            double w = fabs(right.x - left.x);
+    //            h = 0;
+    //
+    //            //if(left.y < right.y)
+    //            //   h = abs(right.y - left.y);
+    //            //else
+    //            h = left.y - right.y;
+    //            h = fabs(h);
+    //
+    //            double b = (w - strSize.width)/2.0;
+    //            double e = (h - strSize.height)/2.0;
+    //
+    //            double y;
+    //            if(left.y < right.y){
+    //                y = left.y;
+    //            }else{
+    //                y = right.y;
+    //            }
+    //
+    //
+    //            [str drawAtPoint:CGPointMake(left.x +b + xmargin, y + e - ymargin)];
+    //
+    //
+    //
+    //            CGRect strRect = CGRectMake(left.x + b + xmargin, y+e -ymargin, str.size.width, str.size.height);
+    //
+    //            conn.touchRect = strRect;
+    //
+    //
+    //    
     if(xArrowStart> 0 && yArrowStart> 0){
         
         UIBezierPath * line = [[UIBezierPath alloc] init];
@@ -304,7 +351,7 @@
     }
     
     
-  }
+}
 
 - (void) repaintCanvas : (NSNotification *) notification {
     
@@ -324,5 +371,33 @@
     CGPathRef hitPath = CGPathCreateCopyByStrokingPath(path, NULL, distance*2, kCGLineCapRound, kCGLineJoinRound, 0);
     BOOL isWithinDistance = CGPathContainsPoint(hitPath, NULL, p, false);
     return isWithinDistance;
+}
+
+
+#pragma mark rotate PNG
+- (UIImage *)imageRotatedByDegrees:(UIImage*)oldImage rads:(CGFloat)rads{
+    //Calculate the size of the rotated view's containing box for our drawing space
+    UIView *rotatedViewBox = [[UIView alloc] initWithFrame:CGRectMake(0,0,oldImage.size.width, oldImage.size.height)];
+    CGAffineTransform t = CGAffineTransformMakeRotation(rads);
+    rotatedViewBox.transform = t;
+    CGSize rotatedSize = rotatedViewBox.frame.size;
+    
+    //Create the bitmap context
+    UIGraphicsBeginImageContext(rotatedSize);
+    CGContextRef bitmap = UIGraphicsGetCurrentContext();
+    
+    //Move the origin to the middle of the image so we will rotate and scale around the center.
+    CGContextTranslateCTM(bitmap, rotatedSize.width/2, rotatedSize.height/2);
+    
+    //Rotate the image context
+    CGContextRotateCTM(bitmap, rads);
+    
+    //Now, draw the rotated/scaled image into the context
+    CGContextScaleCTM(bitmap, 1.0, -1.0);
+    CGContextDrawImage(bitmap, CGRectMake(-oldImage.size.width / 2, -oldImage.size.height / 2, oldImage.size.width, oldImage.size.height), [oldImage CGImage]);
+    
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
 }
 @end
