@@ -428,7 +428,6 @@
         
         Palette * temp = [palettes objectAtIndex:indexPath.row];
         cell.textLabel.text = temp.name;
-        //cell.backgroundColor = [UIColor clearColor];
     }else if(tableView == serverFilesTable){
         PaletteFile * pf = [serverFilesArray objectAtIndex:indexPath.row];
         cell.textLabel.text = pf.name;
@@ -440,6 +439,8 @@
     }
     cell.textLabel.textColor = dele.blue4;
     cell.backgroundColor = [UIColor clearColor];
+    cell.textLabel.adjustsFontSizeToFitWidth = YES;
+    [cell.textLabel setMinimumScaleFactor:7.0/[UIFont labelFontSize]];
     return cell;
 }
 
