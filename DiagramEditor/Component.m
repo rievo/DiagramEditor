@@ -75,6 +75,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         [textLayer setFontSize:14];
         textLayer.alignmentMode = kCAAlignmentCenter;
         textLayer.truncationMode = kCATruncationStart;
+        textLayer.backgroundColor = [UIColor clearColor].CGColor;
         [self.layer addSublayer:textLayer];
         
         [self setNeedsDisplay];

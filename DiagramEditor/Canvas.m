@@ -16,10 +16,11 @@
 #define curveMove 60
 
 
-#define radius 35
+#define defradius 35
 
+#define pi 3.14159265359
 #define radiansToDegrees( radians ) ( ( radians ) * ( 180.0 / M_PI ) )
-
+#define   DEGREES_TO_RADIANS(degrees)  ((pi * degrees)/ 180)
 
 @implementation Canvas
 
@@ -202,8 +203,8 @@
             NSLog(@"%@", [NSString stringWithFormat:@"count: %d    .count: %lu", count, (unsigned long)connectionsBetweenOutAndIns.count]);
             //En count tengo el nº de conexiones que hay
             //En connectionsBetweenOutAndIns tengo esas conexiones
-            CGPoint aux_sourceAnchor = [self getAnchorPointFromComponent:compOut toComponent:compIns andRadius:radius];
-            CGPoint aux_targetAnchor = [self getAnchorPointFromComponent:compIns toComponent:compOut andRadius:radius];
+            CGPoint aux_sourceAnchor = [self getAnchorPointFromComponent:compOut toComponent:compIns andRadius:defradius];
+            CGPoint aux_targetAnchor = [self getAnchorPointFromComponent:compIns toComponent:compOut andRadius:defradius];
             
             //VPunto medio
             float xm = (aux_sourceAnchor.x + aux_targetAnchor.x)/2 ;
@@ -240,11 +241,11 @@
             
             for(int c = 0; c < connectionsBetweenOutAndIns.count; c++){
                 conn = [connectionsBetweenOutAndIns objectAtIndex:c];
-               
                 
-                CGPoint sourceAnchor = [self getAnchorPointFromComponent:conn.source toComponent:conn.target andRadius:radius];
-                CGPoint targetAnchor = [self getAnchorPointFromComponent:conn.target toComponent:conn.source andRadius:radius];
-
+                
+                CGPoint sourceAnchor = [self getAnchorPointFromComponent:conn.source toComponent:conn.target andRadius:defradius];
+                CGPoint targetAnchor = [self getAnchorPointFromComponent:conn.target toComponent:conn.source andRadius:defradius];
+                
                 
                 
                 float px = wx + (tx*div*c/modulet);
@@ -271,7 +272,7 @@
                 UIImage * test = [UIImage imageNamed:@"inputFillArrow"];
                 
                 test = [UIImage imageWithCGImage:[test CGImage]
-                                           scale:2.0
+                                           scale:4.0
                                      orientation:test.imageOrientation];
                 //Calculamos los grados entre el punto de control (px,py) y el target
                 
@@ -279,20 +280,67 @@
                 if(px > targetAnchor.x) {
                     angle += M_PI;
                 }
-             
+                
                 
                 //Rotamos test los ángulos que sean
                 test = [self imageRotatedByDegrees:test rads:angle];
                 [test drawAtPoint:CGPointMake(targetAnchor.x - test.size.width/2 , targetAnchor.y -test.size.height/2 )];
                 
                 
-                //Dibujamos un punto amarillo solo para ver el targetanchor
-                UIBezierPath * point = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(targetAnchor.x-2, targetAnchor.y-2, 4, 4)];
-                [[UIColor redColor]setFill];
-                [point fill];
-                
             }
             
+        }
+    }
+    
+    
+    //Dibujamos las conexiones entre un elemento y él mismo
+    
+    Component * comp = nil;
+    conn = nil;
+    for(int i = 0; i<dele.components.count; i++){
+        comp = [dele.components objectAtIndex:i];
+        //Para cada nodo, recorremos las conexiones y contamos cuántas tiene con origen y destino él mismo
+        
+        NSMutableArray * selfConnections = [[NSMutableArray alloc] init];
+        
+        for(int c = 0; c < dele.connections.count;c++){
+            conn = [dele.connections objectAtIndex:c];
+            if(conn.source == conn.target && conn.source == comp){
+                //Self-connection
+                [selfConnections addObject:conn];
+            }
+        }
+        
+        //Self-connection has those connections that we must draw
+        float h2 = comp.frame.size.height / 2;
+        float div = h2/(selfConnections.count -1)/2;
+        
+        if(selfConnections.count == 1){
+            UIBezierPath * arc = [UIBezierPath bezierPathWithArcCenter:CGPointMake(comp.frame.origin.x, comp.frame.origin.y + comp.frame.size.height)
+                                                                radius:h2
+                                                            startAngle:0
+                                                              endAngle:DEGREES_TO_RADIANS(270)
+                                                             clockwise:YES];
+            conn = [selfConnections objectAtIndex:0];
+            [arc setLineWidth:0.8];
+            [[UIColor blackColor]setStroke];
+            [arc stroke];
+            conn.arrowPath = arc;
+        }else{
+            for(int c = 0; c < selfConnections.count; c++){
+                conn = [selfConnections objectAtIndex:c];
+                UIBezierPath * arc = [UIBezierPath bezierPathWithArcCenter:CGPointMake(comp.frame.origin.x, comp.frame.origin.y+ comp.frame.size.height)
+                                                                    radius:h2 - (div * c)
+                                                                startAngle:0
+                                                                  endAngle:DEGREES_TO_RADIANS(270)
+                                                                 clockwise:YES];
+                
+                [arc setLineWidth:0.8];
+                [[UIColor blackColor]setStroke];
+                [arc stroke];
+                conn.arrowPath = arc;
+                
+            }
         }
     }
     
@@ -343,7 +391,7 @@
     //            conn.touchRect = strRect;
     //
     //
-    //    
+    //
     if(xArrowStart> 0 && yArrowStart> 0){
         
         UIBezierPath * line = [[UIBezierPath alloc] init];
