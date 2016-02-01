@@ -282,23 +282,23 @@
 
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return NO;
+    return YES;
 }
 
-
+/*
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     return nil;
+}*/
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        //add code here for when you hit delete
+        Connection * toDelete = [connections objectAtIndex:indexPath.row];
+        
+        [dele.connections removeObject:toDelete];
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+        [self updateLocalConenctions];
+    }
 }
-/*
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- //add code here for when you hit delete
- Connection * toDelete = [connections objectAtIndex:indexPath.row];
- 
- [dele.connections removeObject:toDelete];
- 
- [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
- [self updateLocalConenctions];
- }
- }*/
 @end
