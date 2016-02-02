@@ -62,11 +62,60 @@
 		F1A20A851C198A540037C05D /* PaletteItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A20A841C198A540037C05D /* PaletteItem.m */; };
 		F1AB3B161C22B19800EDBB1D /* resize.png in Resources */ = {isa = PBXBuildFile; fileRef = F1AB3B151C22B19800EDBB1D /* resize.png */; };
 		F1B4861E1C46604700752157 /* PaletteFile.m in Sources */ = {isa = PBXBuildFile; fileRef = F1B4861D1C46604700752157 /* PaletteFile.m */; };
+		F1B789931C60F045001B6DB4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1B789921C60F045001B6DB4 /* UIKit.framework */; };
+		F1B789951C60F04B001B6DB4 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1B789941C60F04B001B6DB4 /* CoreImage.framework */; };
+		F1B789971C60F05D001B6DB4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1B789961C60F05D001B6DB4 /* QuartzCore.framework */; };
+		F1B789991C60F064001B6DB4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1B789981C60F064001B6DB4 /* CoreGraphics.framework */; };
 		F1C6347B1C2842C30072912D /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C6347A1C2842C30072912D /* camera.png */; };
 		F1DAE7A71C4D023000ECDD34 /* DFAAutomaton.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F1DAE7A61C4D023000ECDD34 /* DFAAutomaton.graphicR */; };
 		F1E9EFD51C4521DA007E227D /* PItemEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E9EFD41C4521DA007E227D /* PItemEditor.m */; };
 		F1E9EFD81C4524CD007E227D /* PaletteItemCreatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E9EFD71C4524CD007E227D /* PaletteItemCreatorViewController.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F1B789861C60F023001B6DB4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F1B7897D1C60F023001B6DB4 /* SVGKit-iOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6639618E16145D0400E58CCA;
+			remoteInfo = "SVGKit-iOS";
+		};
+		F1B789881C60F023001B6DB4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F1B7897D1C60F023001B6DB4 /* SVGKit-iOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55452BF119EC68A200B75A30;
+			remoteInfo = "SVGKit-iOS Tests";
+		};
+		F1B7898A1C60F023001B6DB4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F1B7897D1C60F023001B6DB4 /* SVGKit-iOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 825CDAAF1BDA4BC0003C1C12;
+			remoteInfo = "SVGKitFramework-iOS";
+		};
+		F1B7898C1C60F023001B6DB4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F1B7897D1C60F023001B6DB4 /* SVGKit-iOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 825CDAB81BDA4BC0003C1C12;
+			remoteInfo = "SVGKitFramework-iOSTests";
+		};
+		F1B7898E1C60F023001B6DB4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F1B7897D1C60F023001B6DB4 /* SVGKit-iOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 825CDAD31BDA4D38003C1C12;
+			remoteInfo = "SVGKitFramework-tvOS";
+		};
+		F1B789901C60F023001B6DB4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F1B7897D1C60F023001B6DB4 /* SVGKit-iOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 825CDADC1BDA4D38003C1C12;
+			remoteInfo = "SVGKitFramework-tvOSTests";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		F10580721C5905E4000497DE /* inputClosedArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inputClosedArrow.png; sourceTree = "<group>"; };
@@ -151,6 +200,11 @@
 		F1AB3B151C22B19800EDBB1D /* resize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resize.png; sourceTree = "<group>"; };
 		F1B4861C1C46604700752157 /* PaletteFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaletteFile.h; sourceTree = "<group>"; };
 		F1B4861D1C46604700752157 /* PaletteFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaletteFile.m; sourceTree = "<group>"; };
+		F1B7897D1C60F023001B6DB4 /* SVGKit-iOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "SVGKit-iOS.xcodeproj"; path = "../../../Downloads/SVGKit-2.x/SVGKit-iOS.xcodeproj"; sourceTree = "<group>"; };
+		F1B789921C60F045001B6DB4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		F1B789941C60F04B001B6DB4 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		F1B789961C60F05D001B6DB4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		F1B789981C60F064001B6DB4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		F1C6347A1C2842C30072912D /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
 		F1DAE7A61C4D023000ECDD34 /* DFAAutomaton.graphicR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = DFAAutomaton.graphicR; sourceTree = "<group>"; };
 		F1E9EFD31C4521DA007E227D /* PItemEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PItemEditor.h; sourceTree = "<group>"; };
@@ -164,6 +218,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1B789991C60F064001B6DB4 /* CoreGraphics.framework in Frameworks */,
+				F1B789971C60F05D001B6DB4 /* QuartzCore.framework in Frameworks */,
+				F1B789951C60F04B001B6DB4 /* CoreImage.framework in Frameworks */,
+				F1B789931C60F045001B6DB4 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,6 +346,10 @@
 		F185106A1C1824C8004EC4C8 = {
 			isa = PBXGroup;
 			children = (
+				F1B789981C60F064001B6DB4 /* CoreGraphics.framework */,
+				F1B789961C60F05D001B6DB4 /* QuartzCore.framework */,
+				F1B789941C60F04B001B6DB4 /* CoreImage.framework */,
+				F1B789921C60F045001B6DB4 /* UIKit.framework */,
 				F18510751C1824C8004EC4C8 /* DiagramEditor */,
 				F18510741C1824C8004EC4C8 /* Products */,
 			);
@@ -304,6 +366,7 @@
 		F18510751C1824C8004EC4C8 /* DiagramEditor */ = {
 			isa = PBXGroup;
 			children = (
+				F1B7897C1C60F019001B6DB4 /* Frameworks */,
 				F1431E8C1C5249D4006A45BC /* Views */,
 				F1431E861C523302006A45BC /* testFiles */,
 				F1B4861F1C47A2DD00752157 /* palettes */,
@@ -352,6 +415,27 @@
 			name = palettes;
 			sourceTree = "<group>";
 		};
+		F1B7897C1C60F019001B6DB4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F1B7897D1C60F023001B6DB4 /* SVGKit-iOS.xcodeproj */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F1B7897E1C60F023001B6DB4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F1B789871C60F023001B6DB4 /* libSVGKit-iOS.2.0.0.a */,
+				F1B789891C60F023001B6DB4 /* SVGKit-iOS Tests.xctest */,
+				F1B7898B1C60F023001B6DB4 /* SVGKit.framework */,
+				F1B7898D1C60F023001B6DB4 /* SVGKitFramework-iOSTests.xctest */,
+				F1B7898F1C60F023001B6DB4 /* SVGKit.framework */,
+				F1B789911C60F023001B6DB4 /* SVGKitFramework-tvOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -398,12 +482,63 @@
 			mainGroup = F185106A1C1824C8004EC4C8;
 			productRefGroup = F18510741C1824C8004EC4C8 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = F1B7897E1C60F023001B6DB4 /* Products */;
+					ProjectRef = F1B7897D1C60F023001B6DB4 /* SVGKit-iOS.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				F18510721C1824C8004EC4C8 /* DiagramEditor */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		F1B789871C60F023001B6DB4 /* libSVGKit-iOS.2.0.0.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libSVGKit-iOS.2.0.0.a";
+			remoteRef = F1B789861C60F023001B6DB4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F1B789891C60F023001B6DB4 /* SVGKit-iOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "SVGKit-iOS Tests.xctest";
+			remoteRef = F1B789881C60F023001B6DB4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F1B7898B1C60F023001B6DB4 /* SVGKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SVGKit.framework;
+			remoteRef = F1B7898A1C60F023001B6DB4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F1B7898D1C60F023001B6DB4 /* SVGKitFramework-iOSTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "SVGKitFramework-iOSTests.xctest";
+			remoteRef = F1B7898C1C60F023001B6DB4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F1B7898F1C60F023001B6DB4 /* SVGKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SVGKit.framework;
+			remoteRef = F1B7898E1C60F023001B6DB4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F1B789911C60F023001B6DB4 /* SVGKitFramework-tvOSTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "SVGKitFramework-tvOSTests.xctest";
+			remoteRef = F1B789901C60F023001B6DB4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		F18510711C1824C8004EC4C8 /* Resources */ = {

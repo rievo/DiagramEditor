@@ -235,6 +235,7 @@
                                                                 options:nil];
                     atvc = [nib objectAtIndex:0];
                     atvc.attributeNameLabel.text = attr.name;
+                    atvc.backgroundColor = [UIColor clearColor];
                     //atvc.typeLabel.text = attr.type;
                 }
                 return atvc;
@@ -248,7 +249,7 @@
                     batvc = [nib objectAtIndex:0];
                     batvc.nameLabel.text = attr.name;
                     //batvc.typeLabel.text = attr.type;
-                    
+                    batvc.backgroundColor = [UIColor clearColor];
                     
                 }
                 return batvc;
@@ -261,6 +262,7 @@
                     gatvc = [nib objectAtIndex:0];
                     gatvc.nameLabel.text = attr.name;
                     //gatvc.typeLabel.text = attr.type;
+                    gatvc.backgroundColor = [UIColor clearColor];
                 }
                 return gatvc;
             }
@@ -270,18 +272,18 @@
             return nil;
         }else if([[comp.attributes objectAtIndex:indexPath.row] isKindOfClass:[Reference class]]){
             /*Reference * ref = [comp.attributes objectAtIndex:indexPath.row];
-            ReferenceTableViewCell * rtvc = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
-            if(rtvc == nil){
-                NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"ReferenceTableViewCell" owner:self options:nil];
-                rtvc = [nib objectAtIndex:0];
-                
-                rtvc.nameLabel.text = ref.name;
-                rtvc.targetLabel.text = ref.target;
-                rtvc.minLabel.text = [ref.min description];
-                rtvc.maxLabel.text = [ref.max description];
-                [rtvc.containmentSwitch setOn:ref.containment];
-            }
-            return rtvc;*/
+             ReferenceTableViewCell * rtvc = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+             if(rtvc == nil){
+             NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"ReferenceTableViewCell" owner:self options:nil];
+             rtvc = [nib objectAtIndex:0];
+             
+             rtvc.nameLabel.text = ref.name;
+             rtvc.targetLabel.text = ref.target;
+             rtvc.minLabel.text = [ref.min description];
+             rtvc.maxLabel.text = [ref.max description];
+             [rtvc.containmentSwitch setOn:ref.containment];
+             }
+             return rtvc;*/
             return nil;
         }
     }
@@ -294,23 +296,29 @@
 
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
+    if(tableView == outConnectionsTable)
+        return YES;
+    else
+        return NO;
 }
 
 /*
-- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    return nil;
-}*/
+ - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+ return nil;
+ }*/
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        //add code here for when you hit delete
-        Connection * toDelete = [connections objectAtIndex:indexPath.row];
-        
-        [dele.connections removeObject:toDelete];
-        
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
-        [self updateLocalConenctions];
+    
+    if(tableView == outConnectionsTable){
+        if (editingStyle == UITableViewCellEditingStyleDelete) {
+            //add code here for when you hit delete
+            Connection * toDelete = [connections objectAtIndex:indexPath.row];
+            
+            [dele.connections removeObject:toDelete];
+            
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+            [self updateLocalConenctions];
+        }
     }
 }
 
@@ -321,12 +329,12 @@
 }
 
 /*
--(BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
-    if(gestureRecognizer.view!= background)
-        return NO;
-    else
-        return YES;
-}*/
+ -(BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
+ if(gestureRecognizer.view!= background)
+ return NO;
+ else
+ return YES;
+ }*/
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
     if (touch.view != background) { // accept only touchs on superview, not accept touchs on subviews

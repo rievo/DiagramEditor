@@ -636,7 +636,7 @@
 #pragma mark ComponentDetailsView delegate
 
 -(void)closeDetailsViewAndUpdateThings{
-    [containerView setHidden:YES];
+   [compDetView setHidden:YES];
 }
 
 
