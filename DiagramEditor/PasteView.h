@@ -11,8 +11,9 @@
 
 @protocol PasteViewDelegate;
 
-@interface PasteView : UIView{
+@interface PasteView : UIView<UIGestureRecognizerDelegate, UITextViewDelegate>{
     id delegate;
+    __weak IBOutlet UIView *blueView;
 }
 
 @property (weak, nonatomic) IBOutlet UITextView *textview;
@@ -20,6 +21,7 @@
 @property UIView * backView;
 @property (nonatomic, retain) id delegate;
 
+@property (weak, nonatomic) IBOutlet UIView *background;
 
 - (IBAction)ok:(id)sender;
 

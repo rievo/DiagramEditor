@@ -10,7 +10,7 @@
 
 @implementation BooleanAttributeTableViewCell
 
-@synthesize nameLabel, typeLabel, switchValue;
+@synthesize nameLabel, switchValue;
 
 - (void)awakeFromNib {
     // Initialization code

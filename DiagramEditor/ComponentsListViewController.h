@@ -21,4 +21,5 @@
     BOOL isFiltered;
 }
 
+- (IBAction)closeList:(id)sender;
 @end

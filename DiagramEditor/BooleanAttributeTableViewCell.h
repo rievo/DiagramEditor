@@ -12,5 +12,5 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *switchValue;
-@property (weak, nonatomic) IBOutlet UILabel *typeLabel;
+
 @end

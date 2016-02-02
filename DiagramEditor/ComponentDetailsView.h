@@ -12,7 +12,7 @@
 @class AppDelegate;
 
 
-@interface ComponentDetailsView : UIView <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>{
+@interface ComponentDetailsView : UIView <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>{
     
     __weak IBOutlet Component *previewComponent;
     __weak IBOutlet UITextField *nameTextField;
@@ -26,7 +26,9 @@
     
     NSMutableArray * connections;
     
+    UITapGestureRecognizer * tapgr;
     id delegate;
+    __weak IBOutlet UIView *containerView;
 }
 
 @property (nonatomic, retain)id delegate;
@@ -36,6 +38,7 @@
 - (void)prepare;
 - (IBAction)closeDetailsViw:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UIView *background;
 
 @end;
 

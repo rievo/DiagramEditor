@@ -23,10 +23,15 @@
 
 @implementation ComponentDetailsView
 
-@synthesize comp, delegate;
+@synthesize comp, delegate, background;
 
 
-
+-(void)awakeFromNib{
+    tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                    action:@selector(handleTap:)];
+    [tapgr setDelegate:self];
+    [background addGestureRecognizer:tapgr];
+}
 - (void)prepare {
     
     
@@ -66,7 +71,8 @@
     nameTextField.delegate = self;
     dele = [[UIApplication sharedApplication]delegate];
     
-    typeLabel.text = comp.type;
+    NSArray * parsedArr = [comp.type componentsSeparatedByString:@":"];
+    typeLabel.text = [parsedArr objectAtIndex:parsedArr.count-1];
     
     Connection * tc = nil;
     connections = [[NSMutableArray alloc] init];
@@ -81,6 +87,10 @@
     [attributesTable setDelegate:self];
     [attributesTable setDataSource:self];
     [attributesTable reloadData];
+    
+    
+    //Tap to close
+    
 }
 
 - (IBAction)closeDetailsViw:(id)sender {
@@ -202,7 +212,8 @@
                                           reuseIdentifier:MyIdentifier] ;
         }
         cell.backgroundColor = [UIColor clearColor];
-        
+        cell.textLabel.adjustsFontSizeToFitWidth = YES;
+        cell.textLabel.minimumScaleFactor = 0.5;
         cell.textLabel.text = c.name;
         return cell;
         
@@ -224,7 +235,7 @@
                                                                 options:nil];
                     atvc = [nib objectAtIndex:0];
                     atvc.attributeNameLabel.text = attr.name;
-                    atvc.typeLabel.text = attr.type;
+                    //atvc.typeLabel.text = attr.type;
                 }
                 return atvc;
                 
@@ -236,7 +247,7 @@
                                                                 options:nil];
                     batvc = [nib objectAtIndex:0];
                     batvc.nameLabel.text = attr.name;
-                    batvc.typeLabel.text = attr.type;
+                    //batvc.typeLabel.text = attr.type;
                     
                     
                 }
@@ -249,7 +260,7 @@
                                                                 options:nil];
                     gatvc = [nib objectAtIndex:0];
                     gatvc.nameLabel.text = attr.name;
-                    gatvc.typeLabel.text = attr.type;
+                    //gatvc.typeLabel.text = attr.type;
                 }
                 return gatvc;
             }
@@ -258,7 +269,7 @@
             
             return nil;
         }else if([[comp.attributes objectAtIndex:indexPath.row] isKindOfClass:[Reference class]]){
-            Reference * ref = [comp.attributes objectAtIndex:indexPath.row];
+            /*Reference * ref = [comp.attributes objectAtIndex:indexPath.row];
             ReferenceTableViewCell * rtvc = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
             if(rtvc == nil){
                 NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"ReferenceTableViewCell" owner:self options:nil];
@@ -270,7 +281,8 @@
                 rtvc.maxLabel.text = [ref.max description];
                 [rtvc.containmentSwitch setOn:ref.containment];
             }
-            return rtvc;
+            return rtvc;*/
+            return nil;
         }
     }
     
@@ -300,5 +312,27 @@
         [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
         [self updateLocalConenctions];
     }
+}
+
+
+#pragma mark UITapGestureRecognizer methods
+-(void)handleTap: (UITapGestureRecognizer *)recog{
+    [self setHidden:YES];
+}
+
+/*
+-(BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
+    if(gestureRecognizer.view!= background)
+        return NO;
+    else
+        return YES;
+}*/
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    if (touch.view != background) { // accept only touchs on superview, not accept touchs on subviews
+        return NO;
+    }
+    
+    return YES;
 }
 @end

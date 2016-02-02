@@ -10,18 +10,52 @@
 
 @implementation PasteView
 
-@synthesize textview, backView, delegate;
+@synthesize textview, backView, delegate, background;
+
+-(void)awakeFromNib{
+    /*UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                             action:@selector(handleTap:)];
+    [background addGestureRecognizer:tapgr];
+    [tapgr setDelegate:self];*/
+    [textview setDelegate:self];
+}
 
 - (IBAction)cancel:(id)sender {
     
-    //[self removeFromSuperview]
-    [backView removeFromSuperview];
+    [self removeFromSuperview];
 }
+
+
 - (IBAction)ok:(id)sender {
-    //return textview.text;
-    [backView removeFromSuperview];
-    NSLog(@"Voy a llamar al método delegado");
+    [self removeFromSuperview];
     [delegate saveTextFromPasteView:self];
+}
+
+
+
+-(void)handleTap: (UITapGestureRecognizer *)recog{
+    [self removeFromSuperview];
+}
+
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    
+    if(touch.view == background){
+        return YES;
+    }else if(touch.view ==blueView){
+        [textview resignFirstResponder];
+        return NO;
+    }else{
+        return NO;
+    }
+    
+}
+
+-(BOOL) textFieldShouldReturn:(UITextField *)textField{
+    
+    [textField resignFirstResponder];
+    return YES;
 }
 
 @end

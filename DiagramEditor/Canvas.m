@@ -200,7 +200,7 @@
             }
             
             
-            NSLog(@"%@", [NSString stringWithFormat:@"count: %d    .count: %lu", count, (unsigned long)connectionsBetweenOutAndIns.count]);
+            //NSLog(@"%@", [NSString stringWithFormat:@"count: %d    .count: %lu", count, (unsigned long)connectionsBetweenOutAndIns.count]);
             //En count tengo el nº de conexiones que hay
             //En connectionsBetweenOutAndIns tengo esas conexiones
             CGPoint aux_sourceAnchor = [self getAnchorPointFromComponent:compOut toComponent:compIns andRadius:defradius];

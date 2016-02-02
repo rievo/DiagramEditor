@@ -10,6 +10,5 @@
 
 @interface GenericAttributeTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 
 @end

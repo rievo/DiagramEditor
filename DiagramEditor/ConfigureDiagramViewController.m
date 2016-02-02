@@ -498,8 +498,15 @@
                                                                                                                  owner:self
                                                                                                                options:nil] objectAtIndex:0];
                                                                
+                                                               [rootView setFrame:self.view.frame];
                                                                
-                                                               UIView * backView = [[UIView alloc] initWithFrame:self.view.frame];
+                                                               [rootView.background setFrame:self.view.frame];
+                                                               
+                                                               [rootView setDelegate:self];
+                                                               [rootView.background setCenter:self.view.center];
+                                                               [self.view addSubview:rootView];
+                                                               
+                                                               /*UIView * backView = [[UIView alloc] initWithFrame:self.view.frame];
                                                                
                                                                UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
                                                                UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
@@ -517,7 +524,7 @@
                                                                
                                                                [rootView setDelegate:self];
                                                                
-                                                               [self.view addSubview:backView];
+                                                               [self.view addSubview:backView];*/
                                                            }];
     UIAlertAction * loadFromLocal = [UIAlertAction actionWithTitle:@"Load a local file"
                                                              style:UIAlertActionStyleDefault
@@ -642,6 +649,7 @@
             }
             
             
+            /*
             //Sacamos las references
             NSArray * refs = [dic objectForKey:@"references"];
             for(int a = 0; a < refs.count; a++){
@@ -655,7 +663,7 @@
                 ref.opposite = [rdic objectForKey:@"opposite"];
                 
                 [attributes addObject: ref];
-            }
+            }*/
         }
     }
     

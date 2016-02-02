@@ -13,6 +13,5 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UILabel *attributeNameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *typeLabel;
 
 @end

@@ -64,7 +64,7 @@
                                                object:nil];
     
     
-    containerView = [[UIView alloc]initWithFrame:self.view.frame];
+    /*containerView = [[UIView alloc]initWithFrame:self.view.frame];
     
     UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
     UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
@@ -72,7 +72,7 @@
     blurEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     [containerView addSubview:blurEffectView];
-    [containerView sendSubviewToBack:blurEffectView];
+    [containerView sendSubviewToBack:blurEffectView];*/
     
     
     
@@ -81,20 +81,25 @@
                                                  owner:self
                                                options:nil] objectAtIndex:0];
     
+    
     [compDetView setDelegate:self];
     
-    [containerView addSubview:compDetView];
-    [compDetView setCenter:containerView.center];
-    [containerView bringSubviewToFront:compDetView];
     
-    [containerView setHidden:YES];
+    
+    //[containerView addSubview:compDetView];
+    //[compDetView setCenter:containerView.center];
+    //[containerView bringSubviewToFront:compDetView];
+    
+    //[containerView setHidden:YES];
     
     
     //Add a UITapGR to containerview for closing
     /*UITapGestureRecognizer * tgr = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideDetailsView)];
      [containerView addGestureRecognizer:tgr];*/
     
-    [self.view addSubview:containerView];
+    [self.view addSubview:compDetView];
+    [compDetView setFrame:self.view.frame];
+    [compDetView setHidden:YES];
     
     
     
@@ -108,15 +113,29 @@
     zoomTapGr.delegate = self;
     zoomLevel = 0; //No zoom
     
+    
+    //Cambiar el tamaño de la paleta en función del dispositivo
+    /*
+    if(![self isiPad]){
+        NSLog(@"Es un iphone");
+        CGRect oldFrame = [palette frame];
+        oldFrame.size.height = 87;
+        [palette setFrame:oldFrame];
+    }else{
+        CGRect oldFrame = [palette frame];
+        oldFrame.size.height = 119;
+        [palette setFrame:oldFrame];
+    }*/
+    
 }
 
 #pragma mark Show/Hide detailsView
 -(void)showDetailsView{
     [compDetView prepare];
-    [containerView setHidden:NO];
+    [compDetView setHidden:NO];
 }
 -(void)hideDetailsView{
-    [containerView setHidden:YES];
+    [compDetView setHidden:YES];
 }
 
 
@@ -669,6 +688,12 @@
         
     }
 }
+
+
+-(BOOL) isiPad {
+    return UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad;
+}
+
 
 
 @end

@@ -122,4 +122,9 @@
     }
     [componentsTable reloadData];
 }
+
+
+- (IBAction)closeList:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 @end
