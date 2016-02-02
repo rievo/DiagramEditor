@@ -195,8 +195,6 @@
                 comp.fillColor = sender.fillColor;
                 comp.attributes = sender.attributes;
                 comp.colorString = sender.colorString;
-                //TODO: comp.colorString = sender.
-                
                 if(sender.isImage){
                     comp.isImage = YES;
                     comp.image = sender.image;
@@ -283,7 +281,7 @@
 }
 
 - (IBAction)createNewDiagram:(id)sender {
-    //TODO: show are you sure view
+
     sureView = [[[NSBundle mainBundle] loadNibNamed:@"SureView"
                                               owner:self
                                             options:nil] objectAtIndex:0];
@@ -658,25 +656,7 @@
 }
 
 
-#pragma mark Check integrity
-/*
- Cuando el usuario suelte la conexión entre dos elementos: Siempre mirando el GraphicR
- 1) Comprobar si del nodo origen puede salir alguna conexión
- 2) En caso de que pueda salir conexión, mirar el nodo destino
- 2.1)Si no se pueden unir origen y destino, esto es, 0 conexiones posibles
- 2.2)Si se pueden unir origen y destino
- 2.2.1) Si solo hay una posible conexión en el graphicR, tomarla
- 2.2.2) Si hay más de una posible conexión, mostrar un popup para que el usuario elija cuál de ellas
- */
 
--(BOOL)checkIntegrityForSource: (Component *)source
-                     andTarget: (Component *)target{
-    BOOL result = false;
-    
-    
-    
-    return result;
-}
 
 
 #pragma mark ConnectionDetailsViewDelegate

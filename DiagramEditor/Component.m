@@ -205,6 +205,9 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
             //Hay un componente, los unimos
             //Los componentes serán self = selected
             //Self = source   selected = target
+            
+            //TODO: check integrity before making connections
+            /*
             Connection * conn = [[Connection alloc] init];
             conn.source = self;
             conn.target = selected;
@@ -212,6 +215,13 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
             [dele.connections addObject:conn];
             
             [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+             */
+            
+            BOOL canIMakeConnection = [self checkIntegrityForSource:self andTarget:selected];
+            
+            if(canIMakeConnection){
+                
+            }
             
         }
      
@@ -413,6 +423,26 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     [self setNeedsDisplay];
 }
 
+
+#pragma mark Check integrity
+/*
+ Cuando el usuario suelte la conexión entre dos elementos: Siempre mirando el GraphicR
+ 1) Comprobar si del nodo origen puede salir alguna conexión
+ 2) En caso de que pueda salir conexión, mirar el nodo destino
+ 2.1)Si no se pueden unir origen y destino, esto es, 0 conexiones posibles
+ 2.2)Si se pueden unir origen y destino
+ 2.2.1) Si solo hay una posible conexión en el graphicR, tomarla
+ 2.2.2) Si hay más de una posible conexión, mostrar un popup para que el usuario elija cuál de ellas
+ */
+
+-(BOOL)checkIntegrityForSource: (Component *)source
+                     andTarget: (Component *)target{
+    BOOL result = false;
+    
+    
+    
+    return result;
+}
 
 
 
