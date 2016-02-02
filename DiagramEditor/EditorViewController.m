@@ -414,6 +414,10 @@
     [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
     [writer writeStartElement:@"Diagram"];
     
+    [writer writeStartElement:@"palette_name"];
+    [writer writeAttribute:@"name" value: dele.currentPaletteFileName];
+    [writer writeEndElement];
+    
     [writer writeStartElement:@"Nodes"];
     Component * temp = nil;
     for(int i = 0; i< dele.components.count; i++){
@@ -451,6 +455,8 @@
 
 
 - (IBAction)willChangePalette:(id)sender {
+    
+    dele.currentPaletteFileName = nil;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

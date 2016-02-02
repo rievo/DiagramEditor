@@ -26,7 +26,7 @@
 @property Canvas * can;
 @property CGRect originalCanvasRect;
 
-
+@property NSString * currentPaletteFileName;
 
 @end
 

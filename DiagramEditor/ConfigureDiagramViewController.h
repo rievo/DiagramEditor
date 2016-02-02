@@ -39,6 +39,8 @@
     __weak IBOutlet UIButton *folder;
     
     PasteView *rootView ;
+    
+    NSString * tempPaletteFile;
 }
 
 @end

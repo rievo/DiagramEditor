@@ -52,6 +52,8 @@
      
      [infoView sendSubviewToBack:blurEffectView]; */
     
+    tempPaletteFile = nil;
+    
     
     dele = [UIApplication sharedApplication].delegate;
     
@@ -375,6 +377,7 @@
         
         [self completePaletteForJSONAttributes];
         
+        dele.currentPaletteFileName = tempPaletteFile;
         
         [self performSegueWithIdentifier:@"showEditor" sender:self];
     }else{
@@ -464,11 +467,13 @@
     }else if(tableView == serverFilesTable){
         [palette resetPalette];
         PaletteFile * file = [serverFilesArray objectAtIndex:indexPath.row];
+        tempPaletteFile = file.name;
         
         [self extractPalettesForContentsOfFile:file.content];
     }else if (tableView == localFilesTable){
         [palette resetPalette];
         PaletteFile * pf = [localFilesArray objectAtIndex:indexPath.row];
+        tempPaletteFile = pf.name;
         [self extractPalettesForContentsOfFile:pf.content];
     }
     
@@ -505,26 +510,7 @@
                                                                [rootView setDelegate:self];
                                                                [rootView.background setCenter:self.view.center];
                                                                [self.view addSubview:rootView];
-                                                               
-                                                               /*UIView * backView = [[UIView alloc] initWithFrame:self.view.frame];
-                                                               
-                                                               UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-                                                               UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-                                                               blurEffectView.frame = backView.frame;
-                                                               blurEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-                                                               
-                                                               [backView addSubview:blurEffectView];
-                                                               
-                                                               [backView sendSubviewToBack:blurEffectView];
-                                                               
-                                                               [backView addSubview:rootView];
-                                                               [rootView setCenter:backView.center];
-                                                               
-                                                               rootView.backView = backView;
-                                                               
-                                                               [rootView setDelegate:self];
-                                                               
-                                                               [self.view addSubview:backView];*/
+
                                                            }];
     UIAlertAction * loadFromLocal = [UIAlertAction actionWithTitle:@"Load a local file"
                                                              style:UIAlertActionStyleDefault
@@ -586,6 +572,7 @@
     PaletteItem * pi = nil;
     
     //Pasamos el json a un nsdictionary
+    //TODO: Quitar el fichero harcodeado
     
     NSString *filePath = [[NSBundle mainBundle]pathForResource:@"exported" ofType:@"json"];
     NSString *jsonString = [[NSString alloc] initWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:NULL];
@@ -683,6 +670,6 @@
     
     //Tenemos el fichero del diagrama
     //¿Necesitamos la paleta con la que se hizo?
-    NSLog(path);
+    //NSLog(path);
 }
 @end
