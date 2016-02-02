@@ -57,7 +57,6 @@
 		F1853A031C5253740015A9E0 /* StringAttributeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1853A021C5253740015A9E0 /* StringAttributeTableViewCell.m */; };
 		F19C258E1C43AB580002E490 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = F19C258D1C43AB580002E490 /* back.png */; };
 		F19C25901C43AB8B0002E490 /* palette.png in Resources */ = {isa = PBXBuildFile; fileRef = F19C258F1C43AB8B0002E490 /* palette.png */; };
-		F1A20A791C1977430037C05D /* minus-512.png in Resources */ = {isa = PBXBuildFile; fileRef = F1A20A781C1977430037C05D /* minus-512.png */; };
 		F1A20A7E1C1981290037C05D /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A20A7D1C1981290037C05D /* XMLDictionary.m */; };
 		F1A20A851C198A540037C05D /* PaletteItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A20A841C198A540037C05D /* PaletteItem.m */; };
 		F1AB3B161C22B19800EDBB1D /* resize.png in Resources */ = {isa = PBXBuildFile; fileRef = F1AB3B151C22B19800EDBB1D /* resize.png */; };
@@ -66,6 +65,7 @@
 		F1B789951C60F04B001B6DB4 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1B789941C60F04B001B6DB4 /* CoreImage.framework */; };
 		F1B789971C60F05D001B6DB4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1B789961C60F05D001B6DB4 /* QuartzCore.framework */; };
 		F1B789991C60F064001B6DB4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1B789981C60F064001B6DB4 /* CoreGraphics.framework */; };
+		F1B7899B1C610292001B6DB4 /* Minus-100.png in Resources */ = {isa = PBXBuildFile; fileRef = F1B7899A1C610292001B6DB4 /* Minus-100.png */; };
 		F1C6347B1C2842C30072912D /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C6347A1C2842C30072912D /* camera.png */; };
 		F1DAE7A71C4D023000ECDD34 /* DFAAutomaton.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F1DAE7A61C4D023000ECDD34 /* DFAAutomaton.graphicR */; };
 		F1E9EFD51C4521DA007E227D /* PItemEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E9EFD41C4521DA007E227D /* PItemEditor.m */; };
@@ -192,7 +192,6 @@
 		F1853A021C5253740015A9E0 /* StringAttributeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringAttributeTableViewCell.m; sourceTree = "<group>"; };
 		F19C258D1C43AB580002E490 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		F19C258F1C43AB8B0002E490 /* palette.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = palette.png; sourceTree = "<group>"; };
-		F1A20A781C1977430037C05D /* minus-512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "minus-512.png"; sourceTree = "<group>"; };
 		F1A20A7C1C1981290037C05D /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDictionary.h; sourceTree = "<group>"; };
 		F1A20A7D1C1981290037C05D /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLDictionary.m; sourceTree = "<group>"; };
 		F1A20A831C198A540037C05D /* PaletteItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaletteItem.h; sourceTree = "<group>"; };
@@ -205,6 +204,7 @@
 		F1B789941C60F04B001B6DB4 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		F1B789961C60F05D001B6DB4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F1B789981C60F064001B6DB4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		F1B7899A1C610292001B6DB4 /* Minus-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Minus-100.png"; sourceTree = "<group>"; };
 		F1C6347A1C2842C30072912D /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
 		F1DAE7A61C4D023000ECDD34 /* DFAAutomaton.graphicR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = DFAAutomaton.graphicR; sourceTree = "<group>"; };
 		F1E9EFD31C4521DA007E227D /* PItemEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PItemEditor.h; sourceTree = "<group>"; };
@@ -333,7 +333,7 @@
 				F19C258D1C43AB580002E490 /* back.png */,
 				F19C258F1C43AB8B0002E490 /* palette.png */,
 				F1C6347A1C2842C30072912D /* camera.png */,
-				F1A20A781C1977430037C05D /* minus-512.png */,
+				F1B7899A1C610292001B6DB4 /* Minus-100.png */,
 				F1AB3B151C22B19800EDBB1D /* resize.png */,
 				F17B75AA1C22D79F00AB1B57 /* save.png */,
 				F17B75A81C22D6E100AB1B57 /* newDocument.png */,
@@ -555,9 +555,9 @@
 				F18510861C1824C8004EC4C8 /* LaunchScreen.storyboard in Resources */,
 				F19C258E1C43AB580002E490 /* back.png in Resources */,
 				F1DAE7A71C4D023000ECDD34 /* DFAAutomaton.graphicR in Resources */,
+				F1B7899B1C610292001B6DB4 /* Minus-100.png in Resources */,
 				F10AB8081C50E7E200DE6DCE /* PasteView.xib in Resources */,
 				F1786DED1C56222B00963663 /* GenericAttributeTableViewCell.xib in Resources */,
-				F1A20A791C1977430037C05D /* minus-512.png in Resources */,
 				F16C7DCD1C57AD2900CA9B25 /* SureView.xib in Resources */,
 				F10580771C5905E4000497DE /* outputClosedArrow.png in Resources */,
 				F1431E881C52330C006A45BC /* exported.json in Resources */,
