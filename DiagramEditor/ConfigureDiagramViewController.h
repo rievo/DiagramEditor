@@ -41,6 +41,9 @@
     PasteView *rootView ;
     
     NSString * tempPaletteFile;
+    
+    BOOL loadingADiagram;
+    NSString * content;
 }
 
 @end

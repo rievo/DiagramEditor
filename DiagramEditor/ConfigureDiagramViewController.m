@@ -20,6 +20,9 @@
 #import "Reference.h"
 
 #import "ExploreFilesView.h"
+#import "EditorViewController.h"
+
+#import "Connection.h"
 
 #define defaultwidth 50
 #define defaultheight 50
@@ -43,6 +46,10 @@
     
     //initialInfoPosition = infoView.frame;
     [infoView setHidden:YES];
+    
+    
+    loadingADiagram = NO;
+    content = nil;
     /* UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
      UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
      blurEffectView.frame = infoView.bounds;
@@ -95,6 +102,10 @@
                                                    selector:@selector(loadLocalFiles)
                                                      object:nil];
     [locThread start];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    loadingADiagram = NO;
 }
 
 #pragma mark Recover files from server and local device
@@ -187,6 +198,18 @@
 
 /*  Read file and proccess  */
 
+-(Palette *)extractSubPalette: (NSString *)name{
+    for(int i = 0; i< palettes.count; i++){
+        Palette * pal = [palettes objectAtIndex:i];
+        
+        if ([pal.name isEqualToString:dele.subPalette]) {
+            return pal;
+        }
+    }
+    
+    return nil;
+}
+
 -(void)extractPalettesForContentsOfFile: (NSString *)text{
     [palette resetPalette];
     
@@ -237,7 +260,10 @@
             NSDictionary * diagPalette = [dic objectForKey:@"diag_palette"];
             NSString * paleteName = [diagPalette objectForKey:@"_palette_name"];
             NSLog(@"\n\ntype: %@     	\n name: %@", type, paleteName);
-            item.dialog = paleteName;
+           
+            
+            
+            item.dialog = parsedClass;
             
             NSDictionary * nodeShapeDic = [dic objectForKey:@"node_shape"];
             NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
@@ -275,8 +301,10 @@
                 
                 if(color == nil){
                     item.fillColor = [ColorPalette white];
+                    item.colorString = @"white";
                 }else{
                     item.fillColor = [ColorPalette colorForString:color];
+                    item.colorString = color;
                 }
                 
                 if(w.floatValue <= 0.0){
@@ -456,6 +484,8 @@
         //[selected setFrame:palette.frame];
         palette.paletteItems = selected.paletteItems;
         
+        dele.subPalette = selected.name;
+        
         [palette preparePalette];
         [palette setNeedsDisplay];
         
@@ -603,7 +633,6 @@
 -(NSMutableArray *)getAttributesForClass: (NSString *) key
                           onClassArray: (NSArray *)classArray{
     ClassAttribute * temp;
-    Reference * ref;
     
     NSDictionary * dic = nil;
     NSString * name;
@@ -669,7 +698,201 @@
 -(void)reactToFile:(NSString *)path{
     
     //Tenemos el fichero del diagrama
-    //¿Necesitamos la paleta con la que se hizo?
+
     //NSLog(path);
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+
+    NSString * finalPath = [documentsDirectory stringByAppendingString:@"/diagrams/"];
+    finalPath = [finalPath stringByAppendingString:path];
+    
+    NSError * error = nil;
+    content = [NSString stringWithContentsOfFile:finalPath
+                                                   encoding:NSUTF8StringEncoding
+                                                      error:&error];
+
+    loadingADiagram = YES;
+    // [self performSegueWithIdentifier:@"showEditor" sender:self];
+    
+    [self parseXMLDiagram];
+}
+
+
+#pragma mark UIViewController
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    // Make sure your segue name in storyboard is the same as this line
+    if ([[segue identifier] isEqualToString:@"showEditor"])
+    {
+        // Get reference to the destination view controller
+        EditorViewController *vc = [segue destinationViewController];
+        
+        if(loadingADiagram == YES && content != nil){
+            
+        }else{
+            
+        }
+        
+    }
+}
+
+
+#pragma mark Load old diagram
+-(void)parseContent{
+    [self parseXMLDiagram];
+}
+
+-(void)parseXMLDiagram{
+    NSDictionary * dic = [NSDictionary dictionaryWithXMLString:content];
+    
+    NSDictionary * nodeDic = [dic objectForKey:@"Nodes"];
+    NSArray * nodes = [nodeDic objectForKey:@"node"];
+    
+    if([nodes isKindOfClass:[NSDictionary class]]){
+        nodes = [[NSArray alloc]initWithObjects:nodes, nil];
+    }
+    
+    NSDictionary * edgesDic = [dic objectForKey:@"Edges"];
+    NSArray * edges = [edgesDic objectForKey:@"edge"];
+    
+    if([edges isKindOfClass:[NSDictionary class]]){
+        edges = [[NSArray alloc]initWithObjects:edges, nil];
+    }
+    NSDictionary * palDic = [dic objectForKey:@"palette_name"];
+    NSString * paletteName = [palDic objectForKey:@"_name"];
+    
+    NSDictionary * subpaldic = [dic objectForKey:@"subpalette"];
+    NSString * subpalette= [subpaldic objectForKey:@"_name"];
+    dele.subPalette = subpalette;
+    
+    
+    
+    NSMutableArray * loadedComponents = [[NSMutableArray alloc] init];
+    for(NSDictionary * dic in nodes){
+        Component * comp = [self componentFromDictionary:dic];
+        [loadedComponents addObject:comp];
+    }
+    
+    NSMutableArray * loadedConnections = [[NSMutableArray alloc] init];
+    for(NSDictionary * dic in edges){
+        Connection * conn = [self connectionFromDictionary:dic andComponentsArray:loadedComponents];
+        [loadedConnections addObject:conn];
+    }
+    
+    dele.components = loadedComponents;
+    dele.connections = loadedConnections;
+    
+
+    //Try loading palette with that name
+    NSString * paletteContent = [self loadPaletteNamed:paletteName];
+    
+    
+    [self extractPalettesForContentsOfFile:paletteContent];
+    
+    Palette * paletteForUse = [self extractSubPalette:dele.subPalette];
+    
+    palette = paletteForUse;
+    [palette preparePalette];
+    
+    dele.paletteItems = [[NSMutableArray alloc] initWithArray:palette.paletteItems];
+    [refreshTimer invalidate];
+    
+    [self completePaletteForJSONAttributes];
+    
+    dele.currentPaletteFileName = tempPaletteFile;
+
+    
+    [self performSegueWithIdentifier:@"showEditor" sender:self];
+}
+
+-(NSString *)loadPaletteNamed: (NSString *)name{
+    
+    //Search on local palettes
+    
+    NSString * con = [self searchOnLocalPalettes:name];
+    
+    return con;
+}
+
+-(NSString *)searchOnLocalPalettes: (NSString *)name{
+    NSString * temp = nil;
+    
+    NSArray * bpaths = [[NSBundle mainBundle] pathsForResourcesOfType:@".graphicR" inDirectory:nil];
+    for(NSString * path in bpaths){
+        NSArray * components = [path componentsSeparatedByString:@"/"];
+        
+       NSString * n = [components objectAtIndex:components.count -1];
+        if([n isEqualToString:name]){
+            temp = [NSString stringWithContentsOfFile:path
+                                        encoding:NSUTF8StringEncoding
+                                        error:nil];
+            return temp;
+        }
+    }
+
+    
+    return temp;
+}
+
+
+-(Component *)componentFromDictionary: (NSDictionary *)dic{
+    Component * temp = [[Component alloc] init];
+    
+    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+    f.numberStyle = NSNumberFormatterDecimalStyle;
+
+    NSString * name = [dic objectForKey:@"_name"];
+    NSString * compId = [dic objectForKey:@"_id"];
+    float x = [[dic objectForKey:@"_x"]floatValue];
+    float y = [[dic objectForKey:@"_x"]floatValue];
+    NSString * shape = [dic objectForKey:@"_shape_type"];
+    
+    NSString * colorString = [dic objectForKey:@"_color"];
+    NSString * type = [dic objectForKey:@"_type"];
+    
+    float width = [[dic objectForKey:@"_width"]floatValue];
+    float height = [[dic objectForKey:@"_height"]floatValue];
+    
+    temp.name = name;
+    
+    [temp setFrame:CGRectMake(0, 0, width, height)];
+    temp.center = CGPointMake(x, y);
+    temp.shapeType = shape;
+    temp.componentId = compId;
+    temp.colorString = colorString;
+    temp.fillColor = [ColorPalette colorForString:colorString];
+    temp.type = type;
+    
+    return temp;
+}
+
+-(Connection *)connectionFromDictionary: (NSDictionary *)dic
+                     andComponentsArray: (NSMutableArray *)components{
+    Connection * conn = [[Connection alloc]init];
+    
+    NSString * name = [dic objectForKey:@"_name"];
+    NSString * sourceId = [dic objectForKey:@"_source"];
+    NSString * targetId = [dic objectForKey:@"_target"];
+    
+    Component * source = nil;
+    Component * target = nil;
+    
+    //Get source
+    for(Component * c in components){
+        if([c.componentId isEqualToString:sourceId]){
+            source = c;
+        }
+        
+        if([c.componentId isEqualToString:targetId]){
+            target = c;
+        }
+    }
+    
+    conn.name = name;
+    conn.source = source;
+    conn.target = target;
+    
+    
+    return conn;
 }
 @end

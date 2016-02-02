@@ -15,7 +15,7 @@
 @implementation Component
 
 
-@synthesize name, connections, textLayer, type, shapeType, fillColor, image, isImage, attributes, parent, sons;
+@synthesize name, textLayer, type, shapeType, fillColor, image, isImage, attributes, parent, sons, componentId, colorString;
 
 
 NSString* const SHOW_INSPECTOR = @"ShowInspector";
@@ -33,7 +33,6 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     
     self = [super initWithFrame:frame];
     if (self) {
-        name = @"Class";
         
         font = [UIFont fontWithName:@"Helvetica" size:10.0];
         
@@ -45,7 +44,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         dele = [[UIApplication sharedApplication]delegate];
         
         
-        connections = [[NSMutableArray alloc] init];
+        
         
         self.backgroundColor = [UIColor clearColor];
         
@@ -411,6 +410,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
 
 -(void)updateNameLabel{
     textLayer.string = name;
+    [self setNeedsDisplay];
 }
 
 

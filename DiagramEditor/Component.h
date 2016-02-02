@@ -31,13 +31,14 @@
 
 
 @property NSString * name;
-@property NSMutableArray * connections;
 @property CATextLayer * textLayer;
 @property NSString * type;
 @property NSString * shapeType;
 @property UIColor * fillColor;
+@property NSString * colorString;
 @property UIImage * image;
 @property BOOL isImage;
+@property NSString * componentId;
 
 @property NSMutableArray * attributes;
 

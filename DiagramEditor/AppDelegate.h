@@ -27,6 +27,7 @@
 @property CGRect originalCanvasRect;
 
 @property NSString * currentPaletteFileName;
+@property NSString * subPalette;
 
 @end
 

@@ -47,7 +47,7 @@
     temp.name = comp.name;
     temp.fillColor = comp.fillColor;
     [temp updateNameLabel];
-    temp.connections = [NSMutableArray arrayWithArray:comp.connections];
+    //temp.connections = [NSMutableArray arrayWithArray:comp.connections];
     temp.type = comp.type;
     temp.shapeType = comp.shapeType;
     

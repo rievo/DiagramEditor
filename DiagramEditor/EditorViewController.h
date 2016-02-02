@@ -60,6 +60,8 @@
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
+@property NSString * loadedContent;
+
 
 - (IBAction)showComponentList:(id)sender;
 - (IBAction)showActionsList:(id)sender;

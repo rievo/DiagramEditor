@@ -13,7 +13,7 @@
 #import "Palette.h"
 #import "PaletteItem.h"
 #import "XMLWriter.h"
-
+#import "XMLDictionary.h"
 
 @import Foundation;
 
@@ -23,7 +23,7 @@
 
 @implementation EditorViewController
 
-@synthesize scrollView;
+@synthesize scrollView, loadedContent;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -64,19 +64,6 @@
                                                object:nil];
     
     
-    /*containerView = [[UIView alloc]initWithFrame:self.view.frame];
-    
-    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-    UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-    blurEffectView.frame = self.view.bounds;
-    blurEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    
-    [containerView addSubview:blurEffectView];
-    [containerView sendSubviewToBack:blurEffectView];*/
-    
-    
-    
-    
     compDetView = [[[NSBundle mainBundle] loadNibNamed:@"ComponentDetailsView"
                                                  owner:self
                                                options:nil] objectAtIndex:0];
@@ -85,18 +72,7 @@
     [compDetView setDelegate:self];
     
     
-    
-    //[containerView addSubview:compDetView];
-    //[compDetView setCenter:containerView.center];
-    //[containerView bringSubviewToFront:compDetView];
-    
-    //[containerView setHidden:YES];
-    
-    
-    //Add a UITapGR to containerview for closing
-    /*UITapGestureRecognizer * tgr = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideDetailsView)];
-     [containerView addGestureRecognizer:tgr];*/
-    
+
     [self.view addSubview:compDetView];
     [compDetView setFrame:self.view.frame];
     [compDetView setHidden:YES];
@@ -113,21 +89,27 @@
     zoomTapGr.delegate = self;
     zoomLevel = 0; //No zoom
     
+
     
-    //Cambiar el tamaño de la paleta en función del dispositivo
-    /*
-    if(![self isiPad]){
-        NSLog(@"Es un iphone");
-        CGRect oldFrame = [palette frame];
-        oldFrame.size.height = 87;
-        [palette setFrame:oldFrame];
+    //Si estoy cargando un fichero
+    if(dele.components.count != 0){
+        
+        for(Component * comp in dele.components){
+            [canvas addSubview:comp];
+            [comp updateNameLabel];
+        }
+        //repaint canvas
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
     }else{
-        CGRect oldFrame = [palette frame];
-        oldFrame.size.height = 119;
-        [palette setFrame:oldFrame];
-    }*/
+          }
+    
+    palette.paletteItems = [[NSMutableArray alloc] initWithArray:dele.paletteItems];
+    [palette preparePalette];
+    palette.name = dele.subPalette;
     
 }
+
+
 
 #pragma mark Show/Hide detailsView
 -(void)showDetailsView{
@@ -139,11 +121,10 @@
 }
 
 
-
-
 -(void)viewWillAppear:(BOOL)animated{
     palette.paletteItems = [[NSMutableArray alloc] initWithArray:dele.paletteItems];
     [palette preparePalette];
+    palette.name = dele.subPalette;
     
     //Añadimos a los items de la paleta el gestor de gestos para poder arrastrarlos
     for(int i  =0; i< palette.paletteItems.count; i++){
@@ -213,6 +194,8 @@
                 comp.shapeType = sender.shapeType;
                 comp.fillColor = sender.fillColor;
                 comp.attributes = sender.attributes;
+                comp.colorString = sender.colorString;
+                //TODO: comp.colorString = sender.
                 
                 if(sender.isImage){
                     comp.isImage = YES;
@@ -400,6 +383,7 @@
     
     error = nil;
     NSString *filePath = [folderPath stringByAppendingPathComponent:name];
+    filePath = [filePath stringByAppendingString:@".xml"];
     [textToSave writeToFile:filePath atomically:NO encoding:NSUTF8StringEncoding error:&error];
     
     if(error){
@@ -418,6 +402,11 @@
     [writer writeAttribute:@"name" value: dele.currentPaletteFileName];
     [writer writeEndElement];
     
+    [writer writeStartElement:@"subpalette"];
+    [writer writeAttribute:@"name" value: dele.subPalette];
+    [writer writeEndElement];
+    
+    
     [writer writeStartElement:@"Nodes"];
     Component * temp = nil;
     for(int i = 0; i< dele.components.count; i++){
@@ -425,10 +414,13 @@
         [writer writeStartElement:@"node"];
         [writer writeAttribute:@"name" value:temp.name];
         [writer writeAttribute:@"shape_type" value:temp.shapeType];
-        //[writer writeAttribute:@"fill_color" value:temp.fillCo]
         [writer writeAttribute:@"x" value: [[NSNumber numberWithFloat:temp.center.x]description]];
         [writer writeAttribute:@"y" value: [[NSNumber numberWithFloat:temp.center.y]description]];
         [writer writeAttribute:@"id" value: [[NSNumber numberWithInt:(int)temp ]description]];
+        [writer writeAttribute:@"color" value:temp.colorString];
+        [writer writeAttribute:@"type" value:temp.type];
+        [writer writeAttribute:@"width" value: [[NSNumber numberWithFloat:temp.frame.size.width]description]];
+        [writer writeAttribute:@"height" value: [[NSNumber numberWithFloat:temp.frame.size.height]description]];
         [writer writeEndElement];
     }
     [writer writeEndElement];//Close nodes
@@ -457,6 +449,10 @@
 - (IBAction)willChangePalette:(id)sender {
     
     dele.currentPaletteFileName = nil;
+    [dele.components removeAllObjects];
+    [dele.connections removeAllObjects];
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
