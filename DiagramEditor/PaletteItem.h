@@ -22,8 +22,23 @@
 @property BOOL isImage;
 
 
-@property NSString * className;
+@property NSString * className; //La clase del item
 
 @property NSMutableArray * attributes;
+
+
+//For edges
+@property NSString * edgeStyle;
+@property NSString * sourceDecoratorName;
+@property NSString * targetDecoratorName;
+
+//Los cuatro siguientes son para buscar en el ecore
+@property NSString * sourceName;
+@property NSString * targetName;
+@property NSString * sourcePart; //atributo de la clase sourceName
+@property NSString * targetPart; //atributo de la clase targetName
+
+@property NSString * sourceClass; //La clase que se permite en el origen
+@property NSString * targetClass; //La clase que se permite en el destino
 
 @end

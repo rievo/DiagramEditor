@@ -207,7 +207,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
             //Self = source   selected = target
             
             //TODO: check integrity before making connections
-            /*
+            
             Connection * conn = [[Connection alloc] init];
             conn.source = self;
             conn.target = selected;
@@ -215,7 +215,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
             [dele.connections addObject:conn];
             
             [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
-             */
+             
             
             BOOL canIMakeConnection = [self checkIntegrityForSource:self andTarget:selected];
             

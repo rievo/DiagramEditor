@@ -14,7 +14,7 @@
 @implementation PaletteItem
 
 
-@synthesize type, dialog, width, height, shapeType, fillColor, isImage, image, attributes, className, colorString;
+@synthesize type, dialog, width, height, shapeType, fillColor, isImage, image, attributes, className, colorString, sourceName, targetName, targetDecoratorName, sourceDecoratorName, edgeStyle, sourcePart, targetPart, sourceClass, targetClass;
 
 
 

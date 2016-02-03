@@ -29,5 +29,7 @@
 @property NSString * currentPaletteFileName;
 @property NSString * subPalette;
 
+
+@property NSDictionary * graphicR;
 @end
 

@@ -121,20 +121,20 @@
     
     // filter the array for only sqlite files
     NSPredicate *fltr = [NSPredicate predicateWithFormat:@"self ENDSWITH '.graphicR'"];
-    NSArray *graphicRFiles = [allFiles filteredArrayUsingPredicate:fltr];
+    //NSArray *graphicRFiles = [allFiles filteredArrayUsingPredicate:fltr];
     
     //Load from bundle
     NSArray * bpaths = [[NSBundle mainBundle] pathsForResourcesOfType:@".graphicR" inDirectory:nil];
-    NSString * content = nil;
+    NSString * contentstr = nil;
     for(NSString * path in bpaths){
-        content = [NSString stringWithContentsOfFile:path
+        contentstr = [NSString stringWithContentsOfFile:path
                                             encoding:NSUTF8StringEncoding
                                                error:nil];
         PaletteFile * pf = [[PaletteFile alloc] init];
         NSArray * components = [path componentsSeparatedByString:@"/"];
         
         pf.name = [components objectAtIndex:components.count -1];
-        pf.content = content;
+        pf.content = contentstr;
         
         [localFilesArray addObject:pf];
     }
@@ -323,6 +323,47 @@
             }else{
                 //Default values
                 item.frame = CGRectMake(0, 0, defaultwidth, defaultheight);
+            }
+            
+            
+            if([item.type isEqualToString:@"graphicR:Edge"]){
+                //Extract directions
+                
+                NSDictionary * edgeStyleDic = [dic objectForKey:@"edge_style"];
+                NSString * edgeStyle = [edgeStyleDic objectForKey:@"_color"];
+                NSDictionary * directions = [dic objectForKey:@"directions"];
+                
+                NSDictionary * sourceDic = [directions objectForKey:@"sourceLink"];
+                NSDictionary * targetDic = [directions objectForKey:@"targetLink"];
+                
+                NSString * sourceDecoName = [sourceDic objectForKey:@"_decoratorName"];
+                NSString * targetDecoName = [targetDic objectForKey:@"_decoratorName"];
+                
+                NSDictionary * sourRefeDic = [sourceDic objectForKey:@"anEReference"];
+                NSDictionary * targRefeDic = [targetDic objectForKey:@"anEReference"];
+                
+                NSString * sourceReference = [sourRefeDic objectForKey:@"_href"];
+                NSString * targetReference = [targRefeDic objectForKey:@"_href"];
+                //Split by / ang
+                NSArray * sourceRefArray = [sourceReference componentsSeparatedByString:@"/"];
+                NSString * sClass = [sourceRefArray objectAtIndex:sourceRefArray.count-2];
+                NSString *sPart = [sourceRefArray objectAtIndex:sourceRefArray.count-1];
+                
+                NSArray * targetRefArray = [targetReference componentsSeparatedByString:@"/"];
+                NSString * tClass = [targetRefArray objectAtIndex:targetRefArray.count-2];
+                NSString * tPart = [targetRefArray objectAtIndex:targetRefArray.count-1];
+                
+                
+                item.edgeStyle = edgeStyle;
+                item.sourceDecoratorName = sourceDecoName;
+                item.targetDecoratorName = targetDecoName;
+                item.sourceName = sClass;
+                item.targetName = tClass;
+                item.sourcePart = sPart;
+                item.targetPart = tPart;
+                
+                
+                int r = 2;
             }
             
             
@@ -627,6 +668,28 @@
                                        onClassArray:classes];
         
         
+        if([pi.type isEqualToString:@"graphicR:Edge"]){ //Get enabled class at init and end
+            NSLog(@"Juaja");
+            
+            //Averiguo qué clases me permite en el origen y el destino este edge
+            //
+
+            for(int a = 0; a < pi.attributes.count; a++){
+                if([[pi.attributes objectAtIndex:a] isKindOfClass:[Reference class]]){
+                    
+                    Reference * ref = [pi.attributes objectAtIndex:a];
+                    
+                    if([ref.name isEqualToString:pi.sourcePart]){
+                        pi.sourceClass = ref.target;
+                    }
+                    
+                    if([ref.name isEqualToString:pi.targetPart]){
+                        pi.targetClass = ref.target;
+                    }
+                }
+            }
+        }
+        
     }
 
 }
@@ -665,7 +728,7 @@
             }
             
             
-            /*
+            
             //Sacamos las references
             NSArray * refs = [dic objectForKey:@"references"];
             for(int a = 0; a < refs.count; a++){
@@ -679,7 +742,7 @@
                 ref.opposite = [rdic objectForKey:@"opposite"];
                 
                 [attributes addObject: ref];
-            }*/
+            }
         }
     }
     
@@ -727,11 +790,7 @@
         // Get reference to the destination view controller
         EditorViewController *vc = [segue destinationViewController];
         
-        if(loadingADiagram == YES && content != nil){
-            
-        }else{
-            
-        }
+        //TODO:vc.graphicR =
         
     }
 }

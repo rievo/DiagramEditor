@@ -271,20 +271,21 @@
             
             return nil;
         }else if([[comp.attributes objectAtIndex:indexPath.row] isKindOfClass:[Reference class]]){
-            /*Reference * ref = [comp.attributes objectAtIndex:indexPath.row];
-             ReferenceTableViewCell * rtvc = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
-             if(rtvc == nil){
-             NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"ReferenceTableViewCell" owner:self options:nil];
-             rtvc = [nib objectAtIndex:0];
-             
-             rtvc.nameLabel.text = ref.name;
-             rtvc.targetLabel.text = ref.target;
-             rtvc.minLabel.text = [ref.min description];
-             rtvc.maxLabel.text = [ref.max description];
-             [rtvc.containmentSwitch setOn:ref.containment];
-             }
-             return rtvc;*/
-            return nil;
+            Reference * ref = [comp.attributes objectAtIndex:indexPath.row];
+            ReferenceTableViewCell * rtvc = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+            if(rtvc == nil){
+                NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"ReferenceTableViewCell" owner:self options:nil];
+                rtvc = [nib objectAtIndex:0];
+                
+                rtvc.nameLabel.text = ref.name;
+                rtvc.targetLabel.text = ref.target;
+                rtvc.minLabel.text = [ref.min description];
+                rtvc.maxLabel.text = [ref.max description];
+                [rtvc.containmentSwitch setOn:ref.containment];
+            }
+            
+            //[rtvc setHidden:YES];
+            return rtvc;
         }
     }
     
@@ -302,10 +303,20 @@
         return NO;
 }
 
-/*
- - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
- return nil;
- }*/
+
+
+//Hide references
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+
+    
+    if([[comp.attributes objectAtIndex:indexPath.row] isKindOfClass:[Reference class]]){
+        return 47;
+    }else{
+        return 47;
+    }
+}
+
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -328,13 +339,7 @@
     [self setHidden:YES];
 }
 
-/*
- -(BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
- if(gestureRecognizer.view!= background)
- return NO;
- else
- return YES;
- }*/
+
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
     if (touch.view != background) { // accept only touchs on superview, not accept touchs on subviews
