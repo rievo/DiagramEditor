@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ClassAttribute : NSObject
+@interface ClassAttribute : NSObject<NSCoding>
 
 
 @property NSString * name;
@@ -16,5 +16,6 @@
 @property NSNumber * min;
 @property NSNumber * max;
 @property NSString * defaultValue;
+@property NSString * currentValue;
 
 @end

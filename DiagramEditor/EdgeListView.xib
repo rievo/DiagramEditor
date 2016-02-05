@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="EdgeListView">
+            <rect key="frame" x="0.0" y="0.0" width="730" height="347"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yiz-QL-wKr">
+                    <rect key="frame" x="0.0" y="0.0" width="730" height="347"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lFK-tn-gLS">
+                            <rect key="frame" x="245" y="25" width="240" height="297"/>
+                            <subviews>
+                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2ag-IS-JvM">
+                                    <rect key="frame" x="0.0" y="37" width="240" height="252"/>
+                                    <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="sectionIndexColor" red="0.71764707565307617" green="0.76862746477127075" blue="0.89803922176361084" alpha="1" colorSpace="calibratedRGB"/>
+                                </tableView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select edge type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="69X-Uo-ARZ">
+                                    <rect key="frame" x="55" y="8" width="130" height="21"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="130" id="7Z5-Mc-T54"/>
+                                        <constraint firstAttribute="height" constant="21" id="xIU-79-wjf"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" red="0.71764707565307617" green="0.76862746477127075" blue="0.89803922176361084" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" red="0.32156863808631897" green="0.40392157435417175" blue="0.57647061347961426" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="297" id="4iO-lv-UHh"/>
+                                <constraint firstItem="69X-Uo-ARZ" firstAttribute="centerX" secondItem="lFK-tn-gLS" secondAttribute="centerX" id="P4s-t9-cit"/>
+                                <constraint firstAttribute="width" constant="240" id="Qga-aa-hdG"/>
+                                <constraint firstAttribute="trailing" secondItem="2ag-IS-JvM" secondAttribute="trailing" id="Thr-Ww-vtX"/>
+                                <constraint firstItem="2ag-IS-JvM" firstAttribute="leading" secondItem="lFK-tn-gLS" secondAttribute="leading" id="jmN-gW-vRK"/>
+                                <constraint firstAttribute="bottom" secondItem="2ag-IS-JvM" secondAttribute="bottom" constant="8" id="oJ8-h3-zrA"/>
+                                <constraint firstItem="2ag-IS-JvM" firstAttribute="top" secondItem="69X-Uo-ARZ" secondAttribute="bottom" constant="8" id="xSY-cO-wvN"/>
+                                <constraint firstItem="69X-Uo-ARZ" firstAttribute="top" secondItem="lFK-tn-gLS" secondAttribute="top" constant="8" id="xSv-nL-Rak"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="lFK-tn-gLS" firstAttribute="centerY" secondItem="Yiz-QL-wKr" secondAttribute="centerY" id="eUI-D7-FKO"/>
+                        <constraint firstItem="lFK-tn-gLS" firstAttribute="centerX" secondItem="Yiz-QL-wKr" secondAttribute="centerX" id="j3M-fj-5Hz"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="Yiz-QL-wKr" secondAttribute="trailing" id="1ZZ-D4-YVf"/>
+                <constraint firstAttribute="bottom" secondItem="Yiz-QL-wKr" secondAttribute="bottom" id="5D2-sx-ldB"/>
+                <constraint firstItem="Yiz-QL-wKr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Dkz-D7-gBY"/>
+                <constraint firstItem="Yiz-QL-wKr" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="mN3-Jf-G3a"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="background" destination="Yiz-QL-wKr" id="yj9-EN-QFT"/>
+                <outlet property="table" destination="2ag-IS-JvM" id="IzC-IM-Bxz"/>
+            </connections>
+            <point key="canvasLocation" x="395" y="222.5"/>
+        </view>
+    </objects>
+</document>

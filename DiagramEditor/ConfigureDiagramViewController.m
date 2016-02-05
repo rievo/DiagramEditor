@@ -260,7 +260,10 @@
             NSDictionary * diagPalette = [dic objectForKey:@"diag_palette"];
             NSString * paleteName = [diagPalette objectForKey:@"_palette_name"];
             NSLog(@"\n\ntype: %@     	\n name: %@", type, paleteName);
-           
+            
+            NSDictionary * containerDic = [dic objectForKey:@"containerReference"];
+            NSString * containerReference = [containerDic objectForKey:@"_href"];
+            item.containerReference = containerReference;
             
             
             item.dialog = parsedClass;
@@ -273,7 +276,8 @@
                 NSString * wstr = [nodeShapeDic objectForKey:@"_horizontalDiameter"];
                 NSString * hstr = [nodeShapeDic objectForKey:@"_verticalDiameter"];
                 NSString * shapeType = [nodeShapeDic objectForKey:@"_xsi:type"];
-                NSString * color = [nodeShapeDic objectForKey:@"_color"];
+                NSDictionary * colorDic = [nodeShapeDic objectForKey:@"color"];
+                NSString * color = [colorDic objectForKey:@"_name"];
                 
                 NSString * sizeStr = [nodeShapeDic objectForKey:@"_size"];
                 
@@ -648,6 +652,8 @@
     NSString *filePath = [[NSBundle mainBundle]pathForResource:@"exported" ofType:@"json"];
     NSString *jsonString = [[NSString alloc] initWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:NULL];
     NSError *jsonError;
+    
+    //JsonDic es el fichero JSON (ecore)
     NSMutableDictionary *jsonDict = [NSJSONSerialization
                                      JSONObjectWithData:[jsonString dataUsingEncoding:NSUTF8StringEncoding]
                                                                     options:NSJSONReadingMutableContainers
@@ -656,45 +662,30 @@
     NSArray * classes = [jsonDict objectForKey:@"classes"];
     
 
-    
+    //Para cada item de la paleta, vamos a obtener sus atributos y sus referencias
     for(int i = 0; i< dele.paletteItems.count; i++){
         pi = [dele.paletteItems objectAtIndex:i];
         //pi.className tendrá el nombre de la clase
         
         pi.attributes = [[NSMutableArray alloc] init];
+        pi.references = [[NSMutableArray alloc] init];
         
         
-        pi.attributes = [self getAttributesForClass:pi.className
-                                       onClassArray:classes];
+        [self getAttributesForClass:pi.className
+                       onClassArray:classes
+         storeOnAttributesArray:pi.attributes
+                 andReferencesArray:pi.references];
         
         
-        if([pi.type isEqualToString:@"graphicR:Edge"]){ //Get enabled class at init and end
-            NSLog(@"Juaja");
-            
-            //Averiguo qué clases me permite en el origen y el destino este edge
-            //
-
-            for(int a = 0; a < pi.attributes.count; a++){
-                if([[pi.attributes objectAtIndex:a] isKindOfClass:[Reference class]]){
-                    
-                    Reference * ref = [pi.attributes objectAtIndex:a];
-                    
-                    if([ref.name isEqualToString:pi.sourcePart]){
-                        pi.sourceClass = ref.target;
-                    }
-                    
-                    if([ref.name isEqualToString:pi.targetPart]){
-                        pi.targetClass = ref.target;
-                    }
-                }
-            }
-        }
+        //Tengo los atributos y las referencias para cada clase.
         
     }
 
 }
--(NSMutableArray *)getAttributesForClass: (NSString *) key
-                          onClassArray: (NSArray *)classArray{
+-(void)getAttributesForClass: (NSString *) key
+                          onClassArray: (NSArray *)classArray
+                       storeOnAttributesArray:(NSMutableArray *)attrsArray
+                           andReferencesArray:(NSMutableArray *)refsArray{
     ClassAttribute * temp;
     
     NSDictionary * dic = nil;
@@ -703,10 +694,11 @@
     NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
     f.numberStyle = NSNumberFormatterDecimalStyle;
     
-    NSMutableArray * attributes = [[NSMutableArray alloc] init];
+    //NSMutableArray * attributes = [[NSMutableArray alloc] init];
     
     
     for(int i = 0; i< classArray.count; i++){
+        name = nil;
         dic = [classArray objectAtIndex:i];
         name = [dic objectForKey:@"name"];
         
@@ -724,7 +716,7 @@
                  temp.max = [f numberFromString:[atrDic objectForKey:@"max"]];
                  temp.defaultValue = [atrDic objectForKey:@"default"];
                 
-                [attributes addObject:temp];
+                [attrsArray addObject:temp];
             }
             
             
@@ -735,18 +727,30 @@
                 NSDictionary * rdic = [refs objectAtIndex:a];
                 Reference * ref = [[Reference alloc]init];
                 ref.name = [rdic objectForKey:@"name"];
-                ref.max = [f numberFromString:[rdic objectForKey:@"max"]];
-                ref.min = [f numberFromString:[rdic objectForKey:@"min"]];
+                NSString * maxstr = [rdic objectForKey:@"max"];
+                if([maxstr isEqualToString:@"-1"]){
+                    ref.max = [NSNumber numberWithInt:-1];
+                }else{
+                    ref.max = [f numberFromString:maxstr];
+                }
+                
+                if([[rdic objectForKey:@"min"] isEqualToString:@""]){
+                    ref.min = [NSNumber numberWithInt:-1];
+                }else{
+                    ref.min = [f numberFromString:[rdic objectForKey:@"min"]];
+                }
+                
                 ref.containment = [rdic objectForKey:@"containment"];
                 ref.target = [rdic objectForKey:@"target"];
                 ref.opposite = [rdic objectForKey:@"opposite"];
                 
-                [attributes addObject: ref];
+                [refsArray addObject: ref];
             }
+            
+            
         }
     }
     
-    return attributes;
 }
 
 -(void)parseXMLDiagram: (NSString *)text{
@@ -789,8 +793,6 @@
     {
         // Get reference to the destination view controller
         EditorViewController *vc = [segue destinationViewController];
-        
-        //TODO:vc.graphicR =
         
     }
 }
@@ -911,8 +913,6 @@
     
     float width = [[dic objectForKey:@"_width"]floatValue];
     float height = [[dic objectForKey:@"_height"]floatValue];
-    
-    temp.name = name;
     
     [temp setFrame:CGRectMake(0, 0, width, height)];
     temp.center = CGPointMake(x, y);

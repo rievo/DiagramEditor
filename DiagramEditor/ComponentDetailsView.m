@@ -40,11 +40,9 @@
     outConnectionsTable.dataSource = self;
     
     // Do any additional setup after loading the view.
-    nameTextField.text = comp.name;
     
     CGRect oldFrame = previewComponent.frame;
     temp = [[Component alloc] initWithFrame:CGRectMake(0, 0, oldFrame.size.width, oldFrame.size.height)];
-    temp.name = comp.name;
     temp.fillColor = comp.fillColor;
     [temp updateNameLabel];
     //temp.connections = [NSMutableArray arrayWithArray:comp.connections];
@@ -68,7 +66,6 @@
     
     [temp setNeedsDisplay];
     
-    nameTextField.delegate = self;
     dele = [[UIApplication sharedApplication]delegate];
     
     NSArray * parsedArr = [comp.type componentsSeparatedByString:@":"];
@@ -87,6 +84,8 @@
     [attributesTable setDelegate:self];
     [attributesTable setDataSource:self];
     [attributesTable reloadData];
+    
+    
     
     
     //Tap to close
@@ -117,8 +116,6 @@
 -(void)textFieldDidEndEditing:(UITextField *)textField{
     
     if(textField.text.length >0){
-        comp.name = textField.text;
-        temp.name = textField.text;
         [temp updateNameLabel];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
     }else{
@@ -130,8 +127,6 @@
     NSString * new = [nameTextField.text stringByReplacingCharactersInRange:range withString:string];
     if(new.length > 0){
         [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
-        comp.name = new;
-        temp.name = new;
         [temp updateNameLabel];
         return YES;
     }
@@ -236,6 +231,16 @@
                     atvc = [nib objectAtIndex:0];
                     atvc.attributeNameLabel.text = attr.name;
                     atvc.backgroundColor = [UIColor clearColor];
+                    atvc.comp = comp;
+                    
+                    for(ClassAttribute * atr in comp.attributes){
+                        if([atr.name isEqualToString:atvc.attributeNameLabel.text]){
+                            atvc.textField.text =  atr.currentValue ;
+                        }
+                    }
+                    [comp updateNameLabel];
+
+                    
                     //atvc.typeLabel.text = attr.type;
                 }
                 return atvc;

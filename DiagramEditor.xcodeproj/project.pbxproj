@@ -20,6 +20,10 @@
 		F1431E881C52330C006A45BC /* exported.json in Resources */ = {isa = PBXBuildFile; fileRef = F1431E871C52330C006A45BC /* exported.json */; };
 		F1431E8B1C524127006A45BC /* ClassAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = F1431E8A1C524127006A45BC /* ClassAttribute.m */; };
 		F1431E8E1C5249F7006A45BC /* ComponentDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1431E8D1C5249F7006A45BC /* ComponentDetailsView.xib */; };
+		F147B43E1C63507100A8F5E7 /* EdgeListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F147B43D1C63507100A8F5E7 /* EdgeListView.xib */; };
+		F147B4471C63509600A8F5E7 /* EdgeListView.m in Sources */ = {isa = PBXBuildFile; fileRef = F147B4461C63509600A8F5E7 /* EdgeListView.m */; };
+		F147B4491C636FA500A8F5E7 /* test.json in Resources */ = {isa = PBXBuildFile; fileRef = F147B4481C636FA500A8F5E7 /* test.json */; };
+		F147B44B1C636FB400A8F5E7 /* test.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F147B44A1C636FB400A8F5E7 /* test.graphicR */; };
 		F1587B041C19BC4600E963BE /* Palette.m in Sources */ = {isa = PBXBuildFile; fileRef = F1587B031C19BC4600E963BE /* Palette.m */; };
 		F15A96091C27F69100ACA6FA /* XMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = F15A96081C27F69100ACA6FA /* XMLWriter.m */; };
 		F1685E9F1C1827FB0094097E /* ConfigureDiagramViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685E9E1C1827FB0094097E /* ConfigureDiagramViewController.m */; };
@@ -35,6 +39,7 @@
 		F16C7DCB1C578D4B00CA9B25 /* ConnectionDetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F16C7DCA1C578D4B00CA9B25 /* ConnectionDetailsView.m */; };
 		F16C7DCD1C57AD2900CA9B25 /* SureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F16C7DCC1C57AD2900CA9B25 /* SureView.xib */; };
 		F16C7DD01C57AD4400CA9B25 /* SureView.m in Sources */ = {isa = PBXBuildFile; fileRef = F16C7DCF1C57AD4400CA9B25 /* SureView.m */; };
+		F17568041C64C0980049EECC /* testOriginal.json in Resources */ = {isa = PBXBuildFile; fileRef = F17568031C64C0980049EECC /* testOriginal.json */; };
 		F1786DE51C561ADA00963663 /* BooleanAttributeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1786DE41C561ADA00963663 /* BooleanAttributeTableViewCell.xib */; };
 		F1786DE81C561AF200963663 /* BooleanAttributeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1786DE71C561AF200963663 /* BooleanAttributeTableViewCell.m */; };
 		F1786DEC1C56222B00963663 /* GenericAttributeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1786DEA1C56222B00963663 /* GenericAttributeTableViewCell.m */; };
@@ -70,6 +75,7 @@
 		F1DAE7A71C4D023000ECDD34 /* DFAAutomaton.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F1DAE7A61C4D023000ECDD34 /* DFAAutomaton.graphicR */; };
 		F1E9EFD51C4521DA007E227D /* PItemEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E9EFD41C4521DA007E227D /* PItemEditor.m */; };
 		F1E9EFD81C4524CD007E227D /* PaletteItemCreatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E9EFD71C4524CD007E227D /* PaletteItemCreatorViewController.m */; };
+		F1F29C691C64C8F70035F0B6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1F29C681C64C8F70035F0B6 /* AudioToolbox.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,6 +140,11 @@
 		F1431E891C524127006A45BC /* ClassAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassAttribute.h; sourceTree = "<group>"; };
 		F1431E8A1C524127006A45BC /* ClassAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassAttribute.m; sourceTree = "<group>"; };
 		F1431E8D1C5249F7006A45BC /* ComponentDetailsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComponentDetailsView.xib; sourceTree = "<group>"; };
+		F147B43D1C63507100A8F5E7 /* EdgeListView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EdgeListView.xib; sourceTree = "<group>"; };
+		F147B4451C63509600A8F5E7 /* EdgeListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EdgeListView.h; sourceTree = "<group>"; };
+		F147B4461C63509600A8F5E7 /* EdgeListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EdgeListView.m; sourceTree = "<group>"; };
+		F147B4481C636FA500A8F5E7 /* test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test.json; sourceTree = "<group>"; };
+		F147B44A1C636FB400A8F5E7 /* test.graphicR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = test.graphicR; sourceTree = "<group>"; };
 		F1587B021C19BC4600E963BE /* Palette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Palette.h; sourceTree = "<group>"; };
 		F1587B031C19BC4600E963BE /* Palette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Palette.m; sourceTree = "<group>"; };
 		F15A96071C27F69100ACA6FA /* XMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLWriter.h; sourceTree = "<group>"; };
@@ -161,6 +172,7 @@
 		F16C7DCC1C57AD2900CA9B25 /* SureView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SureView.xib; sourceTree = "<group>"; };
 		F16C7DCE1C57AD4400CA9B25 /* SureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SureView.h; sourceTree = "<group>"; };
 		F16C7DCF1C57AD4400CA9B25 /* SureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SureView.m; sourceTree = "<group>"; };
+		F17568031C64C0980049EECC /* testOriginal.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testOriginal.json; sourceTree = "<group>"; };
 		F1786DE41C561ADA00963663 /* BooleanAttributeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BooleanAttributeTableViewCell.xib; sourceTree = "<group>"; };
 		F1786DE61C561AF200963663 /* BooleanAttributeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BooleanAttributeTableViewCell.h; sourceTree = "<group>"; };
 		F1786DE71C561AF200963663 /* BooleanAttributeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BooleanAttributeTableViewCell.m; sourceTree = "<group>"; };
@@ -211,6 +223,7 @@
 		F1E9EFD41C4521DA007E227D /* PItemEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PItemEditor.m; sourceTree = "<group>"; };
 		F1E9EFD61C4524CD007E227D /* PaletteItemCreatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaletteItemCreatorViewController.h; sourceTree = "<group>"; };
 		F1E9EFD71C4524CD007E227D /* PaletteItemCreatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaletteItemCreatorViewController.m; sourceTree = "<group>"; };
+		F1F29C681C64C8F70035F0B6 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +231,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1F29C691C64C8F70035F0B6 /* AudioToolbox.framework in Frameworks */,
 				F1B789991C60F064001B6DB4 /* CoreGraphics.framework in Frameworks */,
 				F1B789971C60F05D001B6DB4 /* QuartzCore.framework in Frameworks */,
 				F1B789951C60F04B001B6DB4 /* CoreImage.framework in Frameworks */,
@@ -262,6 +276,8 @@
 		F1431E861C523302006A45BC /* testFiles */ = {
 			isa = PBXGroup;
 			children = (
+				F147B4481C636FA500A8F5E7 /* test.json */,
+				F17568031C64C0980049EECC /* testOriginal.json */,
 				F1431E871C52330C006A45BC /* exported.json */,
 			);
 			name = testFiles;
@@ -289,6 +305,9 @@
 				F16C7DCE1C57AD4400CA9B25 /* SureView.h */,
 				F16C7DCF1C57AD4400CA9B25 /* SureView.m */,
 				F16C7DCC1C57AD2900CA9B25 /* SureView.xib */,
+				F147B43D1C63507100A8F5E7 /* EdgeListView.xib */,
+				F147B4451C63509600A8F5E7 /* EdgeListView.h */,
+				F147B4461C63509600A8F5E7 /* EdgeListView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -346,6 +365,7 @@
 		F185106A1C1824C8004EC4C8 = {
 			isa = PBXGroup;
 			children = (
+				F1F29C681C64C8F70035F0B6 /* AudioToolbox.framework */,
 				F1B789981C60F064001B6DB4 /* CoreGraphics.framework */,
 				F1B789961C60F05D001B6DB4 /* QuartzCore.framework */,
 				F1B789941C60F04B001B6DB4 /* CoreImage.framework */,
@@ -411,6 +431,7 @@
 			children = (
 				F1DAE7A61C4D023000ECDD34 /* DFAAutomaton.graphicR */,
 				F10F0FA41C1ED77A00165561 /* design.graphicR */,
+				F147B44A1C636FB400A8F5E7 /* test.graphicR */,
 			);
 			name = palettes;
 			sourceTree = "<group>";
@@ -558,21 +579,25 @@
 				F1B7899B1C610292001B6DB4 /* Minus-100.png in Resources */,
 				F10AB8081C50E7E200DE6DCE /* PasteView.xib in Resources */,
 				F1786DED1C56222B00963663 /* GenericAttributeTableViewCell.xib in Resources */,
+				F147B43E1C63507100A8F5E7 /* EdgeListView.xib in Resources */,
 				F16C7DCD1C57AD2900CA9B25 /* SureView.xib in Resources */,
 				F10580771C5905E4000497DE /* outputClosedArrow.png in Resources */,
 				F1431E881C52330C006A45BC /* exported.json in Resources */,
 				F17B75A91C22D6E100AB1B57 /* newDocument.png in Resources */,
 				F1786DEF1C56410200963663 /* SaveNameView.xib in Resources */,
 				F19C25901C43AB8B0002E490 /* palette.png in Resources */,
+				F147B4491C636FA500A8F5E7 /* test.json in Resources */,
 				F10AB80B1C50E85100DE6DCE /* cancel.png in Resources */,
 				F18510831C1824C8004EC4C8 /* Assets.xcassets in Resources */,
 				F17B75AD1C22D9CC00AB1B57 /* list.png in Resources */,
 				F1C6347B1C2842C30072912D /* camera.png in Resources */,
+				F147B44B1C636FB400A8F5E7 /* test.graphicR in Resources */,
 				F10AB80C1C50E85100DE6DCE /* ok.png in Resources */,
 				F1786DE51C561ADA00963663 /* BooleanAttributeTableViewCell.xib in Resources */,
 				F18510811C1824C8004EC4C8 /* Main.storyboard in Resources */,
 				F1786DF41C56649B00963663 /* ExploreFilesView.xib in Resources */,
 				F10AB8061C50E53100DE6DCE /* open.png in Resources */,
+				F17568041C64C0980049EECC /* testOriginal.json in Resources */,
 				F17B75B01C22DA7200AB1B57 /* arrow.png in Resources */,
 				F17B75AB1C22D79F00AB1B57 /* save.png in Resources */,
 				F16C7DC31C5781EB00CA9B25 /* ReferenceTableViewCell.xib in Resources */,
@@ -594,6 +619,7 @@
 				F1685EAE1C1831840094097E /* ComponentDetailsView.m in Sources */,
 				F1786DE81C561AF200963663 /* BooleanAttributeTableViewCell.m in Sources */,
 				F15A96091C27F69100ACA6FA /* XMLWriter.m in Sources */,
+				F147B4471C63509600A8F5E7 /* EdgeListView.m in Sources */,
 				F1E9EFD51C4521DA007E227D /* PItemEditor.m in Sources */,
 				F1431E8B1C524127006A45BC /* ClassAttribute.m in Sources */,
 				F1685E9F1C1827FB0094097E /* ConfigureDiagramViewController.m in Sources */,

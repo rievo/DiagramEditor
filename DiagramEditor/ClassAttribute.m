@@ -11,7 +11,7 @@
 @implementation ClassAttribute
 
 
-@synthesize name, type, max, min, defaultValue;
+@synthesize name, type, max, min, defaultValue, currentValue;
 
 
 - (instancetype)init
@@ -44,6 +44,33 @@
     }
     return self;
 }
+
+
+#pragma mark NSCoding
+
+- (void)encodeWithCoder:(NSCoder *)coder {
+    [coder encodeObject:self.name forKey:@"name"];
+    [coder encodeObject:self.type forKey:@"type"];
+    [coder encodeObject:self.min forKey:@"min"];
+    [coder encodeObject:self.max forKey:@"max"];
+    [coder encodeObject:self.defaultValue forKey:@"defaultvalue"];
+    [coder encodeObject:self.currentValue forKey:@"currentvalue"];
+}
+
+- (id)initWithCoder:(NSCoder *)coder {
+    self = [super init];
+    if (self) {
+
+        self.name = [coder decodeObjectForKey:@"name"];
+        self.type = [coder decodeObjectForKey:@"type"];
+        self.min = [coder decodeObjectForKey:@"min"];
+        self.max = [coder decodeObjectForKey:@"max"];
+        self.defaultValue = [coder decodeObjectForKey:@"defaultvalue"];
+        self.currentValue = [coder decodeObjectForKey:@"currentvalue"];
+    }
+    return self;
+}
+
 
 
 @end

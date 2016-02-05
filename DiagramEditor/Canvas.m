@@ -8,6 +8,7 @@
 
 #import "Canvas.h"
 #import "Connection.h"
+#import "ClassAttribute.h"
 
 #define xmargin 15
 #define ymargin 10
@@ -411,7 +412,14 @@
     Component * temp = nil;
     for(int i = 0; i<dele.components.count; i++){
         temp = [dele.components objectAtIndex:i];
-        temp.textLayer.string = temp.name;
+        
+        for(ClassAttribute * atr in  temp.attributes){
+            if([atr.name isEqualToString:@"name"]){
+                temp.textLayer.string = atr.currentValue;
+                [temp updateNameLabel];
+            }
+        }
+        
         [temp setNeedsDisplay];
     }
     

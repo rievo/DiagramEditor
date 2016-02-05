@@ -30,6 +30,7 @@
       <elements xsi:type="graphicR:Edge">
         <anEClass href="DFAAutomaton.ecore#//Transition"/>
         <diag_palette palette_name="Create Transition"/>
+        <containerReference href="DFAAutomaton.ecore#//Automaton/transitions"/>
         <directions>
           <sourceLink decoratorName="OutputArrow">
             <anEReference href="DFAAutomaton.ecore#//Transition/from"/>

@@ -87,7 +87,7 @@
     }
     
     
-    cell.textLabel.text = temp.name;
+    cell.textLabel.text = temp.className;
     cell.backgroundColor = [UIColor clearColor];
 
     return cell;
@@ -112,7 +112,7 @@
         filteredArray = [[NSMutableArray alloc] init];
         
         for(Component * com in dele.components){
-            NSRange nameRange = [com.name rangeOfString:text options:NSCaseInsensitiveSearch];
+            NSRange nameRange = [com.className rangeOfString:text options:NSCaseInsensitiveSearch];
             
             if(nameRange.location != NSNotFound)
             {

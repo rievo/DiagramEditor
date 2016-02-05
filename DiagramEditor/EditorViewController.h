@@ -14,6 +14,7 @@
 #import "ConnectionDetailsView.h"
 #import "SaveNameView.h"
 #import "SureView.h"
+#import "EdgeListView.h"
 
 @class Palette;
 @class PaletteItem;
@@ -21,7 +22,14 @@
 
 #import <MessageUI/MFMailComposeViewController.h>
 
-@interface EditorViewController : UIViewController<MFMailComposeViewControllerDelegate, UIGestureRecognizerDelegate, UIScrollViewDelegate, ComponentDetailsViewDelegate, SaveNameDelegate, ConnectionDetailsViewDelegate, SureViewDelegate>{
+@interface EditorViewController : UIViewController<MFMailComposeViewControllerDelegate,
+UIGestureRecognizerDelegate,
+UIScrollViewDelegate,
+ComponentDetailsViewDelegate,
+SaveNameDelegate,
+ConnectionDetailsViewDelegate,
+SureViewDelegate,
+EdgeListDelegate>{
     AppDelegate * dele;
     __weak IBOutlet Palette *palette;
     

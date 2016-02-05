@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 #import "Canvas.h"
+@class Component;
 
 @interface Component : UIView <UIGestureRecognizerDelegate>{
     
@@ -27,10 +28,13 @@
     UIView * resizeView;
     
     float prevPinchScale;
+    
+    Component * sourceTemp;
+    Component * targetTemp;
 }
 
 
-@property NSString * name;
+//@property NSString * name;
 @property CATextLayer * textLayer;
 @property NSString * type;
 @property NSString * shapeType;
@@ -39,12 +43,22 @@
 @property UIImage * image;
 @property BOOL isImage;
 @property NSString * componentId;
+@property NSString * className;
 
 @property NSMutableArray * attributes;
-
+@property NSMutableArray * references;
 
 @property Component * parent;
 @property NSMutableArray * sons;
+
+
+@property NSString * name;
+
+
+
+//Los cuatro siguientes son para buscar en el ecore
+
+@property NSString * containerReference; //nombre de la referencia que lo contiene en la clase root. Sin parsear. Ejemplo: DFAAutomaton.ecore#//Automaton/alphabet
 
 
 -(CGPoint)getTopAnchorPoint;

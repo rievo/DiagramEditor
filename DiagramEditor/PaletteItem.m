@@ -10,11 +10,15 @@
 
 #define kEllipse @"graphicR:Ellipse"
 #define kEdge @"graphicR:Edge"
+#define kRectangle @"graphicR:Rectangle"
+#define kDiamond @"graphicR:Diamond"
+#define kNote @"graphicR:Note"
+#define kParallelogram @"graphicR:ShapeCompartmentParallelogram"
 
 @implementation PaletteItem
 
 
-@synthesize type, dialog, width, height, shapeType, fillColor, isImage, image, attributes, className, colorString, sourceName, targetName, targetDecoratorName, sourceDecoratorName, edgeStyle, sourcePart, targetPart, sourceClass, targetClass;
+@synthesize type, dialog, width, height, shapeType, fillColor, isImage, image, attributes, className, colorString, sourceName, targetName, targetDecoratorName, sourceDecoratorName, edgeStyle, sourcePart, targetPart, sourceClass, targetClass, minOutConnections,maxOutConnections, containerReference, references;
 
 
 
@@ -44,7 +48,7 @@
         [path addLineToPoint:CGPointMake(rect.size.width - 2* lw, rect.size.height /2)];
         
         [path stroke];
-    }else if([shapeType isEqualToString:@"graphicR:Diamond"]){ //Diamond
+    }else if([shapeType isEqualToString:kDiamond]){ //Diamond
         //fixed.origin.x = fixed.origin.x + 4* lw;
         //fixed.origin.y = fixed.origin.y + 4*lw;
         
@@ -63,7 +67,7 @@
         
         [path fill];
         [path stroke];
-    }else if([shapeType isEqualToString:@"graphicR:Note"]){ //Note
+    }else if([shapeType isEqualToString:kNote]){ //Note
         
         //fixed = CGRectMake(fixed.origin.x + 2*lw, fixed.origin.y + 2*lw, fixed.size.width, fixed.size.height);
         //fixed = self.frame;
@@ -96,7 +100,7 @@
         [path stroke];
         
         
-    }else if([shapeType isEqualToString:@"graphicR:ShapeCompartmentParallelogram"]){ //Parallelogram
+    }else if([shapeType isEqualToString:kParallelogram]){ //Parallelogram
        
         
 
@@ -121,11 +125,30 @@
         [[UIColor clearColor]setFill];
         UIBezierPath * path = [UIBezierPath bezierPathWithRect:rect];
         [path fill];
-    }else {
+    }else if([shapeType isEqualToString:kRectangle]){
+        UIBezierPath * path = [[UIBezierPath alloc] init];
+        [[UIColor blackColor] setStroke];
+        [fillColor setFill];
         
+        [path setLineWidth:lw];
+        
+        [path moveToPoint:CGPointMake(fixed.origin.x , fixed.origin.y )];
+        [path addLineToPoint:CGPointMake(fixed.origin.x , fixed.origin.y + fixed.size.height)];
+        [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width, fixed.origin.y + fixed.size.height)];
+        [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width, fixed.origin.y )];
+        [path closePath];
+        [path fill];
+        [path stroke];
+        
+        
+    }else{
+        //Dibujar una cruz o interrogación
     }
 }
 
 
+-(NSString *)description{
+    return [NSString stringWithFormat:@"Type: %@\nDialog: %@\nShape type: %@\nClass name: %@\nContainer reference: %@\n", type, dialog, shapeType, className, containerReference];
+}
 
 @end

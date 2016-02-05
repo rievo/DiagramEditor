@@ -25,6 +25,7 @@
 @property NSString * className; //La clase del item
 
 @property NSMutableArray * attributes;
+@property NSMutableArray * references;
 
 
 //For edges
@@ -40,5 +41,11 @@
 
 @property NSString * sourceClass; //La clase que se permite en el origen
 @property NSString * targetClass; //La clase que se permite en el destino
+
+@property NSNumber * minOutConnections;
+@property NSNumber * maxOutConnections;
+
+
+@property NSString * containerReference; //nombre de la referencia que lo contiene en la clase root. Sin parsear. Ejemplo: DFAAutomaton.ecore#//Automaton/alphabet
 
 @end

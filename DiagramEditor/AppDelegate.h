@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 @class Canvas;
+@class Component;
+@class EditorViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -24,6 +26,7 @@
 @property UIColor * blue4;
 
 @property Canvas * can;
+@property EditorViewController * evc;
 @property CGRect originalCanvasRect;
 
 @property NSString * currentPaletteFileName;
@@ -31,5 +34,8 @@
 
 
 @property NSDictionary * graphicR;
+
+
+-(int)getOutConnectionsForComponent: (Component *)comp;
 @end
 

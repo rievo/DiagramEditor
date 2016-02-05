@@ -9,13 +9,23 @@
 #import "Component.h"
 #import "Connection.h"
 #import "Canvas.h"
+#import "PaletteItem.h"
 
+#import "EdgeListView.h"
+#import "EditorViewController.h"
 
 #define resizeW 40
+
+#define kNotYet @"NotYet"
+
+#import <AudioToolbox/AudioServices.h>
+
+#define minusY 30
+
 @implementation Component
 
 
-@synthesize name, textLayer, type, shapeType, fillColor, image, isImage, attributes, parent, sons, componentId, colorString;
+@synthesize textLayer, type, shapeType, fillColor, image, isImage, attributes, parent, sons, componentId, colorString, containerReference, className, references, name;
 
 
 NSString* const SHOW_INSPECTOR = @"ShowInspector";
@@ -39,7 +49,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         [self addTapGestureRecognizer];
         [self addLongPressGestureRecognizer];
         [self addPanGestureRecognizer];
-
+        
         
         dele = [[UIApplication sharedApplication]delegate];
         
@@ -49,23 +59,23 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         self.backgroundColor = [UIColor clearColor];
         
         /*
-        //ShapeLayer
-        backgroundLayer = [[CAShapeLayer alloc] init];
-        UIBezierPath * backPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds
-                                                        byRoundingCorners:UIRectCornerAllCorners
-                                                              cornerRadii:CGSizeMake(5.0, 5.0)];
-        backgroundLayer.frame = self.bounds;
-        backgroundLayer.path = backPath.CGPath;
-        backgroundLayer.fillColor = [UIColor whiteColor].CGColor;
-        backgroundLayer.strokeColor = [UIColor blackColor].CGColor;
-        backgroundLayer.lineWidth = 2.0;
-        [self.layer addSublayer:backgroundLayer];*/
+         //ShapeLayer
+         backgroundLayer = [[CAShapeLayer alloc] init];
+         UIBezierPath * backPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds
+         byRoundingCorners:UIRectCornerAllCorners
+         cornerRadii:CGSizeMake(5.0, 5.0)];
+         backgroundLayer.frame = self.bounds;
+         backgroundLayer.path = backPath.CGPath;
+         backgroundLayer.fillColor = [UIColor whiteColor].CGColor;
+         backgroundLayer.strokeColor = [UIColor blackColor].CGColor;
+         backgroundLayer.lineWidth = 2.0;
+         [self.layer addSublayer:backgroundLayer];*/
         
         
         
         //NameLayer
         textLayer = [[CATextLayer alloc] init];
-        textLayer.string = name;
+        
         textLayer.foregroundColor = [UIColor blackColor].CGColor;
         CGRect rect = CGRectMake(0 - self.bounds.size.width /2, 0-20, self.frame.size.width * 2,20);
         textLayer.frame = rect;
@@ -81,14 +91,14 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         
         
         /*
-        //Add resizeView
-        resizeView  = [[UIView alloc] initWithFrame:CGRectMake(self.bounds.size.width, self.bounds.size.height, resizeW, resizeW)];
-        [resizeView setUserInteractionEnabled:YES];
-        resizeView.backgroundColor = [UIColor redColor];
-        [self addSubview:resizeView];
-        
-        resizeGr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleResize:)];
-        [resizeView addGestureRecognizer:resizeGr];*/
+         //Add resizeView
+         resizeView  = [[UIView alloc] initWithFrame:CGRectMake(self.bounds.size.width, self.bounds.size.height, resizeW, resizeW)];
+         [resizeView setUserInteractionEnabled:YES];
+         resizeView.backgroundColor = [UIColor redColor];
+         [self addSubview:resizeView];
+         
+         resizeGr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleResize:)];
+         [resizeView addGestureRecognizer:resizeGr];*/
         
         
         parent = nil;
@@ -111,7 +121,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     tapGR.delegate = self;
     [self addGestureRecognizer:tapGR];
-
+    
 }
 
 
@@ -120,7 +130,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     longGR.delegate = self;
     [longGR setMinimumPressDuration:0.5];
     [self addGestureRecognizer:longGR];
-
+    
 }
 
 
@@ -142,7 +152,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
 }
 
 -(void)handleResize:(UIPanGestureRecognizer *)recog{
-
+    
     CGPoint newPoint = [recog locationInView:self];
     
     if(recog.state == UIGestureRecognizerStateBegan){
@@ -158,7 +168,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     }
     
     
-
+    
 }
 
 -(void)handleTap:(UITapGestureRecognizer *)recog{
@@ -177,6 +187,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     
     
     if (sender.state == UIGestureRecognizerStateEnded) {
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
         NSLog(@"Termina el long");
         [dele.can setXArrowStart: -1.0];
         [dele.can setYArrowStart:-1.0];
@@ -192,10 +203,10 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         for(int i = 0; i< [dele.components count]; i++){
             temp = [dele.components objectAtIndex:i];
             //if(temp != self){
-
-                if(CGRectContainsPoint(temp.frame, translatedPoint)){
-                    selected = temp;
-                }
+            
+            if(CGRectContainsPoint(temp.frame, translatedPoint)){
+                selected = temp;
+            }
             //}
         }
         
@@ -206,28 +217,58 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
             //Los componentes serán self = selected
             //Self = source   selected = target
             
-            //TODO: check integrity before making connections
             
-            Connection * conn = [[Connection alloc] init];
-            conn.source = self;
-            conn.target = selected;
+            NSString * canIMakeConnection = [self checkIntegrityForSource:self
+                                                                andTarget:selected];
             
-            [dele.connections addObject:conn];
-            
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
-             
-            
-            BOOL canIMakeConnection = [self checkIntegrityForSource:self andTarget:selected];
-            
-            if(canIMakeConnection){
+            if(canIMakeConnection == nil){
+                Connection * conn = [[Connection alloc] init];
+                conn.source = self;
+                conn.target = selected;
                 
+                [dele.connections addObject:conn];
+                
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+            }else if([canIMakeConnection isEqualToString:kNotYet]){
+                //Tenemos que esperar a que el usuario seleccione el tipo de conexión
+            }else{
+                NSLog(@"No se ha podido hacer la conexión");
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                message:canIMakeConnection
+                                                               delegate:self
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+                [alert show];
             }
             
         }
-     
+        
         
     }
     else if (sender.state == UIGestureRecognizerStateBegan){
+        AudioServicesPlayAlertSound(1352);
+        
+        CGPoint oldCenter = sender.view.center;
+        CGPoint newCenter = CGPointMake(oldCenter.x, oldCenter.y - minusY);
+        
+        [UIView animateWithDuration:0.2
+                              delay:0.0
+                            options:UIViewAnimationOptionCurveEaseOut
+                         animations:^{
+                             [sender.view setCenter:newCenter];
+                         }
+                         completion:^(BOOL finished) {
+                             
+                             [UIView animateWithDuration:0.2
+                                                   delay:0.0
+                                                 options:UIViewAnimationOptionCurveEaseOut
+                                              animations:^{
+                                                  [sender.view setCenter:oldCenter];
+                                              }
+                                              completion:nil];
+                         }];
+        
+        
         NSLog(@"Empieza el long");
         [dele.can setXArrowStart:self.center.x];
         [dele.can setYArrowStart:self.center.y];
@@ -381,6 +422,22 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         [[UIColor clearColor]setFill];
         UIBezierPath * path = [UIBezierPath bezierPathWithRect:rect];
         [path fill];
+    }else if([shapeType isEqualToString:@"graphicR:Rectangle"]){
+        UIBezierPath * path = [[UIBezierPath alloc] init];
+        [[UIColor blackColor] setStroke];
+        [fillColor setFill];
+        
+        [path setLineWidth:lw];
+        
+        [path moveToPoint:CGPointMake(fixed.origin.x , fixed.origin.y )];
+        [path addLineToPoint:CGPointMake(fixed.origin.x , fixed.origin.y + fixed.size.height)];
+        [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width, fixed.origin.y + fixed.size.height)];
+        [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width, fixed.origin.y )];
+        [path closePath];
+        [path fill];
+        [path stroke];
+        
+        
     }else{
         
     }
@@ -434,16 +491,255 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
  2.2.1) Si solo hay una posible conexión en el graphicR, tomarla
  2.2.2) Si hay más de una posible conexión, mostrar un popup para que el usuario elija cuál de ellas
  */
+/*
+ UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
+ message:@"There is no available Edges"
+ delegate:self
+ cancelButtonTitle:@"OK"
+ otherButtonTitles:nil];
+ [alert show];*/
 
--(BOOL)checkIntegrityForSource: (Component *)source
-                     andTarget: (Component *)target{
-    BOOL result = false;
+-(NSString *)checkIntegrityForSource: (Component *)source
+                           andTarget: (Component *)target
+                            withEdge: (PaletteItem *)pi{
+    NSString * res = nil;
+    
+    //Sacamos, de ese tipo, cuántas conexiones pueden salir del source
+    //Recorremos las referencias de source, comprobando si el target es del tipo pi.className
+    NSNumber * min, *max;
+    
+    NSString * targetClassName;
+    NSString * opposite;
+    //pi es el edge
+    for(Reference * ref in source.references){
+        if([ref.target isEqualToString:pi.className]){
+            min = ref.min;
+            max = ref.max;
+            targetClassName = ref.target;
+            opposite = ref.opposite;
+        }
+    }
+    //Hemos calculado cuántas referencias pueden salir del nodo source
     
     
+    //Compruebo si el nodo target es de la clase necesaria
     
-    return result;
+    
+    //Tengo que mirar en pi, la referencia "opposite" y mirar a qué clase apunta (su target)
+    NSString * destinyclass;
+    for(Reference * ref in pi.references){
+        if([ref.name isEqualToString:opposite]){
+            destinyclass = ref.target;
+        }
+    }
+    
+    
+    NSLog(@"Tenemos qu eel nodo %@\n puede tener de la clase %@ entre %@ y %@ conexiones", source, pi.className, [min description], [max description]);
+    
+    
+    if(max.intValue == 0){ //De este nodo no puede salir nada
+        return @"De este nodo no pueden salir referencias";
+    }else{
+        //Sacamos cuántas conexiones tiene ahora
+        
+        int currentConnections = [dele getOutConnectionsForComponent:source];
+        NSLog(@"El nodo %@ tiene actualmente %d conexiones", source, currentConnections);
+        
+        if([destinyclass isEqualToString:target.className]){
+            //El destino de la conexión es de la clase requerida, sigo comprobando
+            
+            if(max.intValue == -1){
+                //Puede haber cualquier número de conexiones salientes, return true
+                return nil;
+            }else{
+                if(currentConnections < max.intValue){
+                    return nil;
+                }else{
+                    return @"El número de conexiones es demasiado alto. \nBorre alguna";
+                }
+            }
+        }else{
+            //El nodo destino no tiene la clase adecuada
+            return @"El nodo destino no tiene la clase adecuada";
+        }
+        
+    }
+    
+    
+    return res;
 }
 
+-(NSString *)checkIntegrityForSource: (Component *)source
+                           andTarget: (Component *)target{
+    //BOOL result = false;
+    
+    
+    //Miramos cuántos edges tengo en la paleta
+    
+    int edges = 0;
+    PaletteItem * pi = nil;
+    PaletteItem * selectedEdge = nil;
+    
+    for(int i = 0; i< dele.paletteItems.count; i++){
+        pi = [dele.paletteItems objectAtIndex:i];
+        
+        if([pi.type isEqualToString:@"graphicR:Edge"]){
+            edges++;
+            selectedEdge = pi; //Solo nos importa pi en el caso de que solo haya uno
+        }
+    }
+    NSLog(@"Tengo %d edges", edges);
+    
+    //NSString * resultText;
+    
+    if(edges == 0){
+        //No se podrá hacer ninguna conexión
+        NSLog(@"No hay edges");
+    }else if(edges == 1){
+        //Se intentará tomar ese edge como defecto y luego se comprobará si puedo usarlo o no
+        //selectedEdge contendrá ese edge
+        //pi.nameClass tiene el nombre de la clase de ese Edge (e.g. Transition)
+        
+        //Sacamos, de ese tipo, cuántas conexiones pueden salir del source
+        //Recorremos las referencias de source, comprobando si el target es del tipo pi.className
+        NSNumber * min, *max;
+        
+        NSString * targetClassName;
+        NSString * opposite;
+        //pi es el edge
+        for(Reference * ref in source.references){
+            if([ref.target isEqualToString:pi.className]){
+                min = ref.min;
+                max = ref.max;
+                targetClassName = ref.target;
+                opposite = ref.opposite;
+            }
+        }
+        //Hemos calculado cuántas referencias pueden salir del nodo source
+        
+        
+        //Compruebo si el nodo target es de la clase necesaria
+        
+        
+        //Tengo que mirar en pi, la referencia "opposite" y mirar a qué clase apunta (su target)
+        NSString * destinyclass;
+        for(Reference * ref in pi.references){
+            if([ref.name isEqualToString:opposite]){
+                destinyclass = ref.target;
+            }
+        }
+        
+        
+        NSLog(@"Tenemos qu eel nodo %@\n puede tener de la clase %@ entre %@ y %@ conexiones", source, pi.className, [min description], [max description]);
+        
+        
+        if(max.intValue == 0){ //De este nodo no puede salir nada
+            return @"De este nodo no pueden salir referencias";
+        }else{
+            //Sacamos cuántas conexiones tiene ahora
+            
+            int currentConnections = [dele getOutConnectionsForComponent:source];
+            NSLog(@"El nodo %@ tiene actualmente %d conexiones", source, currentConnections);
+            
+            if([destinyclass isEqualToString:target.className]){
+                //El destino de la conexión es de la clase requerida, sigo comprobando
+                
+                if(max.intValue == -1){
+                    //Puede haber cualquier número de conexiones salientes, return true
+                    return nil;
+                }else{
+                    if(currentConnections < max.intValue){
+                        return nil;
+                    }else{
+                        return @"El número de conexiones es demasiado alto. \nBorre alguna";
+                    }
+                }
+            }else{
+                //El nodo destino no tiene la clase adecuada
+                return @"El nodo destino no tiene la clase adecuada";
+            }
+            
+        }
+        
+        
+        
+        
+    }else{//More than 1 edge
+        sourceTemp = source;
+        targetTemp = target;
+        NSLog(@"Showing popup");
+        EdgeListView * elv = [[[NSBundle mainBundle] loadNibNamed:@"EdgeListView"
+                                                            owner:self
+                                                          options:nil] objectAtIndex:0];
+        EditorViewController * evc = dele.evc;
+        [evc.view addSubview:elv];
+        [elv setFrame:evc.view.frame];
+        [elv setDelegate:self];
+        return kNotYet;
+    }
+    return @"";
+}
+
+
+//[0]: min
+//[1]: max
+
+/*
+ -(NSArray *)getMinAndMaxForClass: (NSString *)class
+ andEcoreClass: (NSString *)ecls
+ andProperty: (NSString *)pro{
+ NSMutableArray * arr = [[NSMutableArray alloc]init];
+ 
+ PaletteItem * pi = nil;
+ for(int i = 0; i< dele.paletteItems.count; i++){
+ pi = [dele.paletteItems objectAtIndex:i];
+ 
+ if([pi.className isEqualToString:class]){
+ //Pi es la clase del ecore que quiero mirar
+ NSNumber * min = pi.minOutConnections;
+ NSNumber * max = pi.maxOutConnections;
+ 
+ [arr addObject:min];
+ [arr addObject:max];
+ }
+ }
+ 
+ return arr;
+ }
+ */
+-(NSString *)description{
+    return [NSString stringWithFormat:@"Name: %@\nType: %@\nClass: %@", name, type, className];
+}
+
+#pragma mark EdgeList delegate methods
+-(void)selectedEdge:(PaletteItem *)pi{
+    NSLog(@"Ha seleccionado %@", [pi description]);
+    NSString * result =[self checkIntegrityForSource:sourceTemp
+                                           andTarget:targetTemp
+                                            withEdge:pi];
+    
+    
+    if(result == nil){
+        Connection * conn = [[Connection alloc] init];
+        conn.source = sourceTemp;
+        conn.target = targetTemp;
+        
+        [dele.connections addObject:conn];
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+    }else if([result isEqualToString:kNotYet]){
+        //Tenemos que esperar a que el usuario seleccione el tipo de conexión
+    }else{
+        NSLog(@"No se ha podido hacer la conexión");
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:result
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    
+}
 
 
 @end

@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface StringAttributeTableViewCell : UITableViewCell
+#import "Component.h"
+@interface StringAttributeTableViewCell : UITableViewCell<UITextFieldDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UILabel *attributeNameLabel;
+@property Component * comp;
 
 @end

@@ -14,6 +14,7 @@
 #import "PaletteItem.h"
 #import "XMLWriter.h"
 #import "XMLDictionary.h"
+#import "ClassAttribute.h"
 
 @import Foundation;
 
@@ -107,6 +108,8 @@
     [palette preparePalette];
     palette.name = dele.subPalette;
     
+    dele.evc = self;
+    
 }
 
 
@@ -193,8 +196,37 @@
                 comp.type = sender.type;
                 comp.shapeType = sender.shapeType;
                 comp.fillColor = sender.fillColor;
-                comp.attributes = sender.attributes;
+                
+                
+                //Copiamos los atributos
+                NSData * buffer = [NSKeyedArchiver archivedDataWithRootObject:sender.attributes];
+                comp.attributes = [NSKeyedUnarchiver unarchiveObjectWithData:buffer];
+                
+                
+                comp.references = sender.references;
                 comp.colorString = sender.colorString;
+                
+                //Ponemos el nombre en el caso de que lo tenga
+                for(ClassAttribute * atr in comp.attributes){
+                    if([atr.name isEqualToString:@"name"]){
+                        
+                        //Comprobamos si tiene el default
+                        if(atr.defaultValue != nil){
+                            atr.currentValue = atr.defaultValue;
+                        }else{
+                            atr.currentValue = nil;
+                        }
+                        comp.name = atr.currentValue;
+                        [comp updateNameLabel];
+                    }
+                }
+                
+                //ecore-graphicR attributes
+
+                comp.containerReference = sender.containerReference;
+                comp.className = sender.className;
+                
+                
                 if(sender.isImage){
                     comp.isImage = YES;
                     comp.image = sender.image;
@@ -675,7 +707,6 @@
 -(BOOL) isiPad {
     return UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad;
 }
-
 
 
 @end

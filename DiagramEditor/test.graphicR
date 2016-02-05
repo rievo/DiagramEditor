@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="ASCII"?>
+<graphicR:GraphicRepresentation xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:graphicR="http://mondo.org/graphic_representation/1.0.3">
+  <allGraphicRepresentation extension="test">
+    <root>
+      <anEClass href="platform:/resource/testDiego/test.diagram#/2/StateMachine"/>
+    </root>
+    <layers xsi:type="graphicR:DefaultLayer" name="Default Layer">
+      <elements xsi:type="graphicR:Edge">
+        <anEClass href="platform:/resource/testDiego/test.diagram#/2/Transition"/>
+        <diag_palette palette_name="Create Transition"/>
+        <containerReference href="platform:/resource/testDiego/test.diagram#/2/StateMachine/transitions"/>
+        <directions>
+          <sourceLink anDiagramElement="//@allGraphicRepresentation.0/@layers.0/@elements.1 //@allGraphicRepresentation.0/@layers.0/@elements.2 //@allGraphicRepresentation.0/@layers.0/@elements.3">
+            <anEReference href="platform:/resource/testDiego/test.diagram#/2/Transition/source"/>
+          </sourceLink>
+          <targetLink anDiagramElement="//@allGraphicRepresentation.0/@layers.0/@elements.1 //@allGraphicRepresentation.0/@layers.0/@elements.2 //@allGraphicRepresentation.0/@layers.0/@elements.3">
+            <anEReference href="platform:/resource/testDiego/test.diagram#/2/Transition/target"/>
+          </targetLink>
+        </directions>
+        <edge_style>
+          <color xsi:type="graphicR:SiriusSystemColors"/>
+        </edge_style>
+      </elements>
+      <elements xsi:type="graphicR:Node">
+        <anEClass href="platform:/resource/testDiego/test.diagram#/2/InitialState"/>
+        <diag_palette palette_name="Create InitialState"/>
+        <containerReference href="platform:/resource/testDiego/test.diagram#/2/StateMachine/states"/>
+        <node_elements>
+          <LabelanEAttribute>
+            <color xsi:type="graphicR:SiriusSystemColors"/>
+            <anEAttribute href="platform:/resource/testDiego/test.diagram#/2/StateVertex/name"/>
+          </LabelanEAttribute>
+        </node_elements>
+        <node_shape xsi:type="graphicR:Rectangle">
+          <color xsi:type="graphicR:SiriusSystemColors" name="red"/>
+          <borderColor xsi:type="graphicR:SiriusSystemColors"/>
+        </node_shape>
+      </elements>
+      <elements xsi:type="graphicR:Node">
+        <anEClass href="platform:/resource/testDiego/test.diagram#/2/SimpleState"/>
+        <diag_palette palette_name="Create SimpleState"/>
+        <containerReference href="platform:/resource/testDiego/test.diagram#/2/StateMachine/states"/>
+        <node_elements>
+          <LabelanEAttribute>
+            <color xsi:type="graphicR:SiriusSystemColors"/>
+            <anEAttribute href="platform:/resource/testDiego/test.diagram#/2/StateVertex/name"/>
+          </LabelanEAttribute>
+        </node_elements>
+        <node_shape xsi:type="graphicR:Ellipse">
+          <color xsi:type="graphicR:SiriusSystemColors" name="green"/>
+          <borderColor xsi:type="graphicR:SiriusSystemColors"/>
+        </node_shape>
+      </elements>
+      <elements xsi:type="graphicR:Node">
+        <anEClass href="platform:/resource/testDiego/test.diagram#/2/FinalState"/>
+        <diag_palette palette_name="Create FinalState"/>
+        <containerReference href="platform:/resource/testDiego/test.diagram#/2/StateMachine/states"/>
+        <node_elements>
+          <LabelanEAttribute>
+            <color xsi:type="graphicR:SiriusSystemColors"/>
+            <anEAttribute href="platform:/resource/testDiego/test.diagram#/2/StateVertex/name"/>
+          </LabelanEAttribute>
+        </node_elements>
+        <node_shape xsi:type="graphicR:Diamond">
+          <color xsi:type="graphicR:SiriusSystemColors"/>
+          <borderColor xsi:type="graphicR:SiriusSystemColors"/>
+        </node_shape>
+      </elements>
+      <elements xsi:type="graphicR:Edge">
+        <anEClass href="platform:/resource/testDiego/test.diagram#/2/InitialtoFinal"/>
+        <diag_palette palette_name="Create InitialtoFinal"/>
+        <containerReference href="platform:/resource/testDiego/test.diagram#/2/StateMachine/initialstofinales"/>
+        <directions>
+          <sourceLink anDiagramElement="//@allGraphicRepresentation.0/@layers.0/@elements.1">
+            <anEReference href="platform:/resource/testDiego/test.diagram#/2/InitialtoFinal/fromInitial"/>
+          </sourceLink>
+          <targetLink anDiagramElement="//@allGraphicRepresentation.0/@layers.0/@elements.3">
+            <anEReference href="platform:/resource/testDiego/test.diagram#/2/InitialtoFinal/toFinal"/>
+          </targetLink>
+        </directions>
+        <edge_style>
+          <color xsi:type="graphicR:SiriusSystemColors"/>
+        </edge_style>
+      </elements>
+    </layers>
+  </allGraphicRepresentation>
+</graphicR:GraphicRepresentation>

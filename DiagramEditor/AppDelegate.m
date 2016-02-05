@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 #import "Canvas.h"
+#import "Connection.h"
+#import "EditorViewController.h"
 
 @interface AppDelegate ()
 
@@ -15,7 +17,7 @@
 
 @implementation AppDelegate
 
-@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR;
+@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR, evc;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -30,6 +32,7 @@
     currentPaletteFileName = nil;
     subPalette = nil;
     graphicR = nil;
+    evc = nil;
     return YES;
 }
 
@@ -58,4 +61,16 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+
+-(int)getOutConnectionsForComponent: (Component *)comp{
+
+    int count = 0;
+    
+    for(Connection * con in connections){
+        if(con.source == comp){
+            count++;
+        }
+    }
+    return count;
+}
 @end
