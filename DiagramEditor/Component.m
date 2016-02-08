@@ -13,6 +13,7 @@
 
 #import "EdgeListView.h"
 #import "EditorViewController.h"
+#import "PaletteItem.h"
 
 #define resizeW 40
 
@@ -225,6 +226,9 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
                 Connection * conn = [[Connection alloc] init];
                 conn.source = self;
                 conn.target = selected;
+                
+                conn.targetDecorator = connectionToDo.targetDecoratorName;
+                conn.sourceDecorator = connectionToDo.sourceDecoratorName;
                 
                 [dele.connections addObject:conn];
                 
@@ -491,13 +495,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
  2.2.1) Si solo hay una posible conexión en el graphicR, tomarla
  2.2.2) Si hay más de una posible conexión, mostrar un popup para que el usuario elija cuál de ellas
  */
-/*
- UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
- message:@"There is no available Edges"
- delegate:self
- cancelButtonTitle:@"OK"
- otherButtonTitles:nil];
- [alert show];*/
+
 
 -(NSString *)checkIntegrityForSource: (Component *)source
                            andTarget: (Component *)target
@@ -510,6 +508,8 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     
     NSString * targetClassName;
     NSString * opposite;
+    
+    connectionToDo = pi;
     //pi es el edge
     for(Reference * ref in source.references){
         if([ref.target isEqualToString:pi.className]){
@@ -646,9 +646,11 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
                 
                 if(max.intValue == -1){
                     //Puede haber cualquier número de conexiones salientes, return true
+                    connectionToDo = pi;
                     return nil;
                 }else{
                     if(currentConnections < max.intValue){
+                        connectionToDo = pi;
                         return nil;
                     }else{
                         return @"El número de conexiones es demasiado alto. \nBorre alguna";
@@ -681,32 +683,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
 }
 
 
-//[0]: min
-//[1]: max
 
-/*
- -(NSArray *)getMinAndMaxForClass: (NSString *)class
- andEcoreClass: (NSString *)ecls
- andProperty: (NSString *)pro{
- NSMutableArray * arr = [[NSMutableArray alloc]init];
- 
- PaletteItem * pi = nil;
- for(int i = 0; i< dele.paletteItems.count; i++){
- pi = [dele.paletteItems objectAtIndex:i];
- 
- if([pi.className isEqualToString:class]){
- //Pi es la clase del ecore que quiero mirar
- NSNumber * min = pi.minOutConnections;
- NSNumber * max = pi.maxOutConnections;
- 
- [arr addObject:min];
- [arr addObject:max];
- }
- }
- 
- return arr;
- }
- */
 -(NSString *)description{
     return [NSString stringWithFormat:@"Name: %@\nType: %@\nClass: %@", name, type, className];
 }

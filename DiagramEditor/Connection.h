@@ -26,4 +26,7 @@
 
 @property NSMutableArray * attributes;
 
+@property NSString * sourceDecorator;
+@property NSString * targetDecorator;
+
 @end

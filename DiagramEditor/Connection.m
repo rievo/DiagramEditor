@@ -12,7 +12,7 @@
 @implementation Connection
 
 
-@synthesize name, source, target, touchRect, arrowPath,controlPoint, className, attributes;
+@synthesize name, source, target, touchRect, arrowPath,controlPoint, className, attributes, sourceDecorator, targetDecorator;
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -32,6 +32,8 @@
         controlPoint = CGPointMake(0, 0);
         className = @"";
         attributes = [[NSMutableArray alloc] init];
+        sourceDecorator = @"noDecoration";
+        targetDecorator = @"noDecoration";
     }
     return self;
 }

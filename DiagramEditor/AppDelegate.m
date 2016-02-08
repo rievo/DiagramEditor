@@ -33,6 +33,26 @@
     subPalette = nil;
     graphicR = nil;
     evc = nil;
+    
+    
+    /*CGAffineTransform trans = CGAffineTransformIdentity;
+    trans = CGAffineTransformConcat(trans, CGAffineTransformMakeRotation(M_PI/180*30));
+    trans = CGAffineTransformConcat(trans, CGAffineTransformMakeTranslation(200, 0));
+ 
+    //trans = CGAffineTransformConcat(trans, CGAffineTransformMakeTranslation(1, 1));
+    
+
+    CGAffineTransform transformTarget = CGAffineTransformIdentity;
+    transformTarget = CGAffineTransformRotate(transformTarget, M_PI/180*30);
+    transformTarget = CGAffineTransformTranslate(transformTarget,200,0);
+
+    //transformTarget = CGAffineTransformTranslate(transformTarget,1,1);
+    
+
+    int r = 2;*/
+    
+    
+    
     return YES;
 }
 

@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "Canvas.h"
 @class Component;
+@class PaletteItem;
 
 @interface Component : UIView <UIGestureRecognizerDelegate>{
     
@@ -31,6 +32,8 @@
     
     Component * sourceTemp;
     Component * targetTemp;
+    
+    PaletteItem * connectionToDo;
 }
 
 
@@ -55,6 +58,7 @@
 @property NSString * name;
 
 
+@property PaletteItem * parentItem;
 
 //Los cuatro siguientes son para buscar en el ecore
 

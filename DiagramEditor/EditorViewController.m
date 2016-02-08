@@ -196,6 +196,7 @@
                 comp.type = sender.type;
                 comp.shapeType = sender.shapeType;
                 comp.fillColor = sender.fillColor;
+                comp.parentItem = sender;
                 
                 
                 //Copiamos los atributos
