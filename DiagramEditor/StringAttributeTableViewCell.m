@@ -34,31 +34,34 @@
     // Configure the view for the selected state
 }
 
+
+
 #pragma mark UITextField delegate methods
-- (void)textFieldDidEndEditing:(UITextField *)textField{
+- (void)textFieldDidEndEditing:(UITextField *)tf{
     
-    if(textField.text.length > 0){
+    if(tf.text.length > 0){
         
         for(ClassAttribute * atr in comp.attributes){
             if([atr.name isEqualToString:attributeNameLabel.text]){
-                atr.currentValue = textField.text;
+                atr.currentValue = tf.text;
             }
         }
         [comp updateNameLabel];
     }
 }
 
--(BOOL)textField:(UITextField *)textField
+
+-(BOOL)textField:(UITextField *)tf
 shouldChangeCharactersInRange:(NSRange)range
 replacementString:(NSString *)string{
     
-    int newLength =textField.text.length + string.length -range.length;
+    NSInteger newLength =tf.text.length + string.length -range.length;
 
     
     if(newLength > 0){
         for(ClassAttribute * atr in comp.attributes){
             if([atr.name isEqualToString:attributeNameLabel.text]){
-                atr.currentValue = textField.text;
+                atr.currentValue = tf.text;
                 comp.name = atr.currentValue;
             }
         }
@@ -66,6 +69,12 @@ replacementString:(NSString *)string{
         return YES;
     }else
         return NO;
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)tf
+{
+    [tf resignFirstResponder];
+    return YES;
 }
 
 @end

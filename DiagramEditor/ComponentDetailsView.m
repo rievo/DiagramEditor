@@ -128,6 +128,7 @@
     if(new.length > 0){
         [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
         [temp updateNameLabel];
+        [comp updateNameLabel];
         return YES;
     }
     else
@@ -341,16 +342,21 @@
 
 #pragma mark UITapGestureRecognizer methods
 -(void)handleTap: (UITapGestureRecognizer *)recog{
+    
     [self setHidden:YES];
 }
 
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
+    
+    [self endEditing:YES];
     if (touch.view != background) { // accept only touchs on superview, not accept touchs on subviews
         return NO;
     }
     
     return YES;
 }
+
+
 @end

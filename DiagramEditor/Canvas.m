@@ -20,7 +20,7 @@
 
 #define defradius 35
 
-#define decoratorSize 25
+#define decoratorSize 15
 
 #define pi 3.14159265359
 #define radiansToDegrees( radians ) ( ( radians ) * ( 180.0 / M_PI ) )

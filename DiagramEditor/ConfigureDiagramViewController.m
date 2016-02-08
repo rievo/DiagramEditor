@@ -715,6 +715,9 @@
                  temp.min = [f numberFromString:[atrDic objectForKey:@"min"]];
                  temp.max = [f numberFromString:[atrDic objectForKey:@"max"]];
                  temp.defaultValue = [atrDic objectForKey:@"default"];
+                if([temp.defaultValue isEqualToString:@"null"]){
+                    temp.defaultValue = @"";
+                }
                 
                 [attrsArray addObject:temp];
             }

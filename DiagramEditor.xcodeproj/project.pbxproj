@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F10580751C5905E4000497DE /* inputClosedArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = F10580721C5905E4000497DE /* inputClosedArrow.png */; };
-		F10580761C5905E4000497DE /* inputFillArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = F10580731C5905E4000497DE /* inputFillArrow.png */; };
-		F10580771C5905E4000497DE /* outputClosedArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = F10580741C5905E4000497DE /* outputClosedArrow.png */; };
 		F10AB8061C50E53100DE6DCE /* open.png in Resources */ = {isa = PBXBuildFile; fileRef = F10AB8051C50E53100DE6DCE /* open.png */; };
 		F10AB8081C50E7E200DE6DCE /* PasteView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F10AB8071C50E7E200DE6DCE /* PasteView.xib */; };
 		F10AB80B1C50E85100DE6DCE /* cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = F10AB8091C50E85100DE6DCE /* cancel.png */; };
@@ -17,6 +14,7 @@
 		F10AB80F1C50E9FB00DE6DCE /* PasteView.m in Sources */ = {isa = PBXBuildFile; fileRef = F10AB80E1C50E9FB00DE6DCE /* PasteView.m */; };
 		F10F0FA31C1AF67000165561 /* ColorPalette.m in Sources */ = {isa = PBXBuildFile; fileRef = F10F0FA21C1AF67000165561 /* ColorPalette.m */; };
 		F10F0FA51C1ED77A00165561 /* design.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F10F0FA41C1ED77A00165561 /* design.graphicR */; };
+		F14181C91C68DCB600E838F9 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = F14181C81C68DCB600E838F9 /* settings.png */; };
 		F1431E881C52330C006A45BC /* exported.json in Resources */ = {isa = PBXBuildFile; fileRef = F1431E871C52330C006A45BC /* exported.json */; };
 		F1431E8B1C524127006A45BC /* ClassAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = F1431E8A1C524127006A45BC /* ClassAttribute.m */; };
 		F1431E8E1C5249F7006A45BC /* ComponentDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1431E8D1C5249F7006A45BC /* ComponentDetailsView.xib */; };
@@ -67,8 +65,6 @@
 		F1AB3B161C22B19800EDBB1D /* resize.png in Resources */ = {isa = PBXBuildFile; fileRef = F1AB3B151C22B19800EDBB1D /* resize.png */; };
 		F1B4861E1C46604700752157 /* PaletteFile.m in Sources */ = {isa = PBXBuildFile; fileRef = F1B4861D1C46604700752157 /* PaletteFile.m */; };
 		F1B789931C60F045001B6DB4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1B789921C60F045001B6DB4 /* UIKit.framework */; };
-		F1B789951C60F04B001B6DB4 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1B789941C60F04B001B6DB4 /* CoreImage.framework */; };
-		F1B789971C60F05D001B6DB4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1B789961C60F05D001B6DB4 /* QuartzCore.framework */; };
 		F1B789991C60F064001B6DB4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1B789981C60F064001B6DB4 /* CoreGraphics.framework */; };
 		F1B7899B1C610292001B6DB4 /* Minus-100.png in Resources */ = {isa = PBXBuildFile; fileRef = F1B7899A1C610292001B6DB4 /* Minus-100.png */; };
 		F1C6347B1C2842C30072912D /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C6347A1C2842C30072912D /* camera.png */; };
@@ -78,55 +74,7 @@
 		F1F29C691C64C8F70035F0B6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1F29C681C64C8F70035F0B6 /* AudioToolbox.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		F1B789861C60F023001B6DB4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F1B7897D1C60F023001B6DB4 /* SVGKit-iOS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 6639618E16145D0400E58CCA;
-			remoteInfo = "SVGKit-iOS";
-		};
-		F1B789881C60F023001B6DB4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F1B7897D1C60F023001B6DB4 /* SVGKit-iOS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 55452BF119EC68A200B75A30;
-			remoteInfo = "SVGKit-iOS Tests";
-		};
-		F1B7898A1C60F023001B6DB4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F1B7897D1C60F023001B6DB4 /* SVGKit-iOS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 825CDAAF1BDA4BC0003C1C12;
-			remoteInfo = "SVGKitFramework-iOS";
-		};
-		F1B7898C1C60F023001B6DB4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F1B7897D1C60F023001B6DB4 /* SVGKit-iOS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 825CDAB81BDA4BC0003C1C12;
-			remoteInfo = "SVGKitFramework-iOSTests";
-		};
-		F1B7898E1C60F023001B6DB4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F1B7897D1C60F023001B6DB4 /* SVGKit-iOS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 825CDAD31BDA4D38003C1C12;
-			remoteInfo = "SVGKitFramework-tvOS";
-		};
-		F1B789901C60F023001B6DB4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F1B7897D1C60F023001B6DB4 /* SVGKit-iOS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 825CDADC1BDA4D38003C1C12;
-			remoteInfo = "SVGKitFramework-tvOSTests";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		F10580721C5905E4000497DE /* inputClosedArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inputClosedArrow.png; sourceTree = "<group>"; };
-		F10580731C5905E4000497DE /* inputFillArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inputFillArrow.png; sourceTree = "<group>"; };
-		F10580741C5905E4000497DE /* outputClosedArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = outputClosedArrow.png; sourceTree = "<group>"; };
 		F10AB8051C50E53100DE6DCE /* open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = open.png; sourceTree = "<group>"; };
 		F10AB8071C50E7E200DE6DCE /* PasteView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PasteView.xib; sourceTree = "<group>"; };
 		F10AB8091C50E85100DE6DCE /* cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel.png; sourceTree = "<group>"; };
@@ -136,6 +84,7 @@
 		F10F0FA11C1AF67000165561 /* ColorPalette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPalette.h; sourceTree = "<group>"; };
 		F10F0FA21C1AF67000165561 /* ColorPalette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorPalette.m; sourceTree = "<group>"; };
 		F10F0FA41C1ED77A00165561 /* design.graphicR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = design.graphicR; sourceTree = "<group>"; };
+		F14181C81C68DCB600E838F9 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		F1431E871C52330C006A45BC /* exported.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = exported.json; sourceTree = "<group>"; };
 		F1431E891C524127006A45BC /* ClassAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassAttribute.h; sourceTree = "<group>"; };
 		F1431E8A1C524127006A45BC /* ClassAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassAttribute.m; sourceTree = "<group>"; };
@@ -211,7 +160,6 @@
 		F1AB3B151C22B19800EDBB1D /* resize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = resize.png; sourceTree = "<group>"; };
 		F1B4861C1C46604700752157 /* PaletteFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaletteFile.h; sourceTree = "<group>"; };
 		F1B4861D1C46604700752157 /* PaletteFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaletteFile.m; sourceTree = "<group>"; };
-		F1B7897D1C60F023001B6DB4 /* SVGKit-iOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "SVGKit-iOS.xcodeproj"; path = "../../../Downloads/SVGKit-2.x/SVGKit-iOS.xcodeproj"; sourceTree = "<group>"; };
 		F1B789921C60F045001B6DB4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F1B789941C60F04B001B6DB4 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		F1B789961C60F05D001B6DB4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -233,8 +181,6 @@
 			files = (
 				F1F29C691C64C8F70035F0B6 /* AudioToolbox.framework in Frameworks */,
 				F1B789991C60F064001B6DB4 /* CoreGraphics.framework in Frameworks */,
-				F1B789971C60F05D001B6DB4 /* QuartzCore.framework in Frameworks */,
-				F1B789951C60F04B001B6DB4 /* CoreImage.framework in Frameworks */,
 				F1B789931C60F045001B6DB4 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -242,16 +188,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		F10580711C5905DA000497DE /* Decorators */ = {
-			isa = PBXGroup;
-			children = (
-				F10580721C5905E4000497DE /* inputClosedArrow.png */,
-				F10580731C5905E4000497DE /* inputFillArrow.png */,
-				F10580741C5905E4000497DE /* outputClosedArrow.png */,
-			);
-			name = Decorators;
-			sourceTree = "<group>";
-		};
 		F10BE4341C29663E0053A7F9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -345,7 +281,7 @@
 		F17B75AE1C22D9D500AB1B57 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
-				F10580711C5905DA000497DE /* Decorators */,
+				F14181C81C68DCB600E838F9 /* settings.png */,
 				F10AB8091C50E85100DE6DCE /* cancel.png */,
 				F10AB80A1C50E85100DE6DCE /* ok.png */,
 				F10AB8051C50E53100DE6DCE /* open.png */,
@@ -386,7 +322,6 @@
 		F18510751C1824C8004EC4C8 /* DiagramEditor */ = {
 			isa = PBXGroup;
 			children = (
-				F1B7897C1C60F019001B6DB4 /* Frameworks */,
 				F1431E8C1C5249D4006A45BC /* Views */,
 				F1431E861C523302006A45BC /* testFiles */,
 				F1B4861F1C47A2DD00752157 /* palettes */,
@@ -436,27 +371,6 @@
 			name = palettes;
 			sourceTree = "<group>";
 		};
-		F1B7897C1C60F019001B6DB4 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				F1B7897D1C60F023001B6DB4 /* SVGKit-iOS.xcodeproj */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		F1B7897E1C60F023001B6DB4 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				F1B789871C60F023001B6DB4 /* libSVGKit-iOS.2.0.0.a */,
-				F1B789891C60F023001B6DB4 /* SVGKit-iOS Tests.xctest */,
-				F1B7898B1C60F023001B6DB4 /* SVGKit.framework */,
-				F1B7898D1C60F023001B6DB4 /* SVGKitFramework-iOSTests.xctest */,
-				F1B7898F1C60F023001B6DB4 /* SVGKit.framework */,
-				F1B789911C60F023001B6DB4 /* SVGKitFramework-tvOSTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -503,12 +417,6 @@
 			mainGroup = F185106A1C1824C8004EC4C8;
 			productRefGroup = F18510741C1824C8004EC4C8 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = F1B7897E1C60F023001B6DB4 /* Products */;
-					ProjectRef = F1B7897D1C60F023001B6DB4 /* SVGKit-iOS.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				F18510721C1824C8004EC4C8 /* DiagramEditor */,
@@ -516,62 +424,16 @@
 		};
 /* End PBXProject section */
 
-/* Begin PBXReferenceProxy section */
-		F1B789871C60F023001B6DB4 /* libSVGKit-iOS.2.0.0.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libSVGKit-iOS.2.0.0.a";
-			remoteRef = F1B789861C60F023001B6DB4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F1B789891C60F023001B6DB4 /* SVGKit-iOS Tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "SVGKit-iOS Tests.xctest";
-			remoteRef = F1B789881C60F023001B6DB4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F1B7898B1C60F023001B6DB4 /* SVGKit.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SVGKit.framework;
-			remoteRef = F1B7898A1C60F023001B6DB4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F1B7898D1C60F023001B6DB4 /* SVGKitFramework-iOSTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "SVGKitFramework-iOSTests.xctest";
-			remoteRef = F1B7898C1C60F023001B6DB4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F1B7898F1C60F023001B6DB4 /* SVGKit.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SVGKit.framework;
-			remoteRef = F1B7898E1C60F023001B6DB4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F1B789911C60F023001B6DB4 /* SVGKitFramework-tvOSTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "SVGKitFramework-tvOSTests.xctest";
-			remoteRef = F1B789901C60F023001B6DB4 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
-
 /* Begin PBXResourcesBuildPhase section */
 		F18510711C1824C8004EC4C8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				F1853A001C52533E0015A9E0 /* StringAttributeTableViewCell.xib in Resources */,
-				F10580751C5905E4000497DE /* inputClosedArrow.png in Resources */,
+				F14181C91C68DCB600E838F9 /* settings.png in Resources */,
 				F1AB3B161C22B19800EDBB1D /* resize.png in Resources */,
 				F16C7DC81C578D3900CA9B25 /* ConnectionDetailsView.xib in Resources */,
 				F1431E8E1C5249F7006A45BC /* ComponentDetailsView.xib in Resources */,
-				F10580761C5905E4000497DE /* inputFillArrow.png in Resources */,
 				F10F0FA51C1ED77A00165561 /* design.graphicR in Resources */,
 				F18510861C1824C8004EC4C8 /* LaunchScreen.storyboard in Resources */,
 				F19C258E1C43AB580002E490 /* back.png in Resources */,
@@ -581,7 +443,6 @@
 				F1786DED1C56222B00963663 /* GenericAttributeTableViewCell.xib in Resources */,
 				F147B43E1C63507100A8F5E7 /* EdgeListView.xib in Resources */,
 				F16C7DCD1C57AD2900CA9B25 /* SureView.xib in Resources */,
-				F10580771C5905E4000497DE /* outputClosedArrow.png in Resources */,
 				F1431E881C52330C006A45BC /* exported.json in Resources */,
 				F17B75A91C22D6E100AB1B57 /* newDocument.png in Resources */,
 				F1786DEF1C56410200963663 /* SaveNameView.xib in Resources */,
