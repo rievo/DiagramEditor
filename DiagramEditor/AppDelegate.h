@@ -36,6 +36,9 @@
 @property NSDictionary * graphicR;
 
 
--(int)getOutConnectionsForComponent: (Component *)comp;
+-(int)getOutConnectionsForComponent: (Component *)comp
+                             ofType: (NSString * )type;
+-(int)getInConnectionsForComponent: (Component *)comp
+                             ofType: (NSString * )type;
 @end
 

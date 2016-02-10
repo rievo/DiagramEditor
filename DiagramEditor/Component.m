@@ -26,7 +26,7 @@
 @implementation Component
 
 
-@synthesize textLayer, type, shapeType, fillColor, image, isImage, attributes, parent, sons, componentId, colorString, containerReference, className, references, name;
+@synthesize textLayer, type, shapeType, fillColor, image, isImage, attributes, parent, sons, componentId, colorString, containerReference, className, references, name, parentClassArray;
 
 
 NSString* const SHOW_INSPECTOR = @"ShowInspector";
@@ -218,7 +218,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
             //Los componentes serán self = selected
             //Self = source   selected = target
             
-            
+            //TODO:
             NSString * canIMakeConnection = [self checkIntegrityForSource:self
                                                                 andTarget:selected];
             
@@ -229,6 +229,8 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
                 
                 conn.targetDecorator = connectionToDo.targetDecoratorName;
                 conn.sourceDecorator = connectionToDo.sourceDecoratorName;
+                //TODO: Asignar conn.className
+                conn.className = tempClassName;
                 
                 [dele.connections addObject:conn];
                 
@@ -274,8 +276,8 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         
         
         NSLog(@"Empieza el long");
-        [dele.can setXArrowStart:self.center.x];
-        [dele.can setYArrowStart:self.center.y];
+        [dele.can setXArrowStart:oldCenter.x];
+        [dele.can setYArrowStart:oldCenter.y];
         
         
     }else if(sender.state == UIGestureRecognizerStateChanged){
@@ -504,70 +506,133 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     
     //Sacamos, de ese tipo, cuántas conexiones pueden salir del source
     //Recorremos las referencias de source, comprobando si el target es del tipo pi.className
-    NSNumber * min, *max;
+    
+    NSNumber * minS = nil, *maxS= nil;
+    NSNumber * minT= nil, *maxT= nil;
     
     NSString * targetClassName;
     NSString * opposite;
     
     connectionToDo = pi;
+
     //pi es el edge
-    for(Reference * ref in source.references){
-        if([ref.target isEqualToString:pi.className]){
-            min = ref.min;
-            max = ref.max;
-            targetClassName = ref.target;
-            opposite = ref.opposite;
-        }
-    }
-    //Hemos calculado cuántas referencias pueden salir del nodo source
     
+    BOOL flagSource = false;
+    BOOL flagTarget = false;
+
     
-    //Compruebo si el nodo target es de la clase necesaria
-    
-    
-    //Tengo que mirar en pi, la referencia "opposite" y mirar a qué clase apunta (su target)
-    NSString * destinyclass;
+    //Primero buscar la referencia source
     for(Reference * ref in pi.references){
-        if([ref.name isEqualToString:opposite]){
-            destinyclass = ref.target;
-        }
-    }
-    
-    
-    NSLog(@"Tenemos qu eel nodo %@\n puede tener de la clase %@ entre %@ y %@ conexiones", source, pi.className, [min description], [max description]);
-    
-    
-    if(max.intValue == 0){ //De este nodo no puede salir nada
-        return @"De este nodo no pueden salir referencias";
-    }else{
-        //Sacamos cuántas conexiones tiene ahora
         
-        int currentConnections = [dele getOutConnectionsForComponent:source];
-        NSLog(@"El nodo %@ tiene actualmente %d conexiones", source, currentConnections);
-        
-        if([destinyclass isEqualToString:target.className]){
-            //El destino de la conexión es de la clase requerida, sigo comprobando
-            
-            if(max.intValue == -1){
-                //Puede haber cualquier número de conexiones salientes, return true
-                return nil;
-            }else{
-                if(currentConnections < max.intValue){
-                    return nil;
+        if([ref.name isEqualToString:pi.sourcePart]){ //from
+            if([ref.target isEqualToString:source.className]|| [source.parentClassArray containsObject:ref.target]){
+                //Compruebo si tiene eopposite
+                NSString * opp = ref.opposite;
+                if([opp isEqualToString:@"null"]){
+                    //Pongo el flag a true
+                    flagSource = true;
                 }else{
-                    return @"El número de conexiones es demasiado alto. \nBorre alguna";
+                    //busco ese opp en la clase "target" del json
+                    
+                    
+                    for(Reference * r in source.references){
+                        if([r.name isEqualToString:opp]){
+                            minS = r.min;
+                            maxS = r.max;
+                            targetClassName = r.target;
+                            opposite = r.opposite;
+                            flagSource = true;
+                        }
+                    }
+                    
                 }
+            }else{
+                //No se puede crear la conexión
+                //La clase del source no concuerda
+                return @"Clase origen no válida";
             }
-        }else{
-            //El nodo destino no tiene la clase adecuada
-            return @"El nodo destino no tiene la clase adecuada";
         }
-        
     }
+    
+    
+    //Después buscar target
+    for(Reference * ref in pi.references){
+        
+        if([ref.name isEqualToString:pi.targetPart]){ //to
+            if([ref.target isEqualToString:target.className] || [target.parentClassArray containsObject:ref.target]){ //Miramos que la clase a la que miro es la que indica, o una de sus padres
+                //Compruebo si tiene eopposite
+                NSString * opp = ref.opposite;
+                if([opp isEqualToString:@"null"]){
+                    //Pongo el flag a true
+                }else{
+                    //busco ese opp en la clase "target" del json
+                    //NSString * target = ref.target;
+                    
+                    for(Reference * r in target.references){
+                        if([r.name isEqualToString:opp]){
+                            minT = r.min;
+                            maxT = r.max;
+                            targetClassName = r.target;
+                            opposite = r.opposite;
+                            flagTarget = true;
+                        }
+                    }
+                    
+                }
+            }else{
+                //No se puede crear la conexión
+                //La clase del source no concuerda
+                return @"Clase origen no válida";
+            }
+        }
+    }
+    
+    //final
+    
+    //Hasta aquí se podría hacer la conexión en función de las referencias que sea
+    
+    tempClassName = pi.className;
+    
+    //Comprobamos el grado de entrada y salida
+    int inDegree = [dele getInConnectionsForComponent:target ofType:pi.className];
+    int outDegree = [dele getOutConnectionsForComponent:source ofType:pi.className];
+    
+    BOOL sflag = false, tflag = false;
+    
+    if(minS == nil && maxS == nil){ //No nos importa el grado de salida
+        
+    }else{
+        if([maxS intValue] == -1){//-1 = *
+            sflag = true; //
+        }else if(outDegree < [maxS intValue]){ //Puedo hacer la conexión por el mínimo
+            sflag = true;
+        }else{
+            return @"Número máximo de conexiones de salida alcanzado";
+        }
+    }
+    
+    if(minT == nil && maxT == nil){ //No nos importa el grado de entrada
+        
+    }else{
+        if([maxT intValue] == -1){//-1 = *
+            tflag= true; //
+        }else if(inDegree < [maxT intValue]){ //Puedo hacer la conexión por el mínimo
+            tflag = true;
+        }else{
+            return @"Número máximo de conexiones de entrada alcanzado";
+        }
+    }
+    
+    if(sflag == true && tflag == true){
+        //Puedo hacer la conexión
+        return nil;
+    }
+
     
     
     return res;
 }
+
 
 -(NSString *)checkIntegrityForSource: (Component *)source
                            andTarget: (Component *)target{
@@ -600,68 +665,136 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         //selectedEdge contendrá ese edge
         //pi.nameClass tiene el nombre de la clase de ese Edge (e.g. Transition)
         
+        
+        NSString * res = nil;
+        
         //Sacamos, de ese tipo, cuántas conexiones pueden salir del source
         //Recorremos las referencias de source, comprobando si el target es del tipo pi.className
-        NSNumber * min, *max;
+        
+        NSNumber * minS = nil, *maxS= nil;
+        NSNumber * minT= nil, *maxT= nil;
         
         NSString * targetClassName;
         NSString * opposite;
+        
+        connectionToDo = pi;
+        
         //pi es el edge
-        for(Reference * ref in source.references){
-            if([ref.target isEqualToString:pi.className]){
-                min = ref.min;
-                max = ref.max;
-                targetClassName = ref.target;
-                opposite = ref.opposite;
-            }
-        }
-        //Hemos calculado cuántas referencias pueden salir del nodo source
+        
+        BOOL flagSource = false;
+        BOOL flagTarget = false;
         
         
-        //Compruebo si el nodo target es de la clase necesaria
-        
-        
-        //Tengo que mirar en pi, la referencia "opposite" y mirar a qué clase apunta (su target)
-        NSString * destinyclass;
+        //Primero buscar la referencia source
         for(Reference * ref in pi.references){
-            if([ref.name isEqualToString:opposite]){
-                destinyclass = ref.target;
-            }
-        }
-        
-        
-        NSLog(@"Tenemos qu eel nodo %@\n puede tener de la clase %@ entre %@ y %@ conexiones", source, pi.className, [min description], [max description]);
-        
-        
-        if(max.intValue == 0){ //De este nodo no puede salir nada
-            return @"De este nodo no pueden salir referencias";
-        }else{
-            //Sacamos cuántas conexiones tiene ahora
             
-            int currentConnections = [dele getOutConnectionsForComponent:source];
-            NSLog(@"El nodo %@ tiene actualmente %d conexiones", source, currentConnections);
-            
-            if([destinyclass isEqualToString:target.className]){
-                //El destino de la conexión es de la clase requerida, sigo comprobando
-                
-                if(max.intValue == -1){
-                    //Puede haber cualquier número de conexiones salientes, return true
-                    connectionToDo = pi;
-                    return nil;
-                }else{
-                    if(currentConnections < max.intValue){
-                        connectionToDo = pi;
-                        return nil;
+            if([ref.name isEqualToString:pi.sourcePart]){ //from
+                if([ref.target isEqualToString:source.className]|| [source.parentClassArray containsObject:ref.target]){
+                    //Compruebo si tiene eopposite
+                    NSString * opp = ref.opposite;
+                    if([opp isEqualToString:@"null"]){
+                        //Pongo el flag a true
+                        flagSource = true;
                     }else{
-                        return @"El número de conexiones es demasiado alto. \nBorre alguna";
+                        //busco ese opp en la clase "target" del json
+                        
+                        
+                        for(Reference * r in source.references){
+                            if([r.name isEqualToString:opp]){
+                                minS = r.min;
+                                maxS = r.max;
+                                targetClassName = r.target;
+                                opposite = r.opposite;
+                                flagSource = true;
+                            }
+                        }
+                        
                     }
+                }else{
+                    //No se puede crear la conexión
+                    //La clase del source no concuerda
+                    return @"Clase origen no válida";
                 }
-            }else{
-                //El nodo destino no tiene la clase adecuada
-                return @"El nodo destino no tiene la clase adecuada";
             }
-            
         }
+        
+        
+        //Después buscar target
+        for(Reference * ref in pi.references){
+            
+            if([ref.name isEqualToString:pi.targetPart]){ //to
+                if([ref.target isEqualToString:target.className] || [target.parentClassArray containsObject:ref.target]){ //Miramos que la clase a la que miro es la que indica, o una de sus padres
+                    //Compruebo si tiene eopposite
+                    NSString * opp = ref.opposite;
+                    if([opp isEqualToString:@"null"]){
+                        //Pongo el flag a true
+                    }else{
+                        //busco ese opp en la clase "target" del json
+                        //NSString * target = ref.target;
+                        
+                        for(Reference * r in target.references){
+                            if([r.name isEqualToString:opp]){
+                                minT = r.min;
+                                maxT = r.max;
+                                targetClassName = r.target;
+                                opposite = r.opposite;
+                                flagTarget = true;
+                            }
+                        }
+                        
+                    }
+                }else{
+                    //No se puede crear la conexión
+                    //La clase del source no concuerda
+                    return @"Clase origen no válida";
+                }
+            }
+        }
+        
+        //final
+        
+        //Hasta aquí se podría hacer la conexión en función de las referencias que sea
+        
+        tempClassName = pi.className;
+        
+        //Comprobamos el grado de entrada y salida
+        int inDegree = [dele getInConnectionsForComponent:target ofType:pi.className];
+        int outDegree = [dele getOutConnectionsForComponent:source ofType:pi.className];
+        
+        BOOL sflag = false, tflag = false;
+        
+        if(minS == nil && maxS == nil){ //No nos importa el grado de salida
+            
+        }else{
+            if([maxS intValue] == -1){//-1 = *
+                sflag = true; //
+            }else if(outDegree < [maxS intValue]){ //Puedo hacer la conexión por el mínimo
+                sflag = true;
+            }else{
+                return @"Número máximo de conexiones de salida alcanzado";
+            }
+        }
+        
+        if(minT == nil && maxT == nil){ //No nos importa el grado de entrada
+            
+        }else{
+            if([maxT intValue] == -1){//-1 = *
+                tflag= true; //
+            }else if(inDegree < [maxT intValue]){ //Puedo hacer la conexión por el mínimo
+                tflag = true;
+            }else{
+                return @"Número máximo de conexiones de entrada alcanzado";
+            }
+        }
+        
+        if(sflag == true && tflag == true){
+            //Puedo hacer la conexión
+            return nil;
+        }
+        
+        
+        
+        return res;
         
         
         
@@ -700,7 +833,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         Connection * conn = [[Connection alloc] init];
         conn.source = sourceTemp;
         conn.target = targetTemp;
-        
+        conn.className = tempClassName;
         [dele.connections addObject:conn];
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];

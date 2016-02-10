@@ -34,6 +34,8 @@
     Component * targetTemp;
     
     PaletteItem * connectionToDo;
+    
+    NSString * tempClassName;
 }
 
 
@@ -63,6 +65,8 @@
 //Los cuatro siguientes son para buscar en el ecore
 
 @property NSString * containerReference; //nombre de la referencia que lo contiene en la clase root. Sin parsear. Ejemplo: DFAAutomaton.ecore#//Automaton/alphabet
+
+@property NSMutableArray * parentClassArray;
 
 
 -(CGPoint)getTopAnchorPoint;

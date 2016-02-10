@@ -416,7 +416,7 @@
     
     CGPoint p = [gesture locationInView:self.view];
     
-    NSLog(@"%@",[NSString stringWithFormat:@"(%.2f,%.2f)", p.x, p.y]);
+    //NSLog(@"%@",[NSString stringWithFormat:@"(%.2f,%.2f)", p.x, p.y]);
     
     
     if(gesture.state == UIGestureRecognizerStateBegan){
@@ -649,7 +649,7 @@
     //Pasamos el json a un nsdictionary
     //TODO: Quitar el fichero harcodeado
     
-    NSString *filePath = [[NSBundle mainBundle]pathForResource:@"exported" ofType:@"json"];
+    NSString *filePath = [[NSBundle mainBundle]pathForResource:@"testNuevo" ofType:@"json"];
     NSString *jsonString = [[NSString alloc] initWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:NULL];
     NSError *jsonError;
     
@@ -669,6 +669,7 @@
         
         pi.attributes = [[NSMutableArray alloc] init];
         pi.references = [[NSMutableArray alloc] init];
+        pi.parentsClassArray = [[NSMutableArray alloc] init];
         
         
         [self getAttributesForClass:pi.className
@@ -679,9 +680,56 @@
         
         //Tengo los atributos y las referencias para cada clase.
         
+        //Extraemos las clases padre
+        [self getParentsForClass:pi.className
+                    onClassArray:classes
+         storeOnParentClassArray:pi.parentsClassArray];
+        
+        //Para cada clase padre añadimos las referencias correspondientes
+        
+        /*for(NSString * str in pi.parentsClassArray){
+            //str tendrá el nombre de la clase padre
+            [self getAttributesForClass:str
+                           onClassArray:classes
+                 storeOnAttributesArray:pi.attributes
+                     andReferencesArray:pi.references];
+        }*/
+        
+        
+        
+        
     }
 
 }
+
+-(void)getParentsForClass: (NSString *) key
+             onClassArray: (NSArray * ) classArray
+  storeOnParentClassArray: (NSMutableArray *) parents{
+    
+    NSDictionary * dic = nil;
+    NSString * name;
+    
+    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+    f.numberStyle = NSNumberFormatterDecimalStyle;
+    
+    for(int i = 0; i< classArray.count; i++){
+        name = nil;
+        dic = [classArray objectAtIndex:i];
+        name = [dic objectForKey:@"name"];
+        
+        if([name isEqualToString:key]){
+            NSArray * pars = [dic objectForKey:@"parents"];
+            
+            if(pars.count != 0){
+                
+                for(NSString * str in pars){
+                    [parents addObject:str];
+                }
+            }
+        }
+    }
+}
+
 -(void)getAttributesForClass: (NSString *) key
                           onClassArray: (NSArray *)classArray
                        storeOnAttributesArray:(NSMutableArray *)attrsArray

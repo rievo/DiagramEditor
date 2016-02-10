@@ -164,6 +164,9 @@
                 <constraint firstAttribute="bottom" secondItem="oA1-q2-efZ" secondAttribute="bottom" id="ejV-V4-W2Q"/>
                 <constraint firstItem="oA1-q2-efZ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="qG8-YX-Hww"/>
             </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="attributesTable" destination="jsv-Tz-08z" id="Grw-nP-hx4"/>

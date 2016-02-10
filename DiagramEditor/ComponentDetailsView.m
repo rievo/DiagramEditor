@@ -339,6 +339,14 @@
     }
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    // [[NSNotificationCenter defaultCenter]postNotificationName:@"showConnNot" object: conn];
+    if(tableView == outConnectionsTable){
+        Connection * conn = [connections objectAtIndex:indexPath.row];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"showConnNot" object: conn];
+    }
+}
+
 
 #pragma mark UITapGestureRecognizer methods
 -(void)handleTap: (UITapGestureRecognizer *)recog{

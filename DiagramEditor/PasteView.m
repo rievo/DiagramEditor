@@ -41,6 +41,7 @@
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
     
+    [self endEditing:YES];
     if(touch.view == background){
         return YES;
     }else if(touch.view ==blueView){

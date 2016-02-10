@@ -17,7 +17,7 @@
 
 @class Connection;
 
-@interface ConnectionDetailsView : UIView<UITableViewDataSource, UITableViewDelegate>{
+@interface ConnectionDetailsView : UIView<UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>{
     id delegate;
 }
 

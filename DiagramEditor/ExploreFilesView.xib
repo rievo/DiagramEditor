@@ -54,6 +54,9 @@
                 <constraint firstItem="0hG-0a-681" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="y4h-d6-AZH"/>
                 <constraint firstItem="0hG-0a-681" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="z8h-yM-yyg"/>
             </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="background" destination="qXI-wN-rEA" id="4NP-oT-LNj"/>

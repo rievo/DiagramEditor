@@ -14,9 +14,10 @@
 		F10AB80F1C50E9FB00DE6DCE /* PasteView.m in Sources */ = {isa = PBXBuildFile; fileRef = F10AB80E1C50E9FB00DE6DCE /* PasteView.m */; };
 		F10F0FA31C1AF67000165561 /* ColorPalette.m in Sources */ = {isa = PBXBuildFile; fileRef = F10F0FA21C1AF67000165561 /* ColorPalette.m */; };
 		F10F0FA51C1ED77A00165561 /* design.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F10F0FA41C1ED77A00165561 /* design.graphicR */; };
+		F12F70151C69F4E70085229C /* testNuevo.json in Resources */ = {isa = PBXBuildFile; fileRef = F12F70141C69F4E70085229C /* testNuevo.json */; };
 		F14181C91C68DCB600E838F9 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = F14181C81C68DCB600E838F9 /* settings.png */; };
 		F14181CB1C68DE4300E838F9 /* minusDark.png in Resources */ = {isa = PBXBuildFile; fileRef = F14181CA1C68DE4300E838F9 /* minusDark.png */; };
-		F1431E881C52330C006A45BC /* exported.json in Resources */ = {isa = PBXBuildFile; fileRef = F1431E871C52330C006A45BC /* exported.json */; };
+		F1431E881C52330C006A45BC /* automaton.json in Resources */ = {isa = PBXBuildFile; fileRef = F1431E871C52330C006A45BC /* automaton.json */; };
 		F1431E8B1C524127006A45BC /* ClassAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = F1431E8A1C524127006A45BC /* ClassAttribute.m */; };
 		F1431E8E1C5249F7006A45BC /* ComponentDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1431E8D1C5249F7006A45BC /* ComponentDetailsView.xib */; };
 		F147B43E1C63507100A8F5E7 /* EdgeListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F147B43D1C63507100A8F5E7 /* EdgeListView.xib */; };
@@ -85,9 +86,10 @@
 		F10F0FA11C1AF67000165561 /* ColorPalette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPalette.h; sourceTree = "<group>"; };
 		F10F0FA21C1AF67000165561 /* ColorPalette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorPalette.m; sourceTree = "<group>"; };
 		F10F0FA41C1ED77A00165561 /* design.graphicR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = design.graphicR; sourceTree = "<group>"; };
+		F12F70141C69F4E70085229C /* testNuevo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = testNuevo.json; sourceTree = "<group>"; };
 		F14181C81C68DCB600E838F9 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		F14181CA1C68DE4300E838F9 /* minusDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = minusDark.png; sourceTree = "<group>"; };
-		F1431E871C52330C006A45BC /* exported.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = exported.json; sourceTree = "<group>"; };
+		F1431E871C52330C006A45BC /* automaton.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = automaton.json; sourceTree = "<group>"; };
 		F1431E891C524127006A45BC /* ClassAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassAttribute.h; sourceTree = "<group>"; };
 		F1431E8A1C524127006A45BC /* ClassAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassAttribute.m; sourceTree = "<group>"; };
 		F1431E8D1C5249F7006A45BC /* ComponentDetailsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComponentDetailsView.xib; sourceTree = "<group>"; };
@@ -215,8 +217,9 @@
 			isa = PBXGroup;
 			children = (
 				F147B4481C636FA500A8F5E7 /* test.json */,
+				F12F70141C69F4E70085229C /* testNuevo.json */,
 				F17568031C64C0980049EECC /* testOriginal.json */,
-				F1431E871C52330C006A45BC /* exported.json */,
+				F1431E871C52330C006A45BC /* automaton.json */,
 			);
 			name = testFiles;
 			sourceTree = "<group>";
@@ -446,7 +449,7 @@
 				F1786DED1C56222B00963663 /* GenericAttributeTableViewCell.xib in Resources */,
 				F147B43E1C63507100A8F5E7 /* EdgeListView.xib in Resources */,
 				F16C7DCD1C57AD2900CA9B25 /* SureView.xib in Resources */,
-				F1431E881C52330C006A45BC /* exported.json in Resources */,
+				F1431E881C52330C006A45BC /* automaton.json in Resources */,
 				F17B75A91C22D6E100AB1B57 /* newDocument.png in Resources */,
 				F1786DEF1C56410200963663 /* SaveNameView.xib in Resources */,
 				F19C25901C43AB8B0002E490 /* palette.png in Resources */,
@@ -456,6 +459,7 @@
 				F17B75AD1C22D9CC00AB1B57 /* list.png in Resources */,
 				F1C6347B1C2842C30072912D /* camera.png in Resources */,
 				F147B44B1C636FB400A8F5E7 /* test.graphicR in Resources */,
+				F12F70151C69F4E70085229C /* testNuevo.json in Resources */,
 				F10AB80C1C50E85100DE6DCE /* ok.png in Resources */,
 				F14181CB1C68DE4300E838F9 /* minusDark.png in Resources */,
 				F1786DE51C561ADA00963663 /* BooleanAttributeTableViewCell.xib in Resources */,

@@ -76,6 +76,9 @@
                 <constraint firstItem="4bZ-Hp-MYy" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="h6t-UX-0mq"/>
                 <constraint firstAttribute="bottom" secondItem="4bZ-Hp-MYy" secondAttribute="bottom" id="xc8-SN-0IO"/>
             </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="background" destination="4bZ-Hp-MYy" id="XS4-h8-dVA"/>

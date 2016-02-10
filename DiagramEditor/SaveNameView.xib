@@ -59,6 +59,9 @@
                 <constraint firstAttribute="trailing" secondItem="BX4-eT-nDb" secondAttribute="trailing" constant="142" id="j0u-NJ-FlF"/>
                 <constraint firstItem="ynP-4t-IRj" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="39" id="jhv-rK-Rsn"/>
             </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="textField" destination="ynP-4t-IRj" id="fkF-bK-h37"/>

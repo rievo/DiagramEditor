@@ -20,6 +20,7 @@
 - (void)awakeFromNib {
     UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [background addGestureRecognizer:tapgr];
+    [tapgr setDelegate:self];
     
     [nameTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
 }
@@ -107,6 +108,20 @@
     ReferenceTableViewCell * temp = [nib objectAtIndex:0];
     return temp.frame.size.height;
 }
+
+
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    
+    [self endEditing:YES];
+    if (touch.view != background) { // accept only touchs on superview, not accept touchs on subviews
+        return NO;
+    }
+    
+    return YES;
+}
+
 
 
 @end

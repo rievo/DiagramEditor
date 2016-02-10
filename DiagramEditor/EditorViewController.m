@@ -207,6 +207,8 @@
                 comp.references = sender.references;
                 comp.colorString = sender.colorString;
                 
+                comp.parentClassArray = sender.parentsClassArray;
+                
                 //Ponemos el nombre en el caso de que lo tenga
                 for(ClassAttribute * atr in comp.attributes){
                     if([atr.name isEqualToString:@"name"]){
@@ -234,6 +236,19 @@
                 }else{
                     comp.isImage = NO;
                 }
+                
+                
+                //Si en ese punto del canvas hay un nodo ya, establecemos la relación padre-hijo
+                /*for(Component * cm in dele.components){
+                    if(CGRectContainsPoint(cm.frame, pointInSV)){
+                        //We have a parent-son relation
+                        //cm will be the parent
+                        //comp will be the son
+                        comp.parent = cm;
+                        [cm.sons addObject:comp];
+                    }
+                }*/
+                
                 
                 [dele.components addObject:comp];
                 [comp updateNameLabel];
@@ -514,14 +529,8 @@
     
     NSData * data = UIImagePNGRepresentation(image);
     
+
     
-    /*
-     controller = [[MFMailComposeViewController alloc] init];
-     controller.mailComposeDelegate = self;
-     [controller setSubject:@"Digram image text"];
-     [controller addAttachmentData:data mimeType:@"image/png" fileName:@"photo"];
-     [self presentViewController:controller animated:YES completion:nil];
-     */
     
     UIAlertController * ac  = [UIAlertController alertControllerWithTitle:nil
                                                                   message:nil

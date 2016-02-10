@@ -116,6 +116,7 @@
     temp.x = x;
     temp.y = y;
     
+    
     return temp;
 }
 
@@ -273,11 +274,6 @@
                 
                 
                 //Draw decorator
-                /*UIImage * test = [UIImage imageNamed:@"inputFillArrow"];
-                
-                test = [UIImage imageWithCGImage:[test CGImage]
-                                           scale:4.0
-                                     orientation:test.imageOrientation];*/
                 //Calculamos los grados entre el punto de control (px,py) y el target
                 
                 float angle = atanf((targetAnchor.y-py)/ (targetAnchor.x-px));
@@ -455,6 +451,9 @@
                     [pathSource moveToPoint:CGPointMake(decoratorSize-halfDec, 0 -halfDec)];
                     [pathSource addLineToPoint:CGPointMake(0 -halfDec, halfDec-halfDec)];
                     [pathSource addLineToPoint:CGPointMake(decoratorSize -halfDec , decoratorSize -halfDec)];
+                    /*[pathSource moveToPoint:CGPointMake(0-halfDec, 0 -halfDec)];
+                    [pathSource addLineToPoint:CGPointMake(decoratorSize -halfDec , halfDec -halfDec)];
+                    [pathSource addLineToPoint:CGPointMake(0 -halfDec , decoratorSize -halfDec)];*/
                     [pathSource setLineWidth:2.0];
                     
                 }else if([conn.sourceDecorator isEqualToString:@"OutputClosedArrow"]){
@@ -482,9 +481,10 @@
                 }
 
                 CGAffineTransform transformSource = CGAffineTransformIdentity;
-                transformSource = CGAffineTransformConcat(transformSource, CGAffineTransformMakeRotation(angle));
-                transformSource = CGAffineTransformConcat(transformSource, CGAffineTransformMakeTranslation(sourceAnchor.x -(cos(angle +M_PI)*halfDec - sin(angle+M_PI)*0 ),
-                                                                                                            sourceAnchor.y -(sin(angle+M_PI)*halfDec + cos(angle+M_PI)*0 )));
+                transformSource = CGAffineTransformConcat(transformSource, CGAffineTransformMakeRotation(angle + M_PI));
+                transformSource = CGAffineTransformConcat(transformSource,
+                                                          CGAffineTransformMakeTranslation(sourceAnchor.x -(cos(angle +M_PI)*halfDec - sin(angle+M_PI)*0 ),
+                                                                                           sourceAnchor.y -(sin(angle+M_PI)*halfDec + cos(angle+M_PI)*0 )));
                 [pathSource applyTransform:transformSource];
                 
                 
@@ -554,6 +554,18 @@
         }
     }
     
+    /*
+    //Dibujamos las relaciones de padre a hijo
+    [[UIColor greenColor]setStroke];
+    for(Component * parent in dele.components){
+        for(Component * son in parent.sons){
+            UIBezierPath * sonLine = [[UIBezierPath alloc] init];
+            [sonLine setLineWidth:1.0];
+            [sonLine moveToPoint: parent.center];
+            [sonLine addLineToPoint:son.center];
+            [sonLine stroke];
+        }
+    }*/
     
     //
     //            UIColor * color =nil;

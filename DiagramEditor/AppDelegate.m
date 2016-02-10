@@ -82,15 +82,32 @@
 }
 
 
--(int)getOutConnectionsForComponent: (Component *)comp{
+-(int)getOutConnectionsForComponent: (Component *)comp
+                             ofType: (NSString * )type{
 
     int count = 0;
     
     for(Connection * con in connections){
-        if(con.source == comp){
+        if(con.source == comp && [con.className isEqualToString:type]){
             count++;
         }
     }
     return count;
 }
+
+
+-(int)getInConnectionsForComponent: (Component *)comp
+                             ofType: (NSString *)type{
+    
+    int count = 0;
+    
+    for(Connection * con in connections){
+        if(con.target == comp && [con.className isEqualToString:type]){
+            count++;
+        }
+    }
+    return count;
+}
+
+
 @end

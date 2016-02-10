@@ -138,6 +138,9 @@
                 <constraint firstItem="bPL-1j-T8f" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="a9U-6j-t1G"/>
                 <constraint firstItem="bPL-1j-T8f" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="j1C-jC-9Ye"/>
             </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="attributesTable" destination="xcb-am-CbD" id="w9I-Au-AzY"/>
