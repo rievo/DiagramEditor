@@ -13,10 +13,10 @@
 @synthesize textview, backView, delegate, background;
 
 -(void)awakeFromNib{
-    /*UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self
+    UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                              action:@selector(handleTap:)];
     [background addGestureRecognizer:tapgr];
-    [tapgr setDelegate:self];*/
+    [tapgr setDelegate:self];
     [textview setDelegate:self];
 }
 
@@ -44,9 +44,6 @@
     [self endEditing:YES];
     if(touch.view == background){
         return YES;
-    }else if(touch.view ==blueView){
-        [textview resignFirstResponder];
-        return NO;
     }else{
         return NO;
     }
