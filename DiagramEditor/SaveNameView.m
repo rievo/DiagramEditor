@@ -13,6 +13,12 @@
 
 @synthesize delegate, textField;
 
+-(void)awakeFromNib{
+    UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    [background addGestureRecognizer:tapgr];
+    [tapgr setDelegate:self];
+}
+
 - (IBAction)confirmSaving:(id)sender {
     
     if(textField.text.length > 0){
@@ -31,5 +37,22 @@
 
 - (IBAction)cancelSaving:(id)sender {
     [delegate cancelSaving];
+}
+
+
+-(void)handleTap: (UITapGestureRecognizer *)recog{
+    [self removeFromSuperview];
+}
+
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    
+    [self endEditing:YES];
+    if (touch.view != background) { // accept only touchs on superview, not accept touchs on subviews
+        return NO;
+    }
+    
+    return YES;
 }
 @end

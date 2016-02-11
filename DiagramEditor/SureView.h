@@ -13,7 +13,7 @@
 @end
 
 
-@interface SureView : UIView{
+@interface SureView : UIView<UIGestureRecognizerDelegate>{
     id delegate;
     
     

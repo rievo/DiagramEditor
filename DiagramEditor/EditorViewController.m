@@ -406,11 +406,12 @@
     
     if(oldFileName.length  > 0)
         snv.textField.text = oldFileName;
-    snv.center = saveBackgroundBlackView.center;
-    [saveBackgroundBlackView addSubview:snv];
+    //snv.center = saveBackgroundBlackView.center;
+    //[saveBackgroundBlackView addSubview:snv];
+    [snv setFrame:self.view.frame];
     snv.delegate = self;
     
-    [self.view addSubview:saveBackgroundBlackView];
+    [self.view addSubview:snv];
 }
 
 -(void)writeFile: (NSString *)name{

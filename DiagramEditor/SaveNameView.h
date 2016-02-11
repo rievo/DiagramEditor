@@ -13,8 +13,9 @@
     -(void)cancelSaving;
 @end
 
-@interface SaveNameView : UIView{
+@interface SaveNameView : UIView<UIGestureRecognizerDelegate>{
     id delegate;
+    __weak IBOutlet UIView *background;
 }
 
 @property (nonatomic, retain) id delegate;
