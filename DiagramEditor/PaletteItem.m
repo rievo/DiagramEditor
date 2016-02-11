@@ -25,7 +25,7 @@
 - (void)drawRect:(CGRect)rect {
     
     float lw = 4.0;
-    CGRect fixed = CGRectMake(2*lw, 2*lw , rect.size.width - 4*lw , rect.size.height - 4*lw);
+    CGRect fixed = CGRectMake(2*lw, 2*lw +5, rect.size.width - 4*lw , rect.size.height - 4*lw);
     
     if([shapeType isEqualToString:kEllipse]){
         
@@ -49,8 +49,7 @@
         
         [path stroke];
     }else if([shapeType isEqualToString:kDiamond]){ //Diamond
-        //fixed.origin.x = fixed.origin.x + 4* lw;
-        //fixed.origin.y = fixed.origin.y + 4*lw;
+
         
         UIBezierPath * path = [[UIBezierPath alloc] init];
         [[UIColor blackColor] setStroke];
@@ -144,6 +143,15 @@
     }else{
         //Dibujar una cruz o interrogación
     }
+    
+    //Pintamos el nombre del elemento
+    CGRect textRect = CGRectMake(0 , 0, self.frame.size.width, 15);
+    NSMutableParagraphStyle* textStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
+    textStyle.alignment = NSTextAlignmentCenter;
+    
+    NSDictionary* textFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica" size: 10], NSForegroundColorAttributeName: [UIColor blackColor], NSParagraphStyleAttributeName: textStyle};
+    
+    [self.className drawInRect: textRect withAttributes: textFontAttributes];
 }
 
 

@@ -159,7 +159,7 @@
     
     CGPoint p = [recog locationInView:self.view];
     
-    if(recog.state == UIGestureRecognizerStateBegan){
+    if(recog.state == UIGestureRecognizerStateBegan && ![sender.type isEqualToString:@"graphicR:Edge"]){
         //Creamos el icono temporal
         tempIcon = [[PaletteItem alloc] init];
         tempIcon.type = sender.type;
@@ -172,10 +172,10 @@
         tempIcon.center = p;
         tempIcon.backgroundColor = [UIColor blackColor];
         [self.view addSubview:tempIcon];
-    }else if(recog.state == UIGestureRecognizerStateChanged){
+    }else if(recog.state == UIGestureRecognizerStateChanged&& ![sender.type isEqualToString:@"graphicR:Edge"]){
         //Movemos el icono temporal
         tempIcon.center = p;
-    }else if(recog.state == UIGestureRecognizerStateEnded){
+    }else if(recog.state == UIGestureRecognizerStateEnded&& ![sender.type isEqualToString:@"graphicR:Edge"]){
         //Retiramos el icono temporal
         [tempIcon removeFromSuperview];
         tempIcon = nil;
@@ -506,6 +506,60 @@
 
 
 - (IBAction)exportCanvasToImage:(id)sender {
+    
+    //Get min bound
+    Component * minx = nil;
+    Component * miny = nil;
+    Component * maxx = nil;
+    Component * maxy = nil;
+    
+    float minxW, minyW, maxxW, maxyW;
+    
+    for(Component * comp in dele.components){
+        //First round
+        if(minx == nil){
+            minx = comp;
+        }
+        if(miny == nil){
+            miny = comp;
+        }
+        if(maxx == nil){
+            maxx = comp;
+        }
+        if(maxy == nil){
+            maxy = comp;
+        }
+        
+        //Let's update this
+        if(comp.center.x < minx.center.x){
+            minx = comp;
+        }
+        if(comp.center.x > maxx.center.x){
+            minx = comp;
+        }
+        if(comp.center.y < miny.center.y){
+            miny = comp;
+        }
+        if(comp.center.y >maxy.center.y){
+            maxy = comp;
+        }
+    }
+    
+    minxW = minx.frame.size.width / 2;
+    minyW = miny.frame.size.height / 2;
+    maxxW = maxx.frame.size.width / 2;
+    maxyW = maxy.frame.size.height / 2;
+    
+    /*UIGraphicsBeginImageContextWithOptions(CGSizeMake(maxxW-minxW + maxxW, maxyW-minyW + maxyW), canvas.opaque, 0.0);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextTranslateCTM(context, - minx.center.x - minxW, - miny.center.x - minyW);
+    [canvas.layer renderInContext:context];
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    int r = 0;*/
+    
     UIGraphicsBeginImageContext(canvas.frame.size);
     [canvas.layer renderInContext:UIGraphicsGetCurrentContext()];
     
@@ -552,9 +606,15 @@
                                                               [self saveImageOnCameraRoll:image];
                                                           }];
     
+    UIAlertAction * cancel = [UIAlertAction actionWithTitle:@"Cancel"
+                                                            style:UIAlertActionStyleCancel
+                                                          handler:^(UIAlertAction * _Nonnull action) {
+                                                              
+                                                          }];
     
     [ac addAction:sendemail];
     [ac addAction:saveondevice];
+    [ac addAction:cancel];
     
     
     UIPopoverPresentationController * popover = ac.popoverPresentationController;
