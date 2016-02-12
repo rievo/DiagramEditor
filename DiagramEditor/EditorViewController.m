@@ -304,9 +304,6 @@
 -(void)showConnectionDetails:(NSNotification *)not{
     Connection * temp = not.object;
     
-    
-    
-    //TODO: Show connection info view
     ConnectionDetailsView * cdv = [[[NSBundle mainBundle] loadNibNamed:@"ConnectionDetailsView"
                                                                  owner:self
                                                                options:nil] objectAtIndex:0];
@@ -344,6 +341,7 @@
     [canvas prepareCanvas];
 }
 
+#pragma mark Save diagram
 - (IBAction)saveCurrentDiagram:(id)sender {
     
     
@@ -425,7 +423,7 @@
         [fileManager createDirectoryAtPath:folderPath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
     
     if(error){
-        NSLog([error description]);
+        NSLog(@"%@",[error description]);
     }
     
     error = nil;
@@ -434,7 +432,7 @@
     [textToSave writeToFile:filePath atomically:NO encoding:NSUTF8StringEncoding error:&error];
     
     if(error){
-        NSLog([error description]);
+        NSLog(@"%@",[error description]);
     }
     
 }
@@ -759,10 +757,6 @@
 }
 
 
-
-
-
-#pragma mark ConnectionDetailsViewDelegate
 
 #pragma mark SureViewDelegate methods
 

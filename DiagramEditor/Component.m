@@ -293,6 +293,8 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     
     CGPoint translatedPoint =  [sender locationInView: dele.can];
     
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+    
     if(sender.state == UIGestureRecognizerStateBegan){
         
     }else if(sender.state == UIGestureRecognizerStateChanged){

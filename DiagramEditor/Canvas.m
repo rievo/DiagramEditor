@@ -20,11 +20,14 @@
 
 #define defradius 35
 
-#define decoratorSize 15
+#define decoratorSize 10
 
 #define pi 3.14159265359
 #define radiansToDegrees( radians ) ( ( radians ) * ( 180.0 / M_PI ) )
 #define   DEGREES_TO_RADIANS(degrees)  ((pi * degrees)/ 180)
+
+
+#define lineWitdh 1.0
 
 @implementation Canvas
 
@@ -311,7 +314,7 @@
                     [pathTarget addLineToPoint:CGPointMake(0-halfDec, decoratorSize-halfDec)];
                     [pathTarget moveToPoint:CGPointMake(decoratorSize-halfDec,halfDec-halfDec)];
                     [pathTarget addLineToPoint:CGPointMake(0-halfDec, halfDec-halfDec)];
-                    [pathTarget setLineWidth:2.0];
+                    [pathTarget setLineWidth:lineWitdh];
 
                 }else if([conn.targetDecorator isEqualToString:@"Diamond"]){
                     [pathTarget moveToPoint:CGPointMake(0 -halfDec, halfDec-halfDec)];
@@ -319,14 +322,14 @@
                     [pathTarget addLineToPoint:CGPointMake(decoratorSize -halfDec , halfDec -halfDec)];
                     [pathTarget addLineToPoint:CGPointMake(halfDec-halfDec, 0-halfDec)];
                     [pathTarget closePath];
-                    [pathTarget setLineWidth:2.0];
+                    [pathTarget setLineWidth:lineWitdh];
                 }else if([conn.targetDecorator isEqualToString:@"FillDiamond"]){
                     [pathTarget moveToPoint:CGPointMake(0 -halfDec, halfDec-halfDec)];
                     [pathTarget addLineToPoint:CGPointMake(halfDec -halfDec, decoratorSize-halfDec)];
                     [pathTarget addLineToPoint:CGPointMake(decoratorSize -halfDec , halfDec -halfDec)];
                     [pathTarget addLineToPoint:CGPointMake(halfDec-halfDec, 0-halfDec)];
                     [pathTarget closePath];
-                    [pathTarget setLineWidth:2.0];
+                    [pathTarget setLineWidth:lineWitdh];
                     
                 }else if([conn.targetDecorator isEqualToString:@"InputClosedArrow"]){
                     [pathTarget moveToPoint:CGPointMake(0 -halfDec,0 -halfDec)];
@@ -334,7 +337,7 @@
                     [pathTarget addLineToPoint:CGPointMake(0 -halfDec , decoratorSize -halfDec)];
 
                     [pathTarget closePath];
-                    [pathTarget setLineWidth:2.0];
+                    [pathTarget setLineWidth:lineWitdh];
                     
                 }else if([conn.targetDecorator isEqualToString:@"InputFillClosedArrow"]){
                     [pathTarget moveToPoint:CGPointMake(0 -halfDec,0 -halfDec)];
@@ -342,30 +345,30 @@
                     [pathTarget addLineToPoint:CGPointMake(0 -halfDec , decoratorSize -halfDec)];
                     
                     [pathTarget closePath];
-                    [pathTarget setLineWidth:2.0];
+                    [pathTarget setLineWidth:lineWitdh];
                     
                 }else if([conn.targetDecorator isEqualToString:@"OutputArrow"]){
                     [pathTarget moveToPoint:CGPointMake(decoratorSize-halfDec, 0 -halfDec)];
                     [pathTarget addLineToPoint:CGPointMake(0 -halfDec, halfDec-halfDec)];
                     [pathTarget addLineToPoint:CGPointMake(decoratorSize -halfDec , decoratorSize -halfDec)];
-                    [pathTarget setLineWidth:2.0];
+                    [pathTarget setLineWidth:lineWitdh];
                     
                 }else if([conn.targetDecorator isEqualToString:@"OutputClosedArrow"]){
                     [pathTarget moveToPoint:CGPointMake(decoratorSize-halfDec, 0 -halfDec)];
                     [pathTarget addLineToPoint:CGPointMake(0 -halfDec, halfDec-halfDec)];
                     [pathTarget addLineToPoint:CGPointMake(decoratorSize -halfDec , decoratorSize -halfDec)];
-                    [pathTarget setLineWidth:2.0];
+                    [pathTarget setLineWidth:lineWitdh];
                     [pathTarget closePath];
                 }else if([conn.targetDecorator isEqualToString:@"OutputFillClosedArrow"]){
                     [pathTarget moveToPoint:CGPointMake(decoratorSize-halfDec, 0 -halfDec)];
                     [pathTarget addLineToPoint:CGPointMake(0 -halfDec, halfDec-halfDec)];
                     [pathTarget addLineToPoint:CGPointMake(decoratorSize -halfDec , decoratorSize -halfDec)];
-                    [pathTarget setLineWidth:2.0];
+                    [pathTarget setLineWidth:lineWitdh];
                     [pathTarget closePath];
                 }else{ //No decorator
                     [pathTarget moveToPoint:CGPointMake(0 -halfDec, halfDec-halfDec)];
                     [pathTarget addLineToPoint:CGPointMake(decoratorSize-halfDec, halfDec-halfDec)];
-                    [pathTarget setLineWidth:6];
+                    [pathTarget setLineWidth:lineWitdh];
                     //[[UIColor redColor]setStroke];
                     UIColor * col = [UIColor colorWithRed:1.0
                                                     green:0
@@ -400,7 +403,7 @@
                 if([conn.targetDecorator isEqualToString:@"NoDecoration"]){
                     [pathSource moveToPoint:CGPointMake(0 -halfDec, halfDec-halfDec)];
                     [pathSource addLineToPoint:CGPointMake(decoratorSize-halfDec, halfDec-halfDec)];
-                    [pathSource setLineWidth:6];
+                    [pathSource setLineWidth:lineWitdh];
                     //[[UIColor redColor]setStroke];
                     UIColor * col = [UIColor colorWithRed:1.0
                                                     green:0
@@ -414,7 +417,7 @@
                     [pathSource addLineToPoint:CGPointMake(0-halfDec, decoratorSize-halfDec)];
                     [pathSource moveToPoint:CGPointMake(decoratorSize-halfDec,halfDec-halfDec)];
                     [pathSource addLineToPoint:CGPointMake(0-halfDec, halfDec-halfDec)];
-                    [pathSource setLineWidth:2.0];
+                    [pathSource setLineWidth:lineWitdh];
                     
                 }else if([conn.sourceDecorator isEqualToString:@"Diamond"]){
                     [pathSource moveToPoint:CGPointMake(0 -halfDec, halfDec-halfDec)];
@@ -422,14 +425,14 @@
                     [pathSource addLineToPoint:CGPointMake(decoratorSize -halfDec , halfDec -halfDec)];
                     [pathSource addLineToPoint:CGPointMake(halfDec-halfDec, 0-halfDec)];
                     [pathSource closePath];
-                    [pathSource setLineWidth:2.0];
+                    [pathSource setLineWidth:lineWitdh];
                 }else if([conn.sourceDecorator isEqualToString:@"FillDiamond"]){
                     [pathSource moveToPoint:CGPointMake(0 -halfDec, halfDec-halfDec)];
                     [pathSource addLineToPoint:CGPointMake(halfDec -halfDec, decoratorSize-halfDec)];
                     [pathSource addLineToPoint:CGPointMake(decoratorSize -halfDec , halfDec -halfDec)];
                     [pathSource addLineToPoint:CGPointMake(halfDec-halfDec, 0-halfDec)];
                     [pathSource closePath];
-                    [pathSource setLineWidth:2.0];
+                    [pathSource setLineWidth:lineWitdh];
                     
                 }else if([conn.sourceDecorator isEqualToString:@"InputClosedArrow"]){
                     [pathSource moveToPoint:CGPointMake(0 -halfDec,0 -halfDec)];
@@ -437,7 +440,7 @@
                     [pathSource addLineToPoint:CGPointMake(0 -halfDec , decoratorSize -halfDec)];
                     
                     [pathSource closePath];
-                    [pathSource setLineWidth:2.0];
+                    [pathSource setLineWidth:lineWitdh];
                     
                 }else if([conn.sourceDecorator isEqualToString:@"InputFillClosedArrow"]){
                     [pathSource moveToPoint:CGPointMake(0 -halfDec,0 -halfDec)];
@@ -445,7 +448,7 @@
                     [pathSource addLineToPoint:CGPointMake(0 -halfDec , decoratorSize -halfDec)];
                     
                     [pathSource closePath];
-                    [pathSource setLineWidth:2.0];
+                    [pathSource setLineWidth:lineWitdh];
                     
                 }else if([conn.sourceDecorator isEqualToString:@"OutputArrow"]){
                     [pathSource moveToPoint:CGPointMake(decoratorSize-halfDec, 0 -halfDec)];
@@ -454,24 +457,24 @@
                     /*[pathSource moveToPoint:CGPointMake(0-halfDec, 0 -halfDec)];
                     [pathSource addLineToPoint:CGPointMake(decoratorSize -halfDec , halfDec -halfDec)];
                     [pathSource addLineToPoint:CGPointMake(0 -halfDec , decoratorSize -halfDec)];*/
-                    [pathSource setLineWidth:2.0];
+                    [pathSource setLineWidth:lineWitdh];
                     
                 }else if([conn.sourceDecorator isEqualToString:@"OutputClosedArrow"]){
                     [pathSource moveToPoint:CGPointMake(decoratorSize-halfDec, 0 -halfDec)];
                     [pathSource addLineToPoint:CGPointMake(0 -halfDec, halfDec-halfDec)];
                     [pathSource addLineToPoint:CGPointMake(decoratorSize -halfDec , decoratorSize -halfDec)];
-                    [pathSource setLineWidth:2.0];
+                    [pathSource setLineWidth:lineWitdh];
                     [pathSource closePath];
                 }else if([conn.sourceDecorator isEqualToString:@"OutputFillClosedArrow"]){
                     [pathSource moveToPoint:CGPointMake(decoratorSize-halfDec, 0 -halfDec)];
                     [pathSource addLineToPoint:CGPointMake(0 -halfDec, halfDec-halfDec)];
                     [pathSource addLineToPoint:CGPointMake(decoratorSize -halfDec , decoratorSize -halfDec)];
-                    [pathSource setLineWidth:2.0];
+                    [pathSource setLineWidth:lineWitdh];
                     [pathSource closePath];
                 }else{ //No decorator
                     [pathSource moveToPoint:CGPointMake(0 -halfDec, halfDec-halfDec)];
                     [pathSource addLineToPoint:CGPointMake(decoratorSize-halfDec, halfDec-halfDec)];
-                    [pathSource setLineWidth:6];
+                    [pathSource setLineWidth:lineWitdh];
                     //[[UIColor redColor]setStroke];
                     UIColor * col = [UIColor colorWithRed:1.0
                                                     green:0
@@ -625,6 +628,61 @@
         
     }
     
+    //TODO:Quitar la envolvente mínima. Solo es para pruebas. Quitar de aquí y poner en "EditorViewController"
+    //Dibujamos la envolvente mínima
+    //Get min bound
+    Component * minx = nil;
+    Component * miny = nil;
+    Component * maxx = nil;
+    Component * maxy = nil;
+    
+    float minxW, minyW, maxxW, maxyW;
+    
+    for(Component * comp in dele.components){
+        //First round
+        if(minx == nil){
+            minx = comp;
+        }
+        if(miny == nil){
+            miny = comp;
+        }
+        if(maxx == nil){
+            maxx = comp;
+        }
+        if(maxy == nil){
+            maxy = comp;
+        }
+        
+        //Let's update this
+        if(comp.center.x < minx.center.x){
+            minx = comp;
+        }
+        if(comp.center.x > maxx.center.x){
+            maxx = comp;
+        }
+        if(comp.center.y < miny.center.y){
+            miny = comp;
+        }
+        if(comp.center.y >maxy.center.y){
+            maxy = comp;
+        }
+    }
+    
+    minxW = minx.frame.size.width / 2;
+    minyW = miny.frame.size.height / 2;
+    maxxW = maxx.frame.size.width / 2;
+    maxyW = maxy.frame.size.height / 2;
+    
+    float textHeigh = 20;
+    float margin = 15;
+    
+    UIBezierPath * outRect = [UIBezierPath bezierPathWithRect:CGRectMake(minx.center.x -minxW-margin,
+                                                                      miny.center.y - minyW - textHeigh-margin,
+                                                                      maxx.center.x-minx.center.x + minxW + maxxW + 2*margin,
+                                                                      maxy.center.y-miny.center.y + minyW + maxyW +textHeigh+ 2*margin)];
+    [[UIColor redColor]setStroke];
+    [outRect setLineWidth:2.0];
+    [outRect stroke];
     
 }
 
