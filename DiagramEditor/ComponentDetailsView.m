@@ -94,7 +94,6 @@
         NSLog(@"%@", exception);
     }
     @finally {
-        NSLog(@"Ups");
     }
     
     

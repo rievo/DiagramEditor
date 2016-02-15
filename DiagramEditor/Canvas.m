@@ -289,7 +289,7 @@
                 UIBezierPath * pathTarget = [[UIBezierPath alloc]init];
                 UIBezierPath * pathSource = [[UIBezierPath alloc]init];
                 
-                //TODO: Cambiar el path en función del tipo
+
                 float halfDec = decoratorSize/2;
                 
                 [[UIColor redColor]setStroke];
@@ -520,62 +520,8 @@
         [line stroke];
         
     }
-    
-    //TODO:Quitar la envolvente mínima. Solo es para pruebas. Quitar de aquí y poner en "EditorViewController"
-    //Dibujamos la envolvente mínima
-    //Get min bound
-    Component * minx = nil;
-    Component * miny = nil;
-    Component * maxx = nil;
-    Component * maxy = nil;
-    
-    float minxW, minyW, maxxW, maxyW;
-    
-    for(Component * comp in dele.components){
-        //First round
-        if(minx == nil){
-            minx = comp;
-        }
-        if(miny == nil){
-            miny = comp;
-        }
-        if(maxx == nil){
-            maxx = comp;
-        }
-        if(maxy == nil){
-            maxy = comp;
-        }
-        
-        //Let's update this
-        if(comp.center.x < minx.center.x){
-            minx = comp;
-        }
-        if(comp.center.x > maxx.center.x){
-            maxx = comp;
-        }
-        if(comp.center.y < miny.center.y){
-            miny = comp;
-        }
-        if(comp.center.y >maxy.center.y){
-            maxy = comp;
-        }
-    }
-    
-    minxW = minx.frame.size.width / 2;
-    minyW = miny.frame.size.height / 2;
-    maxxW = maxx.frame.size.width / 2;
-    maxyW = maxy.frame.size.height / 2;
-    
-    float textHeigh = 20;
-    float margin = 15;
-    
-    UIBezierPath * outRect = [UIBezierPath bezierPathWithRect:CGRectMake(minx.center.x -minxW-margin,
-                                                                      miny.center.y - minyW - textHeigh-margin,
-                                                                      maxx.center.x-minx.center.x + minxW + maxxW + 2*margin,
-                                                                      maxy.center.y-miny.center.y + minyW + maxyW +textHeigh+ 2*margin)];
-    [[UIColor redColor]setStroke];
-    [outRect setLineWidth:2.0];
-    [outRect stroke];
+
+
     
 }
 
