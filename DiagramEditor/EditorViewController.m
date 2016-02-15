@@ -146,7 +146,7 @@
     
     //Load component details view
     compDetView.comp = temp;
-    [compDetView prepare];
+    //[compDetView prepare];
     [self showDetailsView];
     
 }
@@ -435,6 +435,7 @@
         NSLog(@"%@",[error description]);
     }
     
+    //Quitar la vista de
 }
 
 -(NSString *)generateXML{
@@ -466,7 +467,21 @@
         [writer writeAttribute:@"type" value:temp.type];
         [writer writeAttribute:@"width" value: [[NSNumber numberWithFloat:temp.frame.size.width]description]];
         [writer writeAttribute:@"height" value: [[NSNumber numberWithFloat:temp.frame.size.height]description]];
+        
+        
+        //For each component, fill his attributes
+        for(ClassAttribute * ca in temp.attributes){
+            [writer writeStartElement:@"attribute"];
+            [writer writeAttribute:@"name" value:ca.name];
+            [writer writeAttribute:@"default_value" value:ca.defaultValue];
+            [writer writeAttribute:@"current_value" value:ca.currentValue];
+            [writer writeAttribute:@"max" value:[ca.max description]];
+            [writer writeAttribute:@"min" value:[ca.min description]];
+            [writer writeAttribute:@"type" value:ca.type];
+            [writer writeEndElement];
+        }
         [writer writeEndElement];
+        
     }
     [writer writeEndElement];//Close nodes
     
@@ -750,7 +765,7 @@
 -(void)saveName: (NSString *)name{
     [self writeFile:name];
     oldFileName = name;
-    [saveBackgroundBlackView setHidden:YES];
+    [snv setHidden:YES];
 }
 -(void)cancelSaving{
     [saveBackgroundBlackView setHidden:YES];

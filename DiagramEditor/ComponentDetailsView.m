@@ -71,19 +71,31 @@
     NSArray * parsedArr = [comp.type componentsSeparatedByString:@":"];
     typeLabel.text = [parsedArr objectAtIndex:parsedArr.count-1];
     
-    Connection * tc = nil;
+    //Connection * tc = nil;
     connections = [[NSMutableArray alloc] init];
     for(int i = 0; i< dele.connections.count; i++){
-        tc = [dele.connections objectAtIndex:i];
+        Connection * tc = [dele.connections objectAtIndex:i];
         if(tc.source == comp)
             [connections addObject:tc];
     }
     
-    [outConnectionsTable reloadData];
+    
     
     [attributesTable setDelegate:self];
     [attributesTable setDataSource:self];
     [attributesTable reloadData];
+    
+    
+    @try {
+        //TODO: Arreglar reloaddata
+        //[outConnectionsTable reloadData];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"%@", exception);
+    }
+    @finally {
+        NSLog(@"Ups");
+    }
     
     
     
@@ -184,13 +196,13 @@
         return comp.attributes.count;
     }else if(tableView == outConnectionsTable){
         return connections.count;
-    }else return 0;
+    }else return 1;
 }
 
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
-         cellForRowAtIndexPath:(NSIndexPath *)indexPath
+cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 {
     static NSString *MyIdentifier = @"MyIdentifier";
     
@@ -317,7 +329,7 @@
 
     
     if([[comp.attributes objectAtIndex:indexPath.row] isKindOfClass:[Reference class]]){
-        return 47;
+        return 0;
     }else{
         return 47;
     }

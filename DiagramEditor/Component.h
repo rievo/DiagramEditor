@@ -36,6 +36,7 @@
     PaletteItem * connectionToDo;
     
     NSString * tempClassName;
+    float lastScale;
 }
 
 

@@ -956,7 +956,7 @@
     NSString * name = [dic objectForKey:@"_name"];
     NSString * compId = [dic objectForKey:@"_id"];
     float x = [[dic objectForKey:@"_x"]floatValue];
-    float y = [[dic objectForKey:@"_x"]floatValue];
+    float y = [[dic objectForKey:@"_y"]floatValue];
     NSString * shape = [dic objectForKey:@"_shape_type"];
     
     NSString * colorString = [dic objectForKey:@"_color"];
@@ -972,6 +972,38 @@
     temp.colorString = colorString;
     temp.fillColor = [ColorPalette colorForString:colorString];
     temp.type = type;
+    
+    temp.attributes = [[NSMutableArray alloc] init];
+    
+    //Fill attributes
+    NSArray * attrDic = [dic objectForKey:@"attribute"];
+    NSArray * attrArray = nil;
+    if([attrDic isKindOfClass:[NSDictionary class]]){
+        attrArray =[[NSArray alloc] initWithObjects:attrDic, nil];
+    }
+
+    for(NSDictionary * ad in attrArray){
+        NSString * aname = [ad objectForKey:@"_name"];
+        NSString * adefVal = [ad objectForKey:@"_default_value"];
+        NSNumber * amax = [ad objectForKey:[f numberFromString:[ad objectForKey:@"_max"]]];
+        NSNumber * amin = [ad objectForKey:[f numberFromString:[ad objectForKey:@"_min"]]];
+        NSString * acurrVal = [ad objectForKey:@"_current_value"];
+        NSString * atype = [ad objectForKey:@"_type"];
+        
+        ClassAttribute * atr = [[ClassAttribute alloc] init];
+        atr.name = aname;
+        atr.defaultValue = adefVal;
+        atr.max = amax;
+        atr.min = amin;
+        atr.type = atype;
+        atr.currentValue = acurrVal;
+        
+        [temp.attributes addObject:atr];
+        
+    }
+    
+    
+    int r = 2;
     
     return temp;
 }

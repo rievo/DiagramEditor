@@ -23,6 +23,9 @@
 
 #define minusY 30
 
+#define kMaxScale 2.0
+#define kMinScale 1.0
+
 @implementation Component
 
 
@@ -143,15 +146,34 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
 
 #pragma mark Handle gestures
 
--(void)scale:(UIPinchGestureRecognizer *)pinch{
-    if (pinch.state == UIGestureRecognizerStateBegan)
+-(void)scale:(UIPinchGestureRecognizer *)gestureRecognizer{
+    /*if (pinch.state == UIGestureRecognizerStateBegan)
         prevPinchScale = 1.0;
     
     float thisScale = 1 + (pinch.scale-prevPinchScale);
     prevPinchScale = pinch.scale;
-    self.transform = CGAffineTransformScale(self.transform, thisScale, thisScale);
-}
+    self.transform = CGAffineTransformScale(self.transform, thisScale, thisScale);*/
+    if([gestureRecognizer state] == UIGestureRecognizerStateBegan) {
+        // Reset the last scale, necessary if there are multiple objects with different scales
+        lastScale = [gestureRecognizer scale];
+    }
+    
+    if ([gestureRecognizer state] == UIGestureRecognizerStateBegan ||
+        [gestureRecognizer state] == UIGestureRecognizerStateChanged) {
+        
+        CGFloat currentScale = [[[gestureRecognizer view].layer valueForKeyPath:@"transform.scale"] floatValue];
 
+        
+        CGFloat newScale = 1 -  (lastScale - [gestureRecognizer scale]);
+        newScale = MIN(newScale, kMaxScale / currentScale);
+        newScale = MAX(newScale, kMinScale / currentScale);
+        CGAffineTransform transform = CGAffineTransformScale([[gestureRecognizer view] transform], newScale, newScale);
+        [gestureRecognizer view].transform = transform;
+        
+        lastScale = [gestureRecognizer scale];  // Store the previous scale factor for the next pinch gesture call
+    }
+}
+/*
 -(void)handleResize:(UIPanGestureRecognizer *)recog{
     
     CGPoint newPoint = [recog locationInView:self];
@@ -170,7 +192,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     
     
     
-}
+}*/
 
 -(void)handleTap:(UITapGestureRecognizer *)recog{
     
