@@ -34,6 +34,7 @@
 #define getPalettes @"https://diagrameditorserver.herokuapp.com/palettes?json=true"
 
 #define fileExtension @".graphicR"
+#define baseURL @"https://diagrameditorserver.herokuapp.com"
 
 @interface ConfigureDiagramViewController ()
 
@@ -111,25 +112,20 @@
 #pragma mark Recover files from server and local device
 
 -(void)loadLocalFiles{
-    NSFileManager  *manager = [NSFileManager defaultManager];
+    //NSFileManager  *manager = [NSFileManager defaultManager];
     // the preferred way to get the apps documents directory
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
+    //NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    //NSString *documentsDirectory = [paths objectAtIndex:0];
     
-    // grab all the files in the documents dir
-    NSArray *allFiles = [manager contentsOfDirectoryAtPath:documentsDirectory error:nil];
     
-    // filter the array for only sqlite files
-    NSPredicate *fltr = [NSPredicate predicateWithFormat:@"self ENDSWITH '.graphicR'"];
-    //NSArray *graphicRFiles = [allFiles filteredArrayUsingPredicate:fltr];
     
     //Load from bundle
     NSArray * bpaths = [[NSBundle mainBundle] pathsForResourcesOfType:@".graphicR" inDirectory:nil];
     NSString * contentstr = nil;
     for(NSString * path in bpaths){
         contentstr = [NSString stringWithContentsOfFile:path
-                                            encoding:NSUTF8StringEncoding
-                                               error:nil];
+                                               encoding:NSUTF8StringEncoding
+                                                  error:nil];
         PaletteFile * pf = [[PaletteFile alloc] init];
         NSArray * components = [path componentsSeparatedByString:@"/"];
         
@@ -214,6 +210,7 @@
     [palette resetPalette];
     
     [palettes removeAllObjects];
+    
     
     configuration = [NSDictionary dictionaryWithXMLString:text];
     
@@ -367,7 +364,6 @@
                 item.targetPart = tPart;
                 
                 
-                int r = 2;
             }
             
             
@@ -381,7 +377,7 @@
         [palettes addObject:tempPalete];
     }
     
-
+    
     [palettesTable reloadData];
     [palette preparePalette];
     
@@ -448,11 +444,22 @@
         dele.paletteItems = [[NSMutableArray alloc] initWithArray:palette.paletteItems];
         [refreshTimer invalidate];
         
-        [self completePaletteForJSONAttributes];
+        BOOL result = [self completePaletteForJSONAttributes];
         
-        dele.currentPaletteFileName = tempPaletteFile;
+        if(result == YES){
+            dele.currentPaletteFileName = tempPaletteFile;
+            
+            [self performSegueWithIdentifier:@"showEditor" sender:self];
+        }else{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                            message:@"No tenemos el Json asociado :("
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
         
-        [self performSegueWithIdentifier:@"showEditor" sender:self];
+
     }else{
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                         message:@"Any palette must be selected in order to perform this action."
@@ -507,7 +514,7 @@
     }else if(tableView == serverFilesTable){
         PaletteFile * pf = [serverFilesArray objectAtIndex:indexPath.row];
         cell.textLabel.text = pf.name;
-
+        
     }else if(tableView == localFilesTable){
         PaletteFile * pf = [localFilesArray objectAtIndex:indexPath.row];
         cell.textLabel.text = pf.name;
@@ -575,8 +582,8 @@
                                                                
                                                                
                                                                rootView = [[[NSBundle mainBundle] loadNibNamed:@"PasteView"
-                                                                                                                 owner:self
-                                                                                                               options:nil] objectAtIndex:0];
+                                                                                                         owner:self
+                                                                                                       options:nil] objectAtIndex:0];
                                                                
                                                                [rootView setFrame:self.view.frame];
                                                                
@@ -585,7 +592,7 @@
                                                                [rootView setDelegate:self];
                                                                [rootView.background setCenter:self.view.center];
                                                                [self.view addSubview:rootView];
-
+                                                               
                                                            }];
     UIAlertAction * loadFromLocal = [UIAlertAction actionWithTitle:@"Load a local file"
                                                              style:UIAlertActionStyleDefault
@@ -641,7 +648,7 @@
 
 
 #pragma mark Parse exported json / ecore
--(void)completePaletteForJSONAttributes{
+-(BOOL)completePaletteForJSONAttributes{
     //dele.paletteIttems
     //Para cada item de la paleta, tendré que rellenar el array de atributos
     PaletteItem * pi = nil;
@@ -649,57 +656,67 @@
     //Pasamos el json a un nsdictionary
     //TODO: Quitar el fichero harcodeado
     
-    NSString *filePath = [[NSBundle mainBundle]pathForResource:@"testNuevo" ofType:@"json"];
-    NSString *jsonString = [[NSString alloc] initWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:NULL];
-    NSError *jsonError;
+    //NSString *filePath = [[NSBundle mainBundle]pathForResource:@"testNuevo" ofType:@"json"];
+    //NSString *jsonString = [[NSString alloc] initWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:NULL];
     
-    //JsonDic es el fichero JSON (ecore)
-    NSMutableDictionary *jsonDict = [NSJSONSerialization
-                                     JSONObjectWithData:[jsonString dataUsingEncoding:NSUTF8StringEncoding]
-                                                                    options:NSJSONReadingMutableContainers
-                                                                      error:&jsonError];
     
-    NSArray * classes = [jsonDict objectForKey:@"classes"];
+    NSString * jsonString = [self searchJsonNamed:tempPaletteFile];
     
-
-    //Para cada item de la paleta, vamos a obtener sus atributos y sus referencias
-    for(int i = 0; i< dele.paletteItems.count; i++){
-        pi = [dele.paletteItems objectAtIndex:i];
-        //pi.className tendrá el nombre de la clase
+    if(jsonString == nil){
+        NSLog(@"Error, no tenemos el json");
+        return NO;
+    }else{ //We have the json :)
+        NSError *jsonError;
         
-        pi.attributes = [[NSMutableArray alloc] init];
-        pi.references = [[NSMutableArray alloc] init];
-        pi.parentsClassArray = [[NSMutableArray alloc] init];
+        //JsonDic es el fichero JSON (ecore)
+        NSMutableDictionary *jsonDict = [NSJSONSerialization
+                                         JSONObjectWithData:[jsonString dataUsingEncoding:NSUTF8StringEncoding]
+                                         options:NSJSONReadingMutableContainers
+                                         error:&jsonError];
         
-        
-        [self getAttributesForClass:pi.className
-                       onClassArray:classes
-         storeOnAttributesArray:pi.attributes
-                 andReferencesArray:pi.references];
+        NSArray * classes = [jsonDict objectForKey:@"classes"];
         
         
-        //Tengo los atributos y las referencias para cada clase.
-        
-        //Extraemos las clases padre
-        [self getParentsForClass:pi.className
-                    onClassArray:classes
-         storeOnParentClassArray:pi.parentsClassArray];
-        
-        //Para cada clase padre añadimos las referencias correspondientes
-        
-        /*for(NSString * str in pi.parentsClassArray){
-            //str tendrá el nombre de la clase padre
-            [self getAttributesForClass:str
+        //Para cada item de la paleta, vamos a obtener sus atributos y sus referencias
+        for(int i = 0; i< dele.paletteItems.count; i++){
+            pi = [dele.paletteItems objectAtIndex:i];
+            //pi.className tendrá el nombre de la clase
+            
+            pi.attributes = [[NSMutableArray alloc] init];
+            pi.references = [[NSMutableArray alloc] init];
+            pi.parentsClassArray = [[NSMutableArray alloc] init];
+            
+            
+            [self getAttributesForClass:pi.className
                            onClassArray:classes
                  storeOnAttributesArray:pi.attributes
                      andReferencesArray:pi.references];
-        }*/
-        
-        
-        
-        
+            
+            
+            //Tengo los atributos y las referencias para cada clase.
+            
+            //Extraemos las clases padre
+            [self getParentsForClass:pi.className
+                        onClassArray:classes
+             storeOnParentClassArray:pi.parentsClassArray];
+            
+            //Para cada clase padre añadimos las referencias correspondientes
+            
+            /*for(NSString * str in pi.parentsClassArray){
+             //str tendrá el nombre de la clase padre
+             [self getAttributesForClass:str
+             onClassArray:classes
+             storeOnAttributesArray:pi.attributes
+             andReferencesArray:pi.references];
+             }*/
+            return YES;
+        }
     }
-
+    
+    
+    return NO;
+    
+    
 }
 
 -(void)getParentsForClass: (NSString *) key
@@ -731,9 +748,9 @@
 }
 
 -(void)getAttributesForClass: (NSString *) key
-                          onClassArray: (NSArray *)classArray
-                       storeOnAttributesArray:(NSMutableArray *)attrsArray
-                           andReferencesArray:(NSMutableArray *)refsArray{
+                onClassArray: (NSArray *)classArray
+      storeOnAttributesArray:(NSMutableArray *)attrsArray
+          andReferencesArray:(NSMutableArray *)refsArray{
     ClassAttribute * temp;
     
     NSDictionary * dic = nil;
@@ -758,11 +775,11 @@
             for(int a = 0; a < attrs.count; a++){
                 NSDictionary * atrDic = [attrs objectAtIndex:a];
                 temp = [[ClassAttribute alloc]init];
-                 temp.name = [atrDic objectForKey:@"name"];
-                 temp.type = [atrDic objectForKey:@"type"];
-                 temp.min = [f numberFromString:[atrDic objectForKey:@"min"]];
-                 temp.max = [f numberFromString:[atrDic objectForKey:@"max"]];
-                 temp.defaultValue = [atrDic objectForKey:@"default"];
+                temp.name = [atrDic objectForKey:@"name"];
+                temp.type = [atrDic objectForKey:@"type"];
+                temp.min = [f numberFromString:[atrDic objectForKey:@"min"]];
+                temp.max = [f numberFromString:[atrDic objectForKey:@"max"]];
+                temp.defaultValue = [atrDic objectForKey:@"default"];
                 if([temp.defaultValue isEqualToString:@"null"]){
                     temp.defaultValue = @"";
                 }
@@ -816,19 +833,19 @@
 -(void)reactToFile:(NSString *)path{
     
     //Tenemos el fichero del diagrama
-
+    
     //NSLog(path);
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-
+    
     NSString * finalPath = [documentsDirectory stringByAppendingString:@"/diagrams/"];
     finalPath = [finalPath stringByAppendingString:path];
     
     NSError * error = nil;
     content = [NSString stringWithContentsOfFile:finalPath
-                                                   encoding:NSUTF8StringEncoding
-                                                      error:&error];
-
+                                        encoding:NSUTF8StringEncoding
+                                           error:&error];
+    
     loadingADiagram = YES;
     // [self performSegueWithIdentifier:@"showEditor" sender:self];
     
@@ -843,7 +860,7 @@
     if ([[segue identifier] isEqualToString:@"showEditor"])
     {
         // Get reference to the destination view controller
-        EditorViewController *vc = [segue destinationViewController];
+        //EditorViewController *vc = [segue destinationViewController];
         
     }
 }
@@ -894,7 +911,7 @@
     dele.components = loadedComponents;
     dele.connections = loadedConnections;
     
-
+    
     //Try loading palette with that name
     NSString * paletteContent = [self loadPaletteNamed:paletteName];
     
@@ -909,13 +926,21 @@
     dele.paletteItems = [[NSMutableArray alloc] initWithArray:palette.paletteItems];
     [refreshTimer invalidate];
     
-    [self completePaletteForJSONAttributes];
+    BOOL result = [self completePaletteForJSONAttributes];
     
-    dele.currentPaletteFileName = tempPaletteFile;
+    if(result == YES){ //Tenemos el json y todo lo demás
+        dele.currentPaletteFileName = tempPaletteFile;
+        
+        
+        [self performSegueWithIdentifier:@"showEditor" sender:self];
 
+    }else{ //No se ha podido encontrar el json
+        NSLog(@"No te dejo seguir");
+    }
     
-    [self performSegueWithIdentifier:@"showEditor" sender:self];
 }
+
+#pragma mark Search palette (server-local)
 
 -(NSString *)loadPaletteNamed: (NSString *)name{
     
@@ -926,6 +951,20 @@
     return con;
 }
 
+-(NSString *)searchOnServerPalettes: (NSString *)name{
+    
+    NSString * temp = nil;
+    
+    for(NSString * str in serverFilesArray){
+        if([str isEqualToString:name]){
+            //Tengo un match, devuelvo el contenido
+        }
+    }
+    
+    //If temp == nil, then we don't have this palette
+    return temp;
+}
+
 -(NSString *)searchOnLocalPalettes: (NSString *)name{
     NSString * temp = nil;
     
@@ -933,27 +972,28 @@
     for(NSString * path in bpaths){
         NSArray * components = [path componentsSeparatedByString:@"/"];
         
-       NSString * n = [components objectAtIndex:components.count -1];
+        NSString * n = [components objectAtIndex:components.count -1];
         if([n isEqualToString:name]){
             temp = [NSString stringWithContentsOfFile:path
-                                        encoding:NSUTF8StringEncoding
-                                        error:nil];
+                                             encoding:NSUTF8StringEncoding
+                                                error:nil];
             return temp;
         }
     }
-
+    
     
     return temp;
 }
 
+#pragma mark Component methods
 
 -(Component *)componentFromDictionary: (NSDictionary *)dic{
     Component * temp = [[Component alloc] init];
     
     NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
     f.numberStyle = NSNumberFormatterDecimalStyle;
-
-    NSString * name = [dic objectForKey:@"_name"];
+    
+    
     NSString * compId = [dic objectForKey:@"_id"];
     float x = [[dic objectForKey:@"_x"]floatValue];
     float y = [[dic objectForKey:@"_y"]floatValue];
@@ -981,7 +1021,7 @@
     if([attrDic isKindOfClass:[NSDictionary class]]){
         attrArray =[[NSArray alloc] initWithObjects:attrDic, nil];
     }
-
+    
     for(NSDictionary * ad in attrArray){
         NSString * aname = [ad objectForKey:@"_name"];
         NSString * adefVal = [ad objectForKey:@"_default_value"];
@@ -1003,7 +1043,7 @@
     }
     
     
-    int r = 2;
+    
     
     return temp;
 }
@@ -1036,5 +1076,73 @@
     
     
     return conn;
+}
+
+
+#pragma mark Look for json with name...
+-(NSString *)searchJsonNamed:(NSString *)name{
+    NSString * result = nil;
+    
+    result = [self searchJSONonServer:name];
+    return result;
+}
+
+-(NSString *)searchLocalJSON:(NSString *)name{
+    return nil;
+}
+
+-(NSString *)searchJSONonServer:(NSString *)name{
+    
+    NSArray * parts = [name componentsSeparatedByString:@"."];
+    NSString * trueName = [parts[0] lowercaseString];
+    //Get json content from
+    NSLog(@"Loading files from server");
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/ecores/%@?json=true", baseURL, trueName]];
+    
+    NSURLRequest * urlRequest = [NSURLRequest requestWithURL:url];
+    NSURLResponse * response = nil;
+    NSError * error = nil;
+    NSData * data = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:&response error:&error];
+    if(error != nil){ //Some error
+    }
+    else{ //No error
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        if(error == nil){
+            NSString * code = [dictionary objectForKey:@"code"];
+            if([code isEqualToString:@"200"]){
+                NSDictionary * dicArray = [dictionary objectForKey:@"array"];
+                NSDictionary * body = [dicArray objectForKey:@"body"];
+                
+                NSArray * bodyKeys = [body allKeys];
+                
+                if(bodyKeys.count != 0){
+                    NSString * con = [body objectForKey:@"content"];
+                    
+                    
+                    
+                    //Fix content: Change \" -> "
+                    con = [con stringByReplacingOccurrencesOfString:@"\\\"" withString:@"\""];
+                    con = [con stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                    
+                    return con;
+                }else if([code isEqualToString:@"300"]){
+                    NSLog(@"Error 300. No existe el fichero");
+                    return nil;
+                }else{
+                    NSLog(@"No existe ese fichero");
+                    return nil;
+                }
+                
+            }else{
+                NSLog(@"Código de respuesta no válido");
+                return nil;
+            }
+        }else{
+            NSLog(@"Error parsing data");
+            return nil;
+        }
+    }
+    
+    return nil;
 }
 @end

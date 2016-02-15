@@ -522,48 +522,7 @@
 - (IBAction)exportCanvasToImage:(id)sender {
     
     //Get min bound
-    Component * minx = nil;
-    Component * miny = nil;
-    Component * maxx = nil;
-    Component * maxy = nil;
-    
-    float minxW, minyW, maxxW, maxyW;
-    
-    for(Component * comp in dele.components){
-        //First round
-        if(minx == nil){
-            minx = comp;
-        }
-        if(miny == nil){
-            miny = comp;
-        }
-        if(maxx == nil){
-            maxx = comp;
-        }
-        if(maxy == nil){
-            maxy = comp;
-        }
-        
-        //Let's update this
-        if(comp.center.x < minx.center.x){
-            minx = comp;
-        }
-        if(comp.center.x > maxx.center.x){
-            minx = comp;
-        }
-        if(comp.center.y < miny.center.y){
-            miny = comp;
-        }
-        if(comp.center.y >maxy.center.y){
-            maxy = comp;
-        }
-    }
-    
-    minxW = minx.frame.size.width / 2;
-    minyW = miny.frame.size.height / 2;
-    maxxW = maxx.frame.size.width / 2;
-    maxyW = maxy.frame.size.height / 2;
-    
+
     /*UIGraphicsBeginImageContextWithOptions(CGSizeMake(maxxW-minxW + maxxW, maxyW-minyW + maxyW), canvas.opaque, 0.0);
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextTranslateCTM(context, - minx.center.x - minxW, - miny.center.x - minyW);
@@ -699,6 +658,7 @@
 
 - (void)zoomToPoint:(CGPoint)zoomPoint withScale:(CGFloat)scale animated:(BOOL)animated
 {
+
     
     
     CGPoint translatedZoomPoint = CGPointZero;
@@ -735,15 +695,15 @@
         zoomLevel = 1;
     }else if(zoomLevel == 1){
         zoomLevel = 0;
+    }else{
+        zoomLevel = 0;
     }
 
-    
     CGPoint p = [tapRecognizer locationInView: self.view];
     CGPoint pointInSV = [self.view convertPoint:p toView:canvas];
     
     float newScale = [self getZoomScaleForIntValue:zoomLevel];
-    
-    
+
     [self zoomToPoint:pointInSV withScale:newScale animated:YES];
 }
 
