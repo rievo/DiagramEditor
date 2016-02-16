@@ -44,6 +44,7 @@
     
     BOOL loadingADiagram;
     NSString * content;
+    UIActivityIndicatorView *activityIndicator;
 }
 
 @end

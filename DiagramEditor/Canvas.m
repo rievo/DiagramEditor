@@ -593,6 +593,8 @@
     [path addLineToPoint:CGPointMake(0-halfDec, halfDec-halfDec)];
     [path setLineWidth:lineWitdh];
     
+    [path setLineWidth:1.5];
+    
     return path;
 }
 /*
@@ -611,6 +613,7 @@
     [path addLineToPoint:CGPointMake(halfDec-halfDec, 0-halfDec)];
     [path closePath];
     [path setLineWidth:lineWitdh];
+    [path setLineWidth:1.5];
     return path;
 }
 
@@ -624,6 +627,7 @@
     
     [path closePath];
     [path setLineWidth:lineWitdh];
+    [path setLineWidth:1.5];
 
     return path;
 }
@@ -637,6 +641,7 @@
     
     [path closePath];
     [path setLineWidth:lineWitdh];
+    [path setLineWidth:1.5];
     
     return path;
 }
@@ -648,6 +653,7 @@
     [path addLineToPoint:CGPointMake(0 -halfDec, halfDec-halfDec)];
     [path addLineToPoint:CGPointMake(decoratorSize -halfDec , decoratorSize -halfDec)];
     [path setLineWidth:lineWitdh];
+    [path setLineWidth:1.5];
 
     
     return path;
@@ -661,6 +667,7 @@
     [path addLineToPoint:CGPointMake(decoratorSize -halfDec , decoratorSize -halfDec)];
     [path setLineWidth:lineWitdh];
     [path closePath];
+    [path setLineWidth:1.5];
     
     return path;
 }

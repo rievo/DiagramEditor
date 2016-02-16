@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F107E4641C72221A007DD29E /* ThinkingView.m in Sources */ = {isa = PBXBuildFile; fileRef = F107E4631C72221A007DD29E /* ThinkingView.m */; };
+		F107E4661C722229007DD29E /* ThinkingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F107E4651C722229007DD29E /* ThinkingView.xib */; };
 		F10AB8061C50E53100DE6DCE /* open.png in Resources */ = {isa = PBXBuildFile; fileRef = F10AB8051C50E53100DE6DCE /* open.png */; };
 		F10AB8081C50E7E200DE6DCE /* PasteView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F10AB8071C50E7E200DE6DCE /* PasteView.xib */; };
 		F10AB80B1C50E85100DE6DCE /* cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = F10AB8091C50E85100DE6DCE /* cancel.png */; };
@@ -77,6 +79,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F107E4621C72221A007DD29E /* ThinkingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThinkingView.h; sourceTree = "<group>"; };
+		F107E4631C72221A007DD29E /* ThinkingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThinkingView.m; sourceTree = "<group>"; };
+		F107E4651C722229007DD29E /* ThinkingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ThinkingView.xib; sourceTree = "<group>"; };
 		F10AB8051C50E53100DE6DCE /* open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = open.png; sourceTree = "<group>"; };
 		F10AB8071C50E7E200DE6DCE /* PasteView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PasteView.xib; sourceTree = "<group>"; };
 		F10AB8091C50E85100DE6DCE /* cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel.png; sourceTree = "<group>"; };
@@ -249,6 +254,9 @@
 				F147B43D1C63507100A8F5E7 /* EdgeListView.xib */,
 				F147B4451C63509600A8F5E7 /* EdgeListView.h */,
 				F147B4461C63509600A8F5E7 /* EdgeListView.m */,
+				F107E4621C72221A007DD29E /* ThinkingView.h */,
+				F107E4631C72221A007DD29E /* ThinkingView.m */,
+				F107E4651C722229007DD29E /* ThinkingView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -459,6 +467,7 @@
 				F17B75AD1C22D9CC00AB1B57 /* list.png in Resources */,
 				F1C6347B1C2842C30072912D /* camera.png in Resources */,
 				F147B44B1C636FB400A8F5E7 /* test.graphicR in Resources */,
+				F107E4661C722229007DD29E /* ThinkingView.xib in Resources */,
 				F12F70151C69F4E70085229C /* testNuevo.json in Resources */,
 				F10AB80C1C50E85100DE6DCE /* ok.png in Resources */,
 				F14181CB1C68DE4300E838F9 /* minusDark.png in Resources */,
@@ -482,6 +491,7 @@
 			files = (
 				F1786DF21C56411300963663 /* SaveNameView.m in Sources */,
 				F16C7DC11C577E9100CA9B25 /* Reference.m in Sources */,
+				F107E4641C72221A007DD29E /* ThinkingView.m in Sources */,
 				F1685EA81C1829F00094097E /* Canvas.m in Sources */,
 				F16C7DCB1C578D4B00CA9B25 /* ConnectionDetailsView.m in Sources */,
 				F185107B1C1824C8004EC4C8 /* AppDelegate.m in Sources */,

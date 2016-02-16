@@ -24,6 +24,8 @@
 
 #import "Connection.h"
 
+#import "ThinkingView.h"
+
 #define defaultwidth 50
 #define defaultheight 50
 
@@ -709,8 +711,9 @@
              storeOnAttributesArray:pi.attributes
              andReferencesArray:pi.references];
              }*/
-            return YES;
+            
         }
+        return YES;
     }
     
     
@@ -849,7 +852,7 @@
     loadingADiagram = YES;
     // [self performSegueWithIdentifier:@"showEditor" sender:self];
     
-    [self parseXMLDiagram];
+    [self parseXMLDiagramWithText:content];
 }
 
 
@@ -868,11 +871,11 @@
 
 #pragma mark Load old diagram
 -(void)parseContent{
-    [self parseXMLDiagram];
+    [self parseXMLDiagramWithText:content];
 }
 
--(void)parseXMLDiagram{
-    NSDictionary * dic = [NSDictionary dictionaryWithXMLString:content];
+-(void)parseXMLDiagramWithText:(NSString *)text{
+    NSDictionary * dic = [NSDictionary dictionaryWithXMLString:text];
     
     NSDictionary * nodeDic = [dic objectForKey:@"Nodes"];
     NSArray * nodes = [nodeDic objectForKey:@"node"];
@@ -1093,16 +1096,27 @@
 
 -(NSString *)searchJSONonServer:(NSString *)name{
     
+    //ThinkingView * thinking = [[[NSBundle mainBundle] loadNibNamed:@"ThinkingView"
+    //                                                                    owner:self
+     //                                                                 options:nil] objectAtIndex:0];
+    //[self.view addSubview:thinking];
+    //[thinking setFrame:self.view.frame];
+    
+    
     NSArray * parts = [name componentsSeparatedByString:@"."];
-    NSString * trueName = [parts[0] lowercaseString];
+    NSString * trueName = parts[0] ;
     //Get json content from
     NSLog(@"Loading files from server");
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/ecores/%@?json=true", baseURL, trueName]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/jsons/%@?json=true", baseURL, trueName]];
     
-    NSURLRequest * urlRequest = [NSURLRequest requestWithURL:url];
+    NSURLRequest * urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:2.0];
     NSURLResponse * response = nil;
     NSError * error = nil;
     NSData * data = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:&response error:&error];
+
+    //[thinking removeFromSuperview];
+    
+    
     if(error != nil){ //Some error
     }
     else{ //No error
@@ -1111,30 +1125,25 @@
             NSString * code = [dictionary objectForKey:@"code"];
             if([code isEqualToString:@"200"]){
                 NSDictionary * dicArray = [dictionary objectForKey:@"array"];
-                NSDictionary * body = [dicArray objectForKey:@"body"];
-                
+                NSString * bodystr = [dicArray objectForKey:@"content"];
+                bodystr = [bodystr stringByReplacingOccurrencesOfString:@"\\n" withString:@""];
+                bodystr = [bodystr stringByReplacingOccurrencesOfString:@"\\\"" withString:@"\""];
+                bodystr = [bodystr stringByReplacingOccurrencesOfString:@"\\" withString:@""];
+                NSDictionary * body = [NSJSONSerialization JSONObjectWithData:[bodystr dataUsingEncoding:NSUTF8StringEncoding]
+                                                                      options:kNilOptions
+                                                                        error:&error];
                 NSArray * bodyKeys = [body allKeys];
                 
                 if(bodyKeys.count != 0){
-                    NSString * con = [body objectForKey:@"content"];
                     
-                    
-                    
-                    //Fix content: Change \" -> "
-                    con = [con stringByReplacingOccurrencesOfString:@"\\\"" withString:@"\""];
-                    con = [con stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-                    
-                    return con;
-                }else if([code isEqualToString:@"300"]){
-                    NSLog(@"Error 300. No existe el fichero");
-                    return nil;
-                }else{
-                    NSLog(@"No existe ese fichero");
-                    return nil;
+                    return bodystr;
                 }
                 
+            }else if([code isEqualToString:@"300"]){
+                NSLog(@"%@", [dictionary objectForKey:@"msg"]);
+                return nil;
             }else{
-                NSLog(@"Código de respuesta no válido");
+                NSLog(@"%@", [dictionary objectForKey:@"msg"]);
                 return nil;
             }
         }else{

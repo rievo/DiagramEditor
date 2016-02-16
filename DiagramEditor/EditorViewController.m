@@ -522,39 +522,77 @@
 - (IBAction)exportCanvasToImage:(id)sender {
     
     //Get min bound
-
-    /*UIGraphicsBeginImageContextWithOptions(CGSizeMake(maxxW-minxW + maxxW, maxyW-minyW + maxyW), canvas.opaque, 0.0);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextTranslateCTM(context, - minx.center.x - minxW, - miny.center.x - minyW);
-    [canvas.layer renderInContext:context];
+    Component * minx = nil;
+    Component * miny = nil;
+    Component * maxx = nil;
+    Component * maxy = nil;
     
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-
-    int r = 0;*/
+    float minxW, minyW, maxxW, maxyW;
     
-    UIGraphicsBeginImageContext(canvas.frame.size);
+    for(Component * comp in dele.components){
+        //First round
+        if(minx == nil){
+            minx = comp;
+        }
+        if(miny == nil){
+            miny = comp;
+        }
+        if(maxx == nil){
+            maxx = comp;
+        }
+        if(maxy == nil){
+            maxy = comp;
+        }
+        
+        //Let's update this
+        if(comp.center.x < minx.center.x){
+            minx = comp;
+        }
+        if(comp.center.x > maxx.center.x){
+            maxx = comp;
+        }
+        if(comp.center.y < miny.center.y){
+            miny = comp;
+        }
+        if(comp.center.y >maxy.center.y){
+            maxy = comp;
+        }
+    }
+    
+    minxW = minx.frame.size.width / 2;
+    minyW = miny.frame.size.height / 2;
+    maxxW = maxx.frame.size.width / 2;
+    maxyW = maxy.frame.size.height / 2;
+    
+    float textHeigh = 20;
+    float margin = 15;
+    
+    
+    //*2 due to retina display
+    CGRect cutRect = CGRectMake(roundf(minx.center.x -minxW- 3*margin)*2,
+                                roundf(miny.center.y - minyW - textHeigh- 3*margin)*2,
+                                roundf(maxx.center.x-minx.center.x + minxW + maxxW + 3*margin*2)*2,
+                                roundf(maxy.center.y-miny.center.y + minyW + maxyW +textHeigh+ 3*margin*2)*2);
+    
+    UIGraphicsBeginImageContextWithOptions(canvas.frame.size,
+                                           canvas.opaque,
+                                           0.0);
     [canvas.layer renderInContext:UIGraphicsGetCurrentContext()];
     
     UIImage* image = nil;
-    
-    UIGraphicsBeginImageContext(scrollView.contentSize);
-    {
-        CGPoint savedContentOffset = scrollView.contentOffset;
-        CGRect savedFrame = scrollView.frame;
-        
-        scrollView.contentOffset = CGPointZero;
-        scrollView.frame = CGRectMake(0, 0, scrollView.contentSize.width, scrollView.contentSize.height);
-        
-        [scrollView.layer renderInContext: UIGraphicsGetCurrentContext()];
-        image = UIGraphicsGetImageFromCurrentImageContext();
-        
-        scrollView.contentOffset = savedContentOffset;
-        scrollView.frame = savedFrame;
-    }
+
+    image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
-    NSData * data = UIImagePNGRepresentation(image);
+    
+
+    CGImageRef imgref = image.CGImage;
+    
+    
+    CGImageRef subimage = CGImageCreateWithImageInRect(imgref, cutRect);
+    UIImage * finalImage = [UIImage imageWithCGImage:subimage];
+    
+    NSData * data = UIImagePNGRepresentation(finalImage);
     
 
     
@@ -576,7 +614,7 @@
     UIAlertAction * saveondevice = [UIAlertAction actionWithTitle:@"Save on camera roll"
                                                             style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * _Nonnull action) {
-                                                              [self saveImageOnCameraRoll:image];
+                                                              [self saveImageOnCameraRoll:finalImage];
                                                           }];
     
     UIAlertAction * cancel = [UIAlertAction actionWithTitle:@"Cancel"
