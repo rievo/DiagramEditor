@@ -41,17 +41,19 @@
     
     // Do any additional setup after loading the view.
     
-    CGRect oldFrame = previewComponent.frame;
-    temp = [[Component alloc] initWithFrame:CGRectMake(0, 0, oldFrame.size.width, oldFrame.size.height)];
-    temp.fillColor = comp.fillColor;
-    [temp updateNameLabel];
-    //temp.connections = [NSMutableArray arrayWithArray:comp.connections];
-    temp.type = comp.type;
-    temp.shapeType = comp.shapeType;
+    //CGRect oldFrame = previewComponent.frame;
+    //temp = [[Component alloc] initWithFrame:CGRectMake(0, 0, oldFrame.size.width, oldFrame.size.height)];
+    previewComponent.fillColor = comp.fillColor;
+    [previewComponent updateNameLabel];
+   
+    [previewComponent prepare];
+    previewComponent.type = comp.type;
+    previewComponent.shapeType = comp.shapeType;
+    previewComponent.name = comp.name;
     
-    for (UIGestureRecognizer *recognizer in temp.gestureRecognizers) {
-        [temp removeGestureRecognizer:recognizer];
-    }
+    /*for (UIGestureRecognizer *recognizer in previewComponent.gestureRecognizers) {
+        [previewComponent removeGestureRecognizer:recognizer];
+    }*/
     for (UIGestureRecognizer *recognizer in previewComponent.gestureRecognizers) {
         [previewComponent removeGestureRecognizer:recognizer];
     }
@@ -62,9 +64,9 @@
         [v removeFromSuperview];
     }
     
-    [previewComponent addSubview:temp];
+    //[previewComponent addSubview:temp];
     
-    [temp setNeedsDisplay];
+    [previewComponent setNeedsDisplay];
     
     dele = [[UIApplication sharedApplication]delegate];
     
@@ -87,8 +89,7 @@
     
     
     @try {
-        //TODO: Arreglar reloaddata
-        //[outConnectionsTable reloadData];
+        [outConnectionsTable reloadData];
     }
     @catch (NSException *exception) {
         NSLog(@"%@", exception);
@@ -127,7 +128,7 @@
 -(void)textFieldDidEndEditing:(UITextField *)textField{
     
     if(textField.text.length >0){
-        [temp updateNameLabel];
+        [previewComponent updateNameLabel];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
     }else{
         
@@ -138,7 +139,7 @@
     NSString * new = [nameTextField.text stringByReplacingCharactersInRange:range withString:string];
     if(new.length > 0){
         [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
-        [temp updateNameLabel];
+        [previewComponent updateNameLabel];
         [comp updateNameLabel];
         return YES;
     }
@@ -244,6 +245,7 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
                     atvc.attributeNameLabel.text = attr.name;
                     atvc.backgroundColor = [UIColor clearColor];
                     atvc.comp = comp;
+                    atvc.detailsPreview = previewComponent;
                     
                     for(ClassAttribute * atr in comp.attributes){
                         if([atr.name isEqualToString:atvc.attributeNameLabel.text]){

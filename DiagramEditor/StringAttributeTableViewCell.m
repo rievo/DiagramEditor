@@ -11,7 +11,7 @@
 
 @implementation StringAttributeTableViewCell
 
-@synthesize textField, attributeNameLabel, comp;
+@synthesize textField, attributeNameLabel, comp, detailsPreview;
 
 - (void)awakeFromNib {
     // Initialization code
@@ -23,6 +23,10 @@
         }
     }
     [comp updateNameLabel];
+    [detailsPreview setNeedsDisplay];
+    [detailsPreview updateNameLabel];
+
+    
     
     [textField setDelegate:self];
 }
@@ -47,6 +51,8 @@
             }
         }
         [comp updateNameLabel];
+        [detailsPreview setNeedsDisplay];
+        [detailsPreview updateNameLabel];
     }
 }
 
@@ -54,27 +60,33 @@
 -(BOOL)textField:(UITextField *)tf
 shouldChangeCharactersInRange:(NSRange)range
 replacementString:(NSString *)string{
-    
-    NSInteger newLength =tf.text.length + string.length -range.length;
 
     
-    if(newLength > 0){
+    //if(newLength > 0){
         for(ClassAttribute * atr in comp.attributes){
             if([atr.name isEqualToString:attributeNameLabel.text]){
-                atr.currentValue = tf.text;
+                atr.currentValue =[tf.text stringByReplacingCharactersInRange:range withString:string];
                 comp.name = atr.currentValue;
+                detailsPreview.name = atr.currentValue;
             }
         }
         [comp updateNameLabel];
+        [detailsPreview setNeedsDisplay];
+        [detailsPreview updateNameLabel];
         return YES;
-    }else
-        return NO;
+    //}else
+    //    return NO;
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)tf
 {
-    [tf resignFirstResponder];
-    return YES;
+    //if(tf.text.length == 0){
+    //    return NO;
+    //}else{
+        [tf resignFirstResponder];
+        return YES;
+    //}
+
 }
 
 @end

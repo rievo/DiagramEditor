@@ -20,7 +20,7 @@
     
     AppDelegate * dele;
     
-    Component * temp;
+    //Component * temp;
     __weak IBOutlet UITableView *outConnectionsTable;
     __weak IBOutlet UITableView *attributesTable;
     

@@ -43,6 +43,37 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     return self;
 }
 
+-(void)prepare{
+    font = [UIFont fontWithName:@"Helvetica" size:10.0];
+    
+    [self addTapGestureRecognizer];
+    [self addLongPressGestureRecognizer];
+    [self addPanGestureRecognizer];
+    
+    
+    dele = [[UIApplication sharedApplication]delegate];
+    
+    
+    self.backgroundColor = [UIColor clearColor];
+    //NameLayer
+    textLayer = [[CATextLayer alloc] init];
+    
+    textLayer.foregroundColor = [UIColor blackColor].CGColor;
+    CGRect rect = CGRectMake(0 - self.bounds.size.width /2, 0-20, self.frame.size.width * 2,20);
+    textLayer.frame = rect;
+    textLayer.contentsScale = [UIScreen mainScreen].scale;
+    [textLayer setFont:@"Helvetica-Light"];
+    [textLayer setFontSize:14];
+    textLayer.alignmentMode = kCAAlignmentCenter;
+    textLayer.truncationMode = kCATruncationStart;
+    textLayer.backgroundColor = [UIColor clearColor].CGColor;
+    [self.layer addSublayer:textLayer];
+    
+    [self setNeedsDisplay];
+
+    
+}
+
 -(instancetype)initWithFrame:(CGRect)frame{
     
     self = [super initWithFrame:frame];

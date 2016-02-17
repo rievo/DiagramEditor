@@ -76,5 +76,5 @@
 -(CGPoint)getRightAnchorPoint;
 
 -(void)updateNameLabel;
-
+-(void)prepare;
 @end

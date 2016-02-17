@@ -14,5 +14,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UILabel *attributeNameLabel;
 @property Component * comp;
+@property Component * detailsPreview;
 
 @end
