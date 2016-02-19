@@ -15,10 +15,12 @@
 
 @implementation Palette
 
-@synthesize paletteItems,name;
+@synthesize paletteItems,name, sliderToChange;
 
 
 -(void)preparePalette{
+    
+    self.delegate = self;
     self.contentSize = CGSizeMake(0, self.bounds.size.height);
     
     dele = [UIApplication sharedApplication].delegate;
@@ -43,13 +45,13 @@
         
         temp.frame = insideRect;
         
-        CGFloat hue = ( arc4random() % 256 / 256.0 );  //  0.0 to 1.0
+        /*CGFloat hue = ( arc4random() % 256 / 256.0 );  //  0.0 to 1.0
         CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from white
         CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;  //  0.5 to 1.0, away from black
         UIColor *color = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
-        temp.backgroundColor =color;
+        temp.backgroundColor =color;*/
         
-        //temp.backgroundColor = [UIColor clearColor];
+        temp.backgroundColor = [UIColor clearColor];
         
         //Añadimos el label
         /*UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(0 ,temp.frame.size.height -20, temp.frame.size.width, 30)];
@@ -75,5 +77,14 @@
         [pi removeFromSuperview];
     }
     paletteItems = [[NSMutableArray alloc] init];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    //NSLog(@"ugh");
+    /*if(sliderToChange != nil){
+        //scrollView.contentSize.width
+        //[palette setContentOffset:CGPointMake(slider.value,0) animated:NO];
+        sliderToChange.value = self.frame.size.width -self.contentSize.width ;
+    }*/
 }
 @end

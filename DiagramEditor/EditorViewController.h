@@ -65,6 +65,7 @@ EdgeListDelegate>{
     
     
     SureView * sureView;
+    __weak IBOutlet UISlider *slider;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
@@ -80,4 +81,6 @@ EdgeListDelegate>{
 
 - (IBAction)saveCurrentDiagram:(id)sender;
 - (IBAction)exportCanvasToImage:(id)sender;
+
+- (IBAction) valueChanged:(id)sender event:(UIControlEvents)event ;
 @end

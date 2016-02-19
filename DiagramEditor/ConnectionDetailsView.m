@@ -10,6 +10,7 @@
 #import "Connection.h"
 #import "ReferenceTableViewCell.h"
 #import "AppDelegate.h"
+#import "Component.h"
 
 @implementation ConnectionDetailsView
 
@@ -46,6 +47,8 @@
     nameTextField.text = connection.name;
     attributesTable.delegate = self;
     attributesTable.dataSource = self;
+    sourceLabel.text = connection.source.name;
+    targetLabel.text = connection.target.name;
 }
 
 

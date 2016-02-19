@@ -20,14 +20,14 @@
 
 #define defradius 35
 
-#define decoratorSize 15
+#define decoratorSize 10
 
 #define pi 3.14159265359
 #define radiansToDegrees( radians ) ( ( radians ) * ( 180.0 / M_PI ) )
 #define   DEGREES_TO_RADIANS(degrees)  ((pi * degrees)/ 180)
 
 
-#define lineWitdh 1.0
+#define lineWitdh 2.0
 
 @implementation Canvas
 
@@ -58,6 +58,9 @@
 
 
 -(void)prepareCanvas{
+    
+    fontColor = [UIColor blackColor];
+    font = [UIFont fontWithName:@"Helvetica" size:10.0];
     
     xArrowStart = -1.0;
     yArrowStart = -1.0;
@@ -265,14 +268,16 @@
                 }
                 
                 //El bezier path va a pasar por px, py
-                
+                CGPoint controlPoint = CGPointMake(px, py);
                 UIBezierPath * line  = [[UIBezierPath alloc] init];
                 [line moveToPoint:sourceAnchor];
-                [line addQuadCurveToPoint:targetAnchor controlPoint:CGPointMake(px, py)];
+                [line addQuadCurveToPoint:targetAnchor controlPoint:controlPoint];
                 [line setLineWidth:1.0];
+                //TODO: Change stroke color
                 [[UIColor blackColor]setStroke];
                 [line stroke];
                 conn.arrowPath = line;
+                conn.controlPoint = controlPoint;
                 
                 
                 
@@ -289,7 +294,7 @@
                 UIBezierPath * pathTarget = [[UIBezierPath alloc]init];
                 UIBezierPath * pathSource = [[UIBezierPath alloc]init];
                 
-
+                
                 float halfDec = decoratorSize/2;
                 
                 [[UIColor redColor]setStroke];
@@ -302,12 +307,12 @@
                 }else if([conn.targetDecorator isEqualToString:@"InputArrow"]){
                     
                     pathTarget = [self getInputArrowPath];
-
+                    
                 }else if([conn.targetDecorator isEqualToString:@"Diamond"]){
-
+                    
                     pathTarget = [self getDiamondPath];
                 }else if([conn.targetDecorator isEqualToString:@"FillDiamond"]){
-
+                    
                     pathTarget = [self getDiamondPath];
                 }else if([conn.targetDecorator isEqualToString:@"InputClosedArrow"]){
                     pathTarget = [self getInputClosedArrowPath];
@@ -317,7 +322,7 @@
                     pathTarget = [self getOutputArrowPath];
                     
                 }else if([conn.targetDecorator isEqualToString:@"OutputClosedArrow"]){
-
+                    
                     pathTarget = [self getOutputClosedArrowPath];
                 }else if([conn.targetDecorator isEqualToString:@"OutputFillClosedArrow"]){
                     pathTarget = [self getOutputClosedArrowPath];
@@ -326,7 +331,7 @@
                 }
                 
                 
-
+                
                 
                 
                 CGAffineTransform transformTarget = CGAffineTransformIdentity;
@@ -335,7 +340,7 @@
                                                                                                             targetAnchor.y -(sin(angle)*halfDec + cos(angle)*0 )));
                 [pathTarget applyTransform:transformTarget];
                 
-
+                
                 
                 [pathTarget stroke];
                 if([conn.targetDecorator isEqualToString:@"fillDiamond"] ||
@@ -355,7 +360,7 @@
                     pathSource = [self getInputArrowPath];
                     
                 }else if([conn.sourceDecorator isEqualToString:@"Diamond"]){
-                   pathSource = [self getDiamondPath];
+                    pathSource = [self getDiamondPath];
                 }else if([conn.sourceDecorator isEqualToString:@"FillDiamond"]){
                     pathSource = [self getDiamondPath];
                     
@@ -369,13 +374,13 @@
                     pathSource = [self getOutputArrowPath];
                     
                 }else if([conn.sourceDecorator isEqualToString:@"OutputClosedArrow"]){
-                   pathSource = [self getOutputClosedArrowPath];
+                    pathSource = [self getOutputClosedArrowPath];
                 }else if([conn.sourceDecorator isEqualToString:@"OutputFillClosedArrow"]){
                     pathSource = [self getOutputClosedArrowPath];
                 }else{ //No decorator
-                   pathSource = [self getNoDecoratorPath];
+                    pathSource = [self getNoDecoratorPath];
                 }
-
+                
                 CGAffineTransform transformSource = CGAffineTransformIdentity;
                 transformSource = CGAffineTransformConcat(transformSource, CGAffineTransformMakeRotation(angle + M_PI));
                 transformSource = CGAffineTransformConcat(transformSource,
@@ -389,7 +394,7 @@
                 if([conn.sourceDecorator isEqualToString:@"fillDiamond"] ||
                    [conn.sourceDecorator isEqualToString:@"inputFillClosedArrow"] ||
                    [conn.sourceDecorator isEqualToString:@"outputFillClosedArrow"]){
-                [pathSource fill];
+                    [pathSource fill];
                 }
                 
                 
@@ -450,66 +455,32 @@
         }
     }
     
-    /*
-    //Dibujamos las relaciones de padre a hijo
-    [[UIColor greenColor]setStroke];
-    for(Component * parent in dele.components){
-        for(Component * son in parent.sons){
-            UIBezierPath * sonLine = [[UIBezierPath alloc] init];
-            [sonLine setLineWidth:1.0];
-            [sonLine moveToPoint: parent.center];
-            [sonLine addLineToPoint:son.center];
-            [sonLine stroke];
-        }
-    }*/
     
-    //
-    //            UIColor * color =nil;
-    //            UIFont * font = nil;
-    //
-    //            color = [UIColor blackColor];
-    //            font = [UIFont fontWithName:@"Helvetica" size:12.0];
-    //
-    //
-    //            NSDictionary * dic = @{NSForegroundColorAttributeName: color, NSFontAttributeName: font};
-    //            NSAttributedString * str = [[NSAttributedString alloc] initWithString:conn.name attributes:dic];
-    //
-    //
-    //            CGSize strSize = [str size];
-    //
-    //
-    //
-    //            //[str drawAtPoint:CGPointMake(z, 5)];
-    //            double w = fabs(right.x - left.x);
-    //            h = 0;
-    //
-    //            //if(left.y < right.y)
-    //            //   h = abs(right.y - left.y);
-    //            //else
-    //            h = left.y - right.y;
-    //            h = fabs(h);
-    //
-    //            double b = (w - strSize.width)/2.0;
-    //            double e = (h - strSize.height)/2.0;
-    //
-    //            double y;
-    //            if(left.y < right.y){
-    //                y = left.y;
-    //            }else{
-    //                y = right.y;
-    //            }
-    //
-    //
-    //            [str drawAtPoint:CGPointMake(left.x +b + xmargin, y + e - ymargin)];
-    //
-    //
-    //
-    //            CGRect strRect = CGRectMake(left.x + b + xmargin, y+e -ymargin, str.size.width, str.size.height);
-    //
-    //            conn.touchRect = strRect;
-    //
-    //
-    //
+    
+    
+    NSDictionary * dic = @{NSForegroundColorAttributeName: fontColor,
+                           NSFontAttributeName: font};
+    
+    //Draw connections name
+    
+    for(int c = 0; c < dele.connections.count;c++){
+        conn = [dele.connections objectAtIndex:c];
+        
+        NSAttributedString * str = [[NSAttributedString alloc] initWithString:conn.name
+                                                                   attributes:dic];
+        
+        
+        CGSize strSize = [str size];
+        
+        //[str drawAtPoint:CGPointMake(left.x +b + xmargin, y + e - ymargin)];
+        
+        float halfw = strSize.width / 2;
+        [str drawAtPoint:CGPointMake( conn.controlPoint.x - halfw, conn.controlPoint.y-5)];
+    }
+    
+    
+    
+    
     if(xArrowStart> 0 && yArrowStart> 0){
         
         UIBezierPath * line = [[UIBezierPath alloc] init];
@@ -520,8 +491,8 @@
         [line stroke];
         
     }
-
-
+    
+    
     
 }
 
@@ -585,24 +556,27 @@
 -(UIBezierPath *)getInputArrowPath{
     UIBezierPath * path = [[UIBezierPath alloc]init];
     float halfDec = decoratorSize / 2.0;
+
     
     [path moveToPoint:CGPointMake(0 -halfDec, 0-halfDec)];
     [path addLineToPoint:CGPointMake(decoratorSize-halfDec , halfDec-halfDec)];
     [path addLineToPoint:CGPointMake(0-halfDec, decoratorSize-halfDec)];
     [path moveToPoint:CGPointMake(decoratorSize-halfDec,halfDec-halfDec)];
     [path addLineToPoint:CGPointMake(0-halfDec, halfDec-halfDec)];
+    
+
+    
     [path setLineWidth:lineWitdh];
     
-    [path setLineWidth:1.5];
     
     return path;
 }
 /*
--(UIBezierPath *)getInputArrowPath{
-    UIBezierPath * path = [[UIBezierPath alloc]init];
-    float halfDec = decoratorSize / 2.0;
-    return path;
-}*/
+ -(UIBezierPath *)getInputArrowPath{
+ UIBezierPath * path = [[UIBezierPath alloc]init];
+ float halfDec = decoratorSize / 2.0;
+ return path;
+ }*/
 -(UIBezierPath *)getDiamondPath{
     UIBezierPath * path = [[UIBezierPath alloc]init];
     float halfDec = decoratorSize / 2.0;
@@ -613,7 +587,7 @@
     [path addLineToPoint:CGPointMake(halfDec-halfDec, 0-halfDec)];
     [path closePath];
     [path setLineWidth:lineWitdh];
-    [path setLineWidth:1.5];
+
     return path;
 }
 
@@ -627,8 +601,7 @@
     
     [path closePath];
     [path setLineWidth:lineWitdh];
-    [path setLineWidth:1.5];
-
+    
     return path;
 }
 -(UIBezierPath *)getInputFillClosedArrowPath{
@@ -641,7 +614,6 @@
     
     [path closePath];
     [path setLineWidth:lineWitdh];
-    [path setLineWidth:1.5];
     
     return path;
 }
@@ -653,8 +625,7 @@
     [path addLineToPoint:CGPointMake(0 -halfDec, halfDec-halfDec)];
     [path addLineToPoint:CGPointMake(decoratorSize -halfDec , decoratorSize -halfDec)];
     [path setLineWidth:lineWitdh];
-    [path setLineWidth:1.5];
-
+    
     
     return path;
 }
@@ -667,7 +638,6 @@
     [path addLineToPoint:CGPointMake(decoratorSize -halfDec , decoratorSize -halfDec)];
     [path setLineWidth:lineWitdh];
     [path closePath];
-    [path setLineWidth:1.5];
     
     return path;
 }
@@ -677,7 +647,7 @@
     float halfDec = decoratorSize / 2.0;
     [path moveToPoint:CGPointMake(0 -halfDec, halfDec-halfDec)];
     [path addLineToPoint:CGPointMake(decoratorSize-halfDec, halfDec-halfDec)];
-    [path setLineWidth:6];
+    [path setLineWidth:lineWitdh];
     //[[UIColor redColor]setStroke];
     UIColor * col = [UIColor colorWithRed:1.0
                                     green:0

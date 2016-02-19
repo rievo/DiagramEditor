@@ -200,7 +200,7 @@
     for(int i = 0; i< palettes.count; i++){
         Palette * pal = [palettes objectAtIndex:i];
         
-        if ([pal.name isEqualToString:dele.subPalette]) {
+        if ([pal.name isEqualToString:name]) {
             return pal;
         }
     }
@@ -850,9 +850,27 @@
                                            error:&error];
     
     loadingADiagram = YES;
-    // [self performSegueWithIdentifier:@"showEditor" sender:self];
     
-    [self parseXMLDiagramWithText:content];
+    //Do we have JSON for this old diagram?
+    NSString * paletteName = [self extractPaletteNameFromXMLDiagram:content];
+    
+    //Check on server jsons
+    //NSString * jsonResult = [self searchJsonNamed:paletteName];
+    
+    //if(jsonResult == nil){ //Error, we don't have this palette's json
+        /*UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"We don't have this JSON"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];*/
+    //}else{ //We can continue
+    NSArray * parts = [paletteName componentsSeparatedByString:@"."];
+        tempPaletteFile = parts[0];
+        [self parseXMLDiagramWithText:content ];
+    //}
+    
+    
 }
 
 
@@ -870,8 +888,16 @@
 
 
 #pragma mark Load old diagram
--(void)parseContent{
-    [self parseXMLDiagramWithText:content];
+/*-(void)parseContent{
+    [self parseXMLDiagramWithText:content andJSONInfo:jsonResult];
+}*/
+
+-(NSString *)extractPaletteNameFromXMLDiagram:(NSString *)cont{
+    NSDictionary * dic = [NSDictionary dictionaryWithXMLString:cont];
+    NSDictionary * palDic = [dic objectForKey:@"palette_name"];
+    NSString * paletteName = [palDic objectForKey:@"_name"];
+    
+    return paletteName;
 }
 
 -(void)parseXMLDiagramWithText:(NSString *)text{
@@ -890,8 +916,8 @@
     if([edges isKindOfClass:[NSDictionary class]]){
         edges = [[NSArray alloc]initWithObjects:edges, nil];
     }
-    NSDictionary * palDic = [dic objectForKey:@"palette_name"];
-    NSString * paletteName = [palDic objectForKey:@"_name"];
+    /*NSDictionary * palDic = [dic objectForKey:@"palette_name"];
+    NSString * paletteName = [palDic objectForKey:@"_name"];*/
     
     NSDictionary * subpaldic = [dic objectForKey:@"subpalette"];
     NSString * subpalette= [subpaldic objectForKey:@"_name"];
@@ -916,31 +942,43 @@
     
     
     //Try loading palette with that name
-    NSString * paletteContent = [self loadPaletteNamed:paletteName];
+    NSString * paletteContent = [self loadPaletteNamed:tempPaletteFile];
     
-    
-    [self extractPalettesForContentsOfFile:paletteContent];
-    
-    Palette * paletteForUse = [self extractSubPalette:dele.subPalette];
-    
-    palette = paletteForUse;
-    [palette preparePalette];
-    
-    dele.paletteItems = [[NSMutableArray alloc] initWithArray:palette.paletteItems];
-    [refreshTimer invalidate];
-    
-    BOOL result = [self completePaletteForJSONAttributes];
-    
-    if(result == YES){ //Tenemos el json y todo lo demás
+    if(paletteContent == nil){ //Error, we don't have this palette
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"This diagram uses an unknown palette."
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }else{
+        [self extractPalettesForContentsOfFile:paletteContent];
+        
+        Palette * paletteForUse = [self extractSubPalette:dele.subPalette];
+        
+        palette = paletteForUse;
+        [palette preparePalette];
+        
+        dele.paletteItems = [[NSMutableArray alloc] initWithArray:palette.paletteItems];
+        [refreshTimer invalidate];
+        
         dele.currentPaletteFileName = tempPaletteFile;
+        BOOL result = [self completePaletteForJSONAttributes];
         
-        
-        [self performSegueWithIdentifier:@"showEditor" sender:self];
-
-    }else{ //No se ha podido encontrar el json
-        NSLog(@"No te dejo seguir");
+        if(result == YES){ //Tenemos el json y todo lo demás
+            
+            
+            
+            [self performSegueWithIdentifier:@"showEditor" sender:self];
+            
+        }else{ //No se ha podido encontrar el json
+            NSLog(@"No te dejo seguir");
+        }
     }
     
+    
+    
+    //TODO: Creo que no es buena idea hacer aquí el segue
 }
 
 #pragma mark Search palette (server-local)
@@ -949,18 +987,42 @@
     
     //Search on local palettes
     
-    NSString * con = [self searchOnLocalPalettes:name];
-    
-    return con;
+    //NSString * con = [self searchOnLocalPalettes:name];
+    //TODO: Search on server palettes
+    NSString * pal = [self searchOnServerPalettes:name];
+    return pal;
 }
 
--(NSString *)searchOnServerPalettes: (NSString *)name{
+
+-(NSString *)searchOnServerPalettes: (NSString *)name{ //Name = design.graphicR
     
     NSString * temp = nil;
     
-    for(NSString * str in serverFilesArray){
-        if([str isEqualToString:name]){
+    for(PaletteFile * pf in serverFilesArray){
+        if([pf.name isEqualToString:name]){
             //Tengo un match, devuelvo el contenido
+            //Pido al servidor esa
+            NSArray * parts = [name componentsSeparatedByString:@"."];
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/palettes/%@?json=true", baseURL, parts[0]]];
+            
+            NSURLRequest * urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:2.0];
+            NSURLResponse * response = nil;
+            NSError * error = nil;
+            NSData * data = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:&response error:&error];
+
+            
+            NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+            if([[dictionary objectForKey:@"code"] isEqualToString:@"200"]){ //Ok
+                NSDictionary * dicArray = [dictionary objectForKey:@"array"];
+                NSDictionary * bodyDic = [dicArray objectForKey:@"body"];
+                NSString * con = [bodyDic objectForKey:@"content"];
+                con = [con stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                con = [con stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+                con = [con stringByReplacingOccurrencesOfString:@"\\\"" withString:@""];
+                return con;
+            }else{
+                //Error
+            }
         }
     }
     
@@ -1008,6 +1070,8 @@
     float width = [[dic objectForKey:@"_width"]floatValue];
     float height = [[dic objectForKey:@"_height"]floatValue];
     
+    NSString * className = [dic objectForKey:@"_className"];
+    
     [temp setFrame:CGRectMake(0, 0, width, height)];
     temp.center = CGPointMake(x, y);
     temp.shapeType = shape;
@@ -1017,6 +1081,7 @@
     temp.type = type;
     
     temp.attributes = [[NSMutableArray alloc] init];
+    temp.className = className;
     
     //Fill attributes
     NSArray * attrDic = [dic objectForKey:@"attribute"];
@@ -1058,6 +1123,7 @@
     NSString * name = [dic objectForKey:@"_name"];
     NSString * sourceId = [dic objectForKey:@"_source"];
     NSString * targetId = [dic objectForKey:@"_target"];
+    NSString * className = [dic objectForKey:@"_className"];
     
     Component * source = nil;
     Component * target = nil;
@@ -1076,6 +1142,7 @@
     conn.name = name;
     conn.source = source;
     conn.target = target;
+    conn.className = className;
     
     
     return conn;

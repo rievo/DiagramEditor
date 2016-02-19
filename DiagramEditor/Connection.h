@@ -17,7 +17,7 @@
 @property Component * source;
 @property Component * target;
 
-@property CGRect touchRect;
+
 @property UIBezierPath * arrowPath;
 
 @property CGPoint controlPoint;

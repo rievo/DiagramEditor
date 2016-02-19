@@ -14,6 +14,11 @@
     AppDelegate * dele;
     
     UITapGestureRecognizer * tapGR;
+    
+    
+    
+    UIColor * fontColor;
+    UIFont * font;
 }
 
 @property double xArrowStart;

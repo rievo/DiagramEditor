@@ -31,6 +31,8 @@
                                                     action:@selector(handleTap:)];
     [tapgr setDelegate:self];
     [background addGestureRecognizer:tapgr];
+    [previewComponent setNeedsDisplay];
+    [previewComponent updateNameLabel];
 }
 - (void)prepare {
     
@@ -44,12 +46,13 @@
     //CGRect oldFrame = previewComponent.frame;
     //temp = [[Component alloc] initWithFrame:CGRectMake(0, 0, oldFrame.size.width, oldFrame.size.height)];
     previewComponent.fillColor = comp.fillColor;
-    [previewComponent updateNameLabel];
-   
-    [previewComponent prepare];
+    
     previewComponent.type = comp.type;
     previewComponent.shapeType = comp.shapeType;
     previewComponent.name = comp.name;
+    [previewComponent prepare];
+    [previewComponent updateNameLabel];
+
     
     /*for (UIGestureRecognizer *recognizer in previewComponent.gestureRecognizers) {
         [previewComponent removeGestureRecognizer:recognizer];
@@ -98,7 +101,7 @@
     }
     
     
-    
+    [previewComponent setNeedsDisplay];
     
     //Tap to close
     
@@ -119,7 +122,7 @@
             [connections addObject:tc];
     }
     
-    [outConnectionsTable reloadData];
+    //[outConnectionsTable reloadData];
 }
 
 
@@ -178,9 +181,12 @@
     
     
     [delegate closeDetailsViewAndUpdateThings];
+    [previewComponent setNeedsDisplay];
 }
 
-
+- (void)viewDidAppear:(BOOL)animated{
+    int r = 2;
+}
 
 
 #pragma mark UITableView Delegate methods
@@ -196,7 +202,7 @@
         return comp.attributes.count;
     }else if(tableView == outConnectionsTable){
         return connections.count;
-    }else return 1;
+    }else return 0;
 }
 
 

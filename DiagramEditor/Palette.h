@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @class AppDelegate;
-@interface Palette : UIScrollView{
+@interface Palette : UIScrollView<UIScrollViewDelegate>{
     AppDelegate * dele;
     
 }
@@ -20,4 +20,6 @@
 
 @property NSMutableArray * paletteItems;
 @property NSString * name;
+
+@property UISlider * sliderToChange;
 @end

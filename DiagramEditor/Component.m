@@ -44,6 +44,9 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
 }
 
 -(void)prepare{
+    
+
+    
     font = [UIFont fontWithName:@"Helvetica" size:10.0];
     
     [self addTapGestureRecognizer];
@@ -56,18 +59,25 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     
     self.backgroundColor = [UIColor clearColor];
     //NameLayer
-    textLayer = [[CATextLayer alloc] init];
+    if(textLayer == nil){
+        textLayer = [[CATextLayer alloc] init];
+        
+        textLayer.foregroundColor = [UIColor blackColor].CGColor;
+        CGRect rect = CGRectMake(0 - self.bounds.size.width /2, 0-20, self.frame.size.width * 2,20);
+        textLayer.frame = rect;
+        textLayer.contentsScale = [UIScreen mainScreen].scale;
+        [textLayer setFont:@"Helvetica-Light"];
+        [textLayer setFontSize:14];
+        textLayer.alignmentMode = kCAAlignmentCenter;
+        textLayer.truncationMode = kCATruncationStart;
+        textLayer.backgroundColor = [UIColor clearColor].CGColor;
+        [self.layer addSublayer:textLayer];
+    }else{
+        textLayer.string = name;
+        [self updateNameLabel];
+    }
+
     
-    textLayer.foregroundColor = [UIColor blackColor].CGColor;
-    CGRect rect = CGRectMake(0 - self.bounds.size.width /2, 0-20, self.frame.size.width * 2,20);
-    textLayer.frame = rect;
-    textLayer.contentsScale = [UIScreen mainScreen].scale;
-    [textLayer setFont:@"Helvetica-Light"];
-    [textLayer setFontSize:14];
-    textLayer.alignmentMode = kCAAlignmentCenter;
-    textLayer.truncationMode = kCATruncationStart;
-    textLayer.backgroundColor = [UIColor clearColor].CGColor;
-    [self.layer addSublayer:textLayer];
     
     [self setNeedsDisplay];
 
@@ -604,7 +614,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
             }else{
                 //No se puede crear la conexión
                 //La clase del source no concuerda
-                return @"Clase origen no válida";
+                return @"La clase del Source no es la esperada en transition";
             }
         }
     }

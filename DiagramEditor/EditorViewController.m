@@ -107,9 +107,15 @@
     palette.paletteItems = [[NSMutableArray alloc] initWithArray:dele.paletteItems];
     [palette preparePalette];
     palette.name = dele.subPalette;
+    palette.sliderToChange = slider;
     
     dele.evc = self;
     
+    
+    //Set slider
+    slider.maximumValue = palette.frame.size.width -palette.contentSize.width ;
+
+    //NSLog(@"pags = %.2f", ceil(palette.frame.size.width / palette.contentSize.width ));
 }
 
 
@@ -374,9 +380,16 @@
                                                         
                                                     }];
     
+    UIAlertAction * saveOnServer = [UIAlertAction actionWithTitle:@"Save on server"
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * _Nonnull action) {
+                                                              [self saveDiagramOnServer];
+                                                          }];
+    
     [ac addAction:sendemail];
     [ac addAction:saveondevice];
     [ac addAction:cancel];
+    [ac addAction:saveOnServer];
     
     
     UIPopoverPresentationController * popover = ac.popoverPresentationController;
@@ -387,6 +400,49 @@
     }
     
     [self presentViewController:ac animated:YES completion:nil];
+}
+
+-(void)saveDiagramOnServer{
+    NSString * toSave = [self generateXML];
+    NSDate * date = [NSDate date];
+    
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc]init];
+    [dic setObject:[date description] forKey:@"name"];
+    [dic setObject:toSave forKey:@"content"];
+    
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic
+                                                       options:0 // Pass 0 if you don't care about the readability of the generated string
+                                                         error:&error];
+    if(!error){
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://diagrameditorserver.herokuapp.com/diagrams?json=true"]];
+        //NSURLRequest * urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:2.0];
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+        [request setHTTPMethod:@"POST"];
+        [request setTimeoutInterval:5.0];
+        [request setHTTPBody: jsonData];
+        NSURLResponse * response = nil;
+        NSError * error = nil;
+        NSData * data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+        
+        if(!error){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
+                                                            message:@"Diagram saved properly on server"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }else{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                            message:@"Diagram was not saved on server"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+    }else{
+        NSLog(@"Error generating json");
+    }
 }
 
 -(void) saveDiagramOnDevice{
@@ -458,7 +514,7 @@
     for(int i = 0; i< dele.components.count; i++){
         temp = [dele.components objectAtIndex:i];
         [writer writeStartElement:@"node"];
-        [writer writeAttribute:@"name" value:temp.name];
+        //[writer writeAttribute:@"name" value:temp.name];
         [writer writeAttribute:@"shape_type" value:temp.shapeType];
         [writer writeAttribute:@"x" value: [[NSNumber numberWithFloat:temp.center.x]description]];
         [writer writeAttribute:@"y" value: [[NSNumber numberWithFloat:temp.center.y]description]];
@@ -467,14 +523,16 @@
         [writer writeAttribute:@"type" value:temp.type];
         [writer writeAttribute:@"width" value: [[NSNumber numberWithFloat:temp.frame.size.width]description]];
         [writer writeAttribute:@"height" value: [[NSNumber numberWithFloat:temp.frame.size.height]description]];
-        
+        [writer writeAttribute:@"className" value:temp.className];
         
         //For each component, fill his attributes
         for(ClassAttribute * ca in temp.attributes){
             [writer writeStartElement:@"attribute"];
             [writer writeAttribute:@"name" value:ca.name];
             [writer writeAttribute:@"default_value" value:ca.defaultValue];
-            [writer writeAttribute:@"current_value" value:ca.currentValue];
+            if(ca.currentValue != nil)
+                [writer writeAttribute:@"current_value" value:ca.currentValue];
+            //TODO: Por aquí hay un error
             [writer writeAttribute:@"max" value:[ca.max description]];
             [writer writeAttribute:@"min" value:[ca.min description]];
             [writer writeAttribute:@"type" value:ca.type];
@@ -494,6 +552,7 @@
         [writer writeAttribute:@"name" value:c.name];
         [writer writeAttribute:@"source" value:[[NSNumber numberWithInt:(int)c.source]description]];
         [writer writeAttribute:@"target" value:[[NSNumber numberWithInt:(int)c.target]description]];
+        [writer writeAttribute:@"className" value:c.className];
         [writer writeEndElement];
     }
     [writer writeEndElement];
@@ -786,5 +845,10 @@
     return UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad;
 }
 
+
+#pragma mark UISlider
+- (IBAction) valueChanged:(id)sender event:(UIControlEvents)event {
+    [palette setContentOffset:CGPointMake(slider.value,0) animated:NO];
+}
 
 @end
