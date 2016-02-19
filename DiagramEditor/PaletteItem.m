@@ -15,6 +15,8 @@
 #define kNote @"graphicR:Note"
 #define kParallelogram @"graphicR:ShapeCompartmentParallelogram"
 
+#define handSize 15
+
 @implementation PaletteItem
 
 
@@ -152,6 +154,15 @@
     NSDictionary* textFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica" size: 10], NSForegroundColorAttributeName: [UIColor blackColor], NSParagraphStyleAttributeName: textStyle};
     
     [self.className drawInRect: textRect withAttributes: textFontAttributes];
+    
+    
+    //Draw hand
+    if(![self.type isEqualToString:kEdge]){
+        CGRect handRect = CGRectMake(self.frame.size.width - handSize , self.frame.size.height - handSize, handSize , handSize);
+        UIImage * img = [UIImage imageNamed:@"hand"];
+        [img drawInRect:handRect];
+    }
+
 }
 
 

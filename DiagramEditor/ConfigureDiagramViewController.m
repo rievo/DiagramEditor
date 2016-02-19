@@ -51,16 +51,16 @@
     [infoView setHidden:YES];
     
     
+    //Hide unused groups
+    [subPaletteGroup setHidden:YES];
+    [cancelSubpaletteSelectionOutlet setHidden:YES];
+    
+    [subPaletteGroup setFrame:CGRectMake(subPaletteGroup.frame.origin.x, subPaletteGroup.frame.origin.y, paletteFileGroup.frame.size.width, paletteFileGroup.frame.size.height)];
+    
+    
     loadingADiagram = NO;
     content = nil;
-    /* UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-     UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-     blurEffectView.frame = infoView.bounds;
-     blurEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-     
-     [infoView addSubview:blurEffectView];
-     
-     [infoView sendSubviewToBack:blurEffectView]; */
+
     
     tempPaletteFile = nil;
     
@@ -73,16 +73,10 @@
     [palettesTable setDelegate:self];
     
     
-    //Local files table
-    localFilesArray = [[NSMutableArray alloc] init];
-    [localFilesTable setDataSource:self];
-    [localFilesTable setDelegate:self];
     
-    
-    //Server files table
-    serverFilesArray = [[NSMutableArray alloc] init];
-    [serverFilesTable setDataSource:self];
-    [serverFilesTable setDelegate:self];
+    filesArray = [[NSMutableArray alloc] init];
+    [filesTable setDataSource:self];
+    [filesTable setDelegate:self];
     
     
     
@@ -93,11 +87,11 @@
                                                   object:nil];
     [thread start];
     
-    refreshTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
+    /*refreshTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
                                                     target:self
                                                   selector:@selector(loadFilesFromServer)
                                                   userInfo:nil
-                                                   repeats:YES];
+                                                   repeats:YES];*/
     
     
     //Load local files
@@ -133,12 +127,13 @@
         
         pf.name = [components objectAtIndex:components.count -1];
         pf.content = contentstr;
+        pf.fromServer = false;
         
-        [localFilesArray addObject:pf];
+        [filesArray addObject:pf];
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [localFilesTable reloadData];
+        [filesTable reloadData];
     });
     
     
@@ -159,7 +154,7 @@
                                                                  options:0
                                                                    error:NULL];
              
-             [serverFilesArray removeAllObjects];
+             //[serverFilesArray removeAllObjects];
              
              NSString * code = [dic objectForKey:@"code"];
              
@@ -171,13 +166,13 @@
                      PaletteFile * pf = [[PaletteFile alloc] init];
                      pf.name = [ins objectForKey:@"name"];
                      pf.content = [ins objectForKey:@"content"];
-                     
-                     [serverFilesArray addObject:pf];
+                     pf.fromServer = true;
+                     [filesArray addObject:pf];
                  }
                  
                  
                  dispatch_async(dispatch_get_main_queue(), ^{
-                     [serverFilesTable reloadData];
+                     [filesTable reloadData];
                  });
                  
                  
@@ -486,10 +481,9 @@
     
     if(tableView == palettesTable)
         return [palettes count];
-    else if(tableView == serverFilesTable)
-        return [serverFilesArray count];
-    else if(tableView == localFilesTable)
-        return [localFilesArray count];
+    else if(tableView == filesTable)
+        return [filesArray count];
+
     else
         return 0;
 }
@@ -513,16 +507,24 @@
         
         Palette * temp = [palettes objectAtIndex:indexPath.row];
         cell.textLabel.text = temp.name;
-    }else if(tableView == serverFilesTable){
-        PaletteFile * pf = [serverFilesArray objectAtIndex:indexPath.row];
-        cell.textLabel.text = pf.name;
+    }else if(tableView == filesTable){
+        UIImage * image ;
+    
         
-    }else if(tableView == localFilesTable){
-        PaletteFile * pf = [localFilesArray objectAtIndex:indexPath.row];
+        PaletteFile * pf = [filesArray objectAtIndex:indexPath.row];
+        
+        if(pf.fromServer == true){
+            image = [UIImage imageNamed:@"cloudFilled"];
+        }else{
+            image = [UIImage imageNamed:@"localFilled"];
+        }
+        
         cell.textLabel.text = pf.name;
+        cell.accessoryView = [[ UIImageView alloc ] initWithImage:image];
+        [cell.accessoryView setFrame:CGRectMake(0, 0, 20, 20)];
         
     }
-    cell.textLabel.textColor = dele.blue4;
+    
     cell.backgroundColor = [UIColor clearColor];
     cell.textLabel.adjustsFontSizeToFitWidth = YES;
     [cell.textLabel setMinimumScaleFactor:7.0/[UIFont labelFontSize]];
@@ -548,17 +550,46 @@
         
         
         
-    }else if(tableView == serverFilesTable){
-        [palette resetPalette];
+    }else if(tableView == filesTable){
+        /*[palette resetPalette];
         PaletteFile * file = [serverFilesArray objectAtIndex:indexPath.row];
         tempPaletteFile = file.name;
         
-        [self extractPalettesForContentsOfFile:file.content];
-    }else if (tableView == localFilesTable){
-        [palette resetPalette];
-        PaletteFile * pf = [localFilesArray objectAtIndex:indexPath.row];
-        tempPaletteFile = pf.name;
-        [self extractPalettesForContentsOfFile:pf.content];
+        [self extractPalettesForContentsOfFile:file.content];*/
+        [subPaletteGroup setHidden:NO];
+        oldSubPaletteGroupFrame = subPaletteGroup.frame;
+        [subPaletteGroup setFrame:CGRectMake(self.view.frame.size.width, subPaletteGroup.frame.origin.y, subPaletteGroup.frame.size.width, subPaletteGroup.frame.size.height)];
+        
+        oldPaletteFileGroupFrame = paletteFileGroup.frame;
+        
+        [cancelSubpaletteSelectionOutlet setHidden:NO];
+        [cancelSubpaletteSelectionOutlet setAlpha:0];
+        
+        
+        [UIView animateWithDuration:0.5
+                              delay:0.0
+                            options:UIViewAnimationOptionCurveEaseOut
+                         animations:^{
+                             //[sender.view setCenter:newCenter];
+                             [subPaletteGroup setCenter:self.view.center];
+                             [paletteFileGroup setFrame:CGRectMake(0-paletteFileGroup.frame.size.width, 0, paletteFileGroup.frame.size.width, paletteFileGroup.frame.size.height)];
+                         }
+                         completion:^(BOOL finished) {
+                             
+                             
+                             [UIView animateWithDuration:0.2
+                                                   delay:0.0
+                                                 options:UIViewAnimationOptionCurveEaseOut
+                                              animations:^{
+                                                  [cancelSubpaletteSelectionOutlet setAlpha:1.0];
+                                              }
+                                              completion:^(BOOL finished) {
+                                                  
+                                                  
+                                              }];
+                         }];
+        
+        
     }
     
 }
@@ -998,7 +1029,7 @@
     
     NSString * temp = nil;
     
-    for(PaletteFile * pf in serverFilesArray){
+    for(PaletteFile * pf in filesArray){
         if([pf.name isEqualToString:name]){
             //Tengo un match, devuelvo el contenido
             //Pido al servidor esa
@@ -1220,5 +1251,28 @@
     }
     
     return nil;
+}
+
+
+- (IBAction)cancelSubpaletteSelection:(id)sender {
+    //Quitar el subpalette y mostrar el palettefilegroup
+    
+    
+    [UIView animateWithDuration:0.5
+                          delay:0.0
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         //Quito el botón de volver
+                         [cancelSubpaletteSelectionOutlet setAlpha:0.0];
+                         [cancelSubpaletteSelectionOutlet setHidden:YES];
+                         
+                         [subPaletteGroup setFrame:oldSubPaletteGroupFrame];
+                         
+                         [paletteFileGroup setFrame:oldPaletteFileGroupFrame];
+                     }
+                     completion:^(BOOL finished) {
+                         [subPaletteGroup setHidden:YES];
+                         
+                     }];
 }
 @end

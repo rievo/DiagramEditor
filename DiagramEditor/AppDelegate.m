@@ -17,7 +17,7 @@
 
 @implementation AppDelegate
 
-@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR, evc;
+@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR, evc, blue0, blue1, blue2;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -26,8 +26,11 @@
     
     paletteItems = [[NSMutableArray alloc] init];
     
-    blue3 = [[UIColor alloc]initWithRed:82/256.0 green:103/256.0 blue:147/256.0 alpha:1.0];
-    blue4 = [[UIColor alloc]initWithRed:183/256.0 green:196/256.0 blue:229/256.0 alpha:1.0];
+    blue0 = [[UIColor alloc]initWithRed:91/256.0 green:109/256.0 blue:146/256.0 alpha:1.0];
+    blue1 = [[UIColor alloc]initWithRed:182/256.0 green:191/256.0 blue:209/256.0 alpha:1.0];
+    blue2 = [[UIColor alloc]initWithRed:130/256.0 green:144/256.0 blue:173/256.0 alpha:1.0];
+    blue3 = [[UIColor alloc]initWithRed:58/256.0 green:78/256.0 blue:120/256.0 alpha:1.0];
+    blue4 = [[UIColor alloc]initWithRed:34/256.0 green:54/256.0 blue:96/256.0 alpha:1.0];
     
     currentPaletteFileName = nil;
     subPalette = nil;

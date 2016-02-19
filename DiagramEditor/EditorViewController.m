@@ -468,7 +468,7 @@
     [self.view addSubview:snv];
 }
 
--(void)writeFile: (NSString *)name{
+-(BOOL)writeFile: (NSString *)name{
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
     NSString *folderPath = [documentsDirectory stringByAppendingPathComponent:@"/diagrams"];
@@ -489,6 +489,9 @@
     
     if(error){
         NSLog(@"%@",[error description]);
+        return NO;
+    }else{
+        return YES;
     }
     
     //Quitar la vista de
@@ -628,10 +631,10 @@
     
     
     //*2 due to retina display
-    CGRect cutRect = CGRectMake(roundf(minx.center.x -minxW- 3*margin)*2,
-                                roundf(miny.center.y - minyW - textHeigh- 3*margin)*2,
-                                roundf(maxx.center.x-minx.center.x + minxW + maxxW + 3*margin*2)*2,
-                                roundf(maxy.center.y-miny.center.y + minyW + maxyW +textHeigh+ 3*margin*2)*2);
+    CGRect cutRect = CGRectMake(roundf(minx.center.x -minxW-textHeigh- 2*margin)*2,
+                                roundf(miny.center.y - minyW - textHeigh- 2*margin)*2,
+                                roundf(maxx.center.x-minx.center.x + minxW + maxxW +textHeigh+ 2*margin*2)*2,
+                                roundf(maxy.center.y-miny.center.y + minyW + maxyW +textHeigh+ 2*margin*2)*2);
     
     UIGraphicsBeginImageContextWithOptions(canvas.frame.size,
                                            canvas.opaque,
@@ -820,9 +823,34 @@
 
 #pragma mark SaveNameDelegate
 -(void)saveName: (NSString *)name{
-    [self writeFile:name];
-    oldFileName = name;
+    BOOL result = [self writeFile:name];
+    [self.view endEditing:YES];
+    
+    
+    
     [snv setHidden:YES];
+    
+    if(result == NO){ //Error
+        oldFileName = nil;
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"Error saving diagram"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }else{
+        oldFileName = name;
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
+                                                        message:@"Diagram was saved properly"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    
+   
+
 }
 -(void)cancelSaving{
     [saveBackgroundBlackView setHidden:YES];

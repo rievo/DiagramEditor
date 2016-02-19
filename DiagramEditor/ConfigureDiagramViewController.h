@@ -25,13 +25,12 @@
     
     
     
+    __weak IBOutlet UITableView *filesTable;
+    NSMutableArray * filesArray; //Server and local palettes
+    
+    
     __weak IBOutlet UITableView *palettesTable;
     
-    __weak IBOutlet UITableView *localFilesTable;
-    NSMutableArray * localFilesArray;
-    
-    __weak IBOutlet UITableView *serverFilesTable;
-    NSMutableArray * serverFilesArray;
 
     NSMutableArray * palettes;
     
@@ -45,6 +44,17 @@
     BOOL loadingADiagram;
     NSString * content;
     UIActivityIndicatorView *activityIndicator;
+    
+    
+    
+    __weak IBOutlet UIView *paletteFileGroup;
+    __weak IBOutlet UIView *subPaletteGroup;
+    __weak IBOutlet UIButton *cancelSubpaletteSelectionOutlet;
+    
+    CGRect oldPaletteFileGroupFrame;
+    CGRect oldSubPaletteGroupFrame;
+    
 }
+- (IBAction)cancelSubpaletteSelection:(id)sender;
 
 @end

@@ -22,6 +22,9 @@
 @property NSMutableArray * paletteItems;
 
 
+@property UIColor * blue0;
+@property UIColor * blue1;
+@property UIColor * blue2;
 @property UIColor * blue3;
 @property UIColor * blue4;
 

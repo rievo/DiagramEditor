@@ -13,6 +13,7 @@
 
 @property NSString * name;
 @property NSString * content;
+@property BOOL fromServer;
 
 
 @end
