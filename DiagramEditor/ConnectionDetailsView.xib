@@ -60,7 +60,7 @@
                                         <constraint firstAttribute="height" constant="30" id="otG-Cc-FGL"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits"/>
+                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                 </textField>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="xcb-am-CbD">
                                     <rect key="frame" x="25" y="174" width="257" height="252"/>

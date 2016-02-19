@@ -17,55 +17,75 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xKX-kE-BhK">
                             <rect key="frame" x="77" y="55" width="308" height="158"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Are you sure?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="es2-9Q-0bZ">
-                                    <rect key="frame" x="45" y="17" width="219" height="61"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Are you sure you want to delete all?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="es2-9Q-0bZ">
+                                    <rect key="frame" x="27" y="24" width="256" height="35"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="219" id="qgG-5S-BFx"/>
-                                        <constraint firstAttribute="height" constant="61" id="xNS-hv-VJg"/>
+                                        <constraint firstAttribute="width" constant="256" id="Mh0-Pr-Lxg"/>
+                                        <constraint firstAttribute="height" constant="35" id="bOt-I4-ggC"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="29"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                                     <color key="textColor" red="0.71764707565307617" green="0.76862746477127075" blue="0.89803922176361084" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zur-AR-XfP">
-                                    <rect key="frame" x="46" y="91" width="105" height="39"/>
-                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="23"/>
-                                    <state key="normal" title="YES">
-                                        <color key="titleColor" red="0.71764707569999997" green="0.76862746479999999" blue="0.89803922179999995" alpha="1" colorSpace="calibratedRGB"/>
-                                    </state>
-                                    <connections>
-                                        <action selector="sayYes:" destination="iN0-l3-epB" eventType="touchUpInside" id="QpW-Oi-voh"/>
-                                    </connections>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vo4-DU-F0g">
-                                    <rect key="frame" x="189" y="91" width="35" height="39"/>
-                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="23"/>
-                                    <state key="normal" title="NO">
-                                        <color key="titleColor" red="0.71764707565307617" green="0.76862746477127075" blue="0.89803922176361084" alpha="1" colorSpace="calibratedRGB"/>
-                                    </state>
-                                    <connections>
-                                        <action selector="sayNo:" destination="iN0-l3-epB" eventType="touchUpInside" id="WST-Xq-wOW"/>
-                                    </connections>
-                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Unsaved changes will not be saved" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ozq-jL-5Um">
+                                    <rect key="frame" x="28" y="59" width="253" height="35"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="35" id="4Bi-xp-So5"/>
+                                        <constraint firstAttribute="width" constant="253" id="rJb-1D-tbf"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                    <color key="textColor" red="0.71764707569999997" green="0.76862746479999999" blue="0.89803922179999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hG9-Eh-j9J">
+                                    <rect key="frame" x="65" y="102" width="179" height="48"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zur-AR-XfP">
+                                            <rect key="frame" x="25" y="4" width="58" height="39"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="23"/>
+                                            <state key="normal" title="YES">
+                                                <color key="titleColor" red="0.71764707569999997" green="0.76862746479999999" blue="0.89803922179999995" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="sayYes:" destination="iN0-l3-epB" eventType="touchUpInside" id="QpW-Oi-voh"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vo4-DU-F0g">
+                                            <rect key="frame" x="108" y="4" width="35" height="39"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="23"/>
+                                            <state key="normal" title="NO">
+                                                <color key="titleColor" red="0.71764707565307617" green="0.76862746477127075" blue="0.89803922176361084" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="sayNo:" destination="iN0-l3-epB" eventType="touchUpInside" id="WST-Xq-wOW"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.71764707565307617" green="0.76862746477127075" blue="0.89803922176361084" alpha="0.0" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="48" id="MVR-Vx-7iv"/>
+                                        <constraint firstAttribute="width" constant="179" id="h7f-o5-mGh"/>
+                                    </constraints>
+                                </view>
                             </subviews>
                             <color key="backgroundColor" red="0.32156863808631897" green="0.40392157435417175" blue="0.57647061347961426" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstItem="Vo4-DU-F0g" firstAttribute="top" secondItem="es2-9Q-0bZ" secondAttribute="bottom" constant="13" id="8ZH-b2-J8w"/>
-                                <constraint firstAttribute="width" constant="308" id="GMw-cB-a9h"/>
-                                <constraint firstItem="Vo4-DU-F0g" firstAttribute="centerX" secondItem="xKX-kE-BhK" secondAttribute="centerX" constant="52" id="NEy-3W-RlV"/>
-                                <constraint firstItem="es2-9Q-0bZ" firstAttribute="top" secondItem="xKX-kE-BhK" secondAttribute="top" constant="17" id="NID-lm-ljS"/>
-                                <constraint firstItem="Zur-AR-XfP" firstAttribute="centerX" secondItem="xKX-kE-BhK" secondAttribute="centerX" constant="-56" id="WhB-LB-kWK"/>
-                                <constraint firstItem="es2-9Q-0bZ" firstAttribute="centerX" secondItem="xKX-kE-BhK" secondAttribute="centerX" id="cGv-fn-5ey"/>
-                                <constraint firstAttribute="height" constant="158" id="fIK-Fc-YPX"/>
-                                <constraint firstItem="Zur-AR-XfP" firstAttribute="top" secondItem="es2-9Q-0bZ" secondAttribute="bottom" constant="13" id="t2k-wF-RVr"/>
-                                <constraint firstItem="Vo4-DU-F0g" firstAttribute="leading" secondItem="Zur-AR-XfP" secondAttribute="trailing" constant="38" id="wFf-47-0J8"/>
+                                <constraint firstAttribute="bottom" secondItem="hG9-Eh-j9J" secondAttribute="bottom" constant="8" id="Cw0-Yb-Wlq"/>
+                                <constraint firstItem="es2-9Q-0bZ" firstAttribute="top" secondItem="xKX-kE-BhK" secondAttribute="top" constant="24" id="Ukf-Zq-zdQ"/>
+                                <constraint firstItem="ozq-jL-5Um" firstAttribute="centerX" secondItem="xKX-kE-BhK" secondAttribute="centerX" id="Xeo-Zq-ojm"/>
+                                <constraint firstAttribute="width" constant="308" id="dZT-Jo-g0k"/>
+                                <constraint firstItem="hG9-Eh-j9J" firstAttribute="centerX" secondItem="xKX-kE-BhK" secondAttribute="centerX" id="eBf-GB-eOe"/>
+                                <constraint firstItem="hG9-Eh-j9J" firstAttribute="top" secondItem="ozq-jL-5Um" secondAttribute="bottom" constant="8" id="eSr-VS-5iH"/>
+                                <constraint firstItem="es2-9Q-0bZ" firstAttribute="centerX" secondItem="xKX-kE-BhK" secondAttribute="centerX" constant="1" id="pLj-cq-IrK"/>
+                                <constraint firstItem="ozq-jL-5Um" firstAttribute="top" secondItem="es2-9Q-0bZ" secondAttribute="bottom" id="wqv-kD-wIC"/>
+                                <constraint firstAttribute="height" constant="158" id="x9M-c5-bFj"/>
                             </constraints>
                         </view>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.5" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="xKX-kE-BhK" firstAttribute="centerX" secondItem="kwd-5m-Qtw" secondAttribute="centerX" id="E2Q-Ex-bcY"/>
-                        <constraint firstItem="xKX-kE-BhK" firstAttribute="centerY" secondItem="kwd-5m-Qtw" secondAttribute="centerY" id="Zsf-nh-0cz"/>
+                        <constraint firstItem="xKX-kE-BhK" firstAttribute="centerY" secondItem="kwd-5m-Qtw" secondAttribute="centerY" id="3sj-e6-EPE"/>
+                        <constraint firstItem="xKX-kE-BhK" firstAttribute="centerX" secondItem="kwd-5m-Qtw" secondAttribute="centerX" id="scn-eD-WVD"/>
                     </constraints>
                 </view>
             </subviews>
