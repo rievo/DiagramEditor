@@ -20,7 +20,7 @@
 @implementation PaletteItem
 
 
-@synthesize type, dialog, width, height, shapeType, fillColor, isImage, image, attributes, className, colorString, sourceName, targetName, targetDecoratorName, sourceDecoratorName, edgeStyle, sourcePart, targetPart, sourceClass, targetClass, minOutConnections,maxOutConnections, containerReference, references, parentsClassArray;
+@synthesize type, dialog, width, height, shapeType, fillColor, isImage, image, attributes, className, colorString, sourceName, targetName, targetDecoratorName, sourceDecoratorName, edgeStyle, sourcePart, targetPart, sourceClass, targetClass, minOutConnections,maxOutConnections, containerReference, references, parentsClassArray, isDragable;
 
 
 
@@ -155,12 +155,22 @@
     
     [self.className drawInRect: textRect withAttributes: textFontAttributes];
     
+
+    
     
     //Draw hand
-    if(![self.type isEqualToString:kEdge]){
-        CGRect handRect = CGRectMake(self.frame.size.width - handSize , self.frame.size.height - handSize, handSize , handSize);
-        UIImage * img = [UIImage imageNamed:@"hand"];
-        [img drawInRect:handRect];
+    if([self.type isEqualToString:kEdge] ){
+
+    }else{ // !self.isDragable == true
+        if(self.isDragable == TRUE){
+            CGRect handRect = CGRectMake(self.frame.size.width - handSize , self.frame.size.height - handSize, handSize , handSize);
+            UIImage * img = [UIImage imageNamed:@"hand"];
+            [img drawInRect:handRect];
+        }else{
+            CGRect handRect = CGRectMake(self.frame.size.width - handSize , self.frame.size.height - handSize, handSize , handSize);
+            UIImage * img = [UIImage imageNamed:@"tap"];
+            [img drawInRect:handRect];
+        }
     }
 
 }

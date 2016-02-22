@@ -25,6 +25,12 @@
 		F147B44B1C636FB400A8F5E7 /* test.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F147B44A1C636FB400A8F5E7 /* test.graphicR */; };
 		F1587B041C19BC4600E963BE /* Palette.m in Sources */ = {isa = PBXBuildFile; fileRef = F1587B031C19BC4600E963BE /* Palette.m */; };
 		F15A96091C27F69100ACA6FA /* XMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = F15A96081C27F69100ACA6FA /* XMLWriter.m */; };
+		F163AFE41C7B173300BAE67C /* DFAAutomaton.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F163AFE31C7B173300BAE67C /* DFAAutomaton.graphicR */; };
+		F163AFE61C7B1A1B00BAE67C /* tapDark.png in Resources */ = {isa = PBXBuildFile; fileRef = F163AFE51C7B1A1B00BAE67C /* tapDark.png */; };
+		F163AFEA1C7B1ABE00BAE67C /* tap.png in Resources */ = {isa = PBXBuildFile; fileRef = F163AFE91C7B1ABE00BAE67C /* tap.png */; };
+		F163AFEC1C7B1ACA00BAE67C /* hand.png in Resources */ = {isa = PBXBuildFile; fileRef = F163AFEB1C7B1ACA00BAE67C /* hand.png */; };
+		F163AFEE1C7B1B5E00BAE67C /* NoDraggableComponentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F163AFED1C7B1B5E00BAE67C /* NoDraggableComponentView.xib */; };
+		F163AFF11C7B1B6800BAE67C /* NoDraggableComponentView.m in Sources */ = {isa = PBXBuildFile; fileRef = F163AFF01C7B1B6800BAE67C /* NoDraggableComponentView.m */; };
 		F1685E9F1C1827FB0094097E /* ConfigureDiagramViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685E9E1C1827FB0094097E /* ConfigureDiagramViewController.m */; };
 		F1685EA21C18289E0094097E /* EditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685EA11C18289E0094097E /* EditorViewController.m */; };
 		F1685EA51C18294A0094097E /* Component.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685EA41C18294A0094097E /* Component.m */; };
@@ -71,7 +77,6 @@
 		F1B789991C60F064001B6DB4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1B789981C60F064001B6DB4 /* CoreGraphics.framework */; };
 		F1B7899B1C610292001B6DB4 /* Minus-100.png in Resources */ = {isa = PBXBuildFile; fileRef = F1B7899A1C610292001B6DB4 /* Minus-100.png */; };
 		F1C6347B1C2842C30072912D /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C6347A1C2842C30072912D /* camera.png */; };
-		F1DAE7A71C4D023000ECDD34 /* DFAAutomaton.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F1DAE7A61C4D023000ECDD34 /* DFAAutomaton.graphicR */; };
 		F1E9EFD51C4521DA007E227D /* PItemEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E9EFD41C4521DA007E227D /* PItemEditor.m */; };
 		F1E9EFD81C4524CD007E227D /* PaletteItemCreatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E9EFD71C4524CD007E227D /* PaletteItemCreatorViewController.m */; };
 		F1F29C691C64C8F70035F0B6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1F29C681C64C8F70035F0B6 /* AudioToolbox.framework */; };
@@ -103,6 +108,13 @@
 		F1587B031C19BC4600E963BE /* Palette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Palette.m; sourceTree = "<group>"; };
 		F15A96071C27F69100ACA6FA /* XMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLWriter.h; sourceTree = "<group>"; };
 		F15A96081C27F69100ACA6FA /* XMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLWriter.m; sourceTree = "<group>"; };
+		F163AFE31C7B173300BAE67C /* DFAAutomaton.graphicR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = DFAAutomaton.graphicR; sourceTree = "<group>"; };
+		F163AFE51C7B1A1B00BAE67C /* tapDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tapDark.png; sourceTree = "<group>"; };
+		F163AFE91C7B1ABE00BAE67C /* tap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tap.png; sourceTree = "<group>"; };
+		F163AFEB1C7B1ACA00BAE67C /* hand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hand.png; sourceTree = "<group>"; };
+		F163AFED1C7B1B5E00BAE67C /* NoDraggableComponentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoDraggableComponentView.xib; sourceTree = "<group>"; };
+		F163AFEF1C7B1B6800BAE67C /* NoDraggableComponentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoDraggableComponentView.h; sourceTree = "<group>"; };
+		F163AFF01C7B1B6800BAE67C /* NoDraggableComponentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoDraggableComponentView.m; sourceTree = "<group>"; };
 		F1685E9D1C1827FB0094097E /* ConfigureDiagramViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigureDiagramViewController.h; sourceTree = "<group>"; };
 		F1685E9E1C1827FB0094097E /* ConfigureDiagramViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigureDiagramViewController.m; sourceTree = "<group>"; };
 		F1685EA01C18289E0094097E /* EditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditorViewController.h; sourceTree = "<group>"; };
@@ -173,7 +185,6 @@
 		F1B789981C60F064001B6DB4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		F1B7899A1C610292001B6DB4 /* Minus-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Minus-100.png"; sourceTree = "<group>"; };
 		F1C6347A1C2842C30072912D /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
-		F1DAE7A61C4D023000ECDD34 /* DFAAutomaton.graphicR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = DFAAutomaton.graphicR; sourceTree = "<group>"; };
 		F1E9EFD31C4521DA007E227D /* PItemEditor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PItemEditor.h; sourceTree = "<group>"; };
 		F1E9EFD41C4521DA007E227D /* PItemEditor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PItemEditor.m; sourceTree = "<group>"; };
 		F1E9EFD61C4524CD007E227D /* PaletteItemCreatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaletteItemCreatorViewController.h; sourceTree = "<group>"; };
@@ -244,6 +255,9 @@
 				F107E4621C72221A007DD29E /* ThinkingView.h */,
 				F107E4631C72221A007DD29E /* ThinkingView.m */,
 				F107E4651C722229007DD29E /* ThinkingView.xib */,
+				F163AFED1C7B1B5E00BAE67C /* NoDraggableComponentView.xib */,
+				F163AFEF1C7B1B6800BAE67C /* NoDraggableComponentView.h */,
+				F163AFF01C7B1B6800BAE67C /* NoDraggableComponentView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -281,9 +295,12 @@
 		F17B75AE1C22D9D500AB1B57 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				F163AFE51C7B1A1B00BAE67C /* tapDark.png */,
 				F1801F3C1C77413E005BA437 /* localFilled.png */,
 				F1801F3A1C774137005BA437 /* cloudFilled.png */,
+				F163AFE91C7B1ABE00BAE67C /* tap.png */,
 				F1801F381C7739FB005BA437 /* hand.png */,
+				F163AFEB1C7B1ACA00BAE67C /* hand.png */,
 				F14181CA1C68DE4300E838F9 /* minusDark.png */,
 				F14181C81C68DCB600E838F9 /* settings.png */,
 				F10AB8091C50E85100DE6DCE /* cancel.png */,
@@ -367,7 +384,7 @@
 		F1B4861F1C47A2DD00752157 /* palettes */ = {
 			isa = PBXGroup;
 			children = (
-				F1DAE7A61C4D023000ECDD34 /* DFAAutomaton.graphicR */,
+				F163AFE31C7B173300BAE67C /* DFAAutomaton.graphicR */,
 				F10F0FA41C1ED77A00165561 /* design.graphicR */,
 				F147B44A1C636FB400A8F5E7 /* test.graphicR */,
 			);
@@ -440,12 +457,14 @@
 				F10F0FA51C1ED77A00165561 /* design.graphicR in Resources */,
 				F1801F391C7739FB005BA437 /* hand.png in Resources */,
 				F18510861C1824C8004EC4C8 /* LaunchScreen.storyboard in Resources */,
+				F163AFEA1C7B1ABE00BAE67C /* tap.png in Resources */,
 				F19C258E1C43AB580002E490 /* back.png in Resources */,
-				F1DAE7A71C4D023000ECDD34 /* DFAAutomaton.graphicR in Resources */,
 				F1B7899B1C610292001B6DB4 /* Minus-100.png in Resources */,
+				F163AFEC1C7B1ACA00BAE67C /* hand.png in Resources */,
 				F10AB8081C50E7E200DE6DCE /* PasteView.xib in Resources */,
 				F1786DED1C56222B00963663 /* GenericAttributeTableViewCell.xib in Resources */,
 				F147B43E1C63507100A8F5E7 /* EdgeListView.xib in Resources */,
+				F163AFEE1C7B1B5E00BAE67C /* NoDraggableComponentView.xib in Resources */,
 				F16C7DCD1C57AD2900CA9B25 /* SureView.xib in Resources */,
 				F17B75A91C22D6E100AB1B57 /* newDocument.png in Resources */,
 				F1786DEF1C56410200963663 /* SaveNameView.xib in Resources */,
@@ -453,11 +472,13 @@
 				F1801F3D1C77413E005BA437 /* localFilled.png in Resources */,
 				F1801F3B1C774137005BA437 /* cloudFilled.png in Resources */,
 				F10AB80B1C50E85100DE6DCE /* cancel.png in Resources */,
+				F163AFE61C7B1A1B00BAE67C /* tapDark.png in Resources */,
 				F18510831C1824C8004EC4C8 /* Assets.xcassets in Resources */,
 				F17B75AD1C22D9CC00AB1B57 /* list.png in Resources */,
 				F1C6347B1C2842C30072912D /* camera.png in Resources */,
 				F147B44B1C636FB400A8F5E7 /* test.graphicR in Resources */,
 				F107E4661C722229007DD29E /* ThinkingView.xib in Resources */,
+				F163AFE41C7B173300BAE67C /* DFAAutomaton.graphicR in Resources */,
 				F10AB80C1C50E85100DE6DCE /* ok.png in Resources */,
 				F14181CB1C68DE4300E838F9 /* minusDark.png in Resources */,
 				F1786DE51C561ADA00963663 /* BooleanAttributeTableViewCell.xib in Resources */,
@@ -486,6 +507,7 @@
 				F1685EAE1C1831840094097E /* ComponentDetailsView.m in Sources */,
 				F1786DE81C561AF200963663 /* BooleanAttributeTableViewCell.m in Sources */,
 				F15A96091C27F69100ACA6FA /* XMLWriter.m in Sources */,
+				F163AFF11C7B1B6800BAE67C /* NoDraggableComponentView.m in Sources */,
 				F147B4471C63509600A8F5E7 /* EdgeListView.m in Sources */,
 				F1E9EFD51C4521DA007E227D /* PItemEditor.m in Sources */,
 				F1431E8B1C524127006A45BC /* ClassAttribute.m in Sources */,

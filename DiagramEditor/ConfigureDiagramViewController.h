@@ -53,6 +53,7 @@
     
     CGRect oldPaletteFileGroupFrame;
     CGRect oldSubPaletteGroupFrame;
+    __weak IBOutlet UIButton *confirmButton;
     
 }
 - (IBAction)cancelSubpaletteSelection:(id)sender;

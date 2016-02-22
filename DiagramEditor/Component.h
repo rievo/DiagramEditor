@@ -48,15 +48,12 @@
 @property NSString * colorString;
 @property UIImage * image;
 @property BOOL isImage;
+@property BOOL isDragable;
 @property NSString * componentId;
 @property NSString * className;
 
 @property NSMutableArray * attributes;
 @property NSMutableArray * references;
-
-@property Component * parent;
-@property NSMutableArray * sons;
-
 
 @property NSString * name;
 

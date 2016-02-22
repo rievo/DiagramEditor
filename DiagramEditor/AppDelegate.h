@@ -18,6 +18,7 @@
 
 @property NSMutableArray * connections;
 @property NSMutableArray * components;
+@property NSMutableDictionary * elementsDictionary;
 
 @property NSMutableArray * paletteItems;
 

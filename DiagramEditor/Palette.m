@@ -53,13 +53,7 @@
         
         temp.backgroundColor = [UIColor clearColor];
         
-        //Añadimos el label
-        /*UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(0 ,temp.frame.size.height -20, temp.frame.size.width, 30)];
-        //[label sizeToFit];
-        [label setMinimumScaleFactor:0.2];
-        
-        [label setText:temp.dialog];
-        [temp addSubview:label];*/
+
         [self addSubview:temp];
         self.contentSize = CGSizeMake(self.contentSize.width + temp.frame.size.width + xmargin, self.contentSize.height);
         

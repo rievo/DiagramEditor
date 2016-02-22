@@ -17,7 +17,7 @@
 
 @implementation AppDelegate
 
-@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR, evc, blue0, blue1, blue2;
+@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR, evc, blue0, blue1, blue2, elementsDictionary;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -26,7 +26,7 @@
     
     paletteItems = [[NSMutableArray alloc] init];
     
-    blue0 = [[UIColor alloc]initWithRed:91/256.0 green:109/256.0 blue:146/256.0 alpha:1.0];
+    blue0 = [[UIColor alloc]initWithRed:91.0/256.0 green:109.0/256.0 blue:146.0/256.0 alpha:1.0];
     blue1 = [[UIColor alloc]initWithRed:182/256.0 green:191/256.0 blue:209/256.0 alpha:1.0];
     blue2 = [[UIColor alloc]initWithRed:130/256.0 green:144/256.0 blue:173/256.0 alpha:1.0];
     blue3 = [[UIColor alloc]initWithRed:58/256.0 green:78/256.0 blue:120/256.0 alpha:1.0];
@@ -37,24 +37,7 @@
     graphicR = nil;
     evc = nil;
     
-    
-    /*CGAffineTransform trans = CGAffineTransformIdentity;
-    trans = CGAffineTransformConcat(trans, CGAffineTransformMakeRotation(M_PI/180*30));
-    trans = CGAffineTransformConcat(trans, CGAffineTransformMakeTranslation(200, 0));
- 
-    //trans = CGAffineTransformConcat(trans, CGAffineTransformMakeTranslation(1, 1));
-    
-
-    CGAffineTransform transformTarget = CGAffineTransformIdentity;
-    transformTarget = CGAffineTransformRotate(transformTarget, M_PI/180*30);
-    transformTarget = CGAffineTransformTranslate(transformTarget,200,0);
-
-    //transformTarget = CGAffineTransformTranslate(transformTarget,1,1);
-    
-
-    int r = 2;*/
-    
-    
+    elementsDictionary = [[NSMutableDictionary alloc] init];
     
     return YES;
 }

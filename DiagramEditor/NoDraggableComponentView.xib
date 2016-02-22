@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="NoDraggableComponentView">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="549"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Exy-5C-fKe">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="549"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ti3-pd-ebf">
+                            <rect key="frame" x="87" y="33" width="240" height="483"/>
+                            <subviews>
+                                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="f3m-lV-u6v">
+                                    <rect key="frame" x="8" y="69" width="224" height="293"/>
+                                    <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </tableView>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nbN-ql-r9m">
+                                    <rect key="frame" x="8" y="399" width="194" height="30"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yae-fs-022">
+                                    <rect key="frame" x="210" y="403" width="22" height="22"/>
+                                    <color key="tintColor" red="0.7137255072593689" green="0.74901962280273438" blue="0.81960785388946533" alpha="1" colorSpace="calibratedRGB"/>
+                                    <state key="normal">
+                                        <color key="titleColor" red="0.7137255072593689" green="0.74901962280273438" blue="0.81960785388946533" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="addCurrentNode:" destination="iN0-l3-epB" eventType="touchUpInside" id="f1p-P9-ENu"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EAt-0t-nYD">
+                                    <rect key="frame" x="8" y="8" width="224" height="53"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
+                                    <color key="textColor" red="0.7137255072593689" green="0.74901962280273438" blue="0.81960785388946533" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" red="0.35686275362968445" green="0.42745098471641541" blue="0.57254904508590698" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="240" id="diS-IA-SUt"/>
+                                <constraint firstAttribute="height" constant="483" id="pOM-zl-bG1"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="Ti3-pd-ebf" firstAttribute="centerX" secondItem="Exy-5C-fKe" secondAttribute="centerX" id="a4Q-UR-982"/>
+                        <constraint firstItem="Ti3-pd-ebf" firstAttribute="centerY" secondItem="Exy-5C-fKe" secondAttribute="centerY" id="s7v-HZ-djU"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="Exy-5C-fKe" secondAttribute="trailing" id="A1I-72-FW2"/>
+                <constraint firstItem="Exy-5C-fKe" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Ct9-yL-ruy"/>
+                <constraint firstItem="Exy-5C-fKe" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="dCM-7t-09k"/>
+                <constraint firstAttribute="bottom" secondItem="Exy-5C-fKe" secondAttribute="bottom" id="ryt-cH-wly"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="background" destination="Exy-5C-fKe" id="rUP-lG-ejO"/>
+                <outlet property="nodeTypeLabel" destination="EAt-0t-nYD" id="0dr-0t-Ip6"/>
+                <outlet property="table" destination="f3m-lV-u6v" id="h4D-B1-lYL"/>
+                <outlet property="textField" destination="nbN-ql-r9m" id="zBu-AO-CgQ"/>
+            </connections>
+            <point key="canvasLocation" x="640" y="424.5"/>
+        </view>
+    </objects>
+</document>

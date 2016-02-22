@@ -29,7 +29,7 @@
 @implementation Component
 
 
-@synthesize textLayer, type, shapeType, fillColor, image, isImage, attributes, parent, sons, componentId, colorString, containerReference, className, references, name, parentClassArray;
+@synthesize textLayer, type, shapeType, fillColor, image, isImage, attributes, componentId, colorString, containerReference, className, references, name, parentClassArray, isDragable;
 
 
 NSString* const SHOW_INSPECTOR = @"ShowInspector";
@@ -146,8 +146,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
          [resizeView addGestureRecognizer:resizeGr];*/
         
         
-        parent = nil;
-        sons = [[NSMutableArray alloc] init];
+
         
         
         //Add UIPinch

@@ -20,6 +20,7 @@
 @property NSString * colorString;
 @property UIImage * image;
 @property BOOL isImage;
+@property BOOL isDragable;
 
 
 @property NSString * className; //La clase del item

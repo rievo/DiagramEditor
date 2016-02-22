@@ -185,7 +185,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated{
-    int r = 2;
+
 }
 
 

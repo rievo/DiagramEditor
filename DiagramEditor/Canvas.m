@@ -59,11 +59,15 @@
 
 -(void)prepareCanvas{
     
+    dele = [[UIApplication sharedApplication]delegate];
+    
     fontColor = [UIColor blackColor];
     font = [UIFont fontWithName:@"Helvetica" size:10.0];
     
     xArrowStart = -1.0;
     yArrowStart = -1.0;
+    
+    self.backgroundColor = [dele blue0];
     
     dele = [[UIApplication sharedApplication]delegate];
     
@@ -172,6 +176,11 @@
 
 
 - (void)drawRect:(CGRect)rect {
+    
+    /*//Draw background
+    UIBezierPath * back = [UIBezierPath bezierPathWithRect:self.frame];
+    [[dele blue0]setFill];
+    [back fill];*/
     
     
     Component * compOut = nil;
@@ -525,7 +534,7 @@
 
 
 #pragma mark rotate PNG
-- (UIImage *)imageRotatedByDegrees:(UIImage*)oldImage rads:(CGFloat)rads{
+/*- (UIImage *)imageRotatedByDegrees:(UIImage*)oldImage rads:(CGFloat)rads{
     //Calculate the size of the rotated view's containing box for our drawing space
     UIView *rotatedViewBox = [[UIView alloc] initWithFrame:CGRectMake(0,0,oldImage.size.width, oldImage.size.height)];
     CGAffineTransform t = CGAffineTransformMakeRotation(rads);
@@ -549,7 +558,7 @@
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return newImage;
-}
+}*/
 
 
 #pragma mark Paths for decorators

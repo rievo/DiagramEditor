@@ -54,6 +54,9 @@
     //Hide unused groups
     [subPaletteGroup setHidden:YES];
     [cancelSubpaletteSelectionOutlet setHidden:YES];
+    [palette setHidden:YES];
+    [confirmButton setHidden:YES];
+    
     
     [subPaletteGroup setFrame:CGRectMake(subPaletteGroup.frame.origin.x, subPaletteGroup.frame.origin.y, paletteFileGroup.frame.size.width, paletteFileGroup.frame.size.height)];
     
@@ -204,7 +207,7 @@
 }
 
 -(void)extractPalettesForContentsOfFile: (NSString *)text{
-    [palette resetPalette];
+    // [palette resetPalette];
     
     [palettes removeAllObjects];
     
@@ -254,6 +257,15 @@
             NSDictionary * diagPalette = [dic objectForKey:@"diag_palette"];
             NSString * paleteName = [diagPalette objectForKey:@"_palette_name"];
             NSLog(@"\n\ntype: %@     	\n name: %@", type, paleteName);
+            
+            NSString * draggablestr = [diagPalette objectForKey:@"_isDraggable"];
+            if(draggablestr == nil){ //Default = true
+                item.isDragable = true;
+            }else if([draggablestr isEqualToString:@"true"]){
+                item.isDragable = true;
+            }else if([draggablestr isEqualToString:@"false"]){
+                item.isDragable = false;
+            }
             
             NSDictionary * containerDic = [dic objectForKey:@"containerReference"];
             NSString * containerReference = [containerDic objectForKey:@"_href"];
@@ -376,7 +388,8 @@
     
     
     [palettesTable reloadData];
-    [palette preparePalette];
+
+    //[palette preparePalette];
     
     
     if(palettes.count == 0){
@@ -535,30 +548,48 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if(tableView == palettesTable){
+        
         [palette resetPalette];
         Palette * selected = [palettes objectAtIndex:indexPath.row];
         //[selected setFrame:palette.frame];
         palette.paletteItems = selected.paletteItems;
         
         dele.subPalette = selected.name;
+        [palette setHidden:NO];
+        [palette setAlpha:0];
+        //Muestro el palette
+        [UIView animateWithDuration:1.0
+                              delay:0.0
+                            options:UIViewAnimationOptionCurveEaseOut
+                         animations:^{
+                             selected.center = palette.center;
+                             [palette setAlpha:1.0];
+                         }
+                         completion:^(BOOL finished) {
+                             
+                         }];
         
         [palette preparePalette];
-        [palette setNeedsDisplay];
+        [confirmButton setHidden:NO];
         
-        [self addRecognizers];
+        //[palette setNeedsDisplay];
+
+        
+        //[self addRecognizers];*/
         
         
         
         
     }else if(tableView == filesTable){
-        /*[palette resetPalette];
-        PaletteFile * file = [serverFilesArray objectAtIndex:indexPath.row];
+        //[palette resetPalette];
+        PaletteFile * file = [filesArray objectAtIndex:indexPath.row];
         tempPaletteFile = file.name;
         
-        [self extractPalettesForContentsOfFile:file.content];*/
+       
         [subPaletteGroup setHidden:NO];
+       
+        [subPaletteGroup setCenter:CGPointMake(self.view.frame.size.width + subPaletteGroup.frame.size.width/2, self.view.center.y)];
         oldSubPaletteGroupFrame = subPaletteGroup.frame;
-        [subPaletteGroup setFrame:CGRectMake(self.view.frame.size.width, subPaletteGroup.frame.origin.y, subPaletteGroup.frame.size.width, subPaletteGroup.frame.size.height)];
         
         oldPaletteFileGroupFrame = paletteFileGroup.frame;
         
@@ -582,8 +613,11 @@
                                                  options:UIViewAnimationOptionCurveEaseOut
                                               animations:^{
                                                   [cancelSubpaletteSelectionOutlet setAlpha:1.0];
+                                                  
                                               }
                                               completion:^(BOOL finished) {
+                                                   [self extractPalettesForContentsOfFile:file.content];
+                                                  
                                                   
                                                   
                                               }];
@@ -1269,10 +1303,15 @@
                          [subPaletteGroup setFrame:oldSubPaletteGroupFrame];
                          
                          [paletteFileGroup setFrame:oldPaletteFileGroupFrame];
+                         
+                         //Quitar la paleta
+                         [palette setAlpha:0.0];
                      }
                      completion:^(BOOL finished) {
                          [subPaletteGroup setHidden:YES];
-                         
+                         [palettes removeAllObjects];
+                         [palettesTable reloadData];
+                         [palette setHidden:YES];
                      }];
 }
 @end

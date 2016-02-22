@@ -16,6 +16,8 @@
 #import "XMLDictionary.h"
 #import "ClassAttribute.h"
 
+#import "NoDraggableComponentView.h"
+
 @import Foundation;
 
 @interface EditorViewController ()
@@ -73,7 +75,7 @@
     [compDetView setDelegate:self];
     
     
-
+    
     [self.view addSubview:compDetView];
     [compDetView setFrame:self.view.frame];
     [compDetView setHidden:YES];
@@ -90,7 +92,7 @@
     zoomTapGr.delegate = self;
     zoomLevel = 0; //No zoom
     
-
+    
     
     //Si estoy cargando un fichero
     if(dele.components.count != 0){
@@ -102,7 +104,7 @@
         //repaint canvas
         [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
     }else{
-          }
+    }
     
     palette.paletteItems = [[NSMutableArray alloc] initWithArray:dele.paletteItems];
     [palette preparePalette];
@@ -114,7 +116,7 @@
     
     //Set slider
     slider.maximumValue = palette.frame.size.width -palette.contentSize.width ;
-
+    
     //NSLog(@"pags = %.2f", ceil(palette.frame.size.width / palette.contentSize.width ));
 }
 
@@ -139,8 +141,24 @@
     for(int i  =0; i< palette.paletteItems.count; i++){
         PaletteItem * item = [palette.paletteItems objectAtIndex:i];
         
-        UIPanGestureRecognizer * panGr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
-        [item addGestureRecognizer:panGr];
+        if([item.type isEqualToString:@"graphicR:Edge"]){
+            
+        }else{
+            if(item.isDragable == TRUE){
+                UIPanGestureRecognizer * panGr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+                [item addGestureRecognizer:panGr];
+                
+            }else{ //Tapgesture para añadir un elemento no dragables
+                UITapGestureRecognizer * tapGr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+                [item addGestureRecognizer:tapGr];
+                
+                
+                //Creo un array para esta clave en dele
+                NSMutableArray * compArray = [[NSMutableArray alloc] init];
+                [dele.elementsDictionary setObject:compArray forKey:item.className];
+            }
+        }
+        
     }
 }
 
@@ -204,6 +222,8 @@
                 comp.fillColor = sender.fillColor;
                 comp.parentItem = sender;
                 
+                comp.isDragable = sender.isDragable;
+                
                 
                 //Copiamos los atributos
                 NSData * buffer = [NSKeyedArchiver archivedDataWithRootObject:sender.attributes];
@@ -231,7 +251,7 @@
                 }
                 
                 //ecore-graphicR attributes
-
+                
                 comp.containerReference = sender.containerReference;
                 comp.className = sender.className;
                 
@@ -246,14 +266,14 @@
                 
                 //Si en ese punto del canvas hay un nodo ya, establecemos la relación padre-hijo
                 /*for(Component * cm in dele.components){
-                    if(CGRectContainsPoint(cm.frame, pointInSV)){
-                        //We have a parent-son relation
-                        //cm will be the parent
-                        //comp will be the son
-                        comp.parent = cm;
-                        [cm.sons addObject:comp];
-                    }
-                }*/
+                 if(CGRectContainsPoint(cm.frame, pointInSV)){
+                 //We have a parent-son relation
+                 //cm will be the parent
+                 //comp will be the son
+                 comp.parent = cm;
+                 [cm.sons addObject:comp];
+                 }
+                 }*/
                 
                 
                 [dele.components addObject:comp];
@@ -303,6 +323,21 @@
 }
 
 
+-(void)handleTap:(UITapGestureRecognizer *)recog{
+    PaletteItem * sender = (PaletteItem *)recog.view;
+    
+    NoDraggableComponentView * nod = [[[NSBundle mainBundle] loadNibNamed:@"NoDraggableComponentView"
+                                                                    owner:self
+                                                                  options:nil] objectAtIndex:0];
+    
+    nod.elementName = sender.className;
+    
+    [nod updateNameLabel];
+    [nod setFrame:self.view.frame];
+    [self.view addSubview:nod];
+    
+}
+
 
 #pragma mark Toolbar
 
@@ -332,7 +367,7 @@
 }
 
 - (IBAction)createNewDiagram:(id)sender {
-
+    
     sureView = [[[NSBundle mainBundle] loadNibNamed:@"SureView"
                                               owner:self
                                             options:nil] objectAtIndex:0];
@@ -406,6 +441,8 @@
     NSString * toSave = [self generateXML];
     NSDate * date = [NSDate date];
     
+   // toSave = [toSave stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
+    
     NSMutableDictionary * dic = [[NSMutableDictionary alloc]init];
     [dic setObject:[date description] forKey:@"name"];
     [dic setObject:toSave forKey:@"content"];
@@ -414,34 +451,78 @@
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic
                                                        options:0 // Pass 0 if you don't care about the readability of the generated string
                                                          error:&error];
+    
+    NSString *string = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding] ;
+    
+    NSData * data = [string dataUsingEncoding:NSUTF8StringEncoding];
+
     if(!error){
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://diagrameditorserver.herokuapp.com/diagrams?json=true"]];
         //NSURLRequest * urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:2.0];
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
         [request setHTTPMethod:@"POST"];
         [request setTimeoutInterval:5.0];
-        [request setHTTPBody: jsonData];
-        NSURLResponse * response = nil;
-        NSError * error = nil;
-        NSData * data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+        [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        [request setHTTPBody: data];
+        //[request setHTTPBody:[toSave dataUsingEncoding:NSUTF8StringEncoding]];
         
-        if(!error){
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
-                                                            message:@"Diagram saved properly on server"
-                                                           delegate:self
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-            [alert show];
-        }else{
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                            message:@"Diagram was not saved on server"
-                                                           delegate:self
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-            [alert show];
-        }
+
+        
+        
+        [NSURLConnection sendAsynchronousRequest:request
+                                           queue:[NSOperationQueue mainQueue]
+                               completionHandler:^(NSURLResponse *response,
+                                                   NSData *data, NSError *connectionError)
+         {
+             NSError * error;
+             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data
+                                                                 options:0
+                                                                   error:&error];
+             
+             //[serverFilesArray removeAllObjects];
+             
+             NSString * code = [dic objectForKey:@"code"];
+             
+             if([code isEqualToString:@"200"]){ //Good :)
+                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
+                                                                 message:@"Diagram saved properly on server"
+                                                                delegate:self
+                                                       cancelButtonTitle:@"OK"
+                                                       otherButtonTitles:nil];
+                 [alert show];
+
+             }else{ //Error
+                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                 message:[NSString stringWithFormat:@"Info: %@", connectionError]
+                                                                delegate:self
+                                                       cancelButtonTitle:@"OK"
+                                                       otherButtonTitles:nil];
+                 [alert show];
+
+             }
+             
+         }];
+        //NSData * data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+        
+        
+        /*if(!error){
+         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
+         message:@"Diagram saved properly on server"
+         delegate:self
+         cancelButtonTitle:@"OK"
+         otherButtonTitles:nil];
+         [alert show];
+         }else{
+         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+         message:@"Diagram was not saved on server"
+         delegate:self
+         cancelButtonTitle:@"OK"
+         otherButtonTitles:nil];
+         [alert show];
+         }*/
     }else{
-        NSLog(@"Error generating json");
+        NSLog(@"Error generating diagram json");
     }
 }
 
@@ -574,7 +655,7 @@
     [dele.components removeAllObjects];
     [dele.connections removeAllObjects];
     [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
-
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -642,12 +723,12 @@
     [canvas.layer renderInContext:UIGraphicsGetCurrentContext()];
     
     UIImage* image = nil;
-
+    
     image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
     
-
+    
     CGImageRef imgref = image.CGImage;
     
     
@@ -656,7 +737,7 @@
     
     NSData * data = UIImagePNGRepresentation(finalImage);
     
-
+    
     
     
     UIAlertController * ac  = [UIAlertController alertControllerWithTitle:nil
@@ -680,10 +761,10 @@
                                                           }];
     
     UIAlertAction * cancel = [UIAlertAction actionWithTitle:@"Cancel"
-                                                            style:UIAlertActionStyleCancel
-                                                          handler:^(UIAlertAction * _Nonnull action) {
-                                                              
-                                                          }];
+                                                      style:UIAlertActionStyleCancel
+                                                    handler:^(UIAlertAction * _Nonnull action) {
+                                                        
+                                                    }];
     
     [ac addAction:sendemail];
     [ac addAction:saveondevice];
@@ -758,7 +839,7 @@
 
 - (void)zoomToPoint:(CGPoint)zoomPoint withScale:(CGFloat)scale animated:(BOOL)animated
 {
-
+    
     
     
     CGPoint translatedZoomPoint = CGPointZero;
@@ -798,19 +879,19 @@
     }else{
         zoomLevel = 0;
     }
-
+    
     CGPoint p = [tapRecognizer locationInView: self.view];
     CGPoint pointInSV = [self.view convertPoint:p toView:canvas];
     
     float newScale = [self getZoomScaleForIntValue:zoomLevel];
-
+    
     [self zoomToPoint:pointInSV withScale:newScale animated:YES];
 }
 
 #pragma mark ComponentDetailsView delegate
 
 -(void)closeDetailsViewAndUpdateThings{
-   [compDetView setHidden:YES];
+    [compDetView setHidden:YES];
 }
 
 
@@ -849,8 +930,8 @@
         [alert show];
     }
     
-   
-
+    
+    
 }
 -(void)cancelSaving{
     [saveBackgroundBlackView setHidden:YES];
