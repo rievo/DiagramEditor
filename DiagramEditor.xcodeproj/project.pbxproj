@@ -67,6 +67,7 @@
 		F18510861C1824C8004EC4C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F18510841C1824C8004EC4C8 /* LaunchScreen.storyboard */; };
 		F1853A001C52533E0015A9E0 /* StringAttributeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F18539FF1C52533E0015A9E0 /* StringAttributeTableViewCell.xib */; };
 		F1853A031C5253740015A9E0 /* StringAttributeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1853A021C5253740015A9E0 /* StringAttributeTableViewCell.m */; };
+		F18A8E201C7C5A5900D87C00 /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = F18A8E1F1C7C5A5900D87C00 /* circle.png */; };
 		F19C258E1C43AB580002E490 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = F19C258D1C43AB580002E490 /* back.png */; };
 		F19C25901C43AB8B0002E490 /* palette.png in Resources */ = {isa = PBXBuildFile; fileRef = F19C258F1C43AB8B0002E490 /* palette.png */; };
 		F1A20A7E1C1981290037C05D /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A20A7D1C1981290037C05D /* XMLDictionary.m */; };
@@ -170,6 +171,7 @@
 		F18539FF1C52533E0015A9E0 /* StringAttributeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StringAttributeTableViewCell.xib; sourceTree = "<group>"; };
 		F1853A011C5253740015A9E0 /* StringAttributeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringAttributeTableViewCell.h; sourceTree = "<group>"; };
 		F1853A021C5253740015A9E0 /* StringAttributeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringAttributeTableViewCell.m; sourceTree = "<group>"; };
+		F18A8E1F1C7C5A5900D87C00 /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
 		F19C258D1C43AB580002E490 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		F19C258F1C43AB8B0002E490 /* palette.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = palette.png; sourceTree = "<group>"; };
 		F1A20A7C1C1981290037C05D /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDictionary.h; sourceTree = "<group>"; };
@@ -295,6 +297,7 @@
 		F17B75AE1C22D9D500AB1B57 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				F18A8E1F1C7C5A5900D87C00 /* circle.png */,
 				F163AFE51C7B1A1B00BAE67C /* tapDark.png */,
 				F1801F3C1C77413E005BA437 /* localFilled.png */,
 				F1801F3A1C774137005BA437 /* cloudFilled.png */,
@@ -481,6 +484,7 @@
 				F163AFE41C7B173300BAE67C /* DFAAutomaton.graphicR in Resources */,
 				F10AB80C1C50E85100DE6DCE /* ok.png in Resources */,
 				F14181CB1C68DE4300E838F9 /* minusDark.png in Resources */,
+				F18A8E201C7C5A5900D87C00 /* circle.png in Resources */,
 				F1786DE51C561ADA00963663 /* BooleanAttributeTableViewCell.xib in Resources */,
 				F18510811C1824C8004EC4C8 /* Main.storyboard in Resources */,
 				F1786DF41C56649B00963663 /* ExploreFilesView.xib in Resources */,

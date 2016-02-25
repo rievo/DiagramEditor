@@ -228,7 +228,7 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
         cell.backgroundColor = [UIColor clearColor];
         cell.textLabel.adjustsFontSizeToFitWidth = YES;
         cell.textLabel.minimumScaleFactor = 0.5;
-        cell.textLabel.text = c.name;
+        cell.textLabel.text = [NSString stringWithFormat:@"Name: %@",c.name];
         return cell;
         
     }else if(tableView == attributesTable){
@@ -251,6 +251,7 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
                     atvc.attributeNameLabel.text = attr.name;
                     atvc.backgroundColor = [UIColor clearColor];
                     atvc.comp = comp;
+                    atvc.associatedAttribute = attr;
                     atvc.detailsPreview = previewComponent;
                     
                     for(ClassAttribute * atr in comp.attributes){
@@ -274,7 +275,17 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
                     batvc = [nib objectAtIndex:0];
                     batvc.nameLabel.text = attr.name;
                     //batvc.typeLabel.text = attr.type;
+                    batvc.associatedAttribute = attr;
                     batvc.backgroundColor = [UIColor clearColor];
+                    
+                    //Update switch value for this attribute value
+                    if(attr.currentValue == nil){
+                        [batvc.switchValue setOn:NO];
+                    }else if([attr.currentValue isEqualToString: @"false"]){
+                        [batvc.switchValue setOn:NO];
+                    }else if([attr.currentValue isEqualToString:@"true"]){
+                        [batvc.switchValue setOn:YES];
+                    }
                     
                 }
                 return batvc;
@@ -334,12 +345,19 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
-    
-    if([[comp.attributes objectAtIndex:indexPath.row] isKindOfClass:[Reference class]]){
-        return 0;
+    if(tableView == outConnectionsTable){
+        return 47;
+    }else if(tableView == attributesTable){
+        if([[comp.attributes objectAtIndex:indexPath.row] isKindOfClass:[Reference class]]){
+            return 0;
+        }else{
+            return 47;
+        }
     }else{
         return 47;
     }
+    
+   
 }
 
 

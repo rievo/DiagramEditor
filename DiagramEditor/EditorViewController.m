@@ -214,7 +214,7 @@
                 //It is a node
                 NSLog(@"Creating a node");
                 
-                Component * comp = [[Component alloc] initWithFrame:CGRectMake(0, 0, sender.width.floatValue, sender.height.floatValue)];
+                /*Component * comp = [[Component alloc] initWithFrame:CGRectMake(0, 0, sender.width.floatValue, sender.height.floatValue)];
                 comp.center = pointInSV;
                 comp.name = sender.dialog;
                 comp.type = sender.type;
@@ -261,7 +261,7 @@
                     comp.image = sender.image;
                 }else{
                     comp.isImage = NO;
-                }
+                }*/
                 
                 
                 //Si en ese punto del canvas hay un nodo ya, establecemos la relación padre-hijo
@@ -274,6 +274,10 @@
                  [cm.sons addObject:comp];
                  }
                  }*/
+                
+                Component * comp = [sender getComponentForThisPaletteItem];
+                [comp setFrame:CGRectMake(0, 0, sender.width.floatValue, sender.height.floatValue)];
+                [comp setCenter:pointInSV];
                 
                 
                 [dele.components addObject:comp];
@@ -331,6 +335,7 @@
                                                                   options:nil] objectAtIndex:0];
     
     nod.elementName = sender.className;
+    nod.paletteItem = sender;
     
     [nod updateNameLabel];
     [nod setFrame:self.view.frame];
@@ -710,12 +715,13 @@
     float textHeigh = 20;
     float margin = 15;
     
+    float scale = [UIScreen mainScreen].scale;
     
     //*2 due to retina display
-    CGRect cutRect = CGRectMake(roundf(minx.center.x -minxW-textHeigh- 2*margin)*2,
-                                roundf(miny.center.y - minyW - textHeigh- 2*margin)*2,
-                                roundf(maxx.center.x-minx.center.x + minxW + maxxW +textHeigh+ 2*margin*2)*2,
-                                roundf(maxy.center.y-miny.center.y + minyW + maxyW +textHeigh+ 2*margin*2)*2);
+    CGRect cutRect = CGRectMake(roundf(minx.center.x -minxW-textHeigh- 2*margin)*scale,
+                                roundf(miny.center.y - minyW - textHeigh- 2*margin)*scale,
+                                roundf(maxx.center.x-minx.center.x + minxW + maxxW +textHeigh+ 2*margin*2)*scale,
+                                roundf(maxy.center.y-miny.center.y + minyW + maxyW +textHeigh+ 2*margin*2)*scale);
     
     UIGraphicsBeginImageContextWithOptions(canvas.frame.size,
                                            canvas.opaque,

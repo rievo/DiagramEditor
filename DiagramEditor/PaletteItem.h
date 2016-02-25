@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+@class Component;
+
 
 @interface PaletteItem : UIView
 
@@ -51,4 +53,6 @@
 
 @property NSMutableArray * parentsClassArray; //Array con las clases de las que herada  (en el caso de que lo haga)
 
+
+-(Component *)getComponentForThisPaletteItem;
 @end

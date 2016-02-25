@@ -18,16 +18,11 @@
                             <rect key="frame" x="87" y="33" width="240" height="483"/>
                             <subviews>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="f3m-lV-u6v">
-                                    <rect key="frame" x="8" y="69" width="224" height="293"/>
+                                    <rect key="frame" x="8" y="58" width="224" height="143"/>
                                     <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </tableView>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nbN-ql-r9m">
-                                    <rect key="frame" x="8" y="399" width="194" height="30"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits"/>
-                                </textField>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yae-fs-022">
-                                    <rect key="frame" x="210" y="403" width="22" height="22"/>
+                                    <rect key="frame" x="210" y="209" width="22" height="22"/>
                                     <color key="tintColor" red="0.7137255072593689" green="0.74901962280273438" blue="0.81960785388946533" alpha="1" colorSpace="calibratedRGB"/>
                                     <state key="normal">
                                         <color key="titleColor" red="0.7137255072593689" green="0.74901962280273438" blue="0.81960785388946533" alpha="1" colorSpace="calibratedRGB"/>
@@ -37,11 +32,41 @@
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EAt-0t-nYD">
-                                    <rect key="frame" x="8" y="8" width="224" height="53"/>
+                                    <rect key="frame" x="8" y="8" width="224" height="42"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
                                     <color key="textColor" red="0.7137255072593689" green="0.74901962280273438" blue="0.81960785388946533" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X1x-33-cBy">
+                                    <rect key="frame" x="8" y="239" width="224" height="236"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wUa-ZI-gZp">
+                                            <rect key="frame" x="178" y="198" width="30" height="30"/>
+                                            <state key="normal" title="Ok"/>
+                                            <connections>
+                                                <action selector="confirmSaveNode:" destination="iN0-l3-epB" eventType="touchUpInside" id="qUt-Gc-CEB"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VWA-mn-y9i">
+                                            <rect key="frame" x="8" y="198" width="48" height="30"/>
+                                            <state key="normal" title="Cancel"/>
+                                            <connections>
+                                                <action selector="cancelItemInfo:" destination="iN0-l3-epB" eventType="touchUpInside" id="YSM-vT-A9C"/>
+                                            </connections>
+                                        </button>
+                                        <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="jlh-fJ-iHd">
+                                            <rect key="frame" x="8" y="37" width="208" height="153"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </tableView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Attributes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31w-BP-9n0">
+                                            <rect key="frame" x="74" y="8" width="76" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.7137255072593689" green="0.74901962280273438" blue="0.81960785388946533" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" red="0.50980395078659058" green="0.56470590829849243" blue="0.67843139171600342" alpha="1" colorSpace="calibratedRGB"/>
+                                </view>
                             </subviews>
                             <color key="backgroundColor" red="0.35686275362968445" green="0.42745098471641541" blue="0.57254904508590698" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
@@ -66,10 +91,12 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="attributesTable" destination="jlh-fJ-iHd" id="RSB-cj-dvF"/>
                 <outlet property="background" destination="Exy-5C-fKe" id="rUP-lG-ejO"/>
+                <outlet property="container" destination="Ti3-pd-ebf" id="xqx-03-xWb"/>
+                <outlet property="itemInfoGroup" destination="X1x-33-cBy" id="KsS-lj-2Uz"/>
                 <outlet property="nodeTypeLabel" destination="EAt-0t-nYD" id="0dr-0t-Ip6"/>
                 <outlet property="table" destination="f3m-lV-u6v" id="h4D-B1-lYL"/>
-                <outlet property="textField" destination="nbN-ql-r9m" id="zBu-AO-CgQ"/>
             </connections>
             <point key="canvasLocation" x="640" y="424.5"/>
         </view>

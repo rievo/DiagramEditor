@@ -7,19 +7,34 @@
 //
 
 #import "BooleanAttributeTableViewCell.h"
+#import "ClassAttribute.h"
 
 @implementation BooleanAttributeTableViewCell
 
-@synthesize nameLabel, switchValue;
+@synthesize nameLabel, switchValue, associatedAttribute;
 
 - (void)awakeFromNib {
     // Initialization code
+    
+    [switchValue addTarget:self action:@selector(changeSwitch:) forControlEvents:UIControlEventValueChanged];
+    
 }
-
+/*
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
-    // Configure the view for the selected state
-}
+    if (switchValue.isOn == true) {
+        associatedAttribute.currentValue = @"true";
+    }else{
+        associatedAttribute.currentValue = @"false";
+    }
+}*/
 
+- (void)changeSwitch:(id)sender{
+    if (switchValue.isOn == true) {
+        associatedAttribute.currentValue = @"true";
+    }else{
+        associatedAttribute.currentValue = @"false";
+    }
+}
 @end

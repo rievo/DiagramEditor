@@ -14,6 +14,8 @@
 #define kDiamond @"graphicR:Diamond"
 #define kNote @"graphicR:Note"
 #define kParallelogram @"graphicR:ShapeCompartmentParallelogram"
+#import "Component.h"
+#import "ClassAttribute.h"
 
 #define handSize 15
 
@@ -22,6 +24,54 @@
 
 @synthesize type, dialog, width, height, shapeType, fillColor, isImage, image, attributes, className, colorString, sourceName, targetName, targetDecoratorName, sourceDecoratorName, edgeStyle, sourcePart, targetPart, sourceClass, targetClass, minOutConnections,maxOutConnections, containerReference, references, parentsClassArray, isDragable;
 
+
+-(Component *)getComponentForThisPaletteItem{
+    Component * comp = [[Component alloc] init];
+    
+    comp.name = [dialog copy];
+    comp.type = [type copy];
+    comp.shapeType =  [shapeType copy];
+    comp.fillColor = [fillColor copy];
+    comp.parentItem = self;
+    comp.isDragable = isDragable;
+    
+    //Copy attributes
+    NSData * buffer = [NSKeyedArchiver archivedDataWithRootObject:self.attributes];
+    comp.attributes = [NSKeyedUnarchiver unarchiveObjectWithData:buffer];
+    
+    comp.references = references;
+    comp.colorString = [colorString copy];
+    
+    comp.parentClassArray = parentsClassArray;
+    
+    comp.containerReference = containerReference;
+    comp.className = [className copy];
+    
+    if(isImage){
+        comp.isImage = YES;
+        comp.image = image;
+    }else{
+        comp.isImage = NO;
+    }
+    
+    
+    //Ponemos el nombre en el caso de que lo tenga
+    for(ClassAttribute * atr in comp.attributes){
+        if([atr.name isEqualToString:@"name"]){
+            
+            //Comprobamos si tiene el default
+            if(atr.defaultValue != nil){
+                atr.currentValue = atr.defaultValue;
+            }else{
+                atr.currentValue = nil;
+            }
+            comp.name = [atr.currentValue copy];
+        }
+    }
+    
+    
+    return comp;
+}
 
 
 - (void)drawRect:(CGRect)rect {

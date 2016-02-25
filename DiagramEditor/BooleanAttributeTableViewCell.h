@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class ClassAttribute;
 @interface BooleanAttributeTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *switchValue;
 
+
+@property ClassAttribute * associatedAttribute;
 @end

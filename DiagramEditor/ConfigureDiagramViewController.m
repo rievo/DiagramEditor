@@ -63,7 +63,7 @@
     
     loadingADiagram = NO;
     content = nil;
-
+    
     
     tempPaletteFile = nil;
     
@@ -91,10 +91,10 @@
     [thread start];
     
     /*refreshTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
-                                                    target:self
-                                                  selector:@selector(loadFilesFromServer)
-                                                  userInfo:nil
-                                                   repeats:YES];*/
+     target:self
+     selector:@selector(loadFilesFromServer)
+     userInfo:nil
+     repeats:YES];*/
     
     
     //Load local files
@@ -388,7 +388,7 @@
     
     
     [palettesTable reloadData];
-
+    
     //[palette preparePalette];
     
     
@@ -469,7 +469,7 @@
             [alert show];
         }
         
-
+        
     }else{
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                         message:@"Any palette must be selected in order to perform this action."
@@ -496,7 +496,7 @@
         return [palettes count];
     else if(tableView == filesTable)
         return [filesArray count];
-
+    
     else
         return 0;
 }
@@ -522,7 +522,7 @@
         cell.textLabel.text = temp.name;
     }else if(tableView == filesTable){
         UIImage * image ;
-    
+        
         
         PaletteFile * pf = [filesArray objectAtIndex:indexPath.row];
         
@@ -573,7 +573,7 @@
         [confirmButton setHidden:NO];
         
         //[palette setNeedsDisplay];
-
+        
         
         //[self addRecognizers];*/
         
@@ -585,9 +585,9 @@
         PaletteFile * file = [filesArray objectAtIndex:indexPath.row];
         tempPaletteFile = file.name;
         
-       
+        
         [subPaletteGroup setHidden:NO];
-       
+        
         [subPaletteGroup setCenter:CGPointMake(self.view.frame.size.width + subPaletteGroup.frame.size.width/2, self.view.center.y)];
         oldSubPaletteGroupFrame = subPaletteGroup.frame;
         
@@ -616,7 +616,7 @@
                                                   
                                               }
                                               completion:^(BOOL finished) {
-                                                   [self extractPalettesForContentsOfFile:file.content];
+                                                  [self extractPalettesForContentsOfFile:file.content];
                                                   
                                                   
                                                   
@@ -916,24 +916,19 @@
     
     loadingADiagram = YES;
     
+    
+    
+    
     //Do we have JSON for this old diagram?
-    NSString * paletteName = [self extractPaletteNameFromXMLDiagram:content];
+    NSString * paletteFile = [self extractPaletteNameFromXMLDiagram:content];
+    NSArray * parts = [paletteFile componentsSeparatedByString:@"."];
+    tempPaletteFile = parts[0];
     
-    //Check on server jsons
-    //NSString * jsonResult = [self searchJsonNamed:paletteName];
     
-    //if(jsonResult == nil){ //Error, we don't have this palette's json
-        /*UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                        message:@"We don't have this JSON"
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];*/
-    //}else{ //We can continue
-    NSArray * parts = [paletteName componentsSeparatedByString:@"."];
-        tempPaletteFile = parts[0];
-        [self parseXMLDiagramWithText:content ];
-    //}
+    //TODO: Recover json for this palette
+    
+    [self parseXMLDiagramWithText:content ];
+    
     
     
 }
@@ -954,8 +949,8 @@
 
 #pragma mark Load old diagram
 /*-(void)parseContent{
-    [self parseXMLDiagramWithText:content andJSONInfo:jsonResult];
-}*/
+ [self parseXMLDiagramWithText:content andJSONInfo:jsonResult];
+ }*/
 
 -(NSString *)extractPaletteNameFromXMLDiagram:(NSString *)cont{
     NSDictionary * dic = [NSDictionary dictionaryWithXMLString:cont];
@@ -982,7 +977,7 @@
         edges = [[NSArray alloc]initWithObjects:edges, nil];
     }
     /*NSDictionary * palDic = [dic objectForKey:@"palette_name"];
-    NSString * paletteName = [palDic objectForKey:@"_name"];*/
+     NSString * paletteName = [palDic objectForKey:@"_name"];*/
     
     NSDictionary * subpaldic = [dic objectForKey:@"subpalette"];
     NSString * subpalette= [subpaldic objectForKey:@"_name"];
@@ -1021,24 +1016,50 @@
         
         Palette * paletteForUse = [self extractSubPalette:dele.subPalette];
         
-        palette = paletteForUse;
-        [palette preparePalette];
-        
-        dele.paletteItems = [[NSMutableArray alloc] initWithArray:palette.paletteItems];
-        [refreshTimer invalidate];
-        
-        dele.currentPaletteFileName = tempPaletteFile;
-        BOOL result = [self completePaletteForJSONAttributes];
-        
-        if(result == YES){ //Tenemos el json y todo lo demás
+        if(paletteForUse == nil){
+            //Error, esta paleta no tiene la subpaleta indicada
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                            message:@"This palette file doesn't contain indicated subpalette."
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
             
             
+            //Reset things
+            loadingADiagram = NO;
+            dele.subPalette = nil;
+            paletteContent = nil;
+        }else{
+            palette = paletteForUse;
             
-            [self performSegueWithIdentifier:@"showEditor" sender:self];
             
-        }else{ //No se ha podido encontrar el json
-            NSLog(@"No te dejo seguir");
+            [palette preparePalette];
+            
+            dele.paletteItems = [[NSMutableArray alloc] initWithArray:palette.paletteItems];
+            [refreshTimer invalidate];
+            
+            //TODO: Si estamos cargando un diagrama viejo, tengo que quedarme solo con la subpaleta
+            if (loadingADiagram) {
+                
+            }
+            
+            dele.currentPaletteFileName = tempPaletteFile;
+            BOOL result = [self completePaletteForJSONAttributes];
+            
+            if(result == YES){ //Tenemos el json y todo lo demás
+                
+                
+                
+                [self performSegueWithIdentifier:@"showEditor" sender:self];
+                
+            }else{ //No se ha podido encontrar el json
+                NSLog(@"No te dejo seguir");
+            }
+
         }
+        
+        
     }
     
     
@@ -1055,6 +1076,10 @@
     //NSString * con = [self searchOnLocalPalettes:name];
     //TODO: Search on server palettes
     NSString * pal = [self searchOnServerPalettes:name];
+    
+    if(pal == nil){
+        
+    }
     return pal;
 }
 
@@ -1074,7 +1099,7 @@
             NSURLResponse * response = nil;
             NSError * error = nil;
             NSData * data = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:&response error:&error];
-
+            
             
             NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
             if([[dictionary objectForKey:@"code"] isEqualToString:@"200"]){ //Ok
@@ -1150,12 +1175,12 @@
     
     //Fill attributes
     NSArray * attrDic = [dic objectForKey:@"attribute"];
-    NSArray * attrArray = nil;
+    //NSArray * attrArray = nil;
     if([attrDic isKindOfClass:[NSDictionary class]]){
-        attrArray =[[NSArray alloc] initWithObjects:attrDic, nil];
+        attrDic =[[NSArray alloc] initWithObjects:attrDic, nil];
     }
     
-    for(NSDictionary * ad in attrArray){
+    for(NSDictionary * ad in attrDic){
         NSString * aname = [ad objectForKey:@"_name"];
         NSString * adefVal = [ad objectForKey:@"_default_value"];
         NSNumber * amax = [ad objectForKey:[f numberFromString:[ad objectForKey:@"_max"]]];
@@ -1230,7 +1255,7 @@
     
     //ThinkingView * thinking = [[[NSBundle mainBundle] loadNibNamed:@"ThinkingView"
     //                                                                    owner:self
-     //                                                                 options:nil] objectAtIndex:0];
+    //                                                                 options:nil] objectAtIndex:0];
     //[self.view addSubview:thinking];
     //[thinking setFrame:self.view.frame];
     
@@ -1245,7 +1270,7 @@
     NSURLResponse * response = nil;
     NSError * error = nil;
     NSData * data = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:&response error:&error];
-
+    
     //[thinking removeFromSuperview];
     
     

@@ -380,6 +380,11 @@
                             <constraint firstAttribute="trailingMargin" secondItem="gRD-1m-t7Q" secondAttribute="trailing" id="xiv-kU-OKl"/>
                             <constraint firstItem="hEJ-JO-Gjo" firstAttribute="leading" secondItem="3b3-aY-7QT" secondAttribute="trailing" constant="8" id="z9T-Us-Roe"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="hEJ-JO-Gjo"/>
+                            </mask>
+                        </variation>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
