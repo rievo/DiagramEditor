@@ -29,4 +29,11 @@
 @property NSString * sourceDecorator;
 @property NSString * targetDecorator;
 
+@property NSMutableArray * references;
+
+
+@property NSMutableDictionary * instancesOfClassesDictionary;
+
+-(void)retrieveAttributesForThisClassName;
+
 @end

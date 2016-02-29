@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="NoDraggableClassesView">
+            <rect key="frame" x="0.0" y="0.0" width="316" height="575"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8BT-QX-3XT">
+                    <rect key="frame" x="0.0" y="0.0" width="316" height="575"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CuW-Y7-D2m">
+                            <rect key="frame" x="38" y="19" width="240" height="537"/>
+                            <subviews>
+                                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Eof-2Y-qQq">
+                                    <rect key="frame" x="26" y="160" width="188" height="301"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </tableView>
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="This connection has a reference to Node. Do you want to associate a component instance to her?" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="0Lt-nS-bho">
+                                    <rect key="frame" x="27" y="30" width="187" height="104"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                </textView>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G5m-VK-zVa">
+                                    <rect key="frame" x="53" y="486" width="134" height="30"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                    <state key="normal" title="Not now, thanks">
+                                        <color key="titleColor" red="0.13333334028720856" green="0.21176470816135406" blue="0.37647059559822083" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="cancelAssociatingComponent:" destination="iN0-l3-epB" eventType="touchUpInside" id="xeG-P1-ol3"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" red="0.50980395078659058" green="0.56470590829849243" blue="0.67843139171600342" alpha="1" colorSpace="calibratedRGB"/>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="8BT-QX-3XT" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="dRf-SX-HIB"/>
+                <constraint firstAttribute="bottom" secondItem="8BT-QX-3XT" secondAttribute="bottom" id="fXz-OS-hay"/>
+                <constraint firstItem="8BT-QX-3XT" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="hFg-2R-p4n"/>
+                <constraint firstAttribute="trailing" secondItem="8BT-QX-3XT" secondAttribute="trailing" id="uS7-wc-6hK"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="background" destination="8BT-QX-3XT" id="UDq-15-8qo"/>
+                <outlet property="table" destination="Eof-2Y-qQq" id="Mg7-eX-xS8"/>
+            </connections>
+            <point key="canvasLocation" x="352" y="347.5"/>
+        </view>
+    </objects>
+</document>

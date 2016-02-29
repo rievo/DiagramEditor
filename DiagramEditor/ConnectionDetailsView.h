@@ -19,17 +19,19 @@
 
 @interface ConnectionDetailsView : UIView<UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>{
     id delegate;
+    NSMutableArray * associatedComponentsArray;
+    __weak IBOutlet UITableView *instancesTable;
 }
 
 @property (nonatomic, retain) id delegate;
 
-@property (weak, nonatomic) IBOutlet UITextField *nameTextField;
+//@property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 
 @property (weak, nonatomic) IBOutlet UILabel *sourceLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *targetLabel;
 
-@property (weak, nonatomic) IBOutlet UITableView *attributesTable;
+//@property (weak, nonatomic) IBOutlet UITableView *attributesTable;
 @property (weak, nonatomic) IBOutlet UIView *background;
 
 

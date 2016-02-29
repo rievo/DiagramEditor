@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Reference : NSObject
+@interface Reference : NSObject<NSCoding>
 
 @property NSString * name;
 @property BOOL containment;

@@ -11,9 +11,15 @@
 #import "Canvas.h"
 #import "PaletteItem.h"
 
+
 #import "EdgeListView.h"
 #import "EditorViewController.h"
 #import "PaletteItem.h"
+#import "NoDraggableClassesView.h"
+
+#import "HiddenInstancesListView.h"
+
+#import "ClassAttribute.h"
 
 #define resizeW 40
 
@@ -29,7 +35,7 @@
 @implementation Component
 
 
-@synthesize textLayer, type, shapeType, fillColor, image, isImage, attributes, componentId, colorString, containerReference, className, references, name, parentClassArray, isDragable;
+@synthesize textLayer, type, shapeType, fillColor, image, isImage, attributes, componentId, colorString, containerReference, className, references, name, parentClassArray, isDragable, canvas;
 
 
 NSString* const SHOW_INSPECTOR = @"ShowInspector";
@@ -99,23 +105,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         dele = [[UIApplication sharedApplication]delegate];
         
         
-        
-        
         self.backgroundColor = [UIColor clearColor];
-        
-        /*
-         //ShapeLayer
-         backgroundLayer = [[CAShapeLayer alloc] init];
-         UIBezierPath * backPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds
-         byRoundingCorners:UIRectCornerAllCorners
-         cornerRadii:CGSizeMake(5.0, 5.0)];
-         backgroundLayer.frame = self.bounds;
-         backgroundLayer.path = backPath.CGPath;
-         backgroundLayer.fillColor = [UIColor whiteColor].CGColor;
-         backgroundLayer.strokeColor = [UIColor blackColor].CGColor;
-         backgroundLayer.lineWidth = 2.0;
-         [self.layer addSublayer:backgroundLayer];*/
-        
         
         
         //NameLayer
@@ -126,7 +116,6 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
             textLayer = [[CATextLayer alloc] init];
             
             textLayer.foregroundColor = [UIColor blackColor].CGColor;
-            //TODO: self.frame.size.width está dando 0
             CGRect rect = CGRectMake(0 - self.bounds.size.width /2, 0-20, self.frame.size.width * 2,20);
             textLayer.frame = rect;
             textLayer.contentsScale = [UIScreen mainScreen].scale;
@@ -230,26 +219,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         lastScale = [gestureRecognizer scale];  // Store the previous scale factor for the next pinch gesture call
     }
 }
-/*
--(void)handleResize:(UIPanGestureRecognizer *)recog{
-    
-    CGPoint newPoint = [recog locationInView:self];
-    
-    if(recog.state == UIGestureRecognizerStateBegan){
-        NSLog(@"started");
-        
-    }else if(recog.state == UIGestureRecognizerStateChanged){
-        NSLog(@"Agrandaaando");
-        //recog.view.transform = CGAffineTransformScale(recog.view.transform, recog.scale, recog.scale);
-        [self setFrame:CGRectMake(self.frame.origin.x, self.frame.origin.y, newPoint.x - resizeW/2, newPoint.y-resizeW/2)];
-        [self setNeedsDisplay];
-    }else if(recog.state == UIGestureRecognizerStateEnded){
-        NSLog(@"Ended");
-    }
-    
-    
-    
-}*/
+
 
 -(void)handleTap:(UITapGestureRecognizer *)recog{
     
@@ -308,12 +278,16 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
                 
                 conn.targetDecorator = connectionToDo.targetDecoratorName;
                 conn.sourceDecorator = connectionToDo.sourceDecoratorName;
-                //TODO: Asignar conn.className
+               
                 conn.className = tempClassName;
+                
+                [conn retrieveAttributesForThisClassName];
                 
                 [dele.connections addObject:conn];
                 
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+                
+                [self showAddReferencePopupForConnection:conn];
             }else if([canIMakeConnection isEqualToString:kNotYet]){
                 //Tenemos que esperar a que el usuario seleccione el tipo de conexión
             }else{
@@ -769,6 +743,76 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
 
 
 
+#pragma mark No draggable elements
+//This function returns an array with dragabble elements
+-(NSMutableArray *)getDraggablePaletteItems{
+    NSMutableArray * array = [[NSMutableArray alloc] init];
+    
+    for(PaletteItem * pi in dele.paletteItems){
+        if([pi.type isEqualToString:@"graphicR:Node"]){
+            
+            if(pi.isDragable == NO){
+                [array addObject:pi];
+            }
+        }
+    }
+    
+    return array;
+}
+
+-(NSMutableArray *)filterArray:(NSMutableArray *)array
+                  forClassName:(NSString *)n{
+    
+    NSMutableArray * result = [[NSMutableArray alloc] init];
+    
+    for(PaletteItem * pi in array){
+        if([pi.className isEqualToString:n]){
+            [result addObject:pi];
+        }
+    }
+    
+    return result;
+}
+
+
+-(void)showAddReferencePopupForConnection: (Connection *)conn{
+    
+    NSMutableArray * nodragarray = [self getDraggablePaletteItems];
+    
+    //Hacemos el filtrado por las clases que nos permitan las referencias de la connexión
+    
+    //Saco del array los objetos que no tengan una referencia cuya clase se llame igual
+    
+    NSMutableArray * survivors = [[NSMutableArray alloc] init];
+    
+    //Para cada referencia de conn
+    PaletteItem * temp;
+    for(Reference * ref in conn.references){
+        for(int i = 0; i<nodragarray.count; i++){
+            temp = [nodragarray objectAtIndex:i];
+            if ([temp.className isEqualToString:ref.target]) {
+                [survivors addObject:temp];
+            }
+        }
+    }
+    
+    nodragarray = survivors;
+    
+    
+    NoDraggableClassesView * ndv = [[[NSBundle mainBundle] loadNibNamed:@"NoDraggableClassesView"
+                                                        owner:self
+                                                      options:nil] objectAtIndex:0];
+    ndv.itemsArray = nodragarray;
+    ndv.delegate = self;
+    [ndv setFrame:canvas.frame];
+    [ndv reloadInfo];
+    
+    ndv.connection = conn;
+    [canvas addSubview:ndv];
+}
+
+#pragma mark Description method
+
 -(NSString *)description{
     return [NSString stringWithFormat:@"Name: %@\nType: %@\nClass: %@", name, type, className];
 }
@@ -786,9 +830,17 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         conn.source = sourceTemp;
         conn.target = targetTemp;
         conn.className = tempClassName;
+        //TODO: conn.attributes =
         [dele.connections addObject:conn];
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+        
+        
+        //TODO: Ofrecer aquí lo de los no draggables
+        [self showAddReferencePopupForConnection:conn];
+    
+        
+        
     }else if([result isEqualToString:kNotYet]){
         //Tenemos que esperar a que el usuario seleccione el tipo de conexión
     }else{
@@ -803,5 +855,44 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     
 }
 
+
+#pragma mark NoDraggableView...
+-(void)closeDraggableLisView:(UIView *)view
+           WithReturnedItem:(PaletteItem *)value
+               andConnection:(Connection *)conn{
+    
+    [view removeFromSuperview];
+    
+    
+    HiddenInstancesListView * hilv = [[[NSBundle mainBundle] loadNibNamed:@"HiddenInstancesListView"
+                                                                  owner:self
+                                                                options:nil] objectAtIndex:0];
+    hilv.className = value.className;
+    [hilv setFrame:canvas.frame];
+    [hilv reloadInfo];
+    hilv.delegate = self;
+    hilv.connection = conn;
+    [canvas addSubview:hilv];
+    
+}
+
+#pragma mark HiddenInstancesListViewDelegate methods
+-(void)closeHILV:(UIView *)view
+withSelectedComponent:(Component *)comp
+   andConnection:(Connection *)conn{
+    //TODO: Añado ese comp a la lista de instancias de la conexión
+    
+    NSMutableArray * array = [conn.instancesOfClassesDictionary objectForKey:comp.className];
+    
+    if(array == nil){
+        NSMutableArray * temp = [[NSMutableArray alloc] init];
+        [conn.instancesOfClassesDictionary setObject:temp forKey:comp.className];
+        array = temp;
+    }
+    
+    [array addObject:comp];
+    
+    [view removeFromSuperview];
+}
 
 @end

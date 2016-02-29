@@ -214,68 +214,10 @@
                 //It is a node
                 NSLog(@"Creating a node");
                 
-                /*Component * comp = [[Component alloc] initWithFrame:CGRectMake(0, 0, sender.width.floatValue, sender.height.floatValue)];
-                 comp.center = pointInSV;
-                 comp.name = sender.dialog;
-                 comp.type = sender.type;
-                 comp.shapeType = sender.shapeType;
-                 comp.fillColor = sender.fillColor;
-                 comp.parentItem = sender;
-                 
-                 comp.isDragable = sender.isDragable;
-                 
-                 
-                 //Copiamos los atributos
-                 NSData * buffer = [NSKeyedArchiver archivedDataWithRootObject:sender.attributes];
-                 comp.attributes = [NSKeyedUnarchiver unarchiveObjectWithData:buffer];
-                 
-                 
-                 comp.references = sender.references;
-                 comp.colorString = sender.colorString;
-                 
-                 comp.parentClassArray = sender.parentsClassArray;
-                 
-                 //Ponemos el nombre en el caso de que lo tenga
-                 for(ClassAttribute * atr in comp.attributes){
-                 if([atr.name isEqualToString:@"name"]){
-                 
-                 //Comprobamos si tiene el default
-                 if(atr.defaultValue != nil){
-                 atr.currentValue = atr.defaultValue;
-                 }else{
-                 atr.currentValue = nil;
-                 }
-                 comp.name = atr.currentValue;
-                 [comp updateNameLabel];
-                 }
-                 }
-                 
-                 //ecore-graphicR attributes
-                 
-                 comp.containerReference = sender.containerReference;
-                 comp.className = sender.className;
-                 
-                 
-                 if(sender.isImage){
-                 comp.isImage = YES;
-                 comp.image = sender.image;
-                 }else{
-                 comp.isImage = NO;
-                 }*/
-                
-                
-                //Si en ese punto del canvas hay un nodo ya, establecemos la relación padre-hijo
-                /*for(Component * cm in dele.components){
-                 if(CGRectContainsPoint(cm.frame, pointInSV)){
-                 //We have a parent-son relation
-                 //cm will be the parent
-                 //comp will be the son
-                 comp.parent = cm;
-                 [cm.sons addObject:comp];
-                 }
-                 }*/
+    
                 
                 Component * comp = [sender getComponentForThisPaletteItem];
+                comp.canvas = self.view;
                 [comp setFrame:CGRectMake(0, 0, sender.width.floatValue, sender.height.floatValue)];
                 [comp setCenter:pointInSV];
                 [comp fitNameLabel];

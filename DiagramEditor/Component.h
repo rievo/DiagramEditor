@@ -9,10 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 #import "Canvas.h"
+#import "NoDraggableClassesView.h"
+#import "HiddenInstancesListView.h"
+
 @class Component;
 @class PaletteItem;
 
-@interface Component : UIView <UIGestureRecognizerDelegate>{
+@interface Component : UIView <UIGestureRecognizerDelegate, NoDraggableViewProtocol, HiddenInstancesListViewDelegate>{
     
     UITapGestureRecognizer * tapGR;
     UILongPressGestureRecognizer * longGR;
@@ -65,6 +68,8 @@
 @property NSString * containerReference; //nombre de la referencia que lo contiene en la clase root. Sin parsear. Ejemplo: DFAAutomaton.ecore#//Automaton/alphabet
 
 @property NSMutableArray * parentClassArray;
+
+@property UIView * canvas;
 
 
 -(CGPoint)getTopAnchorPoint;

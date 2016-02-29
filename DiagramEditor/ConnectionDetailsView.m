@@ -16,14 +16,14 @@
 
 
 
-@synthesize delegate, nameTextField, sourceLabel, targetLabel, attributesTable, background, connection;
+@synthesize delegate, sourceLabel, targetLabel, background, connection;
 
 - (void)awakeFromNib {
     UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [background addGestureRecognizer:tapgr];
     [tapgr setDelegate:self];
     
-    [nameTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    //[nameTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
 }
 
 
@@ -45,10 +45,29 @@
 
 -(void)prepare{
     //nameTextField.text = connection.name;
-    attributesTable.delegate = self;
-    attributesTable.dataSource = self;
-    sourceLabel.text = connection.source.name;
-    targetLabel.text = connection.target.name;
+    //attributesTable.delegate = self;
+    //attributesTable.dataSource = self;
+    sourceLabel.text = [NSString stringWithFormat:@"Name: %@",connection.source.name];
+    targetLabel.text = [NSString stringWithFormat:@"Name: %@", connection.target.name];
+    
+    
+    associatedComponentsArray = [[NSMutableArray alloc] init];
+    //Llenamos ese array con las instancias asociadas a esta conexión
+    
+    instancesTable.delegate = self;
+    instancesTable.dataSource = self;
+    
+    
+    for (NSString * key in [connection.instancesOfClassesDictionary allKeys]) {
+        NSLog(@"%@", key);
+        NSMutableArray * tempArray = [connection.instancesOfClassesDictionary objectForKey:key];
+        
+        for(Component * comp in tempArray){
+            [associatedComponentsArray addObject:comp];
+        }
+    }
+    
+    [instancesTable reloadData];
 }
 
 
@@ -67,7 +86,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return connection.attributes.count;
+    return associatedComponentsArray.count;
 }
 
 
@@ -77,28 +96,22 @@
 {
     static NSString *MyIdentifier = @"MyIdentifier";
     
-    ReferenceTableViewCell *cell;
+    UITableViewCell *cell;
     
-    Reference * ref = [connection.attributes objectAtIndex:indexPath.row];
+    Component * c = [associatedComponentsArray objectAtIndex:indexPath.row];
+    
     
     cell= [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
     
     if (cell == nil)
     {
-        NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"ReferenceTableViewCell"
-                                                      owner:self
-                                                    options:nil];
-        cell = [nib objectAtIndex:0];
-        
-        cell.nameLabel.text = ref.name;
-        [cell.containmentSwitch setOn:ref.containment];
-        [cell.containmentSwitch setEnabled:NO];
-        cell.targetLabel.text = ref.target;
-        
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                      reuseIdentifier:MyIdentifier] ;
     }
     cell.backgroundColor = [UIColor clearColor];
-    
-    //cell.textLabel.text = .name;
+    cell.textLabel.adjustsFontSizeToFitWidth = YES;
+    cell.textLabel.minimumScaleFactor = 0.5;
+    cell.textLabel.text = [NSString stringWithFormat:@"--: %@", c.name];
     return cell;
     
 }
