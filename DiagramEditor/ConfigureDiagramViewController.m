@@ -164,6 +164,8 @@
              if([code isEqualToString:@"200"]){
                  NSArray * array = [dic objectForKey:@"array"];
                  
+                 [self removeServerPalettesFromArray];
+                 
                  for(int i = 0; i< [array count]; i++){
                      NSDictionary * ins = [array objectAtIndex:i];
                      PaletteFile * pf = [[PaletteFile alloc] init];
@@ -182,13 +184,27 @@
                  
                  
              }else{
-                 NSLog(@"error");
+                 NSLog(@"Error: %@", connectionError);
              }
              
          }
      }];
 }
 
+-(void)removeServerPalettesFromArray{
+    
+    NSMutableArray * toRemove = [[NSMutableArray alloc] init];
+    
+    for(PaletteFile * pf in filesArray){
+        if(pf.fromServer == YES){
+            [toRemove addObject:pf];
+        }
+    }
+    
+    for(PaletteFile * pf in toRemove){
+        [filesArray removeObject:pf];
+    }
+}
 
 #pragma mark Read file/palette and proccess
 
@@ -1229,7 +1245,7 @@
         }
     }
     
-    conn.name = name;
+    //conn.name = name;
     conn.source = source;
     conn.target = target;
     conn.className = className;
@@ -1338,5 +1354,15 @@
                          [palettesTable reloadData];
                          [palette setHidden:YES];
                      }];
+}
+
+
+#pragma mark Reload server palettes
+- (IBAction)reloadServerPalettes:(id)sender {
+    //Load files from server
+    NSThread * thread = [[NSThread alloc] initWithTarget:self
+                                                selector:@selector(loadFilesFromServer)
+                                                  object:nil];
+    [thread start];
 }
 @end

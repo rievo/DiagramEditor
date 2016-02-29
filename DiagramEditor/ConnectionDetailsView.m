@@ -44,7 +44,7 @@
 }
 
 -(void)prepare{
-    nameTextField.text = connection.name;
+    //nameTextField.text = connection.name;
     attributesTable.delegate = self;
     attributesTable.dataSource = self;
     sourceLabel.text = connection.source.name;
@@ -56,7 +56,7 @@
     if(textField.text.length == 0){
         
     }else{
-        connection.name = textField.text;
+        //connection.name = textField.text;
         [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
     }
 }

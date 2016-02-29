@@ -119,32 +119,28 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         
         
         //NameLayer
-        textLayer = [[CATextLayer alloc] init];
         
-        textLayer.foregroundColor = [UIColor blackColor].CGColor;
-        CGRect rect = CGRectMake(0 - self.bounds.size.width /2, 0-20, self.frame.size.width * 2,20);
-        textLayer.frame = rect;
-        textLayer.contentsScale = [UIScreen mainScreen].scale;
-        [textLayer setFont:@"Helvetica-Light"];
-        [textLayer setFontSize:14];
-        textLayer.alignmentMode = kCAAlignmentCenter;
-        textLayer.truncationMode = kCATruncationStart;
-        textLayer.backgroundColor = [UIColor clearColor].CGColor;
-        [self.layer addSublayer:textLayer];
+        if(textLayer != nil){
+            [textLayer removeFromSuperlayer];
+        }else{
+            textLayer = [[CATextLayer alloc] init];
+            
+            textLayer.foregroundColor = [UIColor blackColor].CGColor;
+            //TODO: self.frame.size.width está dando 0
+            CGRect rect = CGRectMake(0 - self.bounds.size.width /2, 0-20, self.frame.size.width * 2,20);
+            textLayer.frame = rect;
+            textLayer.contentsScale = [UIScreen mainScreen].scale;
+            [textLayer setFont:@"Helvetica-Light"];
+            [textLayer setFontSize:14];
+            textLayer.alignmentMode = kCAAlignmentCenter;
+            textLayer.truncationMode = kCATruncationStart;
+            textLayer.backgroundColor = [UIColor clearColor].CGColor;
+            [self.layer addSublayer:textLayer];
+
+        }
+        
         
         [self setNeedsDisplay];
-        
-        
-        /*
-         //Add resizeView
-         resizeView  = [[UIView alloc] initWithFrame:CGRectMake(self.bounds.size.width, self.bounds.size.height, resizeW, resizeW)];
-         [resizeView setUserInteractionEnabled:YES];
-         resizeView.backgroundColor = [UIColor redColor];
-         [self addSubview:resizeView];
-         
-         resizeGr = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleResize:)];
-         [resizeView addGestureRecognizer:resizeGr];*/
-        
         
 
         
@@ -156,6 +152,27 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         
     }
     return self;
+}
+
+-(void)fitNameLabel{
+
+        [textLayer removeFromSuperlayer];
+
+        textLayer = [[CATextLayer alloc] init];
+        
+        textLayer.foregroundColor = [UIColor blackColor].CGColor;
+
+        CGRect rect = CGRectMake(0 - self.bounds.size.width /2, 0-20, self.frame.size.width * 2,20);
+        textLayer.frame = rect;
+        textLayer.contentsScale = [UIScreen mainScreen].scale;
+        [textLayer setFont:@"Helvetica-Light"];
+        [textLayer setFontSize:14];
+        textLayer.alignmentMode = kCAAlignmentCenter;
+        textLayer.truncationMode = kCATruncationStart;
+        textLayer.backgroundColor = [UIColor clearColor].CGColor;
+        [self.layer addSublayer:textLayer];
+
+
 }
 
 
@@ -721,147 +738,18 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     
     //NSString * resultText;
     
+    //Pi será el selected edge
+    
     if(edges == 0){
         //No se podrá hacer ninguna conexión
         NSLog(@"No hay edges");
     }else if(edges == 1){
-        //Se intentará tomar ese edge como defecto y luego se comprobará si puedo usarlo o no
-        //selectedEdge contendrá ese edge
-        //pi.nameClass tiene el nombre de la clase de ese Edge (e.g. Transition)
         
+        NSString * result = [self checkIntegrityForSource:source andTarget:target withEdge:pi];
         
-        NSString * res = nil;
+        return result;
         
-        //Sacamos, de ese tipo, cuántas conexiones pueden salir del source
-        //Recorremos las referencias de source, comprobando si el target es del tipo pi.className
-        
-        NSNumber * minS = nil, *maxS= nil;
-        NSNumber * minT= nil, *maxT= nil;
-        
-        NSString * targetClassName;
-        NSString * opposite;
-        
-        connectionToDo = pi;
-        
-        //pi es el edge
-        
-        BOOL flagSource = false;
-        BOOL flagTarget = false;
-        
-        
-        //Primero buscar la referencia source
-        for(Reference * ref in pi.references){
-            
-            if([ref.name isEqualToString:pi.sourcePart]){ //from
-                if([ref.target isEqualToString:source.className]|| [source.parentClassArray containsObject:ref.target]){
-                    //Compruebo si tiene eopposite
-                    NSString * opp = ref.opposite;
-                    if([opp isEqualToString:@"null"]){
-                        //Pongo el flag a true
-                        flagSource = true;
-                    }else{
-                        //busco ese opp en la clase "target" del json
-                        
-                        
-                        for(Reference * r in source.references){
-                            if([r.name isEqualToString:opp]){
-                                minS = r.min;
-                                maxS = r.max;
-                                targetClassName = r.target;
-                                opposite = r.opposite;
-                                flagSource = true;
-                            }
-                        }
-                        
-                    }
-                }else{
-                    //No se puede crear la conexión
-                    //La clase del source no concuerda
-                    return @"Clase origen no válida";
-                }
-            }
-        }
-        
-        
-        //Después buscar target
-        for(Reference * ref in pi.references){
-            
-            if([ref.name isEqualToString:pi.targetPart]){ //to
-                if([ref.target isEqualToString:target.className] || [target.parentClassArray containsObject:ref.target]){ //Miramos que la clase a la que miro es la que indica, o una de sus padres
-                    //Compruebo si tiene eopposite
-                    NSString * opp = ref.opposite;
-                    if([opp isEqualToString:@"null"]){
-                        //Pongo el flag a true
-                    }else{
-                        //busco ese opp en la clase "target" del json
-                        //NSString * target = ref.target;
-                        
-                        for(Reference * r in target.references){
-                            if([r.name isEqualToString:opp]){
-                                minT = r.min;
-                                maxT = r.max;
-                                targetClassName = r.target;
-                                opposite = r.opposite;
-                                flagTarget = true;
-                            }
-                        }
-                        
-                    }
-                }else{
-                    //No se puede crear la conexión
-                    //La clase del source no concuerda
-                    return @"Clase origen no válida";
-                }
-            }
-        }
-        
-        //final
-        
-        //Hasta aquí se podría hacer la conexión en función de las referencias que sea
-        
-        tempClassName = pi.className;
-        
-        //Comprobamos el grado de entrada y salida
-        int inDegree = [dele getInConnectionsForComponent:target ofType:pi.className];
-        int outDegree = [dele getOutConnectionsForComponent:source ofType:pi.className];
-        
-        BOOL sflag = false, tflag = false;
-        
-        if(minS == nil && maxS == nil){ //No nos importa el grado de salida
-            
-        }else{
-            if([maxS intValue] == -1){//-1 = *
-                sflag = true; //
-            }else if(outDegree < [maxS intValue]){ //Puedo hacer la conexión por el mínimo
-                sflag = true;
-            }else{
-                return @"Número máximo de conexiones de salida alcanzado";
-            }
-        }
-        
-        if(minT == nil && maxT == nil){ //No nos importa el grado de entrada
-            
-        }else{
-            if([maxT intValue] == -1){//-1 = *
-                tflag= true; //
-            }else if(inDegree < [maxT intValue]){ //Puedo hacer la conexión por el mínimo
-                tflag = true;
-            }else{
-                return @"Número máximo de conexiones de entrada alcanzado";
-            }
-        }
-        
-        if(sflag == true && tflag == true){
-            //Puedo hacer la conexión
-            return nil;
-        }
-        
-        
-        
-        return res;
-        
-        
-        
+        //TODO: Lo recortado en el txt
         
     }else{//More than 1 edge
         sourceTemp = source;

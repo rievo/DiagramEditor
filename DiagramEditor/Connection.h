@@ -13,7 +13,7 @@
 @interface Connection : UIView
 
 
-@property NSString * name;
+//@property NSString * name;
 @property Component * source;
 @property Component * target;
 

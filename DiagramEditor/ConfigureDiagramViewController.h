@@ -57,5 +57,7 @@
     
 }
 - (IBAction)cancelSubpaletteSelection:(id)sender;
+- (IBAction)reloadServerPalettes:(id)sender;
+
 
 @end

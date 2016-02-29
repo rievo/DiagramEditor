@@ -18,18 +18,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="392" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rDy-wQ-BXK">
-                                <rect key="frame" x="123" y="2" width="58" height="36"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cn7-28-AaA">
-                                        <rect key="frame" x="8" y="8" width="42" height="20"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                        <color key="textColor" red="0.047058824449777603" green="0.090196080505847931" blue="0.20000000298023224" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" red="0.32156863808631897" green="0.40392157435417175" blue="0.57647061347961426" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
-                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Fe-7V-wER">
                                 <rect key="frame" x="38" y="30" width="25" height="25"/>
                                 <constraints>
@@ -123,15 +111,28 @@
                                     <constraint firstAttribute="height" constant="100" id="WLk-Pc-hK5"/>
                                 </constraints>
                             </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0OT-qN-y9n" userLabel="reload">
+                                <rect key="frame" x="76" y="30" width="25" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="9YI-WA-TBi"/>
+                                    <constraint firstAttribute="width" constant="25" id="vqU-D7-NmP"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="reload.png"/>
+                                <connections>
+                                    <action selector="reloadServerPalettes:" destination="rN5-PV-uVv" eventType="touchUpInside" id="7Bh-Va-XdE"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.22745098039215686" green="0.30588235294117649" blue="0.47058823529411764" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="aHo-aq-TeB" firstAttribute="top" secondItem="qXz-ja-TaN" secondAttribute="bottom" constant="33" id="14k-Q0-K5z"/>
                             <constraint firstItem="aHo-aq-TeB" firstAttribute="top" secondItem="NFu-5F-w0i" secondAttribute="bottom" constant="33" id="39W-by-ZmQ"/>
+                            <constraint firstItem="0OT-qN-y9n" firstAttribute="leading" secondItem="0Fe-7V-wER" secondAttribute="trailing" constant="13" id="8mR-Lq-oUb"/>
                             <constraint firstItem="qXz-ja-TaN" firstAttribute="centerX" secondItem="iEf-WE-QBC" secondAttribute="centerX" id="9aZ-5R-WAl"/>
                             <constraint firstItem="aHo-aq-TeB" firstAttribute="top" secondItem="pzm-22-k2O" secondAttribute="bottom" constant="8" id="BTt-cI-WTu"/>
                             <constraint firstItem="qXz-ja-TaN" firstAttribute="top" secondItem="0Fe-7V-wER" secondAttribute="bottom" constant="20" id="IZM-XU-vxm"/>
                             <constraint firstAttribute="trailingMargin" secondItem="pzm-22-k2O" secondAttribute="trailing" constant="-10" id="JIM-11-BO6"/>
+                            <constraint firstItem="0OT-qN-y9n" firstAttribute="top" secondItem="Oza-78-sY5" secondAttribute="bottom" constant="30" id="Jfv-eu-kmB"/>
                             <constraint firstItem="pzm-22-k2O" firstAttribute="leading" secondItem="iEf-WE-QBC" secondAttribute="leadingMargin" constant="-11" id="L5R-9b-y6b"/>
                             <constraint firstItem="qXz-ja-TaN" firstAttribute="centerY" secondItem="iEf-WE-QBC" secondAttribute="centerY" constant="21" id="dbW-FO-jJT"/>
                             <constraint firstItem="Fem-NR-cIc" firstAttribute="top" secondItem="Oza-78-sY5" secondAttribute="bottom" constant="20" id="fuX-so-WVx"/>
@@ -150,8 +151,6 @@
                         <outlet property="confirmButton" destination="Fem-NR-cIc" id="gib-CN-U3d"/>
                         <outlet property="filesTable" destination="1WE-VM-4s3" id="CU4-Oz-bTB"/>
                         <outlet property="folder" destination="0Fe-7V-wER" id="CH2-NC-hg0"/>
-                        <outlet property="infoLabel" destination="Cn7-28-AaA" id="JQt-Yb-Ftc"/>
-                        <outlet property="infoView" destination="rDy-wQ-BXK" id="spW-E1-URa"/>
                         <outlet property="palette" destination="pzm-22-k2O" id="OQL-N0-QdW"/>
                         <outlet property="paletteFileGroup" destination="qXz-ja-TaN" id="wfo-nH-nwa"/>
                         <outlet property="palettesTable" destination="Rcu-8g-tKj" id="diB-EO-kyB"/>
@@ -465,6 +464,7 @@
         <image name="newDocument.png" width="100" height="100"/>
         <image name="open.png" width="100" height="100"/>
         <image name="palette.png" width="100" height="100"/>
+        <image name="reload.png" width="100" height="100"/>
         <image name="save.png" width="100" height="100"/>
         <image name="settings.png" width="100" height="100"/>
     </resources>

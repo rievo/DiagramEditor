@@ -193,6 +193,8 @@
         for (int j = i+1; j<dele.components.count; j++){
             compIns = [dele.components objectAtIndex:j];
             
+            [compIns updateNameLabel];
+            
             //Tengo out & ins
             //Recorro todas las conexiones contando
             
@@ -471,7 +473,7 @@
                            NSFontAttributeName: font};
     
     //Draw connections name
-    
+    /*
     for(int c = 0; c < dele.connections.count;c++){
         conn = [dele.connections objectAtIndex:c];
         
@@ -485,7 +487,7 @@
         
         float halfw = strSize.width / 2;
         [str drawAtPoint:CGPointMake( conn.controlPoint.x - halfw, conn.controlPoint.y-5)];
-    }
+    }*/
     
     
     

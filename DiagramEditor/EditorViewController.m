@@ -215,53 +215,53 @@
                 NSLog(@"Creating a node");
                 
                 /*Component * comp = [[Component alloc] initWithFrame:CGRectMake(0, 0, sender.width.floatValue, sender.height.floatValue)];
-                comp.center = pointInSV;
-                comp.name = sender.dialog;
-                comp.type = sender.type;
-                comp.shapeType = sender.shapeType;
-                comp.fillColor = sender.fillColor;
-                comp.parentItem = sender;
-                
-                comp.isDragable = sender.isDragable;
-                
-                
-                //Copiamos los atributos
-                NSData * buffer = [NSKeyedArchiver archivedDataWithRootObject:sender.attributes];
-                comp.attributes = [NSKeyedUnarchiver unarchiveObjectWithData:buffer];
-                
-                
-                comp.references = sender.references;
-                comp.colorString = sender.colorString;
-                
-                comp.parentClassArray = sender.parentsClassArray;
-                
-                //Ponemos el nombre en el caso de que lo tenga
-                for(ClassAttribute * atr in comp.attributes){
-                    if([atr.name isEqualToString:@"name"]){
-                        
-                        //Comprobamos si tiene el default
-                        if(atr.defaultValue != nil){
-                            atr.currentValue = atr.defaultValue;
-                        }else{
-                            atr.currentValue = nil;
-                        }
-                        comp.name = atr.currentValue;
-                        [comp updateNameLabel];
-                    }
-                }
-                
-                //ecore-graphicR attributes
-                
-                comp.containerReference = sender.containerReference;
-                comp.className = sender.className;
-                
-                
-                if(sender.isImage){
-                    comp.isImage = YES;
-                    comp.image = sender.image;
-                }else{
-                    comp.isImage = NO;
-                }*/
+                 comp.center = pointInSV;
+                 comp.name = sender.dialog;
+                 comp.type = sender.type;
+                 comp.shapeType = sender.shapeType;
+                 comp.fillColor = sender.fillColor;
+                 comp.parentItem = sender;
+                 
+                 comp.isDragable = sender.isDragable;
+                 
+                 
+                 //Copiamos los atributos
+                 NSData * buffer = [NSKeyedArchiver archivedDataWithRootObject:sender.attributes];
+                 comp.attributes = [NSKeyedUnarchiver unarchiveObjectWithData:buffer];
+                 
+                 
+                 comp.references = sender.references;
+                 comp.colorString = sender.colorString;
+                 
+                 comp.parentClassArray = sender.parentsClassArray;
+                 
+                 //Ponemos el nombre en el caso de que lo tenga
+                 for(ClassAttribute * atr in comp.attributes){
+                 if([atr.name isEqualToString:@"name"]){
+                 
+                 //Comprobamos si tiene el default
+                 if(atr.defaultValue != nil){
+                 atr.currentValue = atr.defaultValue;
+                 }else{
+                 atr.currentValue = nil;
+                 }
+                 comp.name = atr.currentValue;
+                 [comp updateNameLabel];
+                 }
+                 }
+                 
+                 //ecore-graphicR attributes
+                 
+                 comp.containerReference = sender.containerReference;
+                 comp.className = sender.className;
+                 
+                 
+                 if(sender.isImage){
+                 comp.isImage = YES;
+                 comp.image = sender.image;
+                 }else{
+                 comp.isImage = NO;
+                 }*/
                 
                 
                 //Si en ese punto del canvas hay un nodo ya, establecemos la relación padre-hijo
@@ -278,6 +278,7 @@
                 Component * comp = [sender getComponentForThisPaletteItem];
                 [comp setFrame:CGRectMake(0, 0, sender.width.floatValue, sender.height.floatValue)];
                 [comp setCenter:pointInSV];
+                [comp fitNameLabel];
                 
                 
                 [dele.components addObject:comp];
@@ -423,7 +424,45 @@
     UIAlertAction * saveOnServer = [UIAlertAction actionWithTitle:@"Save on server"
                                                             style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * _Nonnull action) {
-                                                              [self saveDiagramOnServer];
+                                                              //[self saveDiagramOnServer];
+                                                              UIAlertController *alertController = [UIAlertController
+                                                                                                    alertControllerWithTitle:@"title"
+                                                                                                    message:@""
+                                                                                                    preferredStyle:UIAlertControllerStyleAlert];
+                                                              
+                                                              [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField)
+                                                               {
+                                                                   textField.placeholder = @"name";
+                                                               }];
+                                                              
+                                                              
+                                                              UIAlertAction * confirmName = [UIAlertAction
+                                                                                         actionWithTitle:@"Ok"
+                                                                                         style:UIAlertActionStyleDefault
+                                                                                         handler:^(UIAlertAction *action)
+                                                                                         {
+                                                                                             UITextField * nameTF = alertController.textFields.firstObject;
+                                                                                             
+                                                                                             if (nameTF.text.length != 0) {
+                                                                                                 [self saveDiagramOnServerWithName:nameTF.text];
+                                                                                             }else{
+                                                                                                 
+                                                                                             }
+                                                                                             
+                                                                                         }];
+                                                              
+                                                              UIAlertAction * cancelName = [UIAlertAction actionWithTitle:@"Cancel"
+                                                                                                                    style:UIAlertActionStyleDestructive
+                                                                                                                  handler:^(UIAlertAction * _Nonnull action) {
+                                                                                                                      
+                                                                                                                  }];
+                                                              [alertController addAction:confirmName];
+                                                              [alertController addAction:cancelName];
+                                                              
+                                                              [self presentViewController:alertController animated:YES completion:^{
+                                                                  
+                                                              }];
+                                                              
                                                           }];
     
     [ac addAction:sendemail];
@@ -442,15 +481,16 @@
     [self presentViewController:ac animated:YES completion:nil];
 }
 
--(void)saveDiagramOnServer{
+-(void)saveDiagramOnServerWithName: (NSString *)name{
     NSString * toSave = [self generateXML];
     NSDate * date = [NSDate date];
     
-   // toSave = [toSave stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
+    // toSave = [toSave stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
     
     NSMutableDictionary * dic = [[NSMutableDictionary alloc]init];
-    [dic setObject:[date description] forKey:@"name"];
+    [dic setObject:[date description] forKey:@"dateString"];
     [dic setObject:toSave forKey:@"content"];
+    [dic setObject:name forKey:@"name"];
     
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic
@@ -460,7 +500,7 @@
     NSString *string = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding] ;
     
     NSData * data = [string dataUsingEncoding:NSUTF8StringEncoding];
-
+    
     if(!error){
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://diagrameditorserver.herokuapp.com/diagrams?json=true"]];
         //NSURLRequest * urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:2.0];
@@ -472,7 +512,7 @@
         [request setHTTPBody: data];
         //[request setHTTPBody:[toSave dataUsingEncoding:NSUTF8StringEncoding]];
         
-
+        
         
         
         [NSURLConnection sendAsynchronousRequest:request
@@ -496,7 +536,7 @@
                                                        cancelButtonTitle:@"OK"
                                                        otherButtonTitles:nil];
                  [alert show];
-
+                 
              }else{ //Error
                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                                  message:[NSString stringWithFormat:@"Info: %@", connectionError]
@@ -504,7 +544,7 @@
                                                        cancelButtonTitle:@"OK"
                                                        otherButtonTitles:nil];
                  [alert show];
-
+                 
              }
              
          }];
@@ -638,7 +678,7 @@
     for(int i = 0; i<dele.connections.count; i++){
         c = [dele.connections objectAtIndex:i];
         [writer writeStartElement:@"edge"];
-        [writer writeAttribute:@"name" value:c.name];
+        //[writer writeAttribute:@"name" value:c.name];
         [writer writeAttribute:@"source" value:[[NSNumber numberWithInt:(int)c.source]description]];
         [writer writeAttribute:@"target" value:[[NSNumber numberWithInt:(int)c.target]description]];
         [writer writeAttribute:@"className" value:c.className];

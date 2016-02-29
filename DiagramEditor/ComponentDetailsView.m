@@ -228,7 +228,7 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
         cell.backgroundColor = [UIColor clearColor];
         cell.textLabel.adjustsFontSizeToFitWidth = YES;
         cell.textLabel.minimumScaleFactor = 0.5;
-        cell.textLabel.text = [NSString stringWithFormat:@"Name: %@",c.name];
+        cell.textLabel.text = [NSString stringWithFormat:@"Name: "];
         return cell;
         
     }else if(tableView == attributesTable){
