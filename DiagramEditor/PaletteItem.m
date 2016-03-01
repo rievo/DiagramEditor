@@ -25,6 +25,80 @@
 @synthesize type, dialog, width, height, shapeType, fillColor, isImage, image, attributes, className, colorString, sourceName, targetName, targetDecoratorName, sourceDecoratorName, edgeStyle, sourcePart, targetPart, sourceClass, targetClass, minOutConnections,maxOutConnections, containerReference, references, parentsClassArray, isDragable;
 
 
+
+#pragma mark NSCoding
+
+- (void)encodeWithCoder:(NSCoder *)coder {
+
+    [coder encodeObject:self.type forKey:@"type"];
+    [coder encodeObject:self.dialog forKey:@"dialog"];
+    [coder encodeObject:self.width forKey:@"width"];
+    [coder encodeObject:self.height forKey:@"height"];
+    [coder encodeObject:self.shapeType forKey:@"shapeType"];
+    [coder encodeObject:self.fillColor forKey:@"fillColor"];
+    [coder encodeObject:self.colorString forKey:@"colorString"];
+    [coder encodeObject:self.image forKey:@"image"];
+    [coder encodeBool:self.isImage forKey:@"isImage"];
+    [coder encodeBool:self.isDragable forKey:@"isDragable"];
+    [coder encodeObject:self.className forKey:@"className"];
+    [coder encodeObject:self.attributes forKey:@"attributes"];
+    [coder encodeObject:self.references forKey:@"references"];
+    [coder encodeObject:self.edgeStyle forKey:@"edgeStyle"];
+    [coder encodeObject:self.sourceDecoratorName forKey:@"sourceDecoratorName"];
+    [coder encodeObject:self.targetDecoratorName forKey:@"targetDecoratorName"];
+    [coder encodeObject:self.sourceName forKey:@"sourceName"];
+    [coder encodeObject:self.targetName forKey:@"targetName"];
+    [coder encodeObject:self.sourcePart forKey:@"sourcePart"];
+    [coder encodeObject:self.targetPart forKey:@"targetPart"];
+    [coder encodeObject:self.sourceClass forKey:@"sourceClass"];
+    [coder encodeObject:self.targetClass forKey:@"targetClass"];
+    [coder encodeObject:self.minOutConnections forKey:@"minOutConnections"];
+    [coder encodeObject:self.maxOutConnections forKey:@"maxOutConnections"];
+    [coder encodeObject:self.containerReference forKey:@"containerReference"];
+    [coder encodeObject:self.parentsClassArray forKey:@"parentsClassArray"];
+    
+    
+}
+
+- (id)initWithCoder:(NSCoder *)coder {
+    self = [super init];
+    if (self) {
+        
+
+        self.type = [coder decodeObjectForKey:@"type"];
+        self.dialog = [coder decodeObjectForKey:@"dialog"];
+        self.width = [coder decodeObjectForKey:@"width"];
+        self.height = [coder decodeObjectForKey:@"height"];
+        self.shapeType = [coder decodeObjectForKey:@"shapeType"];
+        self.fillColor = [coder decodeObjectForKey:@"fillColor"];
+        self.colorString = [coder decodeObjectForKey:@"colorString"];
+        self.image = [coder decodeObjectForKey:@"image"];
+        self.isImage = [coder decodeBoolForKey:@"isImage"];
+        self.isDragable = [coder decodeBoolForKey:@"isDragable"];
+
+        self.className = [coder decodeObjectForKey:@"className"];
+        self.attributes = [coder decodeObjectForKey:@"attributes"];
+        self.references = [coder decodeObjectForKey:@"references"];
+        self.edgeStyle = [coder decodeObjectForKey:@"edgeStyle"];
+        self.sourceDecoratorName = [coder decodeObjectForKey:@"sourceDecoratorName"];
+        self.targetDecoratorName = [coder decodeObjectForKey:@"targetDecoratorName"];
+        self.sourceName = [coder decodeObjectForKey:@"sourceName"];
+        self.targetName = [coder decodeObjectForKey:@"targetName"];
+        self.sourcePart = [coder decodeObjectForKey:@"sourcePart"];
+        self.targetPart = [coder decodeObjectForKey:@"targetPart"];
+        self.sourceClass = [coder decodeObjectForKey:@"sourceClass"];
+        self.targetClass= [coder decodeObjectForKey:@"targetClass"];
+        self.minOutConnections = [coder decodeObjectForKey:@"minOutConnections"];
+        self.maxOutConnections = [coder decodeObjectForKey:@"maxOutConnections"];
+        self.containerReference = [coder decodeObjectForKey:@"containerReference"];
+        self.parentsClassArray= [coder decodeObjectForKey:@"parentsClassArray"];
+
+
+    }
+    return self;
+}
+
+
 -(Component *)getComponentForThisPaletteItem{
     Component * comp = [[Component alloc] init];
     
@@ -229,5 +303,8 @@
 -(NSString *)description{
     return [NSString stringWithFormat:@"Type: %@\nDialog: %@\nShape type: %@\nClass name: %@\nContainer reference: %@\n", type, dialog, shapeType, className, containerReference];
 }
+
+
+
 
 @end

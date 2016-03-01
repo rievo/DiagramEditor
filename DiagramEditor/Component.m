@@ -752,7 +752,11 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         if([pi.type isEqualToString:@"graphicR:Node"]){
             
             if(pi.isDragable == NO){
-                [array addObject:pi];
+                //TODO: Añadir una copia de ese objeto, no el objeto en sí
+                NSData * buffer = [NSKeyedArchiver archivedDataWithRootObject:pi];
+                PaletteItem * copy = [NSKeyedUnarchiver unarchiveObjectWithData:buffer];
+                [array addObject:copy];
+                //[array addObject:pi];
             }
         }
     }
@@ -857,23 +861,37 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
 
 
 #pragma mark NoDraggableView...
--(void)closeDraggableLisView:(UIView *)view
-           WithReturnedItem:(PaletteItem *)value
-               andConnection:(Connection *)conn{
+-(void)closeDraggableLisView: (UIView *)view
+            WithReturnedItem:(PaletteItem *)value
+               andConnection:(Connection * )conn
+       isRequiredAssignation:(BOOL)required
+    isReferencesLimitReached:(BOOL)limitReached
+isPossibleToMakeANewAssignation:(BOOL)isPossible{
     
     [view removeFromSuperview];
     
     
-    HiddenInstancesListView * hilv = [[[NSBundle mainBundle] loadNibNamed:@"HiddenInstancesListView"
-                                                                  owner:self
-                                                                options:nil] objectAtIndex:0];
-    hilv.className = value.className;
-    [hilv setFrame:canvas.frame];
-    [hilv reloadInfo];
-    hilv.delegate = self;
-    hilv.connection = conn;
-    [canvas addSubview:hilv];
-    
+    if(limitReached == YES){ //No podré asociar ninguna instancia más. Me salto este paso
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
+                                                        message:@"The limit of instances has been reached"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }else{
+        if(isPossible == true){
+            HiddenInstancesListView * hilv = [[[NSBundle mainBundle] loadNibNamed:@"HiddenInstancesListView"
+                                                                            owner:self
+                                                                          options:nil] objectAtIndex:0];
+            hilv.className = value.className;
+            [hilv setFrame:canvas.frame];
+            [hilv reloadInfo];
+            hilv.delegate = self;
+            hilv.connection = conn;
+            [canvas addSubview:hilv];
+        }
+    }
+
 }
 
 #pragma mark HiddenInstancesListViewDelegate methods
@@ -882,15 +900,19 @@ withSelectedComponent:(Component *)comp
    andConnection:(Connection *)conn{
     //TODO: Añado ese comp a la lista de instancias de la conexión
     
-    NSMutableArray * array = [conn.instancesOfClassesDictionary objectForKey:comp.className];
-    
-    if(array == nil){
-        NSMutableArray * temp = [[NSMutableArray alloc] init];
-        [conn.instancesOfClassesDictionary setObject:temp forKey:comp.className];
-        array = temp;
+    if(comp != nil){
+        NSMutableArray * array = [conn.instancesOfClassesDictionary objectForKey:comp.className];
+        
+        if(array == nil){
+            NSMutableArray * temp = [[NSMutableArray alloc] init];
+            [conn.instancesOfClassesDictionary setObject:temp forKey:comp.className];
+            array = temp;
+        }
+        
+        [array addObject:comp];
     }
     
-    [array addObject:comp];
+
     
     [view removeFromSuperview];
 }

@@ -22,8 +22,32 @@
     
     [table setDataSource:self];
     [table setDelegate:self];
+    
+    UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    tapgr.delegate = self;
+    [background addGestureRecognizer:tapgr];
 }
 
+
+#pragma mark UITapGestureRecognizer delegate methods
+
+-(void)handleTap:(UITapGestureRecognizer *)recog{
+    //[delegate closeHILV:self withSelectedComponent:nil andConnection:connection];
+    
+    [self removeFromSuperview];
+}
+
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    
+    [self endEditing:YES];
+    if (touch.view != background) { // accept only touchs on superview, not accept touchs on subviews
+        return NO;
+    }
+    
+    return YES;
+}
 
 #pragma mark UITableView Delegate methods
 
@@ -83,10 +107,67 @@
     PaletteItem * selected = [itemsArray objectAtIndex:indexPath.row];
     
     
+    
+    //Saco cuántas instancias tengo de esta clase
+    NSMutableArray * instancesArray = [dele.elementsDictionary objectForKey:selected.className];
+    if(instancesArray.count == 0){
+        //No va a poder seleccionar ninguna instancia, no le dejo seguir
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
+                                                        message:@"This class has no instances so none can be selected\nCreate a new instance later and associate it from the connection details view"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }else{
+        BOOL required = false;
+        BOOL referenceLimitReached = false;
+        BOOL isPossibleToMakeANewAssignation = false;
+        
+        for(Reference * ref in connection.references){
+            if([ref.target isEqualToString:selected.className]){
+                NSNumber * min = ref.min;
+                NSNumber * max = ref.max;
+                
+                //Saco cuántas referencias de este tipo tengo
+                NSMutableArray * tempArray = [connection.instancesOfClassesDictionary objectForKey:ref.target];
+                if(tempArray == nil){
+                    //No tengo ninguna referencia de esta clase, puedo hacer la conexión
+                    isPossibleToMakeANewAssignation = true;
+                }else{
+                    if(tempArray.count < max.integerValue){
+                        //Todavía tengo espacio para una
+                        isPossibleToMakeANewAssignation = true;
+                    }else{
+                        //No puedo asociar una instancia más de esta clase
+                        referenceLimitReached = true;
+                    }
+                }
+                
+                if(min.integerValue > 0){ //Es obligatorio que haga la conexión
+                    required = true;
+                }
+            }
+        }
+        
+        
+        
+        
+        [delegate closeDraggableLisView:selected
+                       WithReturnedItem:selected
+                          andConnection:connection
+                  isRequiredAssignation:required
+               isReferencesLimitReached:referenceLimitReached
+        isPossibleToMakeANewAssignation:isPossibleToMakeANewAssignation];
+    }
+    
+    
+    
+    
     //[delegate closeDraggableListWithReturnedItem:selected];
-    [delegate closeDraggableLisView:self
+    /*[delegate closeDraggableLisView:self
                   WithReturnedItem:selected
-                      andConnection:connection];
+                      andConnection:connection];*/
+    
 }
 
 

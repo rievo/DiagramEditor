@@ -11,7 +11,7 @@
 @class PaletteItem;
 @class Connection;
 
-@interface NoDraggableClassesView : UIView <UITableViewDataSource, UITableViewDelegate>{
+@interface NoDraggableClassesView : UIView <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>{
     
     __weak IBOutlet UIView *background;
     __weak IBOutlet UITableView *table;
@@ -36,7 +36,10 @@
 
 -(void)closeDraggableLisView: (UIView *)view
            WithReturnedItem:(PaletteItem *)value
-               andConnection:(Connection * )conn;
+               andConnection:(Connection * )conn
+       isRequiredAssignation:(BOOL)required
+    isReferencesLimitReached:(BOOL)limitReached
+isPossibleToMakeANewAssignation:(BOOL)isPossible;
 
 
 @end

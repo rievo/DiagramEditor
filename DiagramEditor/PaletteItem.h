@@ -10,7 +10,7 @@
 @class Component;
 
 
-@interface PaletteItem : UIView
+@interface PaletteItem : UIView <NSCoding>
 
 
 @property NSString * type;

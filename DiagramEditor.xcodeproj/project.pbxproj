@@ -23,6 +23,7 @@
 		F147B43E1C63507100A8F5E7 /* EdgeListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F147B43D1C63507100A8F5E7 /* EdgeListView.xib */; };
 		F147B4471C63509600A8F5E7 /* EdgeListView.m in Sources */ = {isa = PBXBuildFile; fileRef = F147B4461C63509600A8F5E7 /* EdgeListView.m */; };
 		F147B44B1C636FB400A8F5E7 /* test.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F147B44A1C636FB400A8F5E7 /* test.graphicR */; };
+		F14DBF841C849F4600963AA6 /* MyTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F14DBF831C849F4600963AA6 /* MyTextField.m */; };
 		F1587B041C19BC4600E963BE /* Palette.m in Sources */ = {isa = PBXBuildFile; fileRef = F1587B031C19BC4600E963BE /* Palette.m */; };
 		F15A96091C27F69100ACA6FA /* XMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = F15A96081C27F69100ACA6FA /* XMLWriter.m */; };
 		F163AFE41C7B173300BAE67C /* DFAAutomaton.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F163AFE31C7B173300BAE67C /* DFAAutomaton.graphicR */; };
@@ -110,6 +111,8 @@
 		F147B4451C63509600A8F5E7 /* EdgeListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EdgeListView.h; sourceTree = "<group>"; };
 		F147B4461C63509600A8F5E7 /* EdgeListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EdgeListView.m; sourceTree = "<group>"; };
 		F147B44A1C636FB400A8F5E7 /* test.graphicR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = test.graphicR; sourceTree = "<group>"; };
+		F14DBF821C849F4600963AA6 /* MyTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTextField.h; sourceTree = "<group>"; };
+		F14DBF831C849F4600963AA6 /* MyTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTextField.m; sourceTree = "<group>"; };
 		F1587B021C19BC4600E963BE /* Palette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Palette.h; sourceTree = "<group>"; };
 		F1587B031C19BC4600E963BE /* Palette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Palette.m; sourceTree = "<group>"; };
 		F15A96071C27F69100ACA6FA /* XMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLWriter.h; sourceTree = "<group>"; };
@@ -237,6 +240,8 @@
 				F1431E8A1C524127006A45BC /* ClassAttribute.m */,
 				F16C7DBF1C577E9100CA9B25 /* Reference.h */,
 				F16C7DC01C577E9100CA9B25 /* Reference.m */,
+				F14DBF821C849F4600963AA6 /* MyTextField.h */,
+				F14DBF831C849F4600963AA6 /* MyTextField.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -555,6 +560,7 @@
 				F16C7DD01C57AD4400CA9B25 /* SureView.m in Sources */,
 				F1786DF71C5664AB00963663 /* ExploreFilesView.m in Sources */,
 				F18510781C1824C8004EC4C8 /* main.m in Sources */,
+				F14DBF841C849F4600963AA6 /* MyTextField.m in Sources */,
 				F1685EAB1C182B7D0094097E /* Connection.m in Sources */,
 				F10F0FA31C1AF67000165561 /* ColorPalette.m in Sources */,
 			);

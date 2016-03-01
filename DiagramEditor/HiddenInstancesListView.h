@@ -13,7 +13,7 @@
 
 
 //Muestra las instancias ocultas de esta clase
-@interface HiddenInstancesListView : UIView<UITableViewDataSource, UITableViewDelegate>{
+@interface HiddenInstancesListView : UIView<UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>{
     
     __weak IBOutlet UIView *background;
     __weak IBOutlet UITableView *instancesTable;

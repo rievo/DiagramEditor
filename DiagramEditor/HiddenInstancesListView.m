@@ -20,6 +20,10 @@
     [instancesTable setDelegate:self];
     instancesArray = [[NSMutableArray alloc] init];
     [self recoverInstancesOfClass:className];
+    
+    UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    tapgr.delegate = self;
+    [background addGestureRecognizer:tapgr];
 }
 
 -(void)reloadInfo{
@@ -32,6 +36,24 @@
     NSMutableArray * array = [dele.elementsDictionary objectForKey:cn];
     instancesArray = array;
     [instancesTable reloadData];
+}
+
+#pragma mark UITapGestureRecognizer delegate methods
+
+-(void)handleTap:(UITapGestureRecognizer *)recog{
+        [delegate closeHILV:self withSelectedComponent:nil andConnection:connection];
+}
+
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    
+    [self endEditing:YES];
+    if (touch.view != background) { // accept only touchs on superview, not accept touchs on subviews
+        return NO;
+    }
+    
+    return YES;
 }
 
 
