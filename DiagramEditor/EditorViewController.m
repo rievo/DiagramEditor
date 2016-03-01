@@ -427,12 +427,18 @@
     NSString * toSave = [self generateXML];
     NSDate * date = [NSDate date];
     
-    // toSave = [toSave stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
+    
+    UIImage * resultedImage = [self getImageDataFromCanvas];
+
+    NSData * imageData = UIImagePNGRepresentation(resultedImage);
     
     NSMutableDictionary * dic = [[NSMutableDictionary alloc]init];
     [dic setObject:[date description] forKey:@"dateString"];
     [dic setObject:toSave forKey:@"content"];
     [dic setObject:name forKey:@"name"];
+    
+    NSString *base64Encoded = [imageData base64EncodedStringWithOptions:0];
+    [dic setObject:base64Encoded forKey:@"imageData"];
     
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic
@@ -648,9 +654,7 @@
 
 
 
-
-- (IBAction)exportCanvasToImage:(id)sender {
-    
+-(UIImage *)getImageDataFromCanvas{
     //Get min bound
     Component * minx = nil;
     Component * miny = nil;
@@ -723,10 +727,18 @@
     CGImageRef subimage = CGImageCreateWithImageInRect(imgref, cutRect);
     UIImage * finalImage = [UIImage imageWithCGImage:subimage];
     
+    //NSData * data = UIImagePNGRepresentation(finalImage);
+    
+    return finalImage;
+}
+
+
+- (IBAction)exportCanvasToImage:(id)sender {
+    
+    
+    
+    UIImage * finalImage = [self getImageDataFromCanvas];
     NSData * data = UIImagePNGRepresentation(finalImage);
-    
-    
-    
     
     UIAlertController * ac  = [UIAlertController alertControllerWithTitle:nil
                                                                   message:nil
