@@ -429,8 +429,10 @@
     
     
     UIImage * resultedImage = [self getImageDataFromCanvas];
+    
+    UIImage * resized = [EditorViewController imageWithImage:resultedImage scaledToSize:CGSizeMake(100, 100)];
 
-    NSData * imageData = UIImagePNGRepresentation(resultedImage);
+    NSData * imageData = UIImagePNGRepresentation(resized);
     
     NSMutableDictionary * dic = [[NSMutableDictionary alloc]init];
     [dic setObject:[date description] forKey:@"dateString"];
@@ -960,4 +962,17 @@
     [palette setContentOffset:CGPointMake(slider.value,0) animated:NO];
 }
 
+
+
+#pragma mark UIImage method
++ (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
+    //UIGraphicsBeginImageContext(newSize);
+    // In next line, pass 0.0 to use the current device's pixel scaling factor (and thus account for Retina resolution).
+    // Pass 1.0 to force exact pixel size.
+    UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+    [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
 @end
