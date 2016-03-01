@@ -25,6 +25,8 @@
 #import "Connection.h"
 
 #import "ThinkingView.h"
+#import "DiagramFile.h"
+
 
 #define defaultwidth 50
 #define defaultheight 50
@@ -656,7 +658,12 @@
     UIAlertAction * loadFromServer = [UIAlertAction actionWithTitle:@"Load from server"
                                                               style:UIAlertActionStyleDefault
                                                             handler:^(UIAlertAction * _Nonnull action) {
-                                                                
+                                                                CloudDiagramsExplorer * cde = [[[NSBundle mainBundle]loadNibNamed:@"CloudDiagramsExplorer"
+                                                                                                                           owner:self
+                                                                                                                         options:nil]objectAtIndex:0];
+                                                                [cde setFrame:self.view.frame];
+                                                                cde.delegate = self;
+                                                                [self.view addSubview:cde];
                                                             }];
     
     UIAlertAction * pasteFromText = [UIAlertAction actionWithTitle:@"Paste from text"
@@ -1364,5 +1371,29 @@
                                                 selector:@selector(loadFilesFromServer)
                                                   object:nil];
     [thread start];
+}
+
+
+#pragma mark CloudDiagramExplorer delegate
+-(void)closeExplorerWithSelectedDiagramFile:(DiagramFile *)file{
+    //file será el diagrama seleccionado
+    
+    if(file.content == nil){ //Error
+        
+    }else{
+        
+        NSString * fileContent = file.content;
+
+        
+        //Do we have JSON for this old diagram?
+        NSString * paletteFile = [self extractPaletteNameFromXMLDiagram:fileContent];
+        NSArray * parts = [paletteFile componentsSeparatedByString:@"."];
+        tempPaletteFile = parts[0];
+        
+        
+        //TODO: Recover json for this palette
+        
+        [self parseXMLDiagramWithText:fileContent ];
+    }
 }
 @end

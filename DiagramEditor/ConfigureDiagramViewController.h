@@ -11,9 +11,10 @@
 #import "ExploreFilesView.h"
 @class AppDelegate;
 @class Palette;
+#import "CloudDiagramsExplorer.h"
 
 
-@interface ConfigureDiagramViewController : UIViewController<UIScrollViewDelegate, UIGestureRecognizerDelegate, UITableViewDataSource, UITableViewDelegate, PasteViewDelegate, ExploreFilesDelegate>{
+@interface ConfigureDiagramViewController : UIViewController<UIScrollViewDelegate, UIGestureRecognizerDelegate, UITableViewDataSource, UITableViewDelegate, PasteViewDelegate, ExploreFilesDelegate, CloudDiagramsExplorer>{
     NSDictionary * configuration;
     AppDelegate * dele;
     __weak IBOutlet UIScrollView *scrollView;

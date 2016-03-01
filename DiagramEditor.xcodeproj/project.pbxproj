@@ -24,6 +24,10 @@
 		F147B4471C63509600A8F5E7 /* EdgeListView.m in Sources */ = {isa = PBXBuildFile; fileRef = F147B4461C63509600A8F5E7 /* EdgeListView.m */; };
 		F147B44B1C636FB400A8F5E7 /* test.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F147B44A1C636FB400A8F5E7 /* test.graphicR */; };
 		F14DBF841C849F4600963AA6 /* MyTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F14DBF831C849F4600963AA6 /* MyTextField.m */; };
+		F15865111C85A2B5007D2E75 /* CloudDiagramsExplorer.xib in Resources */ = {isa = PBXBuildFile; fileRef = F15865101C85A2B5007D2E75 /* CloudDiagramsExplorer.xib */; };
+		F15865141C85A2CA007D2E75 /* CloudDiagramsExplorer.m in Sources */ = {isa = PBXBuildFile; fileRef = F15865131C85A2CA007D2E75 /* CloudDiagramsExplorer.m */; };
+		F15865191C85A572007D2E75 /* FileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F15865181C85A572007D2E75 /* FileCell.xib */; settings = {ASSET_TAGS = (100, ); }; };
+		F158651C1C85AA59007D2E75 /* DiagramFile.m in Sources */ = {isa = PBXBuildFile; fileRef = F158651B1C85AA59007D2E75 /* DiagramFile.m */; };
 		F1587B041C19BC4600E963BE /* Palette.m in Sources */ = {isa = PBXBuildFile; fileRef = F1587B031C19BC4600E963BE /* Palette.m */; };
 		F15A96091C27F69100ACA6FA /* XMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = F15A96081C27F69100ACA6FA /* XMLWriter.m */; };
 		F163AFE41C7B173300BAE67C /* DFAAutomaton.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F163AFE31C7B173300BAE67C /* DFAAutomaton.graphicR */; };
@@ -113,6 +117,12 @@
 		F147B44A1C636FB400A8F5E7 /* test.graphicR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = test.graphicR; sourceTree = "<group>"; };
 		F14DBF821C849F4600963AA6 /* MyTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTextField.h; sourceTree = "<group>"; };
 		F14DBF831C849F4600963AA6 /* MyTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTextField.m; sourceTree = "<group>"; };
+		F15865101C85A2B5007D2E75 /* CloudDiagramsExplorer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CloudDiagramsExplorer.xib; sourceTree = "<group>"; };
+		F15865121C85A2CA007D2E75 /* CloudDiagramsExplorer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudDiagramsExplorer.h; sourceTree = "<group>"; };
+		F15865131C85A2CA007D2E75 /* CloudDiagramsExplorer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CloudDiagramsExplorer.m; sourceTree = "<group>"; };
+		F15865181C85A572007D2E75 /* FileCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FileCell.xib; sourceTree = "<group>"; };
+		F158651A1C85AA59007D2E75 /* DiagramFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiagramFile.h; sourceTree = "<group>"; };
+		F158651B1C85AA59007D2E75 /* DiagramFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiagramFile.m; sourceTree = "<group>"; };
 		F1587B021C19BC4600E963BE /* Palette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Palette.h; sourceTree = "<group>"; };
 		F1587B031C19BC4600E963BE /* Palette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Palette.m; sourceTree = "<group>"; };
 		F15A96071C27F69100ACA6FA /* XMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLWriter.h; sourceTree = "<group>"; };
@@ -242,6 +252,8 @@
 				F16C7DC01C577E9100CA9B25 /* Reference.m */,
 				F14DBF821C849F4600963AA6 /* MyTextField.h */,
 				F14DBF831C849F4600963AA6 /* MyTextField.m */,
+				F158651A1C85AA59007D2E75 /* DiagramFile.h */,
+				F158651B1C85AA59007D2E75 /* DiagramFile.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -249,22 +261,17 @@
 		F1431E8C1C5249D4006A45BC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F15865171C85A536007D2E75 /* File explorers */,
+				F15865161C85A51E007D2E75 /* No draggable elements */,
+				F15865151C85A4FB007D2E75 /* DetailsViews */,
 				F1786DE31C561AB100963663 /* AttributeCells */,
-				F1685EAC1C1831840094097E /* ComponentDetailsView.h */,
-				F1685EAD1C1831840094097E /* ComponentDetailsView.m */,
-				F1431E8D1C5249F7006A45BC /* ComponentDetailsView.xib */,
 				F10AB8071C50E7E200DE6DCE /* PasteView.xib */,
+				F15865181C85A572007D2E75 /* FileCell.xib */,
 				F10AB80D1C50E9FB00DE6DCE /* PasteView.h */,
 				F10AB80E1C50E9FB00DE6DCE /* PasteView.m */,
 				F1786DEE1C56410200963663 /* SaveNameView.xib */,
 				F1786DF01C56411300963663 /* SaveNameView.h */,
 				F1786DF11C56411300963663 /* SaveNameView.m */,
-				F1786DF31C56649B00963663 /* ExploreFilesView.xib */,
-				F1786DF51C5664AB00963663 /* ExploreFilesView.h */,
-				F1786DF61C5664AB00963663 /* ExploreFilesView.m */,
-				F16C7DC71C578D3900CA9B25 /* ConnectionDetailsView.xib */,
-				F16C7DC91C578D4B00CA9B25 /* ConnectionDetailsView.h */,
-				F16C7DCA1C578D4B00CA9B25 /* ConnectionDetailsView.m */,
 				F16C7DCE1C57AD4400CA9B25 /* SureView.h */,
 				F16C7DCF1C57AD4400CA9B25 /* SureView.m */,
 				F16C7DCC1C57AD2900CA9B25 /* SureView.xib */,
@@ -274,6 +281,26 @@
 				F107E4621C72221A007DD29E /* ThinkingView.h */,
 				F107E4631C72221A007DD29E /* ThinkingView.m */,
 				F107E4651C722229007DD29E /* ThinkingView.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		F15865151C85A4FB007D2E75 /* DetailsViews */ = {
+			isa = PBXGroup;
+			children = (
+				F1685EAC1C1831840094097E /* ComponentDetailsView.h */,
+				F1685EAD1C1831840094097E /* ComponentDetailsView.m */,
+				F1431E8D1C5249F7006A45BC /* ComponentDetailsView.xib */,
+				F16C7DC71C578D3900CA9B25 /* ConnectionDetailsView.xib */,
+				F16C7DC91C578D4B00CA9B25 /* ConnectionDetailsView.h */,
+				F16C7DCA1C578D4B00CA9B25 /* ConnectionDetailsView.m */,
+			);
+			name = DetailsViews;
+			sourceTree = "<group>";
+		};
+		F15865161C85A51E007D2E75 /* No draggable elements */ = {
+			isa = PBXGroup;
+			children = (
 				F163AFED1C7B1B5E00BAE67C /* NoDraggableComponentView.xib */,
 				F163AFEF1C7B1B6800BAE67C /* NoDraggableComponentView.h */,
 				F163AFF01C7B1B6800BAE67C /* NoDraggableComponentView.m */,
@@ -284,7 +311,20 @@
 				F18A55EC1C8487C200B134F0 /* HiddenInstancesListView.h */,
 				F18A55ED1C8487C200B134F0 /* HiddenInstancesListView.m */,
 			);
-			name = Views;
+			name = "No draggable elements";
+			sourceTree = "<group>";
+		};
+		F15865171C85A536007D2E75 /* File explorers */ = {
+			isa = PBXGroup;
+			children = (
+				F1786DF31C56649B00963663 /* ExploreFilesView.xib */,
+				F1786DF51C5664AB00963663 /* ExploreFilesView.h */,
+				F1786DF61C5664AB00963663 /* ExploreFilesView.m */,
+				F15865101C85A2B5007D2E75 /* CloudDiagramsExplorer.xib */,
+				F15865121C85A2CA007D2E75 /* CloudDiagramsExplorer.h */,
+				F15865131C85A2CA007D2E75 /* CloudDiagramsExplorer.m */,
+			);
+			name = "File explorers";
 			sourceTree = "<group>";
 		};
 		F15A96061C27F4A900ACA6FA /* XML Utilities */ = {
@@ -444,6 +484,9 @@
 		F185106B1C1824C8004EC4C8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					100,
+				);
 				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "Diego Vaquero Melchor";
 				TargetAttributes = {
@@ -479,6 +522,7 @@
 				F1853A001C52533E0015A9E0 /* StringAttributeTableViewCell.xib in Resources */,
 				F14181C91C68DCB600E838F9 /* settings.png in Resources */,
 				F1AB3B161C22B19800EDBB1D /* resize.png in Resources */,
+				F15865191C85A572007D2E75 /* FileCell.xib in Resources */,
 				F16C7DC81C578D3900CA9B25 /* ConnectionDetailsView.xib in Resources */,
 				F1431E8E1C5249F7006A45BC /* ComponentDetailsView.xib in Resources */,
 				F10F0FA51C1ED77A00165561 /* design.graphicR in Resources */,
@@ -494,6 +538,7 @@
 				F147B43E1C63507100A8F5E7 /* EdgeListView.xib in Resources */,
 				F163AFEE1C7B1B5E00BAE67C /* NoDraggableComponentView.xib in Resources */,
 				F16C7DCD1C57AD2900CA9B25 /* SureView.xib in Resources */,
+				F15865111C85A2B5007D2E75 /* CloudDiagramsExplorer.xib in Resources */,
 				F17B75A91C22D6E100AB1B57 /* newDocument.png in Resources */,
 				F1786DEF1C56410200963663 /* SaveNameView.xib in Resources */,
 				F19C25901C43AB8B0002E490 /* palette.png in Resources */,
@@ -536,6 +581,7 @@
 				F16C7DCB1C578D4B00CA9B25 /* ConnectionDetailsView.m in Sources */,
 				F185107B1C1824C8004EC4C8 /* AppDelegate.m in Sources */,
 				F1685EAE1C1831840094097E /* ComponentDetailsView.m in Sources */,
+				F15865141C85A2CA007D2E75 /* CloudDiagramsExplorer.m in Sources */,
 				F1786DE81C561AF200963663 /* BooleanAttributeTableViewCell.m in Sources */,
 				F15A96091C27F69100ACA6FA /* XMLWriter.m in Sources */,
 				F163AFF11C7B1B6800BAE67C /* NoDraggableComponentView.m in Sources */,
@@ -557,6 +603,7 @@
 				F1A20A7E1C1981290037C05D /* XMLDictionary.m in Sources */,
 				F1853A031C5253740015A9E0 /* StringAttributeTableViewCell.m in Sources */,
 				F1E9EFD81C4524CD007E227D /* PaletteItemCreatorViewController.m in Sources */,
+				F158651C1C85AA59007D2E75 /* DiagramFile.m in Sources */,
 				F16C7DD01C57AD4400CA9B25 /* SureView.m in Sources */,
 				F1786DF71C5664AB00963663 /* ExploreFilesView.m in Sources */,
 				F18510781C1824C8004EC4C8 /* main.m in Sources */,
