@@ -14,24 +14,48 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dXR-f6-sh2">
                     <rect key="frame" x="0.0" y="0.0" width="321" height="494"/>
                     <subviews>
-                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tWr-QJ-BhO">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tWr-QJ-BhO">
                             <rect key="frame" x="29" y="19" width="263" height="455"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Server files" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zUu-9n-tzi">
-                                    <rect key="frame" x="57" y="16" width="149" height="28"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Server files" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zUu-9n-tzi">
+                                    <rect key="frame" x="57" y="8" width="149" height="28"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="28" id="snY-Xd-ZlL"/>
+                                    </constraints>
                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="22"/>
                                     <color key="textColor" red="0.7137255072593689" green="0.74901962280273438" blue="0.81960785388946533" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="abn-b0-UCk">
-                                    <rect key="frame" x="11" y="52" width="240" height="395"/>
+                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="log-8h-BCJ">
+                                    <rect key="frame" x="8" y="37" width="247" height="410"/>
                                     <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </tableView>
+                                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="14" minimumInteritemSpacing="6" id="AMq-7q-tgE">
+                                        <size key="itemSize" width="100" height="100"/>
+                                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    </collectionViewFlowLayout>
+                                </collectionView>
                             </subviews>
                             <color key="backgroundColor" red="0.35686275362968445" green="0.42745098471641541" blue="0.57254904508590698" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="zUu-9n-tzi" secondAttribute="trailing" constant="57" id="8DR-bn-8AB"/>
+                                <constraint firstAttribute="bottom" secondItem="log-8h-BCJ" secondAttribute="bottom" constant="8" id="GbH-NU-RyI"/>
+                                <constraint firstItem="log-8h-BCJ" firstAttribute="leading" secondItem="tWr-QJ-BhO" secondAttribute="leading" constant="8" id="GmG-PO-aej"/>
+                                <constraint firstItem="log-8h-BCJ" firstAttribute="top" secondItem="zUu-9n-tzi" secondAttribute="bottom" constant="1" id="TpC-Tm-1Fc"/>
+                                <constraint firstItem="zUu-9n-tzi" firstAttribute="top" secondItem="tWr-QJ-BhO" secondAttribute="top" constant="8" id="XOS-QQ-6DM"/>
+                                <constraint firstItem="zUu-9n-tzi" firstAttribute="leading" secondItem="tWr-QJ-BhO" secondAttribute="leading" constant="57" id="kbu-1a-JK5"/>
+                                <constraint firstAttribute="trailing" secondItem="log-8h-BCJ" secondAttribute="trailing" constant="8" id="oZZ-yw-imo"/>
+                            </constraints>
                         </view>
                     </subviews>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="tWr-QJ-BhO" secondAttribute="bottom" constant="20" id="AaV-U3-Vwp"/>
+                        <constraint firstItem="tWr-QJ-BhO" firstAttribute="leading" secondItem="dXR-f6-sh2" secondAttribute="leading" constant="29" id="SaC-zy-hmF"/>
+                        <constraint firstAttribute="trailing" secondItem="tWr-QJ-BhO" secondAttribute="trailing" constant="29" id="cFX-4B-xgA"/>
+                        <constraint firstItem="tWr-QJ-BhO" firstAttribute="top" secondItem="dXR-f6-sh2" secondAttribute="top" constant="19" id="kS7-4X-ogs"/>
+                    </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -44,7 +68,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="background" destination="dXR-f6-sh2" id="V2A-ob-PIf"/>
-                <outlet property="table" destination="abn-b0-UCk" id="xQz-e4-793"/>
+                <outlet property="collection" destination="log-8h-BCJ" id="hJy-Wr-baX"/>
             </connections>
             <point key="canvasLocation" x="686.5" y="321"/>
         </view>

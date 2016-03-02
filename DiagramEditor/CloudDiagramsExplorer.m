@@ -9,6 +9,7 @@
 #import "CloudDiagramsExplorer.h"
 #import "DiagramFile.h"
 #import "AppDelegate.h"
+#import "CloudFileCollectionViewCell.h"
 
 @implementation CloudDiagramsExplorer
 
@@ -31,8 +32,14 @@
     [self loadFilesFromServer];
     
     
-    table.delegate = self;
-    table.dataSource = self;
+    //table.delegate = self;
+    //table.dataSource = self;aa
+    collection.dataSource = self;
+    collection.delegate = self;
+    
+    //[collection registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
+   
+    [collection registerNib:[UINib nibWithNibName:@"CloudFileCollectionViewCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"Cell"];
     
     dele = [[UIApplication sharedApplication]delegate];
     
@@ -68,13 +75,16 @@
                      df.name = [fileDic objectForKey:@"name"];
                      df.dateString = [fileDic objectForKey:@"dateString"];
                      df.content = [fileDic objectForKey:@"content"];
+                     
+                     [df updatePreviewForString:[fileDic objectForKey:@"imageString"]];
                      [filesArray addObject:df];
                  }
                  
                  
                  //Reload table
                  dispatch_async(dispatch_get_main_queue(), ^{
-                     [table reloadData];
+                     //[table reloadData];
+                     [collection reloadData];
                  });
              }
              
@@ -101,7 +111,7 @@
 }
 
 
-
+/*
 #pragma mark UITableViewDelegate methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -145,7 +155,62 @@
     [self removeFromSuperview];
     DiagramFile * file = [filesArray objectAtIndex:indexPath.row];
     [delegate closeExplorerWithSelectedDiagramFile:file];
+}*/
+
+
+#pragma mark UICollectionView methods
+- (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section {
+    return filesArray.count;
 }
 
+- (NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionView {
+    return 1;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    DiagramFile * df = [filesArray objectAtIndex:indexPath.row];
+    
+    CloudFileCollectionViewCell * cell = (CloudFileCollectionViewCell*)[cv dequeueReusableCellWithReuseIdentifier:@"Cell"
+                                forIndexPath:indexPath];
+    
+    
+    
+    cell.nameLabel.text = df.name;
+    cell.preview.image = df.previewImage;
+
+    return cell;
+    
+    
+    /*UICollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
+    cell.backgroundColor = [UIColor whiteColor];
+    return cell;*/
+    
+}
+// 4
+/*- (UICollectionReusableView *)collectionView:
+ (UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+ {
+ return [[UICollectionReusableView alloc] init];
+ }*/
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    [self removeFromSuperview];
+    DiagramFile * file = [filesArray objectAtIndex:indexPath.row];
+    [delegate closeExplorerWithSelectedDiagramFile:file];
+}
+- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+    // TODO: Deselect item
+}
+
+
+#pragma mark – UICollectionViewDelegateFlowLayout
+
+//Da el tamaño de las celdas
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return CGSizeMake(120, 140);
+}
 
 @end

@@ -10,7 +10,7 @@
 
 @implementation DiagramFile
 
-@synthesize name, content, dateString;
+@synthesize name, content, dateString, previewImage;
 
 - (instancetype)init
 {
@@ -19,8 +19,15 @@
         name = @"";
         content = @"";
         dateString = @"";
+        previewImage = nil;
     }
     return self;
+}
+
+-(void)updatePreviewForString:(NSString *)string{
+    NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:string options:0];
+    UIImage * image = [UIImage imageWithData:decodedData];
+    previewImage = image;
 }
 
 

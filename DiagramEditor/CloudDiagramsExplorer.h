@@ -10,12 +10,13 @@
 @class AppDelegate;
 @class DiagramFile;
 
-@interface CloudDiagramsExplorer : UIView <UIGestureRecognizerDelegate, UITableViewDataSource, UITableViewDelegate>{
+@interface CloudDiagramsExplorer : UIView <UIGestureRecognizerDelegate, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>{
     
     
     __weak IBOutlet UIView *background;
-    __weak IBOutlet UITableView *table;
+    //__weak IBOutlet UITableView *table;
     
+    __weak IBOutlet UICollectionView *collection;
     NSMutableArray * filesArray;
     
     AppDelegate * dele;

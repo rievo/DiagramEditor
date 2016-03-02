@@ -24,9 +24,10 @@
 		F147B4471C63509600A8F5E7 /* EdgeListView.m in Sources */ = {isa = PBXBuildFile; fileRef = F147B4461C63509600A8F5E7 /* EdgeListView.m */; };
 		F147B44B1C636FB400A8F5E7 /* test.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F147B44A1C636FB400A8F5E7 /* test.graphicR */; };
 		F14DBF841C849F4600963AA6 /* MyTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F14DBF831C849F4600963AA6 /* MyTextField.m */; };
+		F157993B1C86FDE00009D4C7 /* CloudFileCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F157993A1C86FDE00009D4C7 /* CloudFileCollectionViewCell.m */; };
+		F157993D1C86FE030009D4C7 /* CloudFileCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F157993C1C86FE030009D4C7 /* CloudFileCollectionViewCell.xib */; };
 		F15865111C85A2B5007D2E75 /* CloudDiagramsExplorer.xib in Resources */ = {isa = PBXBuildFile; fileRef = F15865101C85A2B5007D2E75 /* CloudDiagramsExplorer.xib */; };
 		F15865141C85A2CA007D2E75 /* CloudDiagramsExplorer.m in Sources */ = {isa = PBXBuildFile; fileRef = F15865131C85A2CA007D2E75 /* CloudDiagramsExplorer.m */; };
-		F15865191C85A572007D2E75 /* FileCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F15865181C85A572007D2E75 /* FileCell.xib */; settings = {ASSET_TAGS = (100, ); }; };
 		F158651C1C85AA59007D2E75 /* DiagramFile.m in Sources */ = {isa = PBXBuildFile; fileRef = F158651B1C85AA59007D2E75 /* DiagramFile.m */; };
 		F1587B041C19BC4600E963BE /* Palette.m in Sources */ = {isa = PBXBuildFile; fileRef = F1587B031C19BC4600E963BE /* Palette.m */; };
 		F15A96091C27F69100ACA6FA /* XMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = F15A96081C27F69100ACA6FA /* XMLWriter.m */; };
@@ -117,10 +118,12 @@
 		F147B44A1C636FB400A8F5E7 /* test.graphicR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = test.graphicR; sourceTree = "<group>"; };
 		F14DBF821C849F4600963AA6 /* MyTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTextField.h; sourceTree = "<group>"; };
 		F14DBF831C849F4600963AA6 /* MyTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTextField.m; sourceTree = "<group>"; };
+		F15799391C86FDE00009D4C7 /* CloudFileCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudFileCollectionViewCell.h; sourceTree = "<group>"; };
+		F157993A1C86FDE00009D4C7 /* CloudFileCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CloudFileCollectionViewCell.m; sourceTree = "<group>"; };
+		F157993C1C86FE030009D4C7 /* CloudFileCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CloudFileCollectionViewCell.xib; sourceTree = "<group>"; };
 		F15865101C85A2B5007D2E75 /* CloudDiagramsExplorer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CloudDiagramsExplorer.xib; sourceTree = "<group>"; };
 		F15865121C85A2CA007D2E75 /* CloudDiagramsExplorer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudDiagramsExplorer.h; sourceTree = "<group>"; };
 		F15865131C85A2CA007D2E75 /* CloudDiagramsExplorer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CloudDiagramsExplorer.m; sourceTree = "<group>"; };
-		F15865181C85A572007D2E75 /* FileCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FileCell.xib; sourceTree = "<group>"; };
 		F158651A1C85AA59007D2E75 /* DiagramFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiagramFile.h; sourceTree = "<group>"; };
 		F158651B1C85AA59007D2E75 /* DiagramFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiagramFile.m; sourceTree = "<group>"; };
 		F1587B021C19BC4600E963BE /* Palette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Palette.h; sourceTree = "<group>"; };
@@ -266,7 +269,6 @@
 				F15865151C85A4FB007D2E75 /* DetailsViews */,
 				F1786DE31C561AB100963663 /* AttributeCells */,
 				F10AB8071C50E7E200DE6DCE /* PasteView.xib */,
-				F15865181C85A572007D2E75 /* FileCell.xib */,
 				F10AB80D1C50E9FB00DE6DCE /* PasteView.h */,
 				F10AB80E1C50E9FB00DE6DCE /* PasteView.m */,
 				F1786DEE1C56410200963663 /* SaveNameView.xib */,
@@ -323,6 +325,9 @@
 				F15865101C85A2B5007D2E75 /* CloudDiagramsExplorer.xib */,
 				F15865121C85A2CA007D2E75 /* CloudDiagramsExplorer.h */,
 				F15865131C85A2CA007D2E75 /* CloudDiagramsExplorer.m */,
+				F15799391C86FDE00009D4C7 /* CloudFileCollectionViewCell.h */,
+				F157993A1C86FDE00009D4C7 /* CloudFileCollectionViewCell.m */,
+				F157993C1C86FE030009D4C7 /* CloudFileCollectionViewCell.xib */,
 			);
 			name = "File explorers";
 			sourceTree = "<group>";
@@ -522,7 +527,6 @@
 				F1853A001C52533E0015A9E0 /* StringAttributeTableViewCell.xib in Resources */,
 				F14181C91C68DCB600E838F9 /* settings.png in Resources */,
 				F1AB3B161C22B19800EDBB1D /* resize.png in Resources */,
-				F15865191C85A572007D2E75 /* FileCell.xib in Resources */,
 				F16C7DC81C578D3900CA9B25 /* ConnectionDetailsView.xib in Resources */,
 				F1431E8E1C5249F7006A45BC /* ComponentDetailsView.xib in Resources */,
 				F10F0FA51C1ED77A00165561 /* design.graphicR in Resources */,
@@ -553,6 +557,7 @@
 				F147B44B1C636FB400A8F5E7 /* test.graphicR in Resources */,
 				F18A55E61C845CDD00B134F0 /* NoDraggableClassesView.xib in Resources */,
 				F107E4661C722229007DD29E /* ThinkingView.xib in Resources */,
+				F157993D1C86FE030009D4C7 /* CloudFileCollectionViewCell.xib in Resources */,
 				F163AFE41C7B173300BAE67C /* DFAAutomaton.graphicR in Resources */,
 				F10AB80C1C50E85100DE6DCE /* ok.png in Resources */,
 				F14181CB1C68DE4300E838F9 /* minusDark.png in Resources */,
@@ -604,6 +609,7 @@
 				F1853A031C5253740015A9E0 /* StringAttributeTableViewCell.m in Sources */,
 				F1E9EFD81C4524CD007E227D /* PaletteItemCreatorViewController.m in Sources */,
 				F158651C1C85AA59007D2E75 /* DiagramFile.m in Sources */,
+				F157993B1C86FDE00009D4C7 /* CloudFileCollectionViewCell.m in Sources */,
 				F16C7DD01C57AD4400CA9B25 /* SureView.m in Sources */,
 				F1786DF71C5664AB00963663 /* ExploreFilesView.m in Sources */,
 				F18510781C1824C8004EC4C8 /* main.m in Sources */,
