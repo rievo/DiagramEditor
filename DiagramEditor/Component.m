@@ -787,32 +787,38 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     
     //Saco del array los objetos que no tengan una referencia cuya clase se llame igual
     
-    NSMutableArray * survivors = [[NSMutableArray alloc] init];
-    
-    //Para cada referencia de conn
-    PaletteItem * temp;
-    for(Reference * ref in conn.references){
-        for(int i = 0; i<nodragarray.count; i++){
-            temp = [nodragarray objectAtIndex:i];
-            if ([temp.className isEqualToString:ref.target]) {
-                [survivors addObject:temp];
+    if(nodragarray.count == 0){
+        
+    }else{
+        NSMutableArray * survivors = [[NSMutableArray alloc] init];
+        
+        //Para cada referencia de conn
+        PaletteItem * temp;
+        for(Reference * ref in conn.references){
+            for(int i = 0; i<nodragarray.count; i++){
+                temp = [nodragarray objectAtIndex:i];
+                if ([temp.className isEqualToString:ref.target]) {
+                    [survivors addObject:temp];
+                }
             }
         }
+        
+        nodragarray = survivors;
+        
+        
+        NoDraggableClassesView * ndv = [[[NSBundle mainBundle] loadNibNamed:@"NoDraggableClassesView"
+                                                                      owner:self
+                                                                    options:nil] objectAtIndex:0];
+        ndv.itemsArray = nodragarray;
+        ndv.delegate = self;
+        [ndv setFrame:canvas.frame];
+        [ndv reloadInfo];
+        
+        ndv.connection = conn;
+        [canvas addSubview:ndv];
     }
     
-    nodragarray = survivors;
-    
-    
-    NoDraggableClassesView * ndv = [[[NSBundle mainBundle] loadNibNamed:@"NoDraggableClassesView"
-                                                        owner:self
-                                                      options:nil] objectAtIndex:0];
-    ndv.itemsArray = nodragarray;
-    ndv.delegate = self;
-    [ndv setFrame:canvas.frame];
-    [ndv reloadInfo];
-    
-    ndv.connection = conn;
-    [canvas addSubview:ndv];
+   
 }
 
 #pragma mark Description method

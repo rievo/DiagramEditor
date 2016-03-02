@@ -115,7 +115,11 @@
     
     
     //Set slider
-    slider.maximumValue = palette.frame.size.width -palette.contentSize.width ;
+    //if(palette.contentSize.width > palette.frame.size.width){
+        slider.maximumValue = palette.frame.size.width -palette.contentSize.width ;
+    //}else{
+        //[slider setHidden:YES];
+    //}
     
     //NSLog(@"pags = %.2f", ceil(palette.frame.size.width / palette.contentSize.width ));
 }
