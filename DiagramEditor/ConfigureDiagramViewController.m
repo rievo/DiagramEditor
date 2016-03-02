@@ -1203,11 +1203,16 @@
         attrDic =[[NSArray alloc] initWithObjects:attrDic, nil];
     }
     
+
     for(NSDictionary * ad in attrDic){
         NSString * aname = [ad objectForKey:@"_name"];
         NSString * adefVal = [ad objectForKey:@"_default_value"];
-        NSNumber * amax = [ad objectForKey:[f numberFromString:[ad objectForKey:@"_max"]]];
-        NSNumber * amin = [ad objectForKey:[f numberFromString:[ad objectForKey:@"_min"]]];
+        NSString * maxStr = [ad objectForKey:@"_max"];
+        NSString * minStr = [ad objectForKey:@"_min"];
+
+        NSNumber *amax = [f numberFromString:maxStr];
+        NSNumber *amin = [f numberFromString:minStr];
+        
         NSString * acurrVal = [ad objectForKey:@"_current_value"];
         NSString * atype = [ad objectForKey:@"_type"];
         

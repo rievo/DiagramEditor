@@ -611,6 +611,8 @@
             [writer writeAttribute:@"default_value" value:ca.defaultValue];
             if(ca.currentValue != nil)
                 [writer writeAttribute:@"current_value" value:ca.currentValue];
+            else
+                [writer writeAttribute:@"current_value" value:@""];
             //TODO: Por aquí hay un error
             [writer writeAttribute:@"max" value:[ca.max description]];
             [writer writeAttribute:@"min" value:[ca.min description]];
