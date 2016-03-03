@@ -434,7 +434,10 @@
     
     UIImage * resultedImage = [self getImageDataFromCanvas];
     
-    UIImage * resized = [EditorViewController imageWithImage:resultedImage scaledToSize:CGSizeMake(100, 100)];
+    //float newW = resultedImage.size.width * 100 / resultedImage.size.height;
+    float newH = resultedImage.size.height *100 / resultedImage.size.width;
+    
+    UIImage * resized = [EditorViewController imageWithImage:resultedImage scaledToSize:CGSizeMake(100, newH)];
 
     NSData * imageData = UIImagePNGRepresentation(resized);
     
