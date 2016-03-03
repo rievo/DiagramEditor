@@ -575,6 +575,8 @@
         dele.subPalette = selected.name;
         [palette setHidden:NO];
         [palette setAlpha:0];
+        
+        [paletteFileGroup setHidden:YES];
         //Muestro el palette
         [UIView animateWithDuration:1.0
                               delay:0.0
@@ -582,6 +584,7 @@
                          animations:^{
                              selected.center = palette.center;
                              [palette setAlpha:1.0];
+                             
                          }
                          completion:^(BOOL finished) {
                              
@@ -622,6 +625,7 @@
                              //[sender.view setCenter:newCenter];
                              [subPaletteGroup setCenter:self.view.center];
                              [paletteFileGroup setFrame:CGRectMake(0-paletteFileGroup.frame.size.width, 0, paletteFileGroup.frame.size.width, paletteFileGroup.frame.size.height)];
+                             outCenterForFileGroup = paletteFileGroup.center;
                          }
                          completion:^(BOOL finished) {
                              
@@ -1344,7 +1348,8 @@
 - (IBAction)cancelSubpaletteSelection:(id)sender {
     //Quitar el subpalette y mostrar el palettefilegroup
     
-    
+    [paletteFileGroup setCenter:outCenterForFileGroup];
+    [paletteFileGroup setHidden:NO];
     [UIView animateWithDuration:0.5
                           delay:0.0
                         options:UIViewAnimationOptionCurveEaseOut

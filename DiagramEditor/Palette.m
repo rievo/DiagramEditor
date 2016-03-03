@@ -20,7 +20,7 @@
 
 -(void)preparePalette{
     
-    self.delegate = self;
+    //self.delegate = self;
     self.contentSize = CGSizeMake(0, self.bounds.size.height);
     
     dele = [UIApplication sharedApplication].delegate;
@@ -73,12 +73,5 @@
     paletteItems = [[NSMutableArray alloc] init];
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    //NSLog(@"ugh");
-    /*if(sliderToChange != nil){
-        //scrollView.contentSize.width
-        //[palette setContentOffset:CGPointMake(slider.value,0) animated:NO];
-        sliderToChange.value = self.frame.size.width -self.contentSize.width ;
-    }*/
-}
+
 @end

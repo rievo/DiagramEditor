@@ -56,6 +56,8 @@
     CGRect oldSubPaletteGroupFrame;
     __weak IBOutlet UIButton *confirmButton;
     
+    CGPoint outCenterForFileGroup;
+    
 }
 - (IBAction)cancelSubpaletteSelection:(id)sender;
 - (IBAction)reloadServerPalettes:(id)sender;
