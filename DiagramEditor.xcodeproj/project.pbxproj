@@ -50,6 +50,7 @@
 		F16C7DCB1C578D4B00CA9B25 /* ConnectionDetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F16C7DCA1C578D4B00CA9B25 /* ConnectionDetailsView.m */; };
 		F16C7DCD1C57AD2900CA9B25 /* SureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F16C7DCC1C57AD2900CA9B25 /* SureView.xib */; };
 		F16C7DD01C57AD4400CA9B25 /* SureView.m in Sources */ = {isa = PBXBuildFile; fileRef = F16C7DCF1C57AD4400CA9B25 /* SureView.m */; };
+		F171FA751C885F0C005C37D4 /* go.png in Resources */ = {isa = PBXBuildFile; fileRef = F171FA741C885F0C005C37D4 /* go.png */; };
 		F1786DE51C561ADA00963663 /* BooleanAttributeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1786DE41C561ADA00963663 /* BooleanAttributeTableViewCell.xib */; };
 		F1786DE81C561AF200963663 /* BooleanAttributeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1786DE71C561AF200963663 /* BooleanAttributeTableViewCell.m */; };
 		F1786DEC1C56222B00963663 /* GenericAttributeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1786DEA1C56222B00963663 /* GenericAttributeTableViewCell.m */; };
@@ -160,6 +161,7 @@
 		F16C7DCC1C57AD2900CA9B25 /* SureView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SureView.xib; sourceTree = "<group>"; };
 		F16C7DCE1C57AD4400CA9B25 /* SureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SureView.h; sourceTree = "<group>"; };
 		F16C7DCF1C57AD4400CA9B25 /* SureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SureView.m; sourceTree = "<group>"; };
+		F171FA741C885F0C005C37D4 /* go.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = go.png; sourceTree = "<group>"; };
 		F1786DE41C561ADA00963663 /* BooleanAttributeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BooleanAttributeTableViewCell.xib; sourceTree = "<group>"; };
 		F1786DE61C561AF200963663 /* BooleanAttributeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BooleanAttributeTableViewCell.h; sourceTree = "<group>"; };
 		F1786DE71C561AF200963663 /* BooleanAttributeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BooleanAttributeTableViewCell.m; sourceTree = "<group>"; };
@@ -365,6 +367,7 @@
 		F17B75AE1C22D9D500AB1B57 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				F171FA741C885F0C005C37D4 /* go.png */,
 				F17D1C071C7F1EDC0080EA29 /* reload.png */,
 				F18A8E1F1C7C5A5900D87C00 /* circle.png */,
 				F163AFE51C7B1A1B00BAE67C /* tapDark.png */,
@@ -531,6 +534,7 @@
 				F1431E8E1C5249F7006A45BC /* ComponentDetailsView.xib in Resources */,
 				F10F0FA51C1ED77A00165561 /* design.graphicR in Resources */,
 				F1801F391C7739FB005BA437 /* hand.png in Resources */,
+				F171FA751C885F0C005C37D4 /* go.png in Resources */,
 				F18510861C1824C8004EC4C8 /* LaunchScreen.storyboard in Resources */,
 				F18A55EB1C8487B700B134F0 /* HiddenInstancesListView.xib in Resources */,
 				F163AFEA1C7B1ABE00BAE67C /* tap.png in Resources */,
