@@ -63,6 +63,13 @@
 
 @property PaletteItem * parentItem;
 
+
+//Node
+@property NSString * borderColorString;
+@property NSString * borderStyleString;
+@property NSNumber * borderWidth;
+@property UIColor * borderColor;
+
 //Los cuatro siguientes son para buscar en el ecore
 
 @property NSString * containerReference; //nombre de la referencia que lo contiene en la clase root. Sin parsear. Ejemplo: DFAAutomaton.ecore#//Automaton/alphabet

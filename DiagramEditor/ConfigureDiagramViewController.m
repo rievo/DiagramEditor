@@ -306,6 +306,17 @@
                 
                 NSString * sizeStr = [nodeShapeDic objectForKey:@"_size"];
                 
+                
+                NSDictionary * borderColorDic = [nodeShapeDic objectForKey:@"borderColor"];
+                NSString * borderColorString = [borderColorDic objectForKey:@"_name"];
+                NSString * borderStyleString = [nodeShapeDic objectForKey:@"_borderStyle"];
+                NSString * borderWidthString = [nodeShapeDic objectForKey:@"_borderWidth"];
+                
+                item.borderColorString = borderColorString;
+                item.borderColor = [ColorPalette colorForString:borderColorString];
+                item.borderWidth = [f numberFromString:borderWidthString];
+                item.borderStyleString = borderStyleString;
+                
                 NSNumber * w = [f numberFromString:wstr];
                 NSNumber * h = [f numberFromString:hstr];
                 

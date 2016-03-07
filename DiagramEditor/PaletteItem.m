@@ -22,7 +22,7 @@
 @implementation PaletteItem
 
 
-@synthesize type, dialog, width, height, shapeType, fillColor, isImage, image, attributes, className, colorString, sourceName, targetName, targetDecoratorName, sourceDecoratorName, edgeStyle, sourcePart, targetPart, sourceClass, targetClass, minOutConnections,maxOutConnections, containerReference, references, parentsClassArray, isDragable, lineColor, lineColorNameString, lineStyle, lineWidth;
+@synthesize type, dialog, width, height, shapeType, fillColor, isImage, image, attributes, className, colorString, sourceName, targetName, targetDecoratorName, sourceDecoratorName, edgeStyle, sourcePart, targetPart, sourceClass, targetClass, minOutConnections,maxOutConnections, containerReference, references, parentsClassArray, isDragable, lineColor, lineColorNameString, lineStyle, lineWidth, borderStyleString, borderWidth, borderColorString, borderColor;
 
 
 
@@ -121,6 +121,11 @@
     comp.containerReference = containerReference;
     comp.className = [className copy];
     
+    
+    comp.borderWidth = borderWidth;
+    comp.borderStyleString = borderStyleString;
+    comp.borderColorString = borderColorString;
+    comp.borderColor = borderColor;
 
     
     if(isImage){
@@ -149,59 +154,61 @@
     return comp;
 }
 
+-(void)updatePath: (UIBezierPath *)line
+         forStyle: (NSString *)style{
+    if([style isEqualToString:@"solid"]){
+        
+    }else if([style isEqualToString:@"dash"]){
+        CGFloat dashes[] = {10 , 10};
+        [line setLineDash:dashes count:2 phase:0];
+    }else if([style isEqualToString:@"dot"]){
+        CGFloat dashes[] = {2,5};
+        [line setLineDash:dashes count:2 phase:0];
+    }else if([style isEqualToString:@"dash_dot"]){
+        CGFloat dashes[] = {2,10,10,10};
+        [line setLineDash:dashes count:4 phase:0];
+    }else { //solid
+        
+    }
+}
+
 
 - (void)drawRect:(CGRect)rect {
     
     float lw = 4.0;
     CGRect fixed = CGRectMake(2*lw, 2*lw +5, rect.size.width - 4*lw , rect.size.height - 4*lw);
     
+    UIBezierPath * path = nil;
+    
     if([shapeType isEqualToString:kEllipse]){
         
-        UIBezierPath * path = [UIBezierPath bezierPathWithOvalInRect:fixed];
-        [[UIColor blackColor] setStroke];
-       
-        [fillColor setFill];
-        [path setLineWidth:lw];
-        
-        
-        [path fill];
-        [path stroke];
+       path = [UIBezierPath bezierPathWithOvalInRect:fixed];
         
     }else if([type isEqualToString:kEdge]){
 
-        UIBezierPath * path = [[UIBezierPath alloc]init];
-        [[UIColor blackColor]setStroke];
-        [path setLineWidth:lw];
+        path = [[UIBezierPath alloc]init];
+
         [path moveToPoint:CGPointMake(2*lw, rect.size.height /2)];
         [path addLineToPoint:CGPointMake(rect.size.width - 2* lw, rect.size.height /2)];
         
-        [path stroke];
+
     }else if([shapeType isEqualToString:kDiamond]){ //Diamond
 
         
-        UIBezierPath * path = [[UIBezierPath alloc] init];
-        [[UIColor blackColor] setStroke];
-        //[[UIColor whiteColor] setFill];
-        [fillColor setFill];
-        [path setLineWidth:lw];
-        //Use fixed rect
+        path = [[UIBezierPath alloc] init];
+
         [path moveToPoint:CGPointMake(fixed.origin.x + fixed.size.width/2, fixed.origin.y + 0) ];
         [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width, fixed.origin.y + fixed.size.height/2)];
         [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width/2, fixed.origin.y + fixed.size.height)];
         [path addLineToPoint:CGPointMake(fixed.origin.x + 0, fixed.origin.y + fixed.size.height/2)];
         [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width/2, fixed.origin.y + 0)];
         [path closePath];
-        
-        [path fill];
-        [path stroke];
+
     }else if([shapeType isEqualToString:kNote]){ //Note
         
-        //fixed = CGRectMake(fixed.origin.x + 2*lw, fixed.origin.y + 2*lw, fixed.size.width, fixed.size.height);
-        //fixed = self.frame;
-        UIBezierPath * path = [[UIBezierPath alloc] init];
-        [[UIColor blackColor]setStroke];
-        [fillColor setFill];
-        [path setLineWidth:lw];
+
+        path = [[UIBezierPath alloc] init];
+
         
         [path moveToPoint:CGPointMake(fixed.origin.x + 0, fixed.origin.y + 0)];
         [path addLineToPoint:CGPointMake(fixed.origin.x + 0, fixed.origin.y + fixed.size.height)];
@@ -223,28 +230,21 @@
         [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width/7 *6, fixed.origin.y + 0)];
         [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width/7 *6, fixed.origin.y + fixed.size.height/7.0)];
         [path closePath];
-        [path fill];
-        [path stroke];
+
         
         
     }else if([shapeType isEqualToString:kParallelogram]){ //Parallelogram
        
         
 
-        UIBezierPath * path = [[UIBezierPath alloc] init];
-
-        [[UIColor blackColor] setStroke];
-        [fillColor setFill];
-        
-        [path setLineWidth:lw];
+        path = [[UIBezierPath alloc] init];
         
         [path moveToPoint:CGPointMake(fixed.origin.x, fixed.origin.y + fixed.size.height)];
         [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width/4.0*3.0, fixed.origin.y + fixed.size.height)];
         [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width, fixed.origin.y + 0.0)];
         [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width/4, fixed.origin.y + 0)];
         [path closePath];
-        [path fill];
-        [path stroke];
+
         
 
     }else if(isImage){
@@ -253,24 +253,37 @@
         UIBezierPath * path = [UIBezierPath bezierPathWithRect:fixed];
         [path fill];*/
     }else if([shapeType isEqualToString:kRectangle]){
-        UIBezierPath * path = [[UIBezierPath alloc] init];
-        [[UIColor blackColor] setStroke];
-        [fillColor setFill];
-        
-        [path setLineWidth:lw];
+        path = [[UIBezierPath alloc] init];
+
         
         [path moveToPoint:CGPointMake(fixed.origin.x , fixed.origin.y )];
         [path addLineToPoint:CGPointMake(fixed.origin.x , fixed.origin.y + fixed.size.height)];
         [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width, fixed.origin.y + fixed.size.height)];
         [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width, fixed.origin.y )];
         [path closePath];
-        [path fill];
-        [path stroke];
+
         
         
     }else{
         //Dibujar una cruz o interrogación
     }
+    
+    
+    [fillColor setFill];
+    [borderColor setStroke];
+    [path setLineWidth:borderWidth.floatValue];
+    
+    [self updatePath:path  forStyle: borderStyleString];
+
+    
+    if([type isEqualToString:kEdge]){
+        [path setLineWidth:lineWidth.floatValue];
+        [lineColor setStroke];
+        [lineColor setFill];
+        [self updatePath:path forStyle:lineStyle];
+    }
+    [path stroke];
+        [path fill];
     
     //Pintamos el nombre del elemento
     CGRect textRect = CGRectMake(0 , 0, self.frame.size.width, 15);

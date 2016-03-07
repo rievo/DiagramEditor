@@ -35,7 +35,7 @@
 @implementation Component
 
 
-@synthesize textLayer, type, shapeType, fillColor, image, isImage, attributes, componentId, colorString, containerReference, className, references, name, parentClassArray, isDragable, canvas;
+@synthesize textLayer, type, shapeType, fillColor, image, isImage, attributes, componentId, colorString, containerReference, className, references, name, parentClassArray, isDragable, canvas, borderStyleString, borderWidth, borderColor, borderColorString;
 
 
 NSString* const SHOW_INSPECTOR = @"ShowInspector";
@@ -389,32 +389,31 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     float lw = 2.0;
     CGRect fixed = CGRectMake(2*lw, 2*lw , rect.size.width - 4*lw , rect.size.height - 4*lw);
     
+    UIBezierPath * path = nil;
+    
     if([shapeType isEqualToString:@"graphicR:Ellipse"]){
         
-        UIBezierPath * path = [UIBezierPath bezierPathWithOvalInRect:fixed];
-        [[UIColor blackColor] setStroke];
-        
-        [fillColor setFill];
+        path = [UIBezierPath bezierPathWithOvalInRect:fixed];
+
         [path setLineWidth:lw];
         
         
-        [path fill];
-        [path stroke];
+
         
     }else if([type isEqualToString:@"graphicR:Edge"]){
         
-        UIBezierPath * path = [[UIBezierPath alloc]init];
+        path = [[UIBezierPath alloc]init];
         [[UIColor blackColor]setStroke];
         [path setLineWidth:lw];
         [path moveToPoint:CGPointMake(2*lw, rect.size.height /2)];
         [path addLineToPoint:CGPointMake(rect.size.width - 2* lw, rect.size.height /2)];
         
-        [path stroke];
+
     }else if([shapeType isEqualToString:@"graphicR:Diamond"]){ //Diamond
         //fixed.origin.x = fixed.origin.x + 4* lw;
         //fixed.origin.y = fixed.origin.y + 4*lw;
         
-        UIBezierPath * path = [[UIBezierPath alloc] init];
+        path = [[UIBezierPath alloc] init];
         [[UIColor blackColor] setStroke];
         //[[UIColor whiteColor] setFill];
         [fillColor setFill];
@@ -426,14 +425,12 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         [path addLineToPoint:CGPointMake(fixed.origin.x + 0, fixed.origin.y + fixed.size.height/2)];
         [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width/2, fixed.origin.y + 0)];
         [path closePath];
-        
-        [path fill];
-        [path stroke];
+
     }else if([shapeType isEqualToString:@"graphicR:Note"]){ //Note
         
         //fixed = CGRectMake(fixed.origin.x + 2*lw, fixed.origin.y + 2*lw, fixed.size.width, fixed.size.height);
         //fixed = self.frame;
-        UIBezierPath * path = [[UIBezierPath alloc] init];
+       path = [[UIBezierPath alloc] init];
         [[UIColor blackColor]setStroke];
         [fillColor setFill];
         [path setLineWidth:lw];
@@ -458,15 +455,14 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width/7 *6, fixed.origin.y + 0)];
         [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width/7 *6, fixed.origin.y + fixed.size.height/7.0)];
         [path closePath];
-        [path fill];
-        [path stroke];
+
         
         
     }else if([shapeType isEqualToString:@"graphicR:ShapeCompartmentParallelogram"]){ //Parallelogram
         
         
         
-        UIBezierPath * path = [[UIBezierPath alloc] init];
+        path = [[UIBezierPath alloc] init];
         
         [[UIColor blackColor] setStroke];
         [fillColor setFill];
@@ -478,14 +474,12 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width, fixed.origin.y + 0.0)];
         [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width/4, fixed.origin.y + 0)];
         [path closePath];
-        [path fill];
-        [path stroke];
-        
+
         
     }else if(isImage){
         [image drawInRect:fixed];
     }else if([shapeType isEqualToString:@"graphicR:Rectangle"]){
-        UIBezierPath * path = [[UIBezierPath alloc] init];
+        path = [[UIBezierPath alloc] init];
         [[UIColor blackColor] setStroke];
         [fillColor setFill];
         
@@ -496,14 +490,41 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width, fixed.origin.y + fixed.size.height)];
         [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width, fixed.origin.y )];
         [path closePath];
-        [path fill];
-        [path stroke];
+
         
         
     }else{
         
     }
+    
+    [fillColor setFill];
+    [borderColor setStroke];
+    [path setLineWidth:borderWidth.floatValue];
+    
+    [self updatePath:path forStyle:borderStyleString];
+    
+    [path fill];
+    [path stroke];
 }
+
+-(void)updatePath: (UIBezierPath *)line
+         forStyle: (NSString *)style{
+    if([style isEqualToString:@"solid"]){
+        
+    }else if([style isEqualToString:@"dash"]){
+        CGFloat dashes[] = {10 , 10};
+        [line setLineDash:dashes count:2 phase:0];
+    }else if([style isEqualToString:@"dot"]){
+        CGFloat dashes[] = {2,5};
+        [line setLineDash:dashes count:2 phase:0];
+    }else if([style isEqualToString:@"dash_dot"]){
+        CGFloat dashes[] = {2,10,10,10};
+        [line setLineDash:dashes count:4 phase:0];
+    }else { //solid
+        
+    }
+}
+
 
 
 #pragma mark Anchorpoint methods

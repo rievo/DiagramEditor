@@ -32,6 +32,14 @@
 @property NSString * lineColorNameString;
 
 
+//Node
+@property NSString * borderColorString;
+@property NSString * borderStyleString;
+@property NSNumber * borderWidth;
+@property UIColor * borderColor;
+
+
+
 @property NSString * className; //La clase del item
 
 @property NSMutableArray * attributes;
@@ -62,4 +70,7 @@
 
 
 -(Component *)getComponentForThisPaletteItem;
+
+-(void)updatePath: (UIBezierPath *)line
+         forStyle: (NSString *)style;
 @end
