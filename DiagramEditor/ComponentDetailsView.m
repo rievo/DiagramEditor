@@ -50,6 +50,8 @@
     previewComponent.type = comp.type;
     previewComponent.shapeType = comp.shapeType;
     previewComponent.name = comp.name;
+    previewComponent.isImage = comp.isImage;
+    previewComponent.image = comp.image;
     [previewComponent prepare];
     [previewComponent updateNameLabel];
 

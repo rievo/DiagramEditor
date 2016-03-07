@@ -19,10 +19,17 @@
 @property NSNumber * height;
 @property NSString * shapeType;
 @property UIColor * fillColor;
-@property NSString * colorString;
+@property NSString * colorString; //Fill
 @property UIImage * image;
 @property BOOL isImage;
 @property BOOL isDragable;
+
+
+//Edge
+@property NSNumber * lineWidth;
+@property NSString * lineStyle;
+@property UIColor * lineColor;
+@property NSString * lineColorNameString;
 
 
 @property NSString * className; //La clase del item

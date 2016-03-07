@@ -22,7 +22,7 @@
 @implementation PaletteItem
 
 
-@synthesize type, dialog, width, height, shapeType, fillColor, isImage, image, attributes, className, colorString, sourceName, targetName, targetDecoratorName, sourceDecoratorName, edgeStyle, sourcePart, targetPart, sourceClass, targetClass, minOutConnections,maxOutConnections, containerReference, references, parentsClassArray, isDragable;
+@synthesize type, dialog, width, height, shapeType, fillColor, isImage, image, attributes, className, colorString, sourceName, targetName, targetDecoratorName, sourceDecoratorName, edgeStyle, sourcePart, targetPart, sourceClass, targetClass, minOutConnections,maxOutConnections, containerReference, references, parentsClassArray, isDragable, lineColor, lineColorNameString, lineStyle, lineWidth;
 
 
 
@@ -120,6 +120,8 @@
     
     comp.containerReference = containerReference;
     comp.className = [className copy];
+    
+
     
     if(isImage){
         comp.isImage = YES;
@@ -246,10 +248,10 @@
         
 
     }else if(isImage){
-        [image drawInRect:rect];
-        [[UIColor clearColor]setFill];
-        UIBezierPath * path = [UIBezierPath bezierPathWithRect:rect];
-        [path fill];
+        [image drawInRect:fixed];
+        /*[[UIColor redColor]setFill];
+        UIBezierPath * path = [UIBezierPath bezierPathWithRect:fixed];
+        [path fill];*/
     }else if([shapeType isEqualToString:kRectangle]){
         UIBezierPath * path = [[UIBezierPath alloc] init];
         [[UIColor blackColor] setStroke];

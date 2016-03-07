@@ -300,6 +300,7 @@
                 NSString * wstr = [nodeShapeDic objectForKey:@"_horizontalDiameter"];
                 NSString * hstr = [nodeShapeDic objectForKey:@"_verticalDiameter"];
                 NSString * shapeType = [nodeShapeDic objectForKey:@"_xsi:type"];
+                                          
                 NSDictionary * colorDic = [nodeShapeDic objectForKey:@"color"];
                 NSString * color = [colorDic objectForKey:@"_name"];
                 
@@ -342,6 +343,18 @@
                 if(h.floatValue <= 0.0){
                     item.height = [NSNumber numberWithFloat:defaultheight];
                 }
+                
+                if([shapeType isEqualToString:@"graphicR:IconElement"]){
+                    item.isImage = YES;
+                    
+                    
+                    NSString * base64String = [nodeShapeDic objectForKey:@"_embeddedImage"];
+                    NSData * imageData = [[NSData alloc] initWithBase64EncodedString:base64String options:0];
+                    
+                    UIImage * image = [UIImage imageWithData:imageData];
+                    
+                    item.image = image;
+                }
             }
             
             
@@ -360,6 +373,21 @@
                 NSDictionary * edgeStyleDic = [dic objectForKey:@"edge_style"];
                 NSString * edgeStyle = [edgeStyleDic objectForKey:@"_color"];
                 NSDictionary * directions = [dic objectForKey:@"directions"];
+                
+                NSString * lineStyle = [edgeStyleDic objectForKey:@"_LineStyle"];
+                NSString * lineWidth = [edgeStyleDic objectForKey:@"_LineWidth"];
+                NSDictionary * colorDic = [edgeStyleDic objectForKey:@"color"];
+                NSString * lineColorName = [colorDic objectForKey:@"_name"];
+                
+                
+                item.lineWidth = [f numberFromString:lineWidth];
+                item.lineStyle = lineStyle;
+                item.lineColorNameString = lineColorName;
+                
+                if(lineColorName == nil)
+                    item.lineColor = [ColorPalette colorForString:@"black"];
+                else
+                    item.lineColor = [ColorPalette colorForString:lineColorName];
                 
                 NSDictionary * sourceDic = [directions objectForKey:@"sourceLink"];
                 NSDictionary * targetDic = [directions objectForKey:@"targetLink"];
@@ -737,7 +765,6 @@
     //Open diagram with that text
     
     //We need palette name
-    
 }
 
 

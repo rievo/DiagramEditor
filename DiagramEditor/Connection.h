@@ -31,9 +31,16 @@
 
 @property NSMutableArray * references;
 
+//Edge
+@property NSNumber * lineWidth;
+@property NSString * lineStyle;
+@property UIColor * lineColor;
+@property NSString * lineColorNameString;
+
 
 @property NSMutableDictionary * instancesOfClassesDictionary;
 
 -(void)retrieveAttributesForThisClassName;
+-(void)retrieveConnectionGraphicInfo;
 
 @end

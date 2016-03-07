@@ -278,10 +278,14 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
                 
                 conn.targetDecorator = connectionToDo.targetDecoratorName;
                 conn.sourceDecorator = connectionToDo.sourceDecoratorName;
+                
                
-                conn.className = tempClassName;
+                conn.className = connectionToDo.className;
+               
+                //conn.className = tempClassName;
                 
                 [conn retrieveAttributesForThisClassName];
+                [conn retrieveConnectionGraphicInfo];
                 
                 [dele.connections addObject:conn];
                 
@@ -479,10 +483,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         
         
     }else if(isImage){
-        [image drawInRect:rect];
-        [[UIColor clearColor]setFill];
-        UIBezierPath * path = [UIBezierPath bezierPathWithRect:rect];
-        [path fill];
+        [image drawInRect:fixed];
     }else if([shapeType isEqualToString:@"graphicR:Rectangle"]){
         UIBezierPath * path = [[UIBezierPath alloc] init];
         [[UIColor blackColor] setStroke];
@@ -720,6 +721,8 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     }else if(edges == 1){
         
         NSString * result = [self checkIntegrityForSource:source andTarget:target withEdge:pi];
+        connectionToDo = selectedEdge;
+        
         
         return result;
         
@@ -842,6 +845,11 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         conn.className = tempClassName;
         //TODO: conn.attributes =
         [dele.connections addObject:conn];
+        
+        conn.lineWidth = pi.lineWidth;
+        conn.lineStyle = pi.lineStyle;
+        conn.lineColorNameString = pi.lineColorNameString;
+        conn.lineColor = pi.lineColor;
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
         

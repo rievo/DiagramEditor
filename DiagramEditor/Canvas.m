@@ -283,9 +283,29 @@
                 UIBezierPath * line  = [[UIBezierPath alloc] init];
                 [line moveToPoint:sourceAnchor];
                 [line addQuadCurveToPoint:targetAnchor controlPoint:controlPoint];
-                [line setLineWidth:1.0];
-                //TODO: Change stroke color
-                [[UIColor blackColor]setStroke];
+                //[line setLineWidth:1.0];
+                
+                [line setLineWidth:conn.lineWidth.floatValue];
+                
+                
+                [conn.lineColor setStroke];
+                
+                
+                
+                if([conn.lineStyle isEqualToString:@"solid"]){
+                    
+                }else if([conn.lineStyle isEqualToString:@"dash"]){
+                    CGFloat dashes[] = {10 , 10};
+                    [line setLineDash:dashes count:2 phase:0];
+                }else if([conn.lineStyle isEqualToString:@"dot"]){
+                    CGFloat dashes[] = {2,5};
+                    [line setLineDash:dashes count:2 phase:0];
+                    
+                }else if([conn.lineStyle isEqualToString:@"dash_dot"]){
+                    CGFloat dashes[] = {2,10,10,10};
+                    [line setLineDash:dashes count:4 phase:0];
+                }
+                
                 [line stroke];
                 conn.arrowPath = line;
                 conn.controlPoint = controlPoint;
@@ -351,6 +371,8 @@
                                                                                                             targetAnchor.y -(sin(angle)*halfDec + cos(angle)*0 )));
                 [pathTarget applyTransform:transformTarget];
                 
+                [conn.lineColor setStroke];
+                [conn.lineColor setFill];
                 
                 
                 [pathTarget stroke];
@@ -400,6 +422,9 @@
                 [pathSource applyTransform:transformSource];
                 
                 
+                [conn.lineColor setStroke];
+                [conn.lineColor setFill];
+                
                 
                 [pathSource stroke];
                 if([conn.sourceDecorator isEqualToString:@"fillDiamond"] ||
@@ -445,7 +470,8 @@
                                                              clockwise:YES];
             conn = [selfConnections objectAtIndex:0];
             [arc setLineWidth:0.8];
-            [[UIColor blackColor]setStroke];
+            //[[UIColor blackColor]setStroke];
+            [conn.lineColor setStroke];
             [arc stroke];
             conn.arrowPath = arc;
         }else{
@@ -458,7 +484,8 @@
                                                                  clockwise:YES];
                 
                 [arc setLineWidth:0.8];
-                [[UIColor blackColor]setStroke];
+                //[[UIColor blackColor]setStroke];
+                [conn.lineColor setStroke];
                 [arc stroke];
                 conn.arrowPath = arc;
                 

@@ -16,6 +16,7 @@
 		F10AB80F1C50E9FB00DE6DCE /* PasteView.m in Sources */ = {isa = PBXBuildFile; fileRef = F10AB80E1C50E9FB00DE6DCE /* PasteView.m */; };
 		F10F0FA31C1AF67000165561 /* ColorPalette.m in Sources */ = {isa = PBXBuildFile; fileRef = F10F0FA21C1AF67000165561 /* ColorPalette.m */; };
 		F10F0FA51C1ED77A00165561 /* design.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F10F0FA41C1ED77A00165561 /* design.graphicR */; };
+		F1154E0B1C8D841500E98E49 /* automatonImage.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F1154E0A1C8D841500E98E49 /* automatonImage.graphicR */; };
 		F14181C91C68DCB600E838F9 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = F14181C81C68DCB600E838F9 /* settings.png */; };
 		F14181CB1C68DE4300E838F9 /* minusDark.png in Resources */ = {isa = PBXBuildFile; fileRef = F14181CA1C68DE4300E838F9 /* minusDark.png */; };
 		F1431E8B1C524127006A45BC /* ClassAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = F1431E8A1C524127006A45BC /* ClassAttribute.m */; };
@@ -108,6 +109,7 @@
 		F10F0FA11C1AF67000165561 /* ColorPalette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPalette.h; sourceTree = "<group>"; };
 		F10F0FA21C1AF67000165561 /* ColorPalette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorPalette.m; sourceTree = "<group>"; };
 		F10F0FA41C1ED77A00165561 /* design.graphicR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = design.graphicR; sourceTree = "<group>"; };
+		F1154E0A1C8D841500E98E49 /* automatonImage.graphicR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = automatonImage.graphicR; sourceTree = "<group>"; };
 		F14181C81C68DCB600E838F9 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		F14181CA1C68DE4300E838F9 /* minusDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = minusDark.png; sourceTree = "<group>"; };
 		F1431E891C524127006A45BC /* ClassAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassAttribute.h; sourceTree = "<group>"; };
@@ -462,6 +464,7 @@
 				F163AFE31C7B173300BAE67C /* DFAAutomaton.graphicR */,
 				F10F0FA41C1ED77A00165561 /* design.graphicR */,
 				F147B44A1C636FB400A8F5E7 /* test.graphicR */,
+				F1154E0A1C8D841500E98E49 /* automatonImage.graphicR */,
 			);
 			name = palettes;
 			sourceTree = "<group>";
@@ -550,6 +553,7 @@
 				F17B75A91C22D6E100AB1B57 /* newDocument.png in Resources */,
 				F1786DEF1C56410200963663 /* SaveNameView.xib in Resources */,
 				F19C25901C43AB8B0002E490 /* palette.png in Resources */,
+				F1154E0B1C8D841500E98E49 /* automatonImage.graphicR in Resources */,
 				F1801F3D1C77413E005BA437 /* localFilled.png in Resources */,
 				F1801F3B1C774137005BA437 /* cloudFilled.png in Resources */,
 				F10AB80B1C50E85100DE6DCE /* cancel.png in Resources */,
