@@ -428,6 +428,8 @@
 }
 
 -(void)saveDiagramOnServerWithName: (NSString *)name{
+    
+    [self.view endEditing:YES];
     NSString * toSave = [self generateXML];
     NSDate * date = [NSDate date];
     
