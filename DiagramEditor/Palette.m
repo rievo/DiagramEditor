@@ -60,6 +60,8 @@
         
     }
     self.contentSize = CGSizeMake(self.contentSize.width + xmargin, self.contentSize.height);
+    
+    self.delegate = self;
 
 }
 
@@ -73,5 +75,12 @@
     paletteItems = [[NSMutableArray alloc] init];
 }
 
+
+#pragma mark UIScrollView
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    sliderToChange.value=self.contentOffset.x;
+}
 
 @end
