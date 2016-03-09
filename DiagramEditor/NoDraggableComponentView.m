@@ -51,8 +51,10 @@
 
 -(void)showItemInfoGroup{
     
-    temporalComponent = [paletteItem getComponentForThisPaletteItem];
     
+    if(temporalComponent == nil){
+        temporalComponent = [paletteItem getComponentForThisPaletteItem]; //Me crea un component vacío (Para cuando quiero añadir)
+    }
     
     
     itemInfoGroup.center = outCenter;
@@ -95,17 +97,8 @@
 
 - (IBAction)addCurrentNode:(id)sender {
     
+    temporalComponent = nil;
     [self showItemInfoGroup];
-    
-    /*if(textField.text.length == 0){
-     
-     }else{
-     [thisArray addObject:textField.text];
-     [table reloadData];
-     textField.text = @"";
-     }*/
-    
-    
     
     
 }
@@ -205,17 +198,7 @@
                         atvc.comp = temporalComponent;
                         atvc.associatedAttribute = attr;
                         atvc.textField.text = attr.currentValue;
-                        //atvc.detailsPreview = previewComponent;
-                        
-                        for(ClassAttribute * atr in temporalComponent.attributes){
-                            if([atr.name isEqualToString:atvc.attributeNameLabel.text]){
-                                atvc.textField.text =  atr.currentValue ;
-                            }
-                        }
-                        //[comp updateNameLabel];
-                        
-                        
-                        //atvc.typeLabel.text = attr.type;
+
                     }
                     return atvc;
                     
@@ -260,7 +243,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if(tableView == table){
         Component * comp = [thisArray objectAtIndex:indexPath.row];
-        temporalComponent = comp;
+        //temporalComponent = comp;
         [self showItemInfoGroupForItem:comp];
     }
     
