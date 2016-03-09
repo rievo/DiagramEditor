@@ -287,4 +287,29 @@
 
 
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if(tableView == attributesTable){
+        return NO;
+    }else if(tableView == table){
+        return YES;
+    }else
+        return NO;
+}
+
+
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if(tableView == table){
+        if (editingStyle == UITableViewCellEditingStyleDelete) {
+            Component * comp = [thisArray objectAtIndex:indexPath.row];
+            [thisArray removeObject:comp];
+            [table reloadData];
+        }
+    }
+
+}
+
+
 @end

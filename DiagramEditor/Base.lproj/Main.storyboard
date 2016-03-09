@@ -103,7 +103,7 @@
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" bounces="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pzm-22-k2O" customClass="Palette">
                                 <rect key="frame" x="10" y="492" width="373" height="100"/>
-                                <color key="backgroundColor" red="0.50980395078659058" green="0.56470590829849243" blue="0.67843139171600342" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.32156862745098036" green="0.40392156862745099" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="WLk-Pc-hK5"/>
                                 </constraints>
@@ -377,6 +377,7 @@
                             <constraint firstAttribute="leadingMargin" secondItem="9YV-kE-mug" secondAttribute="leading" id="3P9-ab-AP6"/>
                             <constraint firstItem="PyO-ue-whg" firstAttribute="leading" secondItem="npt-04-keg" secondAttribute="trailing" constant="8" id="7WJ-0n-u7J"/>
                             <constraint firstItem="3b3-aY-7QT" firstAttribute="leading" secondItem="PyO-ue-whg" secondAttribute="trailing" constant="22" id="Fkd-YI-8Dh"/>
+                            <constraint firstItem="3b3-aY-7QT" firstAttribute="leading" secondItem="npt-04-keg" secondAttribute="trailing" constant="62" id="GPT-h6-upY"/>
                             <constraint firstItem="gRD-1m-t7Q" firstAttribute="top" secondItem="KOd-BW-gdm" secondAttribute="bottom" constant="6" id="MHb-Pt-dZs"/>
                             <constraint firstItem="3b3-aY-7QT" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="20" id="MwF-cl-ueo"/>
                             <constraint firstItem="uUY-Bf-x28" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="20" id="Mz0-Fv-UBQ"/>
@@ -398,6 +399,7 @@
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
+                                <exclude reference="PyO-ue-whg"/>
                                 <exclude reference="hEJ-JO-Gjo"/>
                             </mask>
                         </variation>

@@ -43,12 +43,15 @@
     [self closeConnectionDetailsView];
 }
 
+- (IBAction)associateNewInstance:(id)sender {
+}
+
 -(void)prepare{
     //nameTextField.text = connection.name;
     //attributesTable.delegate = self;
     //attributesTable.dataSource = self;
-    sourceLabel.text = [NSString stringWithFormat:@"Name: %@",connection.source.name];
-    targetLabel.text = [NSString stringWithFormat:@"Name: %@", connection.target.name];
+    sourceLabel.text = [NSString stringWithFormat:@"%@",connection.source.name];
+    targetLabel.text = [NSString stringWithFormat:@"%@", connection.target.name];
     
     
     associatedComponentsArray = [[NSMutableArray alloc] init];
@@ -68,6 +71,15 @@
     }
     
     [instancesTable reloadData];
+    
+    attributesArray = [[NSMutableArray alloc] init];
+    
+    
+    for(int i = 0; i< connection.attributes.count; i++){
+        [attributesArray addObject:[connection.attributes objectAtIndex:i]];
+    }
+    
+    [attributesTable reloadData];
 }
 
 
@@ -86,7 +98,13 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return associatedComponentsArray.count;
+    
+    if (tableView == instancesTable) {
+        return associatedComponentsArray.count;
+    }else{
+        return 0;
+    }
+    
 }
 
 
@@ -96,33 +114,43 @@
 {
     static NSString *MyIdentifier = @"MyIdentifier";
     
-    UITableViewCell *cell;
+    UITableViewCell *cell = nil;
     
-    Component * c = [associatedComponentsArray objectAtIndex:indexPath.row];
-    
-    
-    cell= [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
-    
-    if (cell == nil)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                      reuseIdentifier:MyIdentifier] ;
+    if(tableView == instancesTable){
+        Component * c = [associatedComponentsArray objectAtIndex:indexPath.row];
+        
+        
+        cell= [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+        
+        if (cell == nil)
+        {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                          reuseIdentifier:MyIdentifier] ;
+        }
+        cell.backgroundColor = [UIColor clearColor];
+        cell.textLabel.adjustsFontSizeToFitWidth = YES;
+        cell.textLabel.minimumScaleFactor = 0.5;
+        cell.textLabel.text = [NSString stringWithFormat:@"--: %@", c.name];
     }
-    cell.backgroundColor = [UIColor clearColor];
-    cell.textLabel.adjustsFontSizeToFitWidth = YES;
-    cell.textLabel.minimumScaleFactor = 0.5;
-    cell.textLabel.text = [NSString stringWithFormat:@"--: %@", c.name];
+    
+
     return cell;
     
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-    NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"ReferenceTableViewCell"
-                                                  owner:self
-                                                options:nil];
-    ReferenceTableViewCell * temp = [nib objectAtIndex:0];
-    return temp.frame.size.height;
+    
+    if(tableView == instancesTable){
+        NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"ReferenceTableViewCell"
+                                                      owner:self
+                                                    options:nil];
+        ReferenceTableViewCell * temp = [nib objectAtIndex:0];
+        return temp.frame.size.height;
+    }else{
+        return 30;
+    }
+
 }
 
 

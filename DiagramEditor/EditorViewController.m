@@ -117,6 +117,11 @@
     //Set slider
     //if(palette.contentSize.width > palette.frame.size.width){
         slider.maximumValue = palette.frame.size.width -palette.contentSize.width ;
+    slider.minimumValue = 0;
+    
+    NSLog(@"palette.contentSize: w:%f h:%f", palette.contentSize.width, palette.contentSize.height);
+    NSLog(@"slider.maxval = %f", slider.maximumValue);
+    NSLog(@"palette.frame = w:%f  h%f ", palette.frame.size.width, palette.frame.size.height);
     //}else{
         //[slider setHidden:YES];
     //}

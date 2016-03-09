@@ -27,6 +27,9 @@
 }
 
 -(void)reloadInfo{
+    [instancesTable setDataSource:self];
+    [instancesTable setDelegate:self];
+    instancesArray = [[NSMutableArray alloc] init];
     [self recoverInstancesOfClass:className];
 }
 

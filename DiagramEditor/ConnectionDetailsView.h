@@ -21,6 +21,9 @@
     id delegate;
     NSMutableArray * associatedComponentsArray;
     __weak IBOutlet UITableView *instancesTable;
+    
+    NSMutableArray * attributesArray;
+    __weak IBOutlet UITableView *attributesTable;
 }
 
 @property (nonatomic, retain) id delegate;
@@ -39,5 +42,6 @@
 
 - (IBAction)removeThisConnection:(id)sender;
 
+- (IBAction)associateNewInstance:(id)sender;
 -(void)prepare;
 @end
