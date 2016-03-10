@@ -55,6 +55,7 @@
                                         <constraint firstAttribute="height" constant="131" id="ntg-vk-wzS"/>
                                     </constraints>
                                     <color key="separatorColor" red="0.13333333333333333" green="0.20392156862745098" blue="0.37647058823529411" alpha="1" colorSpace="calibratedRGB"/>
+                                    <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     <color key="sectionIndexBackgroundColor" red="0.32156863810000003" green="0.40392157439999998" blue="0.57647061349999995" alpha="1" colorSpace="calibratedRGB"/>
                                 </tableView>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ycB-aR-Yde">
@@ -64,6 +65,7 @@
                                         <constraint firstAttribute="width" relation="lessThanOrEqual" constant="280" id="vD3-jh-XNr"/>
                                     </constraints>
                                     <color key="separatorColor" red="0.13333333333333333" green="0.20392156862745098" blue="0.37647058823529411" alpha="1" colorSpace="calibratedRGB"/>
+                                    <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     <color key="sectionIndexBackgroundColor" red="0.32156863810000003" green="0.40392157439999998" blue="0.57647061349999995" alpha="1" colorSpace="calibratedRGB"/>
                                 </tableView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Out connections" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zwz-Md-brB">

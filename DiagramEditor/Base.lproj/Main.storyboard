@@ -38,6 +38,7 @@
                                         <rect key="frame" x="41" y="36" width="199" height="378"/>
                                         <color key="backgroundColor" red="0.50980392156862742" green="0.56470588235294117" blue="0.67843137254901964" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="separatorColor" red="0.71764707565307617" green="0.76862746477127075" blue="0.89411765336990356" alpha="1" colorSpace="calibratedRGB"/>
+                                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <color key="sectionIndexColor" red="0.71764707569999997" green="0.76862746479999999" blue="0.89411765340000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="sectionIndexBackgroundColor" red="0.13333334028720856" green="0.20392157137393951" blue="0.37647059559822083" alpha="0.0" colorSpace="calibratedRGB"/>
                                     </tableView>
@@ -79,6 +80,7 @@
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1WE-VM-4s3">
                                         <rect key="frame" x="24" y="37" width="193" height="377"/>
                                         <color key="backgroundColor" red="0.50980392156862742" green="0.56470588235294117" blue="0.67843137254901964" alpha="1" colorSpace="calibratedRGB"/>
+                                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <color key="sectionIndexColor" red="0.22745098039215686" green="0.30588235294117649" blue="0.47058823529411764" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose a palette" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7hq-e9-fY9">

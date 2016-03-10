@@ -17,10 +17,6 @@
                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CuW-Y7-D2m">
                             <rect key="frame" x="38" y="19" width="240" height="537"/>
                             <subviews>
-                                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Eof-2Y-qQq">
-                                    <rect key="frame" x="26" y="160" width="188" height="301"/>
-                                    <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </tableView>
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="The created connection has a reference to a no draggable class. Do you want to associate an instance to her?" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Lt-nS-bho">
                                     <rect key="frame" x="27" y="30" width="187" height="104"/>
                                     <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -38,6 +34,11 @@
                                         <action selector="cancelAssociatingComponent:" destination="iN0-l3-epB" eventType="touchUpInside" id="xeG-P1-ol3"/>
                                     </connections>
                                 </button>
+                                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Eof-2Y-qQq">
+                                    <rect key="frame" x="26" y="160" width="188" height="301"/>
+                                    <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </tableView>
                             </subviews>
                             <color key="backgroundColor" red="0.50980395078659058" green="0.56470590829849243" blue="0.67843139171600342" alpha="1" colorSpace="calibratedRGB"/>
                         </view>
