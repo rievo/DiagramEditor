@@ -22,7 +22,7 @@
 @implementation PaletteItem
 
 
-@synthesize type, dialog, width, height, shapeType, fillColor, isImage, image, attributes, className, colorString, sourceName, targetName, targetDecoratorName, sourceDecoratorName, edgeStyle, sourcePart, targetPart, sourceClass, targetClass, minOutConnections,maxOutConnections, containerReference, references, parentsClassArray, isDragable, lineColor, lineColorNameString, lineStyle, lineWidth, borderStyleString, borderWidth, borderColorString, borderColor;
+@synthesize type, dialog, width, height, shapeType, fillColor, isImage, image, attributes, className, colorString, sourceName, targetName, targetDecoratorName, sourceDecoratorName, edgeStyle, sourcePart, targetPart, sourceClass, targetClass, minOutConnections,maxOutConnections, containerReference, references, parentsClassArray, isDragable, lineColor, lineColorNameString, lineStyle, lineWidth, borderStyleString, borderWidth, borderColorString, borderColor, labelsAttributesArray;
 
 
 
@@ -56,7 +56,7 @@
     [coder encodeObject:self.maxOutConnections forKey:@"maxOutConnections"];
     [coder encodeObject:self.containerReference forKey:@"containerReference"];
     [coder encodeObject:self.parentsClassArray forKey:@"parentsClassArray"];
-    
+    [coder encodeObject:self.labelsAttributesArray forKey:@"labelsAttributesArray"];
     
 }
 
@@ -64,7 +64,6 @@
     self = [super init];
     if (self) {
         
-
         self.type = [coder decodeObjectForKey:@"type"];
         self.dialog = [coder decodeObjectForKey:@"dialog"];
         self.width = [coder decodeObjectForKey:@"width"];
@@ -92,7 +91,7 @@
         self.maxOutConnections = [coder decodeObjectForKey:@"maxOutConnections"];
         self.containerReference = [coder decodeObjectForKey:@"containerReference"];
         self.parentsClassArray= [coder decodeObjectForKey:@"parentsClassArray"];
-
+        self.labelsAttributesArray = [coder decodeObjectForKey:@"labelsAttributesArray"];
 
     }
     return self;

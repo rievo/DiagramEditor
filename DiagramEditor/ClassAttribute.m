@@ -11,7 +11,7 @@
 @implementation ClassAttribute
 
 
-@synthesize name, type, max, min, defaultValue, currentValue;
+@synthesize name, type, max, min, defaultValue, currentValue, isLabel;
 
 
 - (instancetype)init
@@ -22,7 +22,7 @@
                    andType:@""
                  andMaxVal:[NSNumber numberWithInt:-1]
                  andMinVal:[NSNumber numberWithInt:-1]
-           andDefaultValue:nil];
+           andDefaultValue:@""];
     }
     return self;
 }
@@ -41,6 +41,7 @@
         max = ma;
         min = mi;
         defaultValue = dv;
+        isLabel = false;
     }
     return self;
 }
@@ -55,6 +56,7 @@
     [coder encodeObject:self.max forKey:@"max"];
     [coder encodeObject:self.defaultValue forKey:@"defaultvalue"];
     [coder encodeObject:self.currentValue forKey:@"currentvalue"];
+    [coder encodeBool:self.isLabel forKey:@"isLabel"];
 }
 
 - (id)initWithCoder:(NSCoder *)coder {
@@ -67,6 +69,7 @@
         self.max = [coder decodeObjectForKey:@"max"];
         self.defaultValue = [coder decodeObjectForKey:@"defaultvalue"];
         self.currentValue = [coder decodeObjectForKey:@"currentvalue"];
+        self.isLabel = [coder decodeObjectForKey:@"isLabel"];
     }
     return self;
 }

@@ -18,4 +18,6 @@
 @property NSString * defaultValue;
 @property NSString * currentValue;
 
+@property BOOL isLabel;
+
 @end

@@ -104,7 +104,29 @@
                                                    selector:@selector(loadLocalFiles)
                                                      object:nil];
     [locThread start];
+    
+
+    
+    //Pull to refresh
+    
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    [filesTable addSubview:refreshControl];
+    
+    
 }
+
+
+- (void)refresh:(UIRefreshControl *)refreshControl {
+    
+    
+    [self reloadServerPalettes:self];
+    // Do your job, when done:
+    [refreshControl endRefreshing];
+}
+
+
+
 
 -(void)viewWillAppear:(BOOL)animated{
     loadingADiagram = NO;
@@ -275,6 +297,30 @@
             NSDictionary * diagPalette = [dic objectForKey:@"diag_palette"];
             NSString * paleteName = [diagPalette objectForKey:@"_palette_name"];
             NSLog(@"\n\ntype: %@     	\n name: %@", type, paleteName);
+            
+            //In order to get node label
+            NSDictionary * nodeElementsDic = [dic objectForKey:@"node_elements"];
+            NSArray * labelAnEAttributeArray = [nodeElementsDic objectForKey:@"LabelanEAttribute"];
+            
+            if([labelAnEAttributeArray isKindOfClass:[NSDictionary class]]){
+                labelAnEAttributeArray = [[NSArray alloc]initWithObjects:labelAnEAttributeArray, nil];
+            }
+            
+            //labelAnEAttributeArray tendrá un array con el o los atributos que serán label
+            
+            item.labelsAttributesArray = [[NSMutableArray alloc] init];
+            
+            for(int i = 0; i<labelAnEAttributeArray.count; i++){
+                NSDictionary * labelanEattributeDic = labelAnEAttributeArray[i];
+                NSDictionary * anEattributeDic = [labelanEattributeDic objectForKey:@"anEAttribute"];
+                
+                NSString * labelReference = [anEattributeDic objectForKey:@"_href"];
+                
+                NSArray * parts = [labelReference componentsSeparatedByString:@"/"];
+                NSString * attrName = [parts objectAtIndex:parts.count-1];
+                [item.labelsAttributesArray addObject:attrName];
+            }
+            
             
             NSString * draggablestr = [diagPalette objectForKey:@"_isDraggable"];
             if(draggablestr == nil){ //Default = true
@@ -541,6 +587,26 @@
 
 
 #pragma mark UItableView delegate methods
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Remove seperator inset
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    // Prevent the cell from inheriting the Table View's margin settings
+    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
+        [cell setPreservesSuperviewLayoutMargins:NO];
+    }
+    
+    // Explictly set your cell's layout margins
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;    //count of section
@@ -572,6 +638,8 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                       reuseIdentifier:MyIdentifier] ;
     }
+    
+    [cell setLayoutMargins:UIEdgeInsetsZero];
     
     if(tableView == palettesTable){
         
@@ -841,6 +909,17 @@
              storeOnAttributesArray:pi.attributes
              andReferencesArray:pi.references];
              }*/
+            
+            
+            //Marcamos los atributos si procede como label
+            for(int i = 0; i< pi.attributes.count; i++){
+                ClassAttribute * temp = pi.attributes[i];
+                if([pi.labelsAttributesArray containsObject:temp.name]){ //EL nombre de este atributo está entre los marcados como label
+                    temp.isLabel = YES;
+                }
+            }
+            
+            
             
         }
         return YES;
@@ -1384,6 +1463,33 @@
 
 
 - (IBAction)cancelSubpaletteSelection:(id)sender {
+    
+    
+    //Everything to nil
+    
+    /*palettes = nil;
+    tempPaletteFile = nil;
+    loadingADiagram = NO;
+    content = nil;
+    
+    dele.paletteItems= nil;
+    dele.elementsDictionary = nil;
+    dele.currentPaletteFileName = nil;
+    dele.subPalette = nil;
+    dele.graphicR = nil;*/
+    
+    palette.paletteItems = [[NSMutableArray alloc ]init];
+    dele.paletteItems = [[NSMutableArray alloc ]init];
+    dele.currentPaletteFileName = nil;
+    dele.subPalette = nil;
+    dele.graphicR = nil;
+    loadingADiagram = NO;
+    content = nil;
+    palettes = [[NSMutableArray alloc ]init];
+    tempPaletteFile = nil;
+    
+    
+    
     //Quitar el subpalette y mostrar el palettefilegroup
     
     [paletteFileGroup setCenter:outCenterForFileGroup];

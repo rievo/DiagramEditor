@@ -69,6 +69,9 @@
 @property NSMutableArray * parentsClassArray; //Array con las clases de las que herada  (en el caso de que lo haga)
 
 
+@property NSMutableArray * labelsAttributesArray;
+
+
 -(Component *)getComponentForThisPaletteItem;
 
 -(void)updatePath: (UIBezierPath *)line

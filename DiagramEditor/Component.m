@@ -79,7 +79,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         textLayer.backgroundColor = [UIColor clearColor].CGColor;
         [self.layer addSublayer:textLayer];
     }else{
-        textLayer.string = name;
+        //textLayer.string = name;
         [self updateNameLabel];
     }
 
@@ -559,7 +559,16 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
 
 
 -(void)updateNameLabel{
-    textLayer.string = name;
+    NSString * text = @"";
+    
+    for(ClassAttribute * attr in self.attributes){
+        if(attr.isLabel == YES){
+            text = [text stringByAppendingString:attr.currentValue];
+        }
+    }
+    
+    //textLayer.string = name;
+    textLayer.string = text;
     [self setNeedsDisplay];
 }
 
