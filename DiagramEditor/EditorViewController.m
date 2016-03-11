@@ -18,6 +18,8 @@
 
 #import "NoDraggableComponentView.h"
 
+#define fileExtension @"demiso"
+
 @import Foundation;
 
 @interface EditorViewController ()
@@ -313,6 +315,90 @@
     cdv.delegate = self;
     [self.view addSubview:cdv];
     [cdv setNeedsDisplay];
+}
+
+- (IBAction)shareDiagram:(id)sender {
+    
+    
+    NSString * xml = [self generateXML];
+    
+    NSDateFormatter *timeFormat = [[NSDateFormatter alloc] init];
+    [timeFormat setDateFormat:@"dd:MM:yyyy::HH:mm:ss"];
+    NSDate *now = [[NSDate alloc] init];
+    
+    
+    NSString *fileName = [timeFormat stringFromDate:now];
+
+    
+    [self writeTextFileWithName:fileName andContent:xml];
+    
+    NSURL * fileUrl = [self fileToURL:fileName];
+    
+    UIActivityViewController * cont = [[UIActivityViewController alloc] initWithActivityItems:@[fileUrl]
+                                                                              applicationActivities:nil];
+    
+    //Exclude all activities except airdrop
+    NSArray * excludedActivities = @[UIActivityTypeAddToReadingList,UIActivityTypePostToFacebook, UIActivityTypePostToTwitter, UIActivityTypePostToWeibo, UIActivityTypeMessage, UIActivityTypeMail, UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypePostToTencentWeibo
+                                     ];
+    
+    cont.excludedActivityTypes = excludedActivities;
+    cont.popoverPresentationController.sourceView = shareButtonOutlet;
+    [self presentViewController:cont animated:YES completion:^{
+        
+        /*
+        //Remove created file
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains
+        (NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        
+        NSString *filePath = [NSString stringWithFormat:@"%@/%@.%@",
+                              documentsDirectory, fileName, fileExtension];
+        NSError * error;
+        
+        BOOL success = [fileManager removeItemAtPath:filePath error:&error];
+        if (success) {
+            UIAlertView *removeSuccessFulAlert=[[UIAlertView alloc]initWithTitle:@"Congratulation:" message:@"Successfully removed" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
+            [removeSuccessFulAlert show];
+        }
+        else
+        {
+            NSLog(@"Could not delete file -:%@ ",[error localizedDescription]);
+        }*/
+
+    }];
+}
+
+-(NSURL *)fileToURL:(NSString *)name{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains
+    (NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    
+    //make a file name to write the data to using the documents directory:
+    NSString *filePath = [NSString stringWithFormat:@"%@/%@.%@",
+                          documentsDirectory, name, fileExtension];
+    
+    return [NSURL fileURLWithPath:filePath];
+}
+
+
+-(void)writeTextFileWithName:(NSString *)name
+                  andContent:(NSString *)content{
+    //get the documents directory:
+    NSArray *paths = NSSearchPathForDirectoriesInDomains
+    (NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    
+    //make a file name to write the data to using the documents directory:
+    NSString *filePath = [NSString stringWithFormat:@"%@/%@.%@",
+                          documentsDirectory, name, fileExtension];
+    
+    //save content to the documents directory
+    [content writeToFile:filePath
+              atomically:YES
+                encoding:NSStringEncodingConversionAllowLossy
+                   error:nil];
 }
 
 - (IBAction)showComponentList:(id)sender {

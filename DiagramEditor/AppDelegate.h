@@ -11,7 +11,11 @@
 @class Component;
 @class EditorViewController;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate>{
+    
+    
+    
+}
 
 @property (strong, nonatomic) UIWindow *window;
 

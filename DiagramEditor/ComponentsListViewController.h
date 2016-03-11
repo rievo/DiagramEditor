@@ -7,10 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+
+#import "ClassesFilterView.h"
+#import "AttributesFilterView.h"
+#import "Component.h"
+
+
+
 @class AppDelegate;
 
 
-@interface ComponentsListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>{
+@interface ComponentsListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, ClassesFilterViewProtocol, AttributesFilterViewProtocol>{
     
     AppDelegate * dele;
     __weak IBOutlet UITableView *componentsTable;
@@ -19,7 +26,22 @@
     
     NSMutableArray * filteredArray;
     BOOL isFiltered;
+    
+    
+    ClassesFilterView * classFilter;
+    AttributesFilterView * attrFilter;
+    
+    NSMutableArray * classesArray;
+    NSMutableArray * attrsArray;
+    
+    
+    
+    NSMutableArray * allElementsArray;
+    
+    
 }
+- (IBAction)showClassesFilter:(id)sender;
+- (IBAction)showAttributesFilter:(id)sender;
 
 - (IBAction)closeList:(id)sender;
 @end

@@ -15,7 +15,6 @@
 		F10AB80C1C50E85100DE6DCE /* ok.png in Resources */ = {isa = PBXBuildFile; fileRef = F10AB80A1C50E85100DE6DCE /* ok.png */; };
 		F10AB80F1C50E9FB00DE6DCE /* PasteView.m in Sources */ = {isa = PBXBuildFile; fileRef = F10AB80E1C50E9FB00DE6DCE /* PasteView.m */; };
 		F10F0FA31C1AF67000165561 /* ColorPalette.m in Sources */ = {isa = PBXBuildFile; fileRef = F10F0FA21C1AF67000165561 /* ColorPalette.m */; };
-		F10F0FA51C1ED77A00165561 /* design.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F10F0FA41C1ED77A00165561 /* design.graphicR */; };
 		F1154E0B1C8D841500E98E49 /* automatonImage.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F1154E0A1C8D841500E98E49 /* automatonImage.graphicR */; };
 		F14181C91C68DCB600E838F9 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = F14181C81C68DCB600E838F9 /* settings.png */; };
 		F14181CB1C68DE4300E838F9 /* minusDark.png in Resources */ = {isa = PBXBuildFile; fileRef = F14181CA1C68DE4300E838F9 /* minusDark.png */; };
@@ -25,6 +24,13 @@
 		F147B4471C63509600A8F5E7 /* EdgeListView.m in Sources */ = {isa = PBXBuildFile; fileRef = F147B4461C63509600A8F5E7 /* EdgeListView.m */; };
 		F147B44B1C636FB400A8F5E7 /* test.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F147B44A1C636FB400A8F5E7 /* test.graphicR */; };
 		F14DBF841C849F4600963AA6 /* MyTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F14DBF831C849F4600963AA6 /* MyTextField.m */; };
+		F153796F1C919B2F001D8FFB /* ClassesFilterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F153796E1C919B2F001D8FFB /* ClassesFilterView.xib */; };
+		F15379721C919B42001D8FFB /* ClassesFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = F15379711C919B42001D8FFB /* ClassesFilterView.m */; };
+		F15379741C919B9A001D8FFB /* AttributesFilterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F15379731C919B9A001D8FFB /* AttributesFilterView.xib */; };
+		F15379771C919BA3001D8FFB /* AttributesFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = F15379761C919BA3001D8FFB /* AttributesFilterView.m */; };
+		F15379791C91A25C001D8FFB /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = F15379781C91A25C001D8FFB /* search.png */; };
+		F153797D1C91B9EA001D8FFB /* RowSwitchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F153797B1C91B9EA001D8FFB /* RowSwitchTableViewCell.m */; };
+		F153797E1C91B9EA001D8FFB /* RowSwitchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F153797C1C91B9EA001D8FFB /* RowSwitchTableViewCell.xib */; };
 		F157993B1C86FDE00009D4C7 /* CloudFileCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F157993A1C86FDE00009D4C7 /* CloudFileCollectionViewCell.m */; };
 		F157993D1C86FE030009D4C7 /* CloudFileCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F157993C1C86FE030009D4C7 /* CloudFileCollectionViewCell.xib */; };
 		F15865111C85A2B5007D2E75 /* CloudDiagramsExplorer.xib in Resources */ = {isa = PBXBuildFile; fileRef = F15865101C85A2B5007D2E75 /* CloudDiagramsExplorer.xib */; };
@@ -32,6 +38,7 @@
 		F158651C1C85AA59007D2E75 /* DiagramFile.m in Sources */ = {isa = PBXBuildFile; fileRef = F158651B1C85AA59007D2E75 /* DiagramFile.m */; };
 		F1587B041C19BC4600E963BE /* Palette.m in Sources */ = {isa = PBXBuildFile; fileRef = F1587B031C19BC4600E963BE /* Palette.m */; };
 		F15A96091C27F69100ACA6FA /* XMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = F15A96081C27F69100ACA6FA /* XMLWriter.m */; };
+		F15ADC1E1C92BEF40068142E /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = F15ADC1D1C92BEF40068142E /* share.png */; };
 		F163AFE41C7B173300BAE67C /* DFAAutomaton.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F163AFE31C7B173300BAE67C /* DFAAutomaton.graphicR */; };
 		F163AFE61C7B1A1B00BAE67C /* tapDark.png in Resources */ = {isa = PBXBuildFile; fileRef = F163AFE51C7B1A1B00BAE67C /* tapDark.png */; };
 		F163AFEA1C7B1ABE00BAE67C /* tap.png in Resources */ = {isa = PBXBuildFile; fileRef = F163AFE91C7B1ABE00BAE67C /* tap.png */; };
@@ -108,7 +115,6 @@
 		F10AB80E1C50E9FB00DE6DCE /* PasteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasteView.m; sourceTree = "<group>"; };
 		F10F0FA11C1AF67000165561 /* ColorPalette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPalette.h; sourceTree = "<group>"; };
 		F10F0FA21C1AF67000165561 /* ColorPalette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorPalette.m; sourceTree = "<group>"; };
-		F10F0FA41C1ED77A00165561 /* design.graphicR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = design.graphicR; sourceTree = "<group>"; };
 		F1154E0A1C8D841500E98E49 /* automatonImage.graphicR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = automatonImage.graphicR; sourceTree = "<group>"; };
 		F14181C81C68DCB600E838F9 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		F14181CA1C68DE4300E838F9 /* minusDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = minusDark.png; sourceTree = "<group>"; };
@@ -121,6 +127,16 @@
 		F147B44A1C636FB400A8F5E7 /* test.graphicR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = test.graphicR; sourceTree = "<group>"; };
 		F14DBF821C849F4600963AA6 /* MyTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTextField.h; sourceTree = "<group>"; };
 		F14DBF831C849F4600963AA6 /* MyTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTextField.m; sourceTree = "<group>"; };
+		F153796E1C919B2F001D8FFB /* ClassesFilterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClassesFilterView.xib; sourceTree = "<group>"; };
+		F15379701C919B42001D8FFB /* ClassesFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassesFilterView.h; sourceTree = "<group>"; };
+		F15379711C919B42001D8FFB /* ClassesFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassesFilterView.m; sourceTree = "<group>"; };
+		F15379731C919B9A001D8FFB /* AttributesFilterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AttributesFilterView.xib; sourceTree = "<group>"; };
+		F15379751C919BA3001D8FFB /* AttributesFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttributesFilterView.h; sourceTree = "<group>"; };
+		F15379761C919BA3001D8FFB /* AttributesFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttributesFilterView.m; sourceTree = "<group>"; };
+		F15379781C91A25C001D8FFB /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
+		F153797A1C91B9EA001D8FFB /* RowSwitchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RowSwitchTableViewCell.h; sourceTree = "<group>"; };
+		F153797B1C91B9EA001D8FFB /* RowSwitchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RowSwitchTableViewCell.m; sourceTree = "<group>"; };
+		F153797C1C91B9EA001D8FFB /* RowSwitchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RowSwitchTableViewCell.xib; sourceTree = "<group>"; };
 		F15799391C86FDE00009D4C7 /* CloudFileCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CloudFileCollectionViewCell.h; sourceTree = "<group>"; };
 		F157993A1C86FDE00009D4C7 /* CloudFileCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CloudFileCollectionViewCell.m; sourceTree = "<group>"; };
 		F157993C1C86FE030009D4C7 /* CloudFileCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CloudFileCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -133,6 +149,7 @@
 		F1587B031C19BC4600E963BE /* Palette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Palette.m; sourceTree = "<group>"; };
 		F15A96071C27F69100ACA6FA /* XMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLWriter.h; sourceTree = "<group>"; };
 		F15A96081C27F69100ACA6FA /* XMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLWriter.m; sourceTree = "<group>"; };
+		F15ADC1D1C92BEF40068142E /* share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share.png; sourceTree = "<group>"; };
 		F163AFE31C7B173300BAE67C /* DFAAutomaton.graphicR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = DFAAutomaton.graphicR; sourceTree = "<group>"; };
 		F163AFE51C7B1A1B00BAE67C /* tapDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tapDark.png; sourceTree = "<group>"; };
 		F163AFE91C7B1ABE00BAE67C /* tap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tap.png; sourceTree = "<group>"; };
@@ -291,6 +308,24 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		F153796D1C919AC0001D8FFB /* ComponentSearch */ = {
+			isa = PBXGroup;
+			children = (
+				F17B75B11C22DBFE00AB1B57 /* ComponentsListViewController.h */,
+				F17B75B21C22DBFE00AB1B57 /* ComponentsListViewController.m */,
+				F153796E1C919B2F001D8FFB /* ClassesFilterView.xib */,
+				F15379701C919B42001D8FFB /* ClassesFilterView.h */,
+				F15379711C919B42001D8FFB /* ClassesFilterView.m */,
+				F15379731C919B9A001D8FFB /* AttributesFilterView.xib */,
+				F15379751C919BA3001D8FFB /* AttributesFilterView.h */,
+				F15379761C919BA3001D8FFB /* AttributesFilterView.m */,
+				F153797A1C91B9EA001D8FFB /* RowSwitchTableViewCell.h */,
+				F153797B1C91B9EA001D8FFB /* RowSwitchTableViewCell.m */,
+				F153797C1C91B9EA001D8FFB /* RowSwitchTableViewCell.xib */,
+			);
+			name = ComponentSearch;
+			sourceTree = "<group>";
+		};
 		F15865151C85A4FB007D2E75 /* DetailsViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -369,6 +404,8 @@
 		F17B75AE1C22D9D500AB1B57 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				F15ADC1D1C92BEF40068142E /* share.png */,
+				F15379781C91A25C001D8FFB /* search.png */,
 				F171FA741C885F0C005C37D4 /* go.png */,
 				F17D1C071C7F1EDC0080EA29 /* reload.png */,
 				F18A8E1F1C7C5A5900D87C00 /* circle.png */,
@@ -420,6 +457,7 @@
 		F18510751C1824C8004EC4C8 /* DiagramEditor */ = {
 			isa = PBXGroup;
 			children = (
+				F153796D1C919AC0001D8FFB /* ComponentSearch */,
 				F1431E8C1C5249D4006A45BC /* Views */,
 				F1B4861F1C47A2DD00752157 /* palettes */,
 				F10BE4341C29663E0053A7F9 /* Model */,
@@ -436,8 +474,6 @@
 				F1685EA71C1829F00094097E /* Canvas.m */,
 				F1587B021C19BC4600E963BE /* Palette.h */,
 				F1587B031C19BC4600E963BE /* Palette.m */,
-				F17B75B11C22DBFE00AB1B57 /* ComponentsListViewController.h */,
-				F17B75B21C22DBFE00AB1B57 /* ComponentsListViewController.m */,
 				F18510821C1824C8004EC4C8 /* Assets.xcassets */,
 				F18510841C1824C8004EC4C8 /* LaunchScreen.storyboard */,
 				F18510871C1824C8004EC4C8 /* Info.plist */,
@@ -462,7 +498,6 @@
 			isa = PBXGroup;
 			children = (
 				F163AFE31C7B173300BAE67C /* DFAAutomaton.graphicR */,
-				F10F0FA41C1ED77A00165561 /* design.graphicR */,
 				F147B44A1C636FB400A8F5E7 /* test.graphicR */,
 				F1154E0A1C8D841500E98E49 /* automatonImage.graphicR */,
 			);
@@ -535,8 +570,9 @@
 				F1AB3B161C22B19800EDBB1D /* resize.png in Resources */,
 				F16C7DC81C578D3900CA9B25 /* ConnectionDetailsView.xib in Resources */,
 				F1431E8E1C5249F7006A45BC /* ComponentDetailsView.xib in Resources */,
-				F10F0FA51C1ED77A00165561 /* design.graphicR in Resources */,
+				F15379741C919B9A001D8FFB /* AttributesFilterView.xib in Resources */,
 				F1801F391C7739FB005BA437 /* hand.png in Resources */,
+				F15379791C91A25C001D8FFB /* search.png in Resources */,
 				F171FA751C885F0C005C37D4 /* go.png in Resources */,
 				F18510861C1824C8004EC4C8 /* LaunchScreen.storyboard in Resources */,
 				F18A55EB1C8487B700B134F0 /* HiddenInstancesListView.xib in Resources */,
@@ -551,6 +587,7 @@
 				F16C7DCD1C57AD2900CA9B25 /* SureView.xib in Resources */,
 				F15865111C85A2B5007D2E75 /* CloudDiagramsExplorer.xib in Resources */,
 				F17B75A91C22D6E100AB1B57 /* newDocument.png in Resources */,
+				F153796F1C919B2F001D8FFB /* ClassesFilterView.xib in Resources */,
 				F1786DEF1C56410200963663 /* SaveNameView.xib in Resources */,
 				F19C25901C43AB8B0002E490 /* palette.png in Resources */,
 				F1154E0B1C8D841500E98E49 /* automatonImage.graphicR in Resources */,
@@ -560,6 +597,7 @@
 				F163AFE61C7B1A1B00BAE67C /* tapDark.png in Resources */,
 				F18510831C1824C8004EC4C8 /* Assets.xcassets in Resources */,
 				F17D1C081C7F1EDC0080EA29 /* reload.png in Resources */,
+				F15ADC1E1C92BEF40068142E /* share.png in Resources */,
 				F17B75AD1C22D9CC00AB1B57 /* list.png in Resources */,
 				F1C6347B1C2842C30072912D /* camera.png in Resources */,
 				F147B44B1C636FB400A8F5E7 /* test.graphicR in Resources */,
@@ -570,6 +608,7 @@
 				F10AB80C1C50E85100DE6DCE /* ok.png in Resources */,
 				F14181CB1C68DE4300E838F9 /* minusDark.png in Resources */,
 				F18A8E201C7C5A5900D87C00 /* circle.png in Resources */,
+				F153797E1C91B9EA001D8FFB /* RowSwitchTableViewCell.xib in Resources */,
 				F1786DE51C561ADA00963663 /* BooleanAttributeTableViewCell.xib in Resources */,
 				F18510811C1824C8004EC4C8 /* Main.storyboard in Resources */,
 				F1786DF41C56649B00963663 /* ExploreFilesView.xib in Resources */,
@@ -595,6 +634,7 @@
 				F185107B1C1824C8004EC4C8 /* AppDelegate.m in Sources */,
 				F1685EAE1C1831840094097E /* ComponentDetailsView.m in Sources */,
 				F15865141C85A2CA007D2E75 /* CloudDiagramsExplorer.m in Sources */,
+				F153797D1C91B9EA001D8FFB /* RowSwitchTableViewCell.m in Sources */,
 				F1786DE81C561AF200963663 /* BooleanAttributeTableViewCell.m in Sources */,
 				F15A96091C27F69100ACA6FA /* XMLWriter.m in Sources */,
 				F163AFF11C7B1B6800BAE67C /* NoDraggableComponentView.m in Sources */,
@@ -610,6 +650,8 @@
 				F1587B041C19BC4600E963BE /* Palette.m in Sources */,
 				F17B75B31C22DBFE00AB1B57 /* ComponentsListViewController.m in Sources */,
 				F1B4861E1C46604700752157 /* PaletteFile.m in Sources */,
+				F15379721C919B42001D8FFB /* ClassesFilterView.m in Sources */,
+				F15379771C919BA3001D8FFB /* AttributesFilterView.m in Sources */,
 				F18A55EE1C8487C200B134F0 /* HiddenInstancesListView.m in Sources */,
 				F10AB80F1C50E9FB00DE6DCE /* PasteView.m in Sources */,
 				F1685EA21C18289E0094097E /* EditorViewController.m in Sources */,

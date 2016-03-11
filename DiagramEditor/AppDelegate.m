@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "Canvas.h"
 #import "Connection.h"
+#import "ConfigureDiagramViewController.h"
 #import "EditorViewController.h"
 
 @interface AppDelegate ()
@@ -93,6 +94,38 @@
         }
     }
     return count;
+}
+
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    
+    NSData *urlData = [NSData dataWithContentsOfURL:url];
+    
+    NSString * content = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
+    
+    
+
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main"
+                                                                 bundle: nil];
+        
+        //id = ConfigureViewControllerID
+        ConfigureDiagramViewController * cdvc =(ConfigureDiagramViewController*)[mainStoryboard
+                                                                   instantiateViewControllerWithIdentifier: @"ConfigureViewControllerID"];
+    
+    cdvc.contentToParse = content;
+    [cdvc parseRemainingContent];
+
+
+    
+   /* UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
+                                                    message:[NSString stringWithFormat:@"He recibido la url: %@", url]
+                                                   delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];*/
+    
+    return YES;
 }
 
 

@@ -40,7 +40,7 @@
     
     PasteView *rootView ;
     
-    NSString * tempPaletteFile;
+    
     
     BOOL loadingADiagram;
     NSString * content;
@@ -59,8 +59,20 @@
     CGPoint outCenterForFileGroup;
     
 }
+
+@property NSString * tempPaletteFile;
+
+
 - (IBAction)cancelSubpaletteSelection:(id)sender;
 - (IBAction)reloadServerPalettes:(id)sender;
 
+
+-(NSString *)extractPaletteNameFromXMLDiagram:(NSString *)cont;
+-(void)parseXMLDiagramWithText:(NSString *)text;
+
+
+@property NSString * contentToParse;
+
+-(void)parseRemainingContent;
 
 @end

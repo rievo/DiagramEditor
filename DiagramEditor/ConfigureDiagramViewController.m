@@ -44,8 +44,9 @@
 
 @end
 
-@implementation ConfigureDiagramViewController
 
+@implementation ConfigureDiagramViewController
+@synthesize tempPaletteFile, contentToParse;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -1125,6 +1126,8 @@
     
     NSDictionary * subpaldic = [dic objectForKey:@"subpalette"];
     NSString * subpalette= [subpaldic objectForKey:@"_name"];
+    
+    dele = [[UIApplication sharedApplication]delegate];
     dele.subPalette = subpalette;
     
     
@@ -1231,6 +1234,53 @@
 -(NSString *)searchOnServerPalettes: (NSString *)name{ //Name = design.graphicR
     
     NSString * temp = nil;
+    
+    
+    //Tengo que rellenar filesArray
+    
+    if (filesArray == nil) {
+        filesArray = [[NSMutableArray alloc] init];
+        
+        
+        
+        NSLog(@"Loading files from server");
+        NSURL *url = [NSURL URLWithString:getPalettes];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        NSError *connectionError;
+        NSURLResponse *response;
+        
+        NSData * data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&connectionError];
+        
+        
+        if (data.length > 0 && connectionError == nil)
+        {
+            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data
+                                                                options:0
+                                                                  error:NULL];
+            
+            NSString * code = [dic objectForKey:@"code"];
+            
+            if([code isEqualToString:@"200"]){
+                NSArray * array = [dic objectForKey:@"array"];
+                
+                [self removeServerPalettesFromArray];
+                
+                for(int i = 0; i< [array count]; i++){
+                    NSDictionary * ins = [array objectAtIndex:i];
+                    PaletteFile * pf = [[PaletteFile alloc] init];
+                    pf.name = [ins objectForKey:@"name"];
+                    pf.content = [ins objectForKey:@"content"];
+                    pf.fromServer = true;
+                    [filesArray addObject:pf];
+                }
+            }else{
+                NSLog(@"Error: %@", connectionError);
+            }
+            
+        }
+    }else{
+        
+    }
     
     for(PaletteFile * pf in filesArray){
         if([pf.name isEqualToString:name]){
@@ -1549,5 +1599,65 @@
         
         [self parseXMLDiagramWithText:fileContent ];
     }
+}
+
+-(void)parseRemainingContent{
+    NSString * palettefile = [self extractPaletteNameFromXMLDiagram:contentToParse];
+
+    NSArray * parts = [palettefile componentsSeparatedByString:@"."];
+    tempPaletteFile = parts[0];
+    
+    //TODO: Get palette for this name
+    
+    
+    //fill filesArray
+    
+    NSURL *url = [NSURL URLWithString:getPalettes];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSError * error;
+    NSURLResponse *response;
+    NSData * data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    
+    if (data.length > 0 && error == nil)
+    {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data
+                                                            options:0
+                                                              error:NULL];
+        
+        //[serverFilesArray removeAllObjects];
+        
+        NSString * code = [dic objectForKey:@"code"];
+        
+        if([code isEqualToString:@"200"]){
+            NSArray * array = [dic objectForKey:@"array"];
+            
+            [self removeServerPalettesFromArray];
+            
+            for(int i = 0; i< [array count]; i++){
+                NSDictionary * ins = [array objectAtIndex:i];
+                PaletteFile * pf = [[PaletteFile alloc] init];
+                pf.name = [ins objectForKey:@"name"];
+                pf.content = [ins objectForKey:@"content"];
+                pf.fromServer = true;
+                [filesArray addObject:pf];
+            }
+            
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [filesTable reloadData];
+            });
+            
+            
+            
+            
+        }else{
+            NSLog(@"Error");
+        }
+        
+    }
+    
+    //[self extractSubPalette:<#(NSString *)#>]
+    
+    [self parseXMLDiagramWithText:contentToParse];
 }
 @end

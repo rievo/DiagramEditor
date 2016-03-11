@@ -66,12 +66,14 @@ EdgeListDelegate>{
     
     SureView * sureView;
     __weak IBOutlet UISlider *slider;
+    __weak IBOutlet UIButton *shareButtonOutlet;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @property NSString * loadedContent;
 
 
+- (IBAction)shareDiagram:(id)sender;
 
 
 - (IBAction)showComponentList:(id)sender;
