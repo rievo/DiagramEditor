@@ -225,8 +225,8 @@
             //NSLog(@"%@", [NSString stringWithFormat:@"count: %d    .count: %lu", count, (unsigned long)connectionsBetweenOutAndIns.count]);
             //En count tengo el nº de conexiones que hay
             //En connectionsBetweenOutAndIns tengo esas conexiones
-            CGPoint aux_sourceAnchor = [self getAnchorPointFromComponent:compOut toComponent:compIns andRadius:defradius];
-            CGPoint aux_targetAnchor = [self getAnchorPointFromComponent:compIns toComponent:compOut andRadius:defradius];
+            CGPoint aux_sourceAnchor = [self getAnchorPointFromComponent:compOut toComponent:compIns andRadius:defradius + compOut.frame.size.width/2];
+            CGPoint aux_targetAnchor = [self getAnchorPointFromComponent:compIns toComponent:compOut andRadius:defradius + compIns.frame.size.width/2];
             
             //VPunto medio
             float xm = (aux_sourceAnchor.x + aux_targetAnchor.x)/2 ;
@@ -265,8 +265,8 @@
                 conn = [connectionsBetweenOutAndIns objectAtIndex:c];
                 
                 
-                CGPoint sourceAnchor = [self getAnchorPointFromComponent:conn.source toComponent:conn.target andRadius:defradius];
-                CGPoint targetAnchor = [self getAnchorPointFromComponent:conn.target toComponent:conn.source andRadius:defradius];
+                CGPoint sourceAnchor = [self getAnchorPointFromComponent:conn.source toComponent:conn.target andRadius:defradius + conn.source.frame.size.width / 2];
+                CGPoint targetAnchor = [self getAnchorPointFromComponent:conn.target toComponent:conn.source andRadius:defradius + conn.target.frame.size.width / 2];
                 
                 
                 
