@@ -289,7 +289,7 @@
             Component * comp = [thisArray objectAtIndex:indexPath.row];
             [thisArray removeObject:comp];
             [table reloadData];
-            [self hideAndResetItemInfoGroup]
+            [self hideAndResetItemInfoGroup];
         }
     }
 
