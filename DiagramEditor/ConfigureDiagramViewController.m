@@ -118,6 +118,7 @@
 }
 
 
+
 - (void)refresh:(UIRefreshControl *)refreshControl {
     
     
@@ -251,6 +252,10 @@
     // [palette resetPalette];
     
     [palettes removeAllObjects];
+    
+    if(palettes == nil){
+        palettes = [[NSMutableArray alloc] init];
+    }
     
     
     configuration = [NSDictionary dictionaryWithXMLString:text];
@@ -1163,6 +1168,7 @@
         
         Palette * paletteForUse = [self extractSubPalette:dele.subPalette];
         
+        
         if(paletteForUse == nil){
             //Error, esta paleta no tiene la subpaleta indicada
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
@@ -1196,9 +1202,14 @@
             
             if(result == YES){ //Tenemos el json y todo lo demás
                 
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    //[self performSegueWithIdentifier:@"showEditor" sender:self];
+                    
+                    [self performSegueWithIdentifier:@"showEditor" sender:self];
+                    //[self presentViewController:vc animated:YES completion:nil];
+                });
                 
                 
-                [self performSegueWithIdentifier:@"showEditor" sender:self];
                 
             }else{ //No se ha podido encontrar el json
                 NSLog(@"No te dejo seguir");
@@ -1281,9 +1292,31 @@
     }else{
         
     }
+    /*
+    //Load local files
+    NSArray * bpaths = [[NSBundle mainBundle] pathsForResourcesOfType:@".graphicR" inDirectory:nil];
+    NSString * contentstr = nil;
+    for(NSString * path in bpaths){
+        contentstr = [NSString stringWithContentsOfFile:path
+                                               encoding:NSUTF8StringEncoding
+                                                  error:nil];
+        PaletteFile * pf = [[PaletteFile alloc] init];
+        NSArray * components = [path componentsSeparatedByString:@"/"];
+        
+        pf.name = [components objectAtIndex:components.count -1];
+        pf.content = contentstr;
+        pf.fromServer = false;
+        
+        [filesArray addObject:pf];
+    }*/
+    
     
     for(PaletteFile * pf in filesArray){
-        if([pf.name isEqualToString:name]){
+        
+        NSString * n = pf.name;
+        NSArray * array = [n componentsSeparatedByString:@"."];
+        n = array[0];
+        if([n isEqualToString:name]){
             //Tengo un match, devuelvo el contenido
             //Pido al servidor esa
             NSArray * parts = [name componentsSeparatedByString:@"."];
@@ -1601,7 +1634,7 @@
     }
 }
 
--(void)parseRemainingContent{
+-(BOOL)parseRemainingContent{
     NSString * palettefile = [self extractPaletteNameFromXMLDiagram:contentToParse];
 
     NSArray * parts = [palettefile componentsSeparatedByString:@"."];
@@ -1642,22 +1675,25 @@
                 [filesArray addObject:pf];
             }
             
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [filesTable reloadData];
-            });
-            
-            
-            
-            
         }else{
             NSLog(@"Error");
         }
         
     }
+    //TODO: Todo está a ni O.O
+    dele.paletteItems = [[NSMutableArray alloc] initWithArray:palette.paletteItems];
+    [refreshTimer invalidate];
     
-    //[self extractSubPalette:<#(NSString *)#>]
     
     [self parseXMLDiagramWithText:contentToParse];
+    
+    
+    //Go to editor
+    int r =2;
+    
+
+    
+    
+    return YES;
 }
 @end

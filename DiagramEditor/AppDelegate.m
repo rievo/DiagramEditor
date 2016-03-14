@@ -104,26 +104,14 @@
     
     NSString * content = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
     
+        ConfigureDiagramViewController * cc = (ConfigureDiagramViewController *)  self.window.rootViewController;
+    
+    cc.contentToParse = content;
+   [cc parseRemainingContent];
+    
+    [cc performSegueWithIdentifier:@"showEditor" sender:self];
     
 
-        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main"
-                                                                 bundle: nil];
-        
-        //id = ConfigureViewControllerID
-        ConfigureDiagramViewController * cdvc =(ConfigureDiagramViewController*)[mainStoryboard
-                                                                   instantiateViewControllerWithIdentifier: @"ConfigureViewControllerID"];
-    
-    cdvc.contentToParse = content;
-    [cdvc parseRemainingContent];
-
-
-    
-   /* UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
-                                                    message:[NSString stringWithFormat:@"He recibido la url: %@", url]
-                                                   delegate:self
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-    [alert show];*/
     
     return YES;
 }

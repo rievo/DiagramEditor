@@ -306,7 +306,7 @@
         <!--Editor View Controller-->
         <scene sceneID="Uvc-A9-8hW">
             <objects>
-                <viewController id="b9M-0K-SdS" customClass="EditorViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="editorVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="b9M-0K-SdS" customClass="EditorViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7bh-UT-OeV"/>
                         <viewControllerLayoutGuide type="bottom" id="bKe-dJ-Azz"/>

@@ -73,6 +73,6 @@
 
 @property NSString * contentToParse;
 
--(void)parseRemainingContent;
+-(BOOL)parseRemainingContent;
 
 @end
