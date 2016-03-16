@@ -687,9 +687,30 @@
 }
 
 -(NSString *)generateXML{
+    
+    //Remove <xml line from graphicR
+    NSArray * graphicRParts = [dele.graphicRContent componentsSeparatedByString:@"\n"];
+    NSString * grRToWrite = @"";
+    for(int i = 1; i< graphicRParts.count; i++){
+        NSString * str = graphicRParts[i];
+        grRToWrite = [grRToWrite stringByAppendingString:str];
+    }
+    
+    //Remove <xml line from ecore
+    NSString * ecoreToWrite = @"";
+    NSArray * ecoreParts = [dele.ecoreContent componentsSeparatedByString:@"\n"];
+    for(int i = 1; i< ecoreParts.count; i++){
+        NSString * str = ecoreParts[i];
+        ecoreToWrite = [ecoreToWrite stringByAppendingString:str];
+    }
+
+    
+    
     //Generate XML
     XMLWriter * writer = [[XMLWriter alloc] init];
-    [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    //[writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    
+    /*  DIAGRAM   */
     [writer writeStartElement:@"Diagram"];
     
     [writer writeStartElement:@"palette_name"];
@@ -706,8 +727,8 @@
     for(int i = 0; i< dele.components.count; i++){
         temp = [dele.components objectAtIndex:i];
         [writer writeStartElement:@"node"];
-        //[writer writeAttribute:@"name" value:temp.name];
-        [writer writeAttribute:@"shape_type" value:temp.shapeType];
+
+        //[writer writeAttribute:@"shape_type" value:temp.shapeType];
         [writer writeAttribute:@"x" value: [[NSNumber numberWithFloat:temp.center.x]description]];
         [writer writeAttribute:@"y" value: [[NSNumber numberWithFloat:temp.center.y]description]];
         [writer writeAttribute:@"id" value: [[NSNumber numberWithInt:(int)temp ]description]];
@@ -721,15 +742,15 @@
         for(ClassAttribute * ca in temp.attributes){
             [writer writeStartElement:@"attribute"];
             [writer writeAttribute:@"name" value:ca.name];
-            [writer writeAttribute:@"default_value" value:ca.defaultValue];
+            //[writer writeAttribute:@"default_value" value:ca.defaultValue];
             if(ca.currentValue != nil)
                 [writer writeAttribute:@"current_value" value:ca.currentValue];
             else
                 [writer writeAttribute:@"current_value" value:@""];
-            //TODO: Por aquí hay un error
-            [writer writeAttribute:@"max" value:[ca.max description]];
-            [writer writeAttribute:@"min" value:[ca.min description]];
-            [writer writeAttribute:@"type" value:ca.type];
+
+            //[writer writeAttribute:@"max" value:[ca.max description]];
+            //[writer writeAttribute:@"min" value:[ca.min description]];
+            //[writer writeAttribute:@"type" value:ca.type];
             [writer writeEndElement];
         }
         [writer writeEndElement];
@@ -752,10 +773,40 @@
     [writer writeEndElement];
     
     [writer writeEndElement];//Close diagram
-    [writer writeEndDocument];
+    //[writer writeEndDocument];
     
-    NSString * xml = [writer toString];
-    return xml;
+    NSString * diagramString = [writer toString];
+    
+    //remove <xmlLine from diagramString
+    /*NSString * finalDiagString = @"";
+    NSArray * diagArray = [diagramString componentsSeparatedByString:@"\">"];
+    for(int i = 1; i< diagArray.count; i++){
+        NSString * str = diagArray[i];
+        finalDiagString = [finalDiagString stringByAppendingString:str];
+    }*/
+    
+    NSString * result = @""; //result = [result stringByAppendingString:@""];
+    result = [result stringByAppendingString:@"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"];
+    result = [result stringByAppendingString:@"<DiagramEditor>"];
+    
+    //GraphicR
+    result = [result stringByAppendingString:@"<graphicR>"];
+    result = [result stringByAppendingString:grRToWrite];
+    result = [result stringByAppendingString:@"</graphicR>"];
+    
+    //Diagram
+    result = [result stringByAppendingString:@"\n"];
+    result = [result stringByAppendingString:diagramString];
+    result = [result stringByAppendingString:@"\n"];
+    
+    //Ecore
+    result = [result stringByAppendingString:@"<metamodel>"];
+    result = [result stringByAppendingString:ecoreToWrite]; //TODO: heere
+    result = [result stringByAppendingString:@"</metamodel>"];
+    
+    result = [result stringByAppendingString:@"</DiagramEditor>"];
+    
+    return result;
 }
 
 

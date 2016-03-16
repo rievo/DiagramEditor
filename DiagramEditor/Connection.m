@@ -12,6 +12,8 @@
 #import "PaletteItem.h"
 #import "ColorPalette.h"
 
+#import "Constants.h"
+
 @implementation Connection
 
 
@@ -35,14 +37,14 @@
         controlPoint = CGPointMake(0, 0);
         className = @"";
         attributes = [[NSMutableArray alloc] init];
-        sourceDecorator = @"noDecoration";
-        targetDecorator = @"noDecoration";
+        sourceDecorator = NO_DECORATION;
+        targetDecorator = NO_DECORATION;
         references = [[NSMutableArray alloc] init];
         
         instancesOfClassesDictionary = [[NSMutableDictionary alloc] init];
         lineColorNameString = @"black";
         lineColor = [ColorPalette colorForString:@"black"];
-        lineStyle = @"solid";
+        lineStyle = SOLID;
         lineWidth = [NSNumber numberWithFloat:2.0];
             
     }

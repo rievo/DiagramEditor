@@ -333,29 +333,29 @@
                 
                 //Target
                 
-                if([conn.targetDecorator isEqualToString:@"NoDecoration"]){
+                if([conn.targetDecorator isEqualToString:@"noDecoration"]){
                     pathTarget = [self getNoDecoratorPath];
-                }else if([conn.targetDecorator isEqualToString:@"InputArrow"]){
+                }else if([conn.targetDecorator isEqualToString:@"inputArrow"]){
                     
                     pathTarget = [self getInputArrowPath];
                     
-                }else if([conn.targetDecorator isEqualToString:@"Diamond"]){
+                }else if([conn.targetDecorator isEqualToString:@"diamond"]){
                     
                     pathTarget = [self getDiamondPath];
-                }else if([conn.targetDecorator isEqualToString:@"FillDiamond"]){
+                }else if([conn.targetDecorator isEqualToString:@"fillDiamond"]){
                     
                     pathTarget = [self getDiamondPath];
-                }else if([conn.targetDecorator isEqualToString:@"InputClosedArrow"]){
+                }else if([conn.targetDecorator isEqualToString:@"inputClosedArrow"]){
                     pathTarget = [self getInputClosedArrowPath];
-                }else if([conn.targetDecorator isEqualToString:@"InputFillClosedArrow"]){
+                }else if([conn.targetDecorator isEqualToString:@"inputFillClosedArrow"]){
                     pathTarget = [self getInputFillClosedArrowPath];
-                }else if([conn.targetDecorator isEqualToString:@"OutputArrow"]){
+                }else if([conn.targetDecorator isEqualToString:@"outputArrow"]){
                     pathTarget = [self getOutputArrowPath];
                     
-                }else if([conn.targetDecorator isEqualToString:@"OutputClosedArrow"]){
+                }else if([conn.targetDecorator isEqualToString:@"outputClosedArrow"]){
                     
                     pathTarget = [self getOutputClosedArrowPath];
-                }else if([conn.targetDecorator isEqualToString:@"OutputFillClosedArrow"]){
+                }else if([conn.targetDecorator isEqualToString:@"outputFillClosedArrow"]){
                     pathTarget = [self getOutputClosedArrowPath];
                 }else{ //No decorator
                     pathTarget = [self getNoDecoratorPath];
@@ -386,29 +386,29 @@
                 //Source, igual que el target, pero cambia el punto de la transformación
                 
                 
-                if([conn.targetDecorator isEqualToString:@"NoDecoration"]){
+                if([conn.targetDecorator isEqualToString:@"noDecoration"]){
                     pathSource = [self getNoDecoratorPath];
-                }else if([conn.sourceDecorator isEqualToString:@"InputArrow"]){
+                }else if([conn.sourceDecorator isEqualToString:@"inputArrow"]){
                     
                     pathSource = [self getInputArrowPath];
                     
-                }else if([conn.sourceDecorator isEqualToString:@"Diamond"]){
+                }else if([conn.sourceDecorator isEqualToString:@"diamond"]){
                     pathSource = [self getDiamondPath];
-                }else if([conn.sourceDecorator isEqualToString:@"FillDiamond"]){
+                }else if([conn.sourceDecorator isEqualToString:@"fillDiamond"]){
                     pathSource = [self getDiamondPath];
                     
-                }else if([conn.sourceDecorator isEqualToString:@"InputClosedArrow"]){
+                }else if([conn.sourceDecorator isEqualToString:@"inputClosedArrow"]){
                     pathSource = [self getInputClosedArrowPath];
                     
-                }else if([conn.sourceDecorator isEqualToString:@"InputFillClosedArrow"]){
+                }else if([conn.sourceDecorator isEqualToString:@"inputFillClosedArrow"]){
                     pathSource = [self getInputFillClosedArrowPath];
                     
-                }else if([conn.sourceDecorator isEqualToString:@"OutputArrow"]){
+                }else if([conn.sourceDecorator isEqualToString:@"outputArrow"]){
                     pathSource = [self getOutputArrowPath];
                     
-                }else if([conn.sourceDecorator isEqualToString:@"OutputClosedArrow"]){
+                }else if([conn.sourceDecorator isEqualToString:@"outputClosedArrow"]){
                     pathSource = [self getOutputClosedArrowPath];
-                }else if([conn.sourceDecorator isEqualToString:@"OutputFillClosedArrow"]){
+                }else if([conn.sourceDecorator isEqualToString:@"outputFillClosedArrow"]){
                     pathSource = [self getOutputClosedArrowPath];
                 }else{ //No decorator
                     pathSource = [self getNoDecoratorPath];

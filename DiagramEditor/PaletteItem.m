@@ -155,15 +155,15 @@
 
 -(void)updatePath: (UIBezierPath *)line
          forStyle: (NSString *)style{
-    if([style isEqualToString:@"solid"]){
+    if([style isEqualToString:SOLID]){
         
-    }else if([style isEqualToString:@"dash"]){
+    }else if([style isEqualToString:DASH]){
         CGFloat dashes[] = {10 , 10};
         [line setLineDash:dashes count:2 phase:0];
-    }else if([style isEqualToString:@"dot"]){
+    }else if([style isEqualToString:DOT]){
         CGFloat dashes[] = {2,5};
         [line setLineDash:dashes count:2 phase:0];
-    }else if([style isEqualToString:@"dash_dot"]){
+    }else if([style isEqualToString:DASH_DOT]){
         CGFloat dashes[] = {2,10,10,10};
         [line setLineDash:dashes count:4 phase:0];
     }else { //solid

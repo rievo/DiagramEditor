@@ -451,10 +451,24 @@
                 NSDictionary * colorDic = [edgeStyleDic objectForKey:@"color"];
                 NSString * lineColorName = [colorDic objectForKey:@"_name"];
                 
+                if(lineWidth == nil){
+                    item.lineWidth = [NSNumber numberWithFloat:2.0];
+                }else{
+                    item.lineWidth = [f numberFromString:lineWidth];
+                }
                 
-                item.lineWidth = [f numberFromString:lineWidth];
-                item.lineStyle = lineStyle;
-                item.lineColorNameString = lineColorName;
+                if(lineStyle == nil){
+                    item.lineStyle = SOLID;
+                }else{
+                    item.lineStyle = lineStyle;
+                }
+                
+                if(lineColorName == nil){
+                    item.lineColorNameString = @"black";
+                }else{
+                    item.lineColorNameString = lineColorName;
+                }
+                
                 
                 if(lineColorName == nil)
                     item.lineColor = [ColorPalette colorForString:@"black"];
@@ -728,6 +742,8 @@
         PaletteFile * file = [filesArray objectAtIndex:indexPath.row];
         tempPaletteFile = file.name;
         
+        dele.graphicRContent = file.content;
+        
         
         [subPaletteGroup setHidden:NO];
         
@@ -937,6 +953,16 @@
             
             
         }
+        
+        
+        //so we have the JSON, let's get associated ecore
+        
+        NSString * ecoreContent = [self getEcoreNamed:tempPaletteFile];
+        
+        dele.ecoreContent = ecoreContent;
+        
+
+        
         return YES;
     }
     
@@ -1481,6 +1507,47 @@
 
 
 #pragma mark Look for json with name...
+
+-(NSString *)getEcoreNamed:(NSString *)name{
+    NSArray * nameParts = [name componentsSeparatedByString:@"."];
+    NSString * nameToSearch = nameParts[0];
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/ecores/%@?json=true", baseURL, nameToSearch]];
+    
+    NSURLRequest * urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:2.0];
+    NSURLResponse * response = nil;
+    NSError * error = nil;
+    NSData * data = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:&response error:&error];
+    
+    
+    if(error != nil){ //Some error
+    }
+    else{ //No error
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+        if(error == nil){
+            NSString * code = [dictionary objectForKey:@"code"];
+            if([code isEqualToString:@"200"]){
+                NSDictionary * dicArray = [dictionary objectForKey:@"array"];
+                
+                NSDictionary * insArray = [dicArray objectForKey:@"body"];
+                
+                
+                NSString * bodystr = [insArray objectForKey:@"content"];
+                bodystr = [bodystr stringByReplacingOccurrencesOfString:@"\\n" withString:@""];
+                bodystr = [bodystr stringByReplacingOccurrencesOfString:@"\\\"" withString:@"\""];
+                bodystr = [bodystr stringByReplacingOccurrencesOfString:@"\\" withString:@""];
+                
+                return bodystr;
+            }
+
+        }else{ //Some error
+            NSLog(@"Error parsing data");
+            return nil;
+        }
+    }
+
+    return nil;
+}
 -(NSString *)searchJsonNamed:(NSString *)name{
     NSString * result = nil;
     
@@ -1579,6 +1646,9 @@
     content = nil;
     palettes = [[NSMutableArray alloc ]init];
     tempPaletteFile = nil;
+    
+    dele.graphicR = nil;
+    dele.graphicRContent = nil;
     
     
     

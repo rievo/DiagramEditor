@@ -44,6 +44,11 @@
 @property NSDictionary * graphicR;
 
 
+//Generate XML
+@property NSString * graphicRContent;
+@property NSString * ecoreContent;
+
+
 //Multipeer Connectivity
 @property MCManager * manager;
 
