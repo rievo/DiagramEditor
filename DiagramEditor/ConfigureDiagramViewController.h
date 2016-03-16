@@ -58,6 +58,7 @@
     
     CGPoint outCenterForFileGroup;
     
+    __weak IBOutlet UISwitch *searchSessionsOutlet;
 }
 
 @property NSString * tempPaletteFile;
@@ -66,6 +67,7 @@
 - (IBAction)cancelSubpaletteSelection:(id)sender;
 - (IBAction)reloadServerPalettes:(id)sender;
 
+- (IBAction)changeSearchSessions:(id)sender;
 
 -(NSString *)extractPaletteNameFromXMLDiagram:(NSString *)cont;
 -(void)parseXMLDiagramWithText:(NSString *)text;

@@ -18,7 +18,7 @@
 #define curveMove 60
 
 
-#define defradius 35
+#define defradius 5
 
 #define decoratorSize 10
 

@@ -51,6 +51,9 @@
 		F1685EA81C1829F00094097E /* Canvas.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685EA71C1829F00094097E /* Canvas.m */; };
 		F1685EAB1C182B7D0094097E /* Connection.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685EAA1C182B7D0094097E /* Connection.m */; };
 		F1685EAE1C1831840094097E /* ComponentDetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1685EAD1C1831840094097E /* ComponentDetailsView.m */; };
+		F16C35C01C98247A006F4255 /* MCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F16C35BF1C98247A006F4255 /* MCManager.m */; };
+		F16C35C31C9824F0006F4255 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = F16C35C21C9824F0006F4255 /* Constants.m */; };
+		F16C35C51C98277F006F4255 /* users.png in Resources */ = {isa = PBXBuildFile; fileRef = F16C35C41C98277F006F4255 /* users.png */; };
 		F16C7DC11C577E9100CA9B25 /* Reference.m in Sources */ = {isa = PBXBuildFile; fileRef = F16C7DC01C577E9100CA9B25 /* Reference.m */; };
 		F16C7DC31C5781EB00CA9B25 /* ReferenceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F16C7DC21C5781EB00CA9B25 /* ReferenceTableViewCell.xib */; };
 		F16C7DC61C57821800CA9B25 /* ReferenceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F16C7DC51C57821800CA9B25 /* ReferenceTableViewCell.m */; };
@@ -169,6 +172,11 @@
 		F1685EAA1C182B7D0094097E /* Connection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Connection.m; sourceTree = "<group>"; };
 		F1685EAC1C1831840094097E /* ComponentDetailsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComponentDetailsView.h; sourceTree = "<group>"; };
 		F1685EAD1C1831840094097E /* ComponentDetailsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComponentDetailsView.m; sourceTree = "<group>"; };
+		F16C35BE1C98247A006F4255 /* MCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCManager.h; sourceTree = "<group>"; };
+		F16C35BF1C98247A006F4255 /* MCManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCManager.m; sourceTree = "<group>"; };
+		F16C35C11C9824F0006F4255 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		F16C35C21C9824F0006F4255 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
+		F16C35C41C98277F006F4255 /* users.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = users.png; sourceTree = "<group>"; };
 		F16C7DBF1C577E9100CA9B25 /* Reference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reference.h; sourceTree = "<group>"; };
 		F16C7DC01C577E9100CA9B25 /* Reference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reference.m; sourceTree = "<group>"; };
 		F16C7DC21C5781EB00CA9B25 /* ReferenceTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReferenceTableViewCell.xib; sourceTree = "<group>"; };
@@ -382,6 +390,15 @@
 			name = "XML Utilities";
 			sourceTree = "<group>";
 		};
+		F16C35BD1C98246F006F4255 /* MultipeerConnectivity */ = {
+			isa = PBXGroup;
+			children = (
+				F16C35BE1C98247A006F4255 /* MCManager.h */,
+				F16C35BF1C98247A006F4255 /* MCManager.m */,
+			);
+			name = MultipeerConnectivity;
+			sourceTree = "<group>";
+		};
 		F1786DE31C561AB100963663 /* AttributeCells */ = {
 			isa = PBXGroup;
 			children = (
@@ -404,6 +421,7 @@
 		F17B75AE1C22D9D500AB1B57 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				F16C35C41C98277F006F4255 /* users.png */,
 				F15ADC1D1C92BEF40068142E /* share.png */,
 				F15379781C91A25C001D8FFB /* search.png */,
 				F171FA741C885F0C005C37D4 /* go.png */,
@@ -457,6 +475,7 @@
 		F18510751C1824C8004EC4C8 /* DiagramEditor */ = {
 			isa = PBXGroup;
 			children = (
+				F16C35BD1C98246F006F4255 /* MultipeerConnectivity */,
 				F153796D1C919AC0001D8FFB /* ComponentSearch */,
 				F1431E8C1C5249D4006A45BC /* Views */,
 				F1B4861F1C47A2DD00752157 /* palettes */,
@@ -482,6 +501,8 @@
 				F1E9EFD41C4521DA007E227D /* PItemEditor.m */,
 				F1E9EFD61C4524CD007E227D /* PaletteItemCreatorViewController.h */,
 				F1E9EFD71C4524CD007E227D /* PaletteItemCreatorViewController.m */,
+				F16C35C11C9824F0006F4255 /* Constants.h */,
+				F16C35C21C9824F0006F4255 /* Constants.m */,
 			);
 			path = DiagramEditor;
 			sourceTree = "<group>";
@@ -567,6 +588,7 @@
 			files = (
 				F1853A001C52533E0015A9E0 /* StringAttributeTableViewCell.xib in Resources */,
 				F14181C91C68DCB600E838F9 /* settings.png in Resources */,
+				F16C35C51C98277F006F4255 /* users.png in Resources */,
 				F1AB3B161C22B19800EDBB1D /* resize.png in Resources */,
 				F16C7DC81C578D3900CA9B25 /* ConnectionDetailsView.xib in Resources */,
 				F1431E8E1C5249F7006A45BC /* ComponentDetailsView.xib in Resources */,
@@ -631,6 +653,7 @@
 				F107E4641C72221A007DD29E /* ThinkingView.m in Sources */,
 				F1685EA81C1829F00094097E /* Canvas.m in Sources */,
 				F16C7DCB1C578D4B00CA9B25 /* ConnectionDetailsView.m in Sources */,
+				F16C35C31C9824F0006F4255 /* Constants.m in Sources */,
 				F185107B1C1824C8004EC4C8 /* AppDelegate.m in Sources */,
 				F1685EAE1C1831840094097E /* ComponentDetailsView.m in Sources */,
 				F15865141C85A2CA007D2E75 /* CloudDiagramsExplorer.m in Sources */,
@@ -647,6 +670,7 @@
 				F1685EA51C18294A0094097E /* Component.m in Sources */,
 				F1A20A851C198A540037C05D /* PaletteItem.m in Sources */,
 				F18A55E91C845CF500B134F0 /* NoDraggableClassesView.m in Sources */,
+				F16C35C01C98247A006F4255 /* MCManager.m in Sources */,
 				F1587B041C19BC4600E963BE /* Palette.m in Sources */,
 				F17B75B31C22DBFE00AB1B57 /* ComponentsListViewController.m in Sources */,
 				F1B4861E1C46604700752157 /* PaletteFile.m in Sources */,

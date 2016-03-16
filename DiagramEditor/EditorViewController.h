@@ -21,6 +21,7 @@
 @class ComponentDetailsView;
 
 #import <MessageUI/MFMailComposeViewController.h>
+#import <MultipeerConnectivity/MultipeerConnectivity.h>
 
 @interface EditorViewController : UIViewController<MFMailComposeViewControllerDelegate,
 UIGestureRecognizerDelegate,
@@ -29,7 +30,7 @@ ComponentDetailsViewDelegate,
 SaveNameDelegate,
 ConnectionDetailsViewDelegate,
 SureViewDelegate,
-EdgeListDelegate>{
+EdgeListDelegate, MCBrowserViewControllerDelegate>{
     AppDelegate * dele;
     __weak IBOutlet Palette *palette;
     
@@ -67,6 +68,11 @@ EdgeListDelegate>{
     SureView * sureView;
     __weak IBOutlet UISlider *slider;
     __weak IBOutlet UIButton *shareButtonOutlet;
+    
+    
+    BOOL sharingDiagram;
+    
+    NSTimer * resendTimer;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 

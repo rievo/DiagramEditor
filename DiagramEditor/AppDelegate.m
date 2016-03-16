@@ -18,7 +18,7 @@
 
 @implementation AppDelegate
 
-@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR, evc, blue0, blue1, blue2, elementsDictionary;
+@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR, evc, blue0, blue1, blue2, elementsDictionary, manager;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -39,6 +39,9 @@
     evc = nil;
     
     elementsDictionary = [[NSMutableDictionary alloc] init];
+    
+    
+    manager = [[MCManager alloc] init];
     
     return YES;
 }
@@ -116,5 +119,37 @@
     return YES;
 }
 
+
+-(NSData *) packImportantInfo{
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+    
+    [dic setObject:components forKey:@"components"];
+    [dic setObject:connections forKey:@"connections"];
+    [dic setObject:elementsDictionary forKey:@"elementsDictionary"];
+    [dic setObject:paletteItems forKey:@"paletteItems"];
+    [dic setObject:currentPaletteFileName forKey:@"currPalFilNam"];
+    [dic setObject:subPalette forKey:@"subpalette"];
+    [dic setObject:graphicR forKey:@"graphicR"];
+    
+    
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dic];
+    
+    return data;
+}
+
+
+-(void)recoverInfoFromData: (NSData *)data{
+    NSDictionary *myDictionary = (NSDictionary*) [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    
+    components = [myDictionary objectForKey:@"components"];
+    connections  = [myDictionary objectForKey:@"connections"];
+    elementsDictionary  = [myDictionary objectForKey:@"elementsDictionary"];
+    paletteItems = [myDictionary objectForKey:@"paletteItems"];
+    currentPaletteFileName  = [myDictionary objectForKey:@"currPalFilNam"];
+    if(subPalette != nil)
+        subPalette = [myDictionary objectForKey:@"subpalette"];
+    if(graphicR != nil)
+        graphicR = [myDictionary objectForKey:@"graphicR"];
+}
 
 @end

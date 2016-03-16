@@ -115,6 +115,15 @@
     [filesTable addSubview:refreshControl];
     
     
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didReceiveAppDeleLetsgoToEditor)
+                                                 name:@"receivingAppDeleGoEditor"
+                                                object:nil];
+}
+
+-(void)didReceiveAppDeleLetsgoToEditor{
+    [self performSegueWithIdentifier:@"showEditor" sender:self];
 }
 
 
@@ -1696,4 +1705,15 @@
     
     return YES;
 }
+
+
+#pragma mark Multipeer Connectivity
+- (IBAction)changeSearchSessions:(id)sender {
+    if(searchSessionsOutlet.isOn == YES){
+        [dele.manager startAdvertising];
+    }else{
+        [dele.manager stopAdvertising];
+    }
+}
+
 @end

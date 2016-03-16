@@ -35,7 +35,11 @@
     
     canvasW = 1500;
     
+    sharingDiagram = NO;
+    
     dele = [[UIApplication sharedApplication]delegate];
+    
+    dele.manager.browser.delegate = self;
     
     canvas = [[Canvas alloc] initWithFrame:CGRectMake(0, 0, canvasW, canvasW)];
     canvas.backgroundColor = [dele blue4];
@@ -118,17 +122,26 @@
     
     //Set slider
     //if(palette.contentSize.width > palette.frame.size.width){
-        slider.maximumValue = palette.frame.size.width -palette.contentSize.width ;
+    slider.maximumValue = palette.frame.size.width -palette.contentSize.width ;
     slider.minimumValue = 0;
     
     NSLog(@"palette.contentSize: w:%f h:%f", palette.contentSize.width, palette.contentSize.height);
     NSLog(@"slider.maxval = %f", slider.maximumValue);
     NSLog(@"palette.frame = w:%f  h%f ", palette.frame.size.width, palette.frame.size.height);
     //}else{
-        //[slider setHidden:YES];
+    //[slider setHidden:YES];
     //}
     
     //NSLog(@"pags = %.2f", ceil(palette.frame.size.width / palette.contentSize.width ));
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didReceiveNewAppDeleInfo)
+                                                 name:@"receivedNewAppdelegate"
+                                               object:nil];
+}
+
+-(void)didReceiveNewAppDeleInfo{
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
 }
 
 
@@ -225,7 +238,7 @@
                 //It is a node
                 NSLog(@"Creating a node");
                 
-    
+                
                 
                 Component * comp = [sender getComponentForThisPaletteItem];
                 comp.canvas = self.view;
@@ -328,14 +341,14 @@
     
     
     NSString *fileName = [timeFormat stringFromDate:now];
-
+    
     
     [self writeTextFileWithName:fileName andContent:xml];
     
     NSURL * fileUrl = [self fileToURL:fileName];
     
     UIActivityViewController * cont = [[UIActivityViewController alloc] initWithActivityItems:@[fileUrl]
-                                                                              applicationActivities:nil];
+                                                                        applicationActivities:nil];
     
     //Exclude all activities except airdrop
     NSArray * excludedActivities = @[UIActivityTypeAddToReadingList,UIActivityTypePostToFacebook, UIActivityTypePostToTwitter, UIActivityTypePostToWeibo, UIActivityTypeMessage, UIActivityTypeMail, UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypePostToTencentWeibo
@@ -346,27 +359,27 @@
     [self presentViewController:cont animated:YES completion:^{
         
         /*
-        //Remove created file
-        NSFileManager *fileManager = [NSFileManager defaultManager];
+         //Remove created file
+         NSFileManager *fileManager = [NSFileManager defaultManager];
+         
+         NSArray *paths = NSSearchPathForDirectoriesInDomains
+         (NSDocumentDirectory, NSUserDomainMask, YES);
+         NSString *documentsDirectory = [paths objectAtIndex:0];
+         
+         NSString *filePath = [NSString stringWithFormat:@"%@/%@.%@",
+         documentsDirectory, fileName, fileExtension];
+         NSError * error;
+         
+         BOOL success = [fileManager removeItemAtPath:filePath error:&error];
+         if (success) {
+         UIAlertView *removeSuccessFulAlert=[[UIAlertView alloc]initWithTitle:@"Congratulation:" message:@"Successfully removed" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
+         [removeSuccessFulAlert show];
+         }
+         else
+         {
+         NSLog(@"Could not delete file -:%@ ",[error localizedDescription]);
+         }*/
         
-        NSArray *paths = NSSearchPathForDirectoriesInDomains
-        (NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsDirectory = [paths objectAtIndex:0];
-        
-        NSString *filePath = [NSString stringWithFormat:@"%@/%@.%@",
-                              documentsDirectory, fileName, fileExtension];
-        NSError * error;
-        
-        BOOL success = [fileManager removeItemAtPath:filePath error:&error];
-        if (success) {
-            UIAlertView *removeSuccessFulAlert=[[UIAlertView alloc]initWithTitle:@"Congratulation:" message:@"Successfully removed" delegate:self cancelButtonTitle:@"Close" otherButtonTitles:nil];
-            [removeSuccessFulAlert show];
-        }
-        else
-        {
-            NSLog(@"Could not delete file -:%@ ",[error localizedDescription]);
-        }*/
-
     }];
 }
 
@@ -474,19 +487,19 @@
                                                               
                                                               
                                                               UIAlertAction * confirmName = [UIAlertAction
-                                                                                         actionWithTitle:@"Ok"
-                                                                                         style:UIAlertActionStyleDefault
-                                                                                         handler:^(UIAlertAction *action)
-                                                                                         {
-                                                                                             UITextField * nameTF = alertController.textFields.firstObject;
-                                                                                             
-                                                                                             if (nameTF.text.length != 0) {
-                                                                                                 [self saveDiagramOnServerWithName:nameTF.text];
-                                                                                             }else{
+                                                                                             actionWithTitle:@"Ok"
+                                                                                             style:UIAlertActionStyleDefault
+                                                                                             handler:^(UIAlertAction *action)
+                                                                                             {
+                                                                                                 UITextField * nameTF = alertController.textFields.firstObject;
                                                                                                  
-                                                                                             }
-                                                                                             
-                                                                                         }];
+                                                                                                 if (nameTF.text.length != 0) {
+                                                                                                     [self saveDiagramOnServerWithName:nameTF.text];
+                                                                                                 }else{
+                                                                                                     
+                                                                                                 }
+                                                                                                 
+                                                                                             }];
                                                               
                                                               UIAlertAction * cancelName = [UIAlertAction actionWithTitle:@"Cancel"
                                                                                                                     style:UIAlertActionStyleDestructive
@@ -531,7 +544,7 @@
     float newH = resultedImage.size.height *100 / resultedImage.size.width;
     
     UIImage * resized = [EditorViewController imageWithImage:resultedImage scaledToSize:CGSizeMake(100, newH)];
-
+    
     NSData * imageData = UIImagePNGRepresentation(resized);
     
     NSMutableDictionary * dic = [[NSMutableDictionary alloc]init];
@@ -1077,5 +1090,49 @@
     UIGraphicsEndImageContext();
     return newImage;
 }
+
+
+
+#pragma mark ShareThisDiagram
+- (IBAction)openSessionThisDiagram:(id)sender {
+    
+    [self presentViewController:dele.manager.browser animated:YES completion:nil];
+    
+}
+
+-(void)browserViewControllerWasCancelled:(MCBrowserViewController *)browserViewController{
+    [dele.manager.browser dismissViewControllerAnimated:YES completion:nil];
+    sharingDiagram = NO;
+    
+    resendTimer = nil;
+}
+
+-(void)browserViewControllerDidFinish:(MCBrowserViewController *)browserViewController{
+    [dele.manager.browser dismissViewControllerAnimated:YES completion:nil];
+    sharingDiagram = YES;
+    
+    resendTimer = [NSTimer scheduledTimerWithTimeInterval:0.5f
+                                                   target:self
+                                                 selector:@selector(resendInfo)
+                                                 userInfo:nil
+                                                  repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:resendTimer forMode:NSRunLoopCommonModes];
+
+    
+}
+
+
+-(void)resendInfo{
+    NSData * appDeledata = [dele packImportantInfo];
+    
+    NSArray * peers = dele.manager.session.connectedPeers;
+    NSError * error = nil;
+    [dele.manager.session sendData:appDeledata
+                           toPeers:peers
+                          withMode:MCSessionSendDataReliable
+                             error:&error];
+}
+
+
 
 @end
