@@ -9,11 +9,12 @@
 #import "EdgeListView.h"
 #import "AppDelegate.h"
 #import "PaletteItem.h"
+#import "Component.h"
 
 @implementation EdgeListView
 
 
-@synthesize table, background, delegate;
+@synthesize table, background, delegate, sourceComponent, targetComponent;
 
 
 
@@ -31,9 +32,25 @@
     //Recover all edges from appdelegate
     
     dele = [[UIApplication sharedApplication]delegate];
+
+}
+
+-(void)reloadView{
+    
+    //Tengo el sourceComponent.className y el targetComponent.className
+    
+    edges = [[NSMutableArray alloc] init];
+    
     for(PaletteItem * pi in dele.paletteItems){
         if([pi.type isEqualToString:@"graphicR:Edge"]){
-            [edges addObject:pi];
+            
+            
+            //NO ME VALEN, SON REFERENCIAS
+            if([pi.sourceName isEqualToString:sourceComponent.className] &&
+               [pi.targetName isEqualToString:targetComponent.className]){
+                [edges addObject:pi];
+            }
+            
         }
     }
 }

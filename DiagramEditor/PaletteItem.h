@@ -51,7 +51,7 @@
 @property NSString * sourceDecoratorName;
 @property NSString * targetDecoratorName;
 
-//Los cuatro siguientes son para buscar en el ecore
+//Los cuatro siguientes son para buscar en el ecore //REFERENCIAS
 @property NSString * sourceName;
 @property NSString * targetName;
 @property NSString * sourcePart; //atributo de la clase sourceName

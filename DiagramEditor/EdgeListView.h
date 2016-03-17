@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @class AppDelegate;
 @class PaletteItem;
-
+@class Component;
 
 @interface EdgeListView : UIView<UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>{
     
@@ -21,6 +21,12 @@
 @property (weak, nonatomic) IBOutlet UIView *background;
 
 @property (nonatomic, retain) id delegate;
+
+
+@property Component * sourceComponent;
+@property Component * targetComponent;
+
+-(void)reloadView;
 
 @end
 

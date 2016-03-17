@@ -765,7 +765,12 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         EdgeListView * elv = [[[NSBundle mainBundle] loadNibNamed:@"EdgeListView"
                                                             owner:self
                                                           options:nil] objectAtIndex:0];
+        elv.targetComponent = target;
+        elv.sourceComponent = source;
+        
         EditorViewController * evc = dele.evc;
+        
+        [elv reloadView];
         [evc.view addSubview:elv];
         [elv setFrame:evc.view.frame];
         [elv setDelegate:self];
@@ -817,7 +822,6 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     NSMutableArray * nodragarray = [self getDraggablePaletteItems];
     
     //Hacemos el filtrado por las clases que nos permitan las referencias de la connexión
-    
     //Saco del array los objetos que no tengan una referencia cuya clase se llame igual
     
     if(nodragarray.count == 0){
