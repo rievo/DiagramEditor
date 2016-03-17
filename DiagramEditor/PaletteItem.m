@@ -137,16 +137,14 @@
     
     //Ponemos el nombre en el caso de que lo tenga
     for(ClassAttribute * atr in comp.attributes){
-        //if([atr.name isEqualToString:@"name"]){
-            
-            //Comprobamos si tiene el default
+
             if(atr.defaultValue != nil){
                 atr.currentValue = atr.defaultValue;
             }else{
                 atr.currentValue = @"";
             }
             comp.name = [atr.currentValue copy];
-       // }
+
     }
     
     

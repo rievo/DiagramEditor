@@ -69,7 +69,7 @@
         self.max = [coder decodeObjectForKey:@"max"];
         self.defaultValue = [coder decodeObjectForKey:@"defaultvalue"];
         self.currentValue = [coder decodeObjectForKey:@"currentvalue"];
-        self.isLabel = [coder decodeObjectForKey:@"isLabel"];
+        self.isLabel = [coder decodeBoolForKey:@"isLabel"];
     }
     return self;
 }

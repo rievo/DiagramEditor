@@ -262,6 +262,7 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
                         }
                     }
                     [comp updateNameLabel];
+                    //[previewComponent updateNameLabel];
 
                     
                     //atvc.typeLabel.text = attr.type;

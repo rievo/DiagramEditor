@@ -478,8 +478,8 @@
                 NSDictionary * sourceDic = [directions objectForKey:@"sourceLink"];
                 NSDictionary * targetDic = [directions objectForKey:@"targetLink"];
                 
-                NSString * sourceDecoName = [sourceDic objectForKey:@"_decoratorName"];
-                NSString * targetDecoName = [targetDic objectForKey:@"_decoratorName"];
+                NSString * sourceDecoName = [[sourceDic objectForKey:@"_decoratorName"] lowercaseString];
+                NSString * targetDecoName = [[targetDic objectForKey:@"_decoratorName"] lowercaseString];
                 
                 NSDictionary * sourRefeDic = [sourceDic objectForKey:@"anEReference"];
                 NSDictionary * targRefeDic = [targetDic objectForKey:@"anEReference"];
