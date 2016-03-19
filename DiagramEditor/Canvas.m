@@ -495,12 +495,12 @@
     
     
     
-    
+    /*
     NSDictionary * dic = @{NSForegroundColorAttributeName: fontColor,
                            NSFontAttributeName: font};
     
     //Draw connections name
-    /*
+    
     for(int c = 0; c < dele.connections.count;c++){
         conn = [dele.connections objectAtIndex:c];
         

@@ -10,7 +10,7 @@
 @class AppDelegate;
 @class DiagramFile;
 
-@interface CloudDiagramsExplorer : UIView <UIGestureRecognizerDelegate, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>{
+@interface CloudDiagramsExplorer : UIView <UIGestureRecognizerDelegate , UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>{
     
     
     __weak IBOutlet UIView *background;

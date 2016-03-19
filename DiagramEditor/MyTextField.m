@@ -19,7 +19,6 @@
 */
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    int r;
 }
 
 @end
