@@ -875,6 +875,17 @@
     //Open diagram with that text
     
     //We need palette name
+    
+    
+    //Do we have JSON for this old diagram?
+    NSString * paletteFile = [self extractPaletteNameFromXMLDiagram:text];
+    NSArray * parts = [paletteFile componentsSeparatedByString:@"."];
+    tempPaletteFile = parts[0];
+    
+    
+    //TODO: Recover json for this palette
+    
+    [self parseXMLDiagramWithText:text ];
 }
 
 
@@ -885,11 +896,7 @@
     PaletteItem * pi = nil;
     
     //Pasamos el json a un nsdictionary
-    //TODO: Quitar el fichero harcodeado
-    
-    //NSString *filePath = [[NSBundle mainBundle]pathForResource:@"testNuevo" ofType:@"json"];
-    //NSString *jsonString = [[NSString alloc] initWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:NULL];
-    
+
     
     NSString * jsonString = [self searchJsonNamed:tempPaletteFile];
     
