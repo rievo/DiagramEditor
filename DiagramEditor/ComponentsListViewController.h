@@ -31,13 +31,16 @@
     ClassesFilterView * classFilter;
     AttributesFilterView * attrFilter;
     
-    NSMutableArray * classesArray;
+    NSMutableArray * classesArray; //Array de diccionarios
     NSMutableArray * attrsArray;
     
     
     
     NSMutableArray * allElementsArray;
     
+    
+    
+    BOOL attrFilterEnabled;
     
 }
 - (IBAction)showClassesFilter:(id)sender;

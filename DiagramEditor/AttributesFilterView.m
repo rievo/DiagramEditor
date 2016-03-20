@@ -18,12 +18,15 @@
 
 -(void)awakeFromNib{
     UITapGestureRecognizer * tapGr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    tapGr.delegate = self;
     [background addGestureRecognizer:tapGr];
+    
+    isEnabled = filterEnabled.isOn;
 }
 
 - (IBAction)coseView:(id)sender {
     [self removeFromSuperview];
-    [delegate closedAttributesFilterView];
+    [delegate closedAttributesFilterViewWithEnabled:isEnabled];
 }
 
 
@@ -34,7 +37,29 @@
 
 -(void)handleTap:(UITapGestureRecognizer *)recog{
     [self removeFromSuperview];
-    [delegate closedAttributesFilterView];
+    [delegate closedAttributesFilterViewWithEnabled:isEnabled];
+}
+- (IBAction)setFilterEnabled:(id)sender {
+    
+    if(sender == filterEnabled){
+        UISwitch * sen = (UISwitch *)sender;
+        BOOL value = sen.isOn;
+        
+        if(value == true){
+            atrributesTable.userInteractionEnabled = YES;
+            atrributesTable.alpha = 1.0;
+            [selectAllSwitch setEnabled:YES];
+            selectAllSwitch.alpha = 1.0;
+        }else{ //Disable everything
+            atrributesTable.userInteractionEnabled = NO;
+            atrributesTable.alpha = 0.5;
+            [selectAllSwitch setEnabled:NO];
+            selectAllSwitch.alpha = 0.5;
+            
+        }
+        
+        isEnabled = value;
+    }   
 }
 
 - (IBAction)selectAllAttributes:(id)sender {
@@ -124,5 +149,17 @@
     
 }
 */
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    
+    [self endEditing:YES];
+    if (touch.view != background) { // accept only touchs on superview, not accept touchs on subviews
+        return NO;
+    }
+    
+    return YES;
+}
+
 
 @end

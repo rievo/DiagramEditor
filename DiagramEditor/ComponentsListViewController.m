@@ -22,6 +22,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    attrFilterEnabled = YES;
+    
     componentsTable.delegate = self;
     componentsTable.dataSource = self;
     dele = [[UIApplication sharedApplication]delegate];
@@ -139,13 +142,13 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
     
-    if (cell == nil)
-    {
+    //if (cell == nil)
+    //{
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle
                                       reuseIdentifier:MyIdentifier] ;
         
         
-        /*if(isFiltered){ //Get from filtered array
+        if(isFiltered){ //Get from filtered array*/
             if([[filteredArray objectAtIndex:indexPath.row] isKindOfClass:[Component class]]){
                 Component * temp = [filteredArray objectAtIndex:indexPath.row];
                 cell.textLabel.text = temp.className;
@@ -165,10 +168,10 @@
                 cell.textLabel.text = conn.className;
                 cell.detailTextLabel.text = @"Connection";
             }
-        //}
+        }
         
         cell.backgroundColor = [UIColor clearColor];
-    }
+    //}
     
     /*
      Component * temp = nil;
@@ -198,7 +201,7 @@
 -(void)doFilterForText:(NSString *)text{
     
     //if(text.length == 0){
-     //   isFiltered = NO;
+    //    isFiltered = NO;
     //}else{
         isFiltered = YES;
         filteredArray = [[NSMutableArray alloc] init];
@@ -258,6 +261,8 @@
             }
         }
     //}
+    
+    [componentsTable reloadData];
 }
 #pragma  mark UISearchBarDelegate
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)text{
@@ -283,7 +288,21 @@
 }
 
 -(BOOL)areWeAllowingInstancesOfClassName: (NSString *)name{
-    BOOL result = YES;
+    BOOL result = NO;
+    
+    for(int i = 0; i< classesArray.count; i++){
+        NSDictionary * dic = classesArray[i];
+        
+        NSArray * allKeys = [dic allKeys];
+        NSString * className = allKeys[0];
+        
+        BOOL isEnabled = [[dic objectForKey:className]boolValue];
+        
+        if([name isEqualToString:className]){
+            
+            return isEnabled;
+        }
+    }
     
     
     return result;
@@ -332,7 +351,9 @@
 }
 
 #pragma mark AttributesFilgerviewDelegate
--(void)closedAttributesFilterView{
+-(void)closedAttributesFilterViewWithEnabled:(BOOL)enabled{
+    
+    attrFilterEnabled = enabled;
     [self doFilterForText:searchBar.text];
 }
 @end

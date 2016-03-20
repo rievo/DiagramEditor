@@ -10,7 +10,7 @@
 
 @class AppDelegate;
 
-@interface AttributesFilterView : UIView<UITableViewDataSource, UITableViewDelegate>{
+@interface AttributesFilterView : UIView<UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>{
     
     id delegate;
     __weak IBOutlet UISwitch *selectAllSwitch;
@@ -19,6 +19,10 @@
     
     AppDelegate * dele;
     __weak IBOutlet UILabel *label;
+    __weak IBOutlet UISwitch *filterEnabled;
+    
+    
+    BOOL isEnabled;
 }
 
 
@@ -34,6 +38,6 @@
 
 @protocol AttributesFilterViewProtocol <NSObject>
 
--(void)closedAttributesFilterView;
+-(void)closedAttributesFilterViewWithEnabled:(BOOL)enabled;
 
 @end
