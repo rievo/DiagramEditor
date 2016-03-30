@@ -41,6 +41,15 @@
     
     dele.manager.browser.delegate = self;
     
+    
+    //Show-hide palette
+    isPaletteCollapsed = YES;
+    paletteCenter = palette.center;
+    paletteRect = palette.frame;
+    [self collapsePalette];
+    //[self fitPaletteToScreen];
+    
+    
     canvas = [[Canvas alloc] initWithFrame:CGRectMake(0, 0, canvasW, canvasW)];
     canvas.backgroundColor = [dele blue4];
     [canvas prepareCanvas];
@@ -115,19 +124,19 @@
     palette.paletteItems = [[NSMutableArray alloc] initWithArray:dele.paletteItems];
     [palette preparePalette];
     palette.name = dele.subPalette;
-    palette.sliderToChange = slider;
+    //palette.sliderToChange = slider;
     
     dele.evc = self;
     
     
     //Set slider
     //if(palette.contentSize.width > palette.frame.size.width){
-    slider.maximumValue = palette.frame.size.width -palette.contentSize.width ;
-    slider.minimumValue = 0;
+    //slider.maximumValue = palette.frame.size.width -palette.contentSize.width ;
+    //slider.minimumValue = 0;
     
-    NSLog(@"palette.contentSize: w:%f h:%f", palette.contentSize.width, palette.contentSize.height);
-    NSLog(@"slider.maxval = %f", slider.maximumValue);
-    NSLog(@"palette.frame = w:%f  h%f ", palette.frame.size.width, palette.frame.size.height);
+    //NSLog(@"palette.contentSize: w:%f h:%f", palette.contentSize.width, palette.contentSize.height);
+   // NSLog(@"slider.maxval = %f", slider.maximumValue);
+    ///NSLog(@"palette.frame = w:%f  h%f ", palette.frame.size.width, palette.frame.size.height);
     //}else{
     //[slider setHidden:YES];
     //}
@@ -1125,9 +1134,8 @@
 
 #pragma mark UISlider
 - (IBAction) valueChanged:(id)sender event:(UIControlEvents)event {
-    [palette setContentOffset:CGPointMake(slider.value,0) animated:NO];
+    //[palette setContentOffset:CGPointMake(slider.value,0) animated:NO];
 }
-
 
 
 #pragma mark UIImage method
@@ -1168,22 +1176,107 @@
                                                  userInfo:nil
                                                   repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:resendTimer forMode:NSRunLoopCommonModes];
+    /*NSData * appDeleData = [dele packImportantInfo];
+    
+    [dele.output write:appDeleData.bytes maxLength:appDeleData.length];*/
+    
 
     
 }
 
 
 -(void)resendInfo{
-    NSData * appDeledata = [dele packImportantInfo];
+    NSLog(@"resend");
+    NSData * appDeleData = [dele packElementsInfo];
     
-    NSArray * peers = dele.manager.session.connectedPeers;
+    //NSData * appDeleData = [[NSString stringWithFormat:@"Hellou :D"]dataUsingEncoding:NSUTF8StringEncoding];
+    
+    [dele.output write:appDeleData.bytes maxLength:appDeleData.length];
+    /*NSArray * peers = dele.manager.session.connectedPeers;
     NSError * error = nil;
     [dele.manager.session sendData:appDeledata
                            toPeers:peers
                           withMode:MCSessionSendDataReliable
-                             error:&error];
+                             error:&error];*/
 }
 
+
+#pragma mark Expand-Collapse palette methods
+- (IBAction)expandOrCollapsePalette:(id)sender {
+    if(isPaletteCollapsed){ //Palette is hidden, expand it
+        [self expandPalette];
+        isPaletteCollapsed = NO;
+        UIImage *image = [UIImage imageNamed:@"hidePaletteEditor.png"];
+        [showHidePaletteOutlet setImage:image forState:UIControlStateNormal];
+    }else{ //Palette is shown, collapse it
+        [self collapsePalette];
+        isPaletteCollapsed = YES;
+        UIImage *image = [UIImage imageNamed:@"showPaletteEditor.png"];
+        [showHidePaletteOutlet setImage:image forState:UIControlStateNormal];
+    }
+}
+
+-(void)collapsePalette{
+    
+    /*CGRect thisRect = CGRectMake(paletteRect.origin.x,
+                                 paletteRect.origin.y,
+                                 0,
+                                 paletteRect.size.height);
+    [showHidePaletteOutlet setEnabled:NO];
+
+    [UIView animateWithDuration:0.3
+                          delay:0.0
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         [palette setFrame:thisRect];
+                     }
+                     completion:^(BOOL finished) {
+                         [palette setHidden:YES];
+                         [showHidePaletteOutlet setEnabled:YES];
+                     }];*/
+    [palette setHidden:YES];
+}
+
+-(void)expandPalette{
+    
+    //[palette setAlpha:1.0];
+    [showHidePaletteOutlet setEnabled:NO];
+    [palette setFrame:CGRectMake(paletteRect.origin.x,
+                                 paletteRect.origin.y,
+                                 0,
+                                 paletteRect.size.height)];
+    
+    [palette setHidden:NO];
+    [UIView animateWithDuration:0.2
+                          delay:0.0
+                        options:UIViewAnimationOptionCurveEaseIn
+                     animations:^{
+                         
+                         CGRect newRect = CGRectMake(paletteRect.origin.x,
+                                                     paletteRect.origin.y,
+                                                     paletteRect.size.width,
+                                                     paletteRect.size.height);
+                         [palette setFrame:newRect];
+                         
+                         paletteRect = newRect;
+                     }
+                     completion:^(BOOL finished) {
+                         [showHidePaletteOutlet setEnabled:YES];
+                     }];
+    
+}
+
+-(void)fitPaletteToScreen{
+    float m = 5;
+    float bm = 10;
+    
+    float pw = canvas.frame.size.width - 2 * m - showHidePaletteOutlet.frame.size.width -bm;
+    float px = canvas.frame.origin.x;
+    float py = canvas.frame.size.height - palette.frame.size.height + canvas.frame.origin.y;
+    float ph = palette.frame.size.height;
+    
+    [palette setFrame:CGRectMake(px, py, pw, ph)];
+}
 
 
 @end

@@ -76,4 +76,8 @@
 
 -(void)updatePath: (UIBezierPath *)line
          forStyle: (NSString *)style;
+
+
+-(NSString *)getSourceClassName;
+-(NSString *)getTargetClassName;
 @end

@@ -66,13 +66,24 @@ EdgeListDelegate, MCBrowserViewControllerDelegate>{
     
     
     SureView * sureView;
-    __weak IBOutlet UISlider *slider;
+    //__weak IBOutlet UISlider *slider;
     __weak IBOutlet UIButton *shareButtonOutlet;
     
     
     BOOL sharingDiagram;
     
     NSTimer * resendTimer;
+    
+    
+    __weak IBOutlet UIButton *showHidePaletteOutlet;
+    BOOL isPaletteCollapsed;
+    
+    CGPoint paletteCenter;
+    
+    CGRect paletteRect;
+    CGRect collapsedRect;
+    
+    //__weak IBOutlet UIView *paletteAndSliderGroup;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
@@ -91,4 +102,8 @@ EdgeListDelegate, MCBrowserViewControllerDelegate>{
 - (IBAction)exportCanvasToImage:(id)sender;
 
 - (IBAction) valueChanged:(id)sender event:(UIControlEvents)event ;
+
+- (IBAction)expandOrCollapsePalette:(id)sender;
+
+
 @end

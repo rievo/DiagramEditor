@@ -17,6 +17,8 @@
 #import "Component.h"
 #import "ClassAttribute.h"
 #import "Canvas.h"
+#import "AppDelegate.h"
+#import "Reference.h"
 
 #define handSize 15
 
@@ -429,5 +431,48 @@
 
 
 
+-(NSString *)getSourceClassName{
+    NSString * result = @"";
+    
+    AppDelegate * dele = [[UIApplication sharedApplication]delegate];
+    
+    PaletteItem * temp = nil;
+    
+    for(temp in dele.paletteItems){
+        if([temp.className isEqualToString:sourceName]){
+            //For each reference
+            for(Reference * ref in temp.references){
+                if([ref.name isEqualToString:sourcePart]){
+                    result = ref.target;
+                }
+            }
+        }
+    }
+    
+    
+    return result;
+}
+
+-(NSString *)getTargetClassName{
+    NSString * result = @"";
+    
+    AppDelegate * dele = [[UIApplication sharedApplication]delegate];
+    
+    PaletteItem * temp = nil;
+    
+    for(temp in dele.paletteItems){
+        if([temp.className isEqualToString:targetName]){
+            //For each reference
+            for(Reference * ref in temp.references){
+                if([ref.name isEqualToString:targetPart]){
+                    result = ref.target;
+                }
+            }
+        }
+    }
+    
+    
+    return result;
+}
 
 @end

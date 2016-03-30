@@ -26,7 +26,7 @@
 @property Component * sourceComponent;
 @property Component * targetComponent;
 
--(void)reloadView;
+-(BOOL)reloadView;
 
 @end
 

@@ -18,7 +18,7 @@
 
 @implementation AppDelegate
 
-@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR, evc, blue0, blue1, blue2, elementsDictionary, manager, ecoreContent;
+@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR, evc, blue0, blue1, blue2, elementsDictionary, manager, ecoreContent, output;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -50,31 +50,24 @@
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
 
 -(int)getOutConnectionsForComponent: (Component *)comp
                              ofType: (NSString * )type{
-
+    
     int count = 0;
     
     for(Connection * con in connections){
@@ -87,7 +80,7 @@
 
 
 -(int)getInConnectionsForComponent: (Component *)comp
-                             ofType: (NSString *)type{
+                            ofType: (NSString *)type{
     
     int count = 0;
     
@@ -100,6 +93,8 @@
 }
 
 
+
+
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
     
@@ -107,29 +102,50 @@
     
     NSString * content = [[NSString alloc]initWithData:urlData encoding:NSUTF8StringEncoding];
     
-        ConfigureDiagramViewController * cc = (ConfigureDiagramViewController *)  self.window.rootViewController;
+    ConfigureDiagramViewController * cc = (ConfigureDiagramViewController *)  self.window.rootViewController;
     
     cc.contentToParse = content;
-   [cc parseRemainingContent];
+    [cc parseRemainingContent];
     
     [cc performSegueWithIdentifier:@"showEditor" sender:self];
     
-
+    
     
     return YES;
 }
 
 
--(NSData *) packImportantInfo{
+-(NSData *)packAppDelegate{
     NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
     
-    [dic setObject:components forKey:@"components"];
-    [dic setObject:connections forKey:@"connections"];
-    [dic setObject:elementsDictionary forKey:@"elementsDictionary"];
-    [dic setObject:paletteItems forKey:@"paletteItems"];
-    [dic setObject:currentPaletteFileName forKey:@"currPalFilNam"];
-    [dic setObject:subPalette forKey:@"subpalette"];
-    [dic setObject:graphicR forKey:@"graphicR"];
+    if (components != nil)
+        [dic setObject:components forKey:@"components"];
+    if(connections != nil)
+        [dic setObject:connections forKey:@"connections"];
+    if(elementsDictionary != nil)
+        [dic setObject:elementsDictionary forKey:@"elementsDictionary"];
+    if(paletteItems != nil)
+        [dic setObject:paletteItems forKey:@"paletteItems"];
+    if(currentPaletteFileName != nil)
+        [dic setObject:currentPaletteFileName forKey:@"currPalFilNam"];
+    if(subPalette != nil)
+        [dic setObject:subPalette forKey:@"subpalette"];
+    if(graphicR != nil)
+        [dic setObject:graphicR forKey:@"graphicR"];
+    
+    NSData * data = [NSKeyedArchiver archivedDataWithRootObject:dic];
+    return data;
+}
+
+-(NSData *) packElementsInfo{
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+    
+    if (components != nil)
+        [dic setObject:components forKey:@"components"];
+    if(connections != nil)
+        [dic setObject:connections forKey:@"connections"];
+    if(elementsDictionary != nil)
+        [dic setObject:elementsDictionary forKey:@"elementsDictionary"];
     
     
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dic];
@@ -139,17 +155,15 @@
 
 
 -(void)recoverInfoFromData: (NSData *)data{
-    NSDictionary *myDictionary = (NSDictionary*) [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    NSMutableDictionary *myDictionary = (NSMutableDictionary*) [NSKeyedUnarchiver unarchiveObjectWithData:data];
     
     components = [myDictionary objectForKey:@"components"];
     connections  = [myDictionary objectForKey:@"connections"];
     elementsDictionary  = [myDictionary objectForKey:@"elementsDictionary"];
     paletteItems = [myDictionary objectForKey:@"paletteItems"];
     currentPaletteFileName  = [myDictionary objectForKey:@"currPalFilNam"];
-    if(subPalette != nil)
-        subPalette = [myDictionary objectForKey:@"subpalette"];
-    if(graphicR != nil)
-        graphicR = [myDictionary objectForKey:@"graphicR"];
+    subPalette = [myDictionary objectForKey:@"subpalette"];
+    graphicR = [myDictionary objectForKey:@"graphicR"];
 }
 
 @end

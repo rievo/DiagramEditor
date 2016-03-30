@@ -52,6 +52,9 @@
 //Multipeer Connectivity
 @property MCManager * manager;
 
+//Stream
+@property NSOutputStream * output;
+
 
 -(int)getOutConnectionsForComponent: (Component *)comp
                              ofType: (NSString * )type;
@@ -59,7 +62,7 @@
                              ofType: (NSString * )type;
 
 
--(NSData *) packImportantInfo;
+-(NSData *) packElementsInfo;
 -(void)recoverInfoFromData: (NSData *)data;
 
 

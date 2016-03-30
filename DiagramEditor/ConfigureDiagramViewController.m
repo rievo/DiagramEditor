@@ -93,12 +93,6 @@
                                                   object:nil];
     [thread start];
     
-    /*refreshTimer = [NSTimer scheduledTimerWithTimeInterval:5.0
-     target:self
-     selector:@selector(loadFilesFromServer)
-     userInfo:nil
-     repeats:YES];*/
-    
     
     //Load local files
     NSThread * locThread = [[NSThread alloc] initWithTarget:self
@@ -123,6 +117,7 @@
 }
 
 -(void)didReceiveAppDeleLetsgoToEditor{
+    NSLog(@"Received AppDelegate from server. Showing editor");
     [self performSegueWithIdentifier:@"showEditor" sender:self];
 }
 
@@ -1005,6 +1000,7 @@
             }
         }
     }
+    //TODO: Recursive
 }
 
 -(void)getAttributesForClass: (NSString *) key
@@ -1644,7 +1640,10 @@
     dele.subPalette = nil;
     dele.graphicR = nil;*/
     
+    [palette resetPalette];
+    
     palette.paletteItems = [[NSMutableArray alloc ]init];
+    
     dele.paletteItems = [[NSMutableArray alloc ]init];
     dele.currentPaletteFileName = nil;
     dele.subPalette = nil;
@@ -1657,6 +1656,7 @@
     dele.graphicR = nil;
     dele.graphicRContent = nil;
     
+    [palette setNeedsDisplay];
     
     
     //Quitar el subpalette y mostrar el palettefilegroup

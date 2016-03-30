@@ -35,7 +35,11 @@
 
 }
 
--(void)reloadView{
+
+//true: show view
+//false: there are no possible edges, don't show view
+
+-(BOOL)reloadView{
     
     //Tengo el sourceComponent.className y el targetComponent.className
     
@@ -44,14 +48,21 @@
     for(PaletteItem * pi in dele.paletteItems){
         if([pi.type isEqualToString:@"graphicR:Edge"]){
             
-            
+            //aa
             //NO ME VALEN, SON REFERENCIAS
-            if([pi.sourceName isEqualToString:sourceComponent.className] &&
-               [pi.targetName isEqualToString:targetComponent.className]){
+            if([[pi getSourceClassName] isEqualToString:sourceComponent.className] &&
+               [[pi getTargetClassName] isEqualToString:targetComponent.className]){
                 [edges addObject:pi];
             }
             
         }
+    }
+    
+    
+    if(edges.count == 0){ //There is no edges
+        return false;
+    }else{
+        return true;
     }
 }
 
@@ -74,7 +85,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *MyIdentifier = @"MyIdentifier";
+    static NSString *MyIdentifier = @"cellPossibleEdges";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
     PaletteItem * temp = [edges objectAtIndex:indexPath.row];

@@ -770,11 +770,17 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         
         EditorViewController * evc = dele.evc;
         
-        [elv reloadView];
-        [evc.view addSubview:elv];
-        [elv setFrame:evc.view.frame];
-        [elv setDelegate:self];
-        return kNotYet;
+        BOOL result = [elv reloadView];
+        
+        if(result == true){ //Show possible connections
+            [evc.view addSubview:elv];
+            [elv setFrame:evc.view.frame];
+            [elv setDelegate:self];
+            return kNotYet;
+        }else{ //No possible connections
+            return @"There are no possible connections to do between those classes";
+        }
+       
     }
     return @"";
 }
