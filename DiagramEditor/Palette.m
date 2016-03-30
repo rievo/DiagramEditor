@@ -11,6 +11,8 @@
 #import "PaletteItem.h"
 
 #define xmargin 20
+#define distanceToBorder 10
+#define separationBetweenElements 20
 
 
 @implementation Palette
@@ -36,9 +38,10 @@
             [temp removeGestureRecognizer:recognizer];
         }
         
-        float a = 10;
+        float a = distanceToBorder;
         
         CGFloat x  = i* self.contentSize.height + xmargin;
+        x = x + i* separationBetweenElements;
         
         CGRect insideRect = CGRectMake(x, a, self.contentSize.height -2*a, self.contentSize.height -2*a);
         
