@@ -79,4 +79,56 @@
     }
 }
 
+
+
+#pragma mark NSCoding
+
+- (void)encodeWithCoder:(NSCoder *)coder {
+
+    [coder encodeObject:self.target forKey:@"target"];
+    [coder encodeObject:self.source  forKey:@"source"];
+    [coder encodeObject:arrowPath  forKey:@"arrowPath"];
+    [coder encodeObject:className  forKey:@"className"];
+    
+    [coder encodeObject:attributes  forKey:@"attributes"];
+    [coder encodeObject:self.references  forKey:@"references"];
+    
+    [coder encodeObject:self.sourceDecorator  forKey:@"sourceDecorator"];
+    [coder encodeObject:self.targetDecorator  forKey:@"targetDecorator"];
+    
+    [coder encodeObject:self.lineWidth  forKey:@"lineWidth"];
+    [coder encodeObject:self.lineStyle  forKey:@"lineStyle"];
+    [coder encodeObject:self.lineColor  forKey:@"lineColor"];
+    [coder encodeObject:self.lineColorNameString forKey:@"lineColorNameString"];
+    
+    [coder encodeObject:instancesOfClassesDictionary forKey:@"instancesOfClassesDictionary"];
+    
+}
+
+- (id)initWithCoder:(NSCoder *)coder {
+    self = [super initWithCoder:coder];
+    if (self) {
+        self.target = [coder decodeObjectForKey:@"target"];
+        self.source = [coder decodeObjectForKey:@"source"];
+        self.arrowPath = [coder decodeObjectForKey:@"arrowPath"];
+        self.className = [coder decodeObjectForKey:@"className"];
+        
+        self.attributes = [coder decodeObjectForKey:@"attributes"];
+        self.references = [coder decodeObjectForKey:@"references"];
+        
+        self.sourceDecorator = [coder decodeObjectForKey:@"sourceDecorator"];
+        self.targetDecorator = [coder decodeObjectForKey:@"targetDecorator"];
+        
+        self.lineWidth =[coder decodeObjectForKey:@"lineWidth"];
+        self.lineStyle = [coder decodeObjectForKey:@"lineStyle"];
+        self.lineColor = [coder decodeObjectForKey:@"linecolor"];
+        self.lineColorNameString = [coder decodeObjectForKey:@"lineColorNameString"];
+        
+        self.instancesOfClassesDictionary = [coder decodeObjectForKey:@"instancesOfClassesDictionary"];
+
+    }
+    return self;
+}
+
+
 @end

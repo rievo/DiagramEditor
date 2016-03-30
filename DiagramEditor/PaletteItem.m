@@ -16,6 +16,7 @@
 #define kParallelogram @"graphicR:ShapeCompartmentParallelogram"
 #import "Component.h"
 #import "ClassAttribute.h"
+#import "Canvas.h"
 
 #define handSize 15
 
@@ -61,7 +62,7 @@
 }
 
 - (id)initWithCoder:(NSCoder *)coder {
-    self = [super init];
+    self = [super initWithCoder:coder];
     if (self) {
         
         self.type = [coder decodeObjectForKey:@"type"];
@@ -175,6 +176,21 @@
     float lw = 4.0;
     CGRect fixed = CGRectMake(2*lw, 2*lw +5, rect.size.width - 4*lw , rect.size.height - 4*lw);
     
+    //Draw border
+    UIBezierPath * border = [[UIBezierPath alloc ] init];
+    [border moveToPoint:rect.origin];
+    [border addLineToPoint:CGPointMake(rect.origin.x + rect.size.width, rect.origin.y)];
+    [border addLineToPoint:CGPointMake(rect.origin.x + rect.size.width, rect.origin.y + rect.size.height)];
+    [border addLineToPoint:CGPointMake(rect.origin.x, rect.origin.y + rect.size.height)];
+    [border closePath];
+    [border setLineWidth:0.2];
+    
+    [[UIColor blackColor]setStroke];
+    [border stroke];
+    
+    
+    //Draw element
+    
     UIBezierPath * path = nil;
     
     if([shapeType isEqualToString:kEllipse]){
@@ -278,9 +294,104 @@
         [lineColor setStroke];
         [lineColor setFill];
         [self updatePath:path forStyle:lineStyle];
+        
     }
     [path stroke];
-        [path fill];
+    [path fill];
+    
+    if([type isEqualToString:kEdge]){
+        //Draw decorators
+        
+        //Source (left)
+        UIBezierPath * pathSource= nil;
+        
+        if([self.targetDecoratorName isEqualToString:NO_DECORATION]){
+            pathSource = [Canvas getNoDecoratorPath];
+        }else if([self.targetDecoratorName isEqualToString:INPUT_ARROW]){
+            
+            pathSource = [Canvas getInputArrowPath];
+            
+        }else if([self.targetDecoratorName isEqualToString:DIAMOND]){
+            pathSource = [Canvas getDiamondPath];
+        }else if([self.targetDecoratorName isEqualToString:FILL_DIAMOND]){
+            pathSource = [Canvas getDiamondPath];
+            
+        }else if([self.targetDecoratorName isEqualToString:INPUT_CLOSED_ARROW]){
+            pathSource = [Canvas getInputClosedArrowPath];
+            
+        }else if([self.targetDecoratorName isEqualToString:INPUT_FILL_CLOSED_ARROW]){
+            pathSource = [Canvas getInputFillClosedArrowPath];
+            
+        }else if([self.targetDecoratorName isEqualToString:OUTPUT_ARROW]){
+            pathSource = [Canvas getOutputArrowPath];
+            
+        }else if([self.targetDecoratorName isEqualToString:OUTPUT_CLOSED_ARROW]){
+            pathSource = [Canvas getOutputClosedArrowPath];
+        }else if([self.targetDecoratorName isEqualToString:OUTPUT_FILL_CLOSED_ARROW]){
+            pathSource = [Canvas getOutputClosedArrowPath];
+        }else{ //No decorator
+            pathSource = [Canvas getNoDecoratorPath];
+        }
+        
+        CGAffineTransform transformSource = CGAffineTransformIdentity;
+        transformSource = CGAffineTransformConcat(transformSource,
+                                                  CGAffineTransformMakeTranslation(fixed.origin.x,fixed.size.height/2 + fixed.origin.y -decoratorSize/2));
+        [pathSource applyTransform:transformSource];
+        [pathSource stroke];
+        if([self.sourceDecoratorName isEqualToString:@"fillDiamond"] ||
+           [self.sourceDecoratorName isEqualToString:@"inputFillClosedArrow"] ||
+           [self.sourceDecoratorName isEqualToString:@"outputFillClosedArrow"]){
+            [pathSource fill];
+        }
+        
+        
+        //Target
+        UIBezierPath * pathTarget= nil;
+        
+        if([self.sourceDecoratorName isEqualToString:NO_DECORATION]){
+            pathTarget = [Canvas getNoDecoratorPath];
+        }else if([self.sourceDecoratorName isEqualToString:INPUT_ARROW]){
+            
+            pathTarget = [Canvas getInputArrowPath];
+            
+        }else if([self.sourceDecoratorName isEqualToString:DIAMOND]){
+            pathTarget = [Canvas getDiamondPath];
+        }else if([self.sourceDecoratorName isEqualToString:FILL_DIAMOND]){
+            pathTarget = [Canvas getDiamondPath];
+            
+        }else if([self.sourceDecoratorName isEqualToString:INPUT_CLOSED_ARROW]){
+            pathTarget = [Canvas getInputClosedArrowPath];
+            
+        }else if([self.sourceDecoratorName isEqualToString:INPUT_FILL_CLOSED_ARROW]){
+            pathTarget = [Canvas getInputFillClosedArrowPath];
+            
+        }else if([self.sourceDecoratorName isEqualToString:OUTPUT_ARROW]){
+            pathTarget = [Canvas getOutputArrowPath];
+            
+        }else if([self.sourceDecoratorName isEqualToString:OUTPUT_CLOSED_ARROW]){
+            pathTarget = [Canvas getOutputClosedArrowPath];
+        }else if([self.sourceDecoratorName isEqualToString:OUTPUT_FILL_CLOSED_ARROW]){
+            pathTarget = [Canvas getOutputClosedArrowPath];
+        }else{ //No decorator
+            pathTarget = [Canvas getNoDecoratorPath];
+        }
+        
+        CGAffineTransform transformTarget = CGAffineTransformIdentity;
+        transformTarget = CGAffineTransformConcat(transformTarget,
+                                                  CGAffineTransformMakeTranslation(fixed.origin.x + fixed.size.width ,
+                                                                                   fixed.size.height/2 + fixed.origin.y -decoratorSize/2));
+        [pathTarget applyTransform:transformTarget];
+        [pathTarget stroke];
+        
+        if([self.sourceDecoratorName isEqualToString:@"fillDiamond"] ||
+           [self.sourceDecoratorName isEqualToString:@"inputFillClosedArrow"] ||
+           [self.sourceDecoratorName isEqualToString:@"outputFillClosedArrow"]){
+            [pathTarget fill];
+        }
+
+        
+
+    }
     
     //Pintamos el nombre del elemento
     CGRect textRect = CGRectMake(0 , 0, self.frame.size.width, 15);

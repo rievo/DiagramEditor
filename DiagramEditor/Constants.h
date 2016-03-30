@@ -29,6 +29,10 @@ FOUNDATION_EXPORT NSString *const DASH;
 FOUNDATION_EXPORT NSString *const DOT;
 FOUNDATION_EXPORT NSString *const DASH_DOT;
 
+
+#pragma mark Decorators
+#define decoratorSize 10
+
 @interface Constants : NSObject
 
 @end

@@ -9,6 +9,7 @@
 #import "Canvas.h"
 #import "Connection.h"
 #import "ClassAttribute.h"
+#import "Constants.h"
 
 
 #define xmargin 15
@@ -20,7 +21,6 @@
 
 #define defradius 5
 
-#define decoratorSize 10
 
 #define pi 3.14159265359
 #define radiansToDegrees( radians ) ( ( radians ) * ( 180.0 / M_PI ) )
@@ -334,31 +334,31 @@
                 //Target
                 
                 if([conn.targetDecorator isEqualToString:NO_DECORATION]){
-                    pathTarget = [self getNoDecoratorPath];
+                    pathTarget = [Canvas getNoDecoratorPath];
                 }else if([conn.targetDecorator isEqualToString:INPUT_ARROW]){
                     
-                    pathTarget = [self getInputArrowPath];
+                    pathTarget = [Canvas getInputArrowPath];
                     
                 }else if([conn.targetDecorator isEqualToString:DIAMOND]){
                     
-                    pathTarget = [self getDiamondPath];
+                    pathTarget = [Canvas getDiamondPath];
                 }else if([conn.targetDecorator isEqualToString:FILL_DIAMOND]){
                     
-                    pathTarget = [self getDiamondPath];
+                    pathTarget = [Canvas getDiamondPath];
                 }else if([conn.targetDecorator isEqualToString:INPUT_CLOSED_ARROW]){
-                    pathTarget = [self getInputClosedArrowPath];
+                    pathTarget = [Canvas getInputClosedArrowPath];
                 }else if([conn.targetDecorator isEqualToString:INPUT_FILL_CLOSED_ARROW]){
-                    pathTarget = [self getInputFillClosedArrowPath];
+                    pathTarget = [Canvas getInputFillClosedArrowPath];
                 }else if([conn.targetDecorator isEqualToString:OUTPUT_ARROW]){
-                    pathTarget = [self getOutputArrowPath];
+                    pathTarget = [Canvas getOutputArrowPath];
                     
                 }else if([conn.targetDecorator isEqualToString:OUTPUT_CLOSED_ARROW]){
                     
-                    pathTarget = [self getOutputClosedArrowPath];
+                    pathTarget = [Canvas getOutputClosedArrowPath];
                 }else if([conn.targetDecorator isEqualToString:OUTPUT_FILL_CLOSED_ARROW]){
-                    pathTarget = [self getOutputClosedArrowPath];
+                    pathTarget = [Canvas getOutputClosedArrowPath];
                 }else{ //No decorator
-                    pathTarget = [self getNoDecoratorPath];
+                    pathTarget = [Canvas getNoDecoratorPath];
                 }
                 
                 
@@ -387,31 +387,31 @@
                 
                 
                 if([conn.targetDecorator isEqualToString:NO_DECORATION]){
-                    pathSource = [self getNoDecoratorPath];
+                    pathSource = [Canvas getNoDecoratorPath];
                 }else if([conn.sourceDecorator isEqualToString:INPUT_ARROW]){
                     
-                    pathSource = [self getInputArrowPath];
+                    pathSource = [Canvas getInputArrowPath];
                     
                 }else if([conn.sourceDecorator isEqualToString:DIAMOND]){
-                    pathSource = [self getDiamondPath];
+                    pathSource = [Canvas getDiamondPath];
                 }else if([conn.sourceDecorator isEqualToString:FILL_DIAMOND]){
-                    pathSource = [self getDiamondPath];
+                    pathSource = [Canvas getDiamondPath];
                     
                 }else if([conn.sourceDecorator isEqualToString:INPUT_CLOSED_ARROW]){
-                    pathSource = [self getInputClosedArrowPath];
+                    pathSource = [Canvas getInputClosedArrowPath];
                     
                 }else if([conn.sourceDecorator isEqualToString:INPUT_FILL_CLOSED_ARROW]){
-                    pathSource = [self getInputFillClosedArrowPath];
+                    pathSource = [Canvas getInputFillClosedArrowPath];
                     
                 }else if([conn.sourceDecorator isEqualToString:OUTPUT_ARROW]){
-                    pathSource = [self getOutputArrowPath];
+                    pathSource = [Canvas getOutputArrowPath];
                     
                 }else if([conn.sourceDecorator isEqualToString:OUTPUT_CLOSED_ARROW]){
-                    pathSource = [self getOutputClosedArrowPath];
+                    pathSource = [Canvas getOutputClosedArrowPath];
                 }else if([conn.sourceDecorator isEqualToString:OUTPUT_FILL_CLOSED_ARROW]){
-                    pathSource = [self getOutputClosedArrowPath];
+                    pathSource = [Canvas getOutputClosedArrowPath];
                 }else{ //No decorator
-                    pathSource = [self getNoDecoratorPath];
+                    pathSource = [Canvas getNoDecoratorPath];
                 }
                 
                 CGAffineTransform transformSource = CGAffineTransformIdentity;
@@ -536,21 +536,25 @@
 
 - (void) repaintCanvas : (NSNotification *) notification {
     
-    Component * temp = nil;
-    for(int i = 0; i<dele.components.count; i++){
-        temp = [dele.components objectAtIndex:i];
-        
-        for(ClassAttribute * atr in  temp.attributes){
-            if([atr.name isEqualToString:@"name"]){
-                temp.textLayer.string = atr.currentValue;
-                [temp updateNameLabel];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        Component * temp = nil;
+        for(int i = 0; i<dele.components.count; i++){
+            temp = [dele.components objectAtIndex:i];
+            
+            for(ClassAttribute * atr in  temp.attributes){
+                if([atr.name isEqualToString:@"name"]){
+                    temp.textLayer.string = atr.currentValue;
+                    [temp updateNameLabel];
+                }
             }
+            
+            [temp setNeedsDisplay];
         }
         
-        [temp setNeedsDisplay];
-    }
+        [self setNeedsDisplay];
+    });
     
-    [self setNeedsDisplay];
+   
 }
 
 
@@ -591,7 +595,7 @@
 
 
 #pragma mark Paths for decorators
--(UIBezierPath *)getInputArrowPath{
++(UIBezierPath *)getInputArrowPath{
     UIBezierPath * path = [[UIBezierPath alloc]init];
     float halfDec = decoratorSize / 2.0;
 
@@ -615,7 +619,7 @@
  float halfDec = decoratorSize / 2.0;
  return path;
  }*/
--(UIBezierPath *)getDiamondPath{
++(UIBezierPath *)getDiamondPath{
     UIBezierPath * path = [[UIBezierPath alloc]init];
     float halfDec = decoratorSize / 2.0;
     
@@ -629,7 +633,7 @@
     return path;
 }
 
--(UIBezierPath *)getInputClosedArrowPath{
++(UIBezierPath *)getInputClosedArrowPath{
     UIBezierPath * path = [[UIBezierPath alloc]init];
     float halfDec = decoratorSize / 2.0;
     
@@ -642,7 +646,7 @@
     
     return path;
 }
--(UIBezierPath *)getInputFillClosedArrowPath{
++(UIBezierPath *)getInputFillClosedArrowPath{
     UIBezierPath * path = [[UIBezierPath alloc]init];
     float halfDec = decoratorSize / 2.0;
     
@@ -656,7 +660,7 @@
     return path;
 }
 
--(UIBezierPath *)getOutputArrowPath{
++(UIBezierPath *)getOutputArrowPath{
     UIBezierPath * path = [[UIBezierPath alloc]init];
     float halfDec = decoratorSize / 2.0;
     [path moveToPoint:CGPointMake(decoratorSize-halfDec, 0 -halfDec)];
@@ -668,7 +672,7 @@
     return path;
 }
 
--(UIBezierPath *)getOutputClosedArrowPath{
++(UIBezierPath *)getOutputClosedArrowPath{
     UIBezierPath * path = [[UIBezierPath alloc]init];
     float halfDec = decoratorSize / 2.0;
     [path moveToPoint:CGPointMake(decoratorSize-halfDec, 0 -halfDec)];
@@ -680,7 +684,7 @@
     return path;
 }
 
--(UIBezierPath *)getNoDecoratorPath{
++(UIBezierPath *)getNoDecoratorPath{
     UIBezierPath * path = [[UIBezierPath alloc]init];
     float halfDec = decoratorSize / 2.0;
     [path moveToPoint:CGPointMake(0 -halfDec, halfDec-halfDec)];

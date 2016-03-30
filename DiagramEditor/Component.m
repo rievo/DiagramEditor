@@ -965,4 +965,83 @@ withSelectedComponent:(Component *)comp
     [view removeFromSuperview];
 }
 
+
+
+#pragma mark NSCoding
+
+- (void)encodeWithCoder:(NSCoder *)coder {
+    [coder encodeObject:self.name forKey:@"name"];
+    
+    [coder encodeFloat:self.frame.size.height forKey:@"height"];
+    [coder encodeFloat:self.frame.size.width forKey:@"width"];
+    [coder encodeFloat:self.frame.origin.x forKey:@"xorigin"];
+    [coder encodeFloat:self.frame.origin.y forKey:@"yorigin"];
+    
+    [coder encodeObject:self.type forKey:@"type"];
+    [coder encodeObject:self.shapeType forKey:@"shapeType"];
+    [coder encodeObject:self.fillColor forKey:@"fillColor"];
+    [coder encodeObject:self.colorString forKey:@"colorString"];
+    [coder encodeObject:self.image forKey:@"image"];
+    [coder encodeBool:self.isImage forKey:@"isImage"];
+    [coder encodeBool:self.isDragable forKey:@"isDraggable"];
+    [coder encodeObject:componentId forKey:@"componentId"];
+    [coder encodeObject:className forKey:@"className"];
+    
+    [coder encodeObject:self.attributes forKey:@"attributes"];
+    [coder encodeObject:self.references forKey:@"references"];
+    
+    //Node
+    [coder encodeObject:self.borderColorString forKey:@"borderColorString"];
+    [coder encodeObject:self.borderStyleString forKey:@"borderStyleString"];
+    [coder encodeObject:self.borderWidth forKey:@"borderWidth"];
+    [coder encodeObject:self.borderColor forKey:@"borderColor"];
+    
+    //ecore
+    [coder encodeObject:self.containerReference forKey:@"containerReference"];
+    [coder encodeObject:parentClassArray forKey:@"parentClassArray"];
+    
+    
+    
+
+}
+
+- (id)initWithCoder:(NSCoder *)coder {
+    
+    float w = [coder decodeFloatForKey:@"width"];
+    float h = [coder decodeFloatForKey:@"height"];
+    float yo = [coder decodeFloatForKey:@"yorigin"];
+    float xo = [coder decodeFloatForKey:@"xorigin"];
+    
+    self = [super initWithFrame:CGRectMake(xo, yo, w, h)];
+    
+    if (self) {
+        
+        self.name = [coder decodeObjectForKey:@"name"];
+        self.type = [coder decodeObjectForKey:@"type"];
+        self.shapeType = [coder decodeObjectForKey:@"shapeType"];
+        self.fillColor = [coder decodeObjectForKey:@"fillColor"];
+        self.colorString = [coder decodeObjectForKey:@"colorString"];
+        self.image = [coder decodeObjectForKey:@"image"];
+        self.isImage = [coder decodeBoolForKey:@"isImage"];
+        self.isDragable = [coder decodeBoolForKey:@"isDraggable"];
+        self.componentId  = [coder decodeObjectForKey:@"componentId"];
+        self.className = [coder decodeObjectForKey:@"className"];
+        
+        
+        self.attributes = [coder decodeObjectForKey:@"attributes"];
+        self.references = [coder decodeObjectForKey:@"references"];
+        
+        self.borderColorString = [coder decodeObjectForKey:@"borderColorString"];
+        self.borderStyleString = [coder decodeObjectForKey:@"borderStyleString"];
+        self.borderWidth  = [coder decodeObjectForKey:@"borderWidth"];
+        self.borderColor = [coder decodeObjectForKey:@"borderColor"];
+        
+        self.containerReference  = [coder decodeObjectForKey:@"containerReference"];
+        self.parentClassArray  = [coder decodeObjectForKey:@"parentClassArray"];
+
+    }
+    return self;
+}
+
+
 @end

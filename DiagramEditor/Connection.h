@@ -10,7 +10,7 @@
 #import "Reference.h"
 @class Component;
 
-@interface Connection : UIView
+@interface Connection : UIView<NSCoding>
 
 
 //@property NSString * name;

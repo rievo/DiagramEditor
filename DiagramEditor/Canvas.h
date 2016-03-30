@@ -31,4 +31,15 @@
 -(void)prepareCanvas;
 
 - (BOOL)isPoint:(CGPoint)p withinDistance:(CGFloat)distance ofPath:(CGPathRef)path;
+
+
+
++(UIBezierPath *)getInputArrowPath;
++(UIBezierPath *)getDiamondPath;
++(UIBezierPath *)getInputClosedArrowPath;
++(UIBezierPath *)getInputFillClosedArrowPath;
++(UIBezierPath *)getOutputArrowPath;
++(UIBezierPath *)getOutputClosedArrowPath;
++(UIBezierPath *)getNoDecoratorPath;
+
 @end

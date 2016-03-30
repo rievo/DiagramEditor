@@ -15,7 +15,7 @@
 @class Component;
 @class PaletteItem;
 
-@interface Component : UIView <UIGestureRecognizerDelegate, NoDraggableViewProtocol, HiddenInstancesListViewDelegate>{
+@interface Component : UIView <UIGestureRecognizerDelegate, NoDraggableViewProtocol, HiddenInstancesListViewDelegate, NSCoding>{
     
     UITapGestureRecognizer * tapGR;
     UILongPressGestureRecognizer * longGR;

@@ -8,11 +8,17 @@
 
 #import <Foundation/Foundation.h>
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
+#import <UIKit/UIKit.h>
 #import "Constants.h"
+
 @class AppDelegate;
 
-@interface MCManager : NSObject<MCSessionDelegate>{
+@interface MCManager : NSObject<MCSessionDelegate, NSStreamDelegate>{
     AppDelegate * dele;
+    
+    
+    NSMutableData * data;
+    //NSInteger bytesRead;
 }
 
 @property (strong, nonatomic) MCPeerID * peerId;
