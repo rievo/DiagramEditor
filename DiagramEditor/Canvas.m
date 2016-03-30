@@ -690,12 +690,7 @@
     [path moveToPoint:CGPointMake(0 -halfDec, halfDec-halfDec)];
     [path addLineToPoint:CGPointMake(decoratorSize-halfDec, halfDec-halfDec)];
     [path setLineWidth:lineWitdh];
-    //[[UIColor redColor]setStroke];
-    UIColor * col = [UIColor colorWithRed:1.0
-                                    green:0
-                                     blue:0
-                                    alpha:0.5];
-    [col setStroke];
+
     return path;
 }
 
