@@ -50,8 +50,8 @@
             
             //aa
             //NO ME VALEN, SON REFERENCIAS
-            if([[pi getSourceClassName] isEqualToString:sourceComponent.className] &&
-               [[pi getTargetClassName] isEqualToString:targetComponent.className]){
+            if(([[pi getSourceClassName] isEqualToString:sourceComponent.className] || [sourceComponent.parentClassArray containsObject:[pi getSourceClassName]]) &&
+               ([[pi getTargetClassName] isEqualToString:targetComponent.className] || [targetComponent.parentClassArray containsObject:[pi getTargetClassName]])){
                 [edges addObject:pi];
             }
             

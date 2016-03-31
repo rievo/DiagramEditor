@@ -13,6 +13,8 @@
 
 @class Canvas;
 @class Component;
+@class PaletteItem;
+
 @class EditorViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
@@ -65,7 +67,7 @@
 -(NSData *) packElementsInfo;
 -(void)recoverInfoFromData: (NSData *)data;
 
-
+-(PaletteItem *) getPaletteItemForClassName:(NSString *)name;
 
 @end
 

@@ -24,6 +24,7 @@
 #define resizeW 40
 
 #define kNotYet @"NotYet"
+#define kDefaultConnection @"DefaultConnection"
 
 #import <AudioToolbox/AudioServices.h>
 
@@ -294,6 +295,17 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
                 [self showAddReferencePopupForConnection:conn];
             }else if([canIMakeConnection isEqualToString:kNotYet]){
                 //Tenemos que esperar a que el usuario seleccione el tipo de conexión
+            }else if([canIMakeConnection isEqualToString:kDefaultConnection]){
+                Connection * conn = [[Connection alloc] init];
+                conn.source = self;
+                conn.target = targetTemp;
+                conn.targetDecorator = NO_DECORATION;
+                conn.sourceDecorator = NO_DECORATION;
+                
+                conn.className = kDefaultConnection;
+                
+                [dele.connections addObject:conn];
+                 [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
             }else{
                 NSLog(@"No se ha podido hacer la conexión");
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
@@ -746,8 +758,20 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     //Pi será el selected edge
     
     if(edges == 0){
-        //No se podrá hacer ninguna conexión
-        NSLog(@"No hay edges");
+        
+        //There are no edges, just check references
+        for (Reference * ref in self.references) {
+            NSString * targetReference = ref.target; //Con qué clase puedo conectar
+            
+            if([targetReference isEqualToString:target.className] || [target.parentClassArray containsObject:targetReference]){ //Puedo conectar con la clase destino
+                //Puedo hacer la conexión
+                targetTemp = target;
+                return kDefaultConnection;
+            }
+        }
+        
+        return @"There are no possible references between those two items";
+    
     }else if(edges == 1){
         
         NSString * result = [self checkIntegrityForSource:source andTarget:target withEdge:pi];

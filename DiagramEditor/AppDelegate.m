@@ -11,6 +11,7 @@
 #import "Connection.h"
 #import "ConfigureDiagramViewController.h"
 #import "EditorViewController.h"
+#import "PaletteItem.h"
 
 @interface AppDelegate ()
 
@@ -166,4 +167,13 @@
     graphicR = [myDictionary objectForKey:@"graphicR"];
 }
 
+-(PaletteItem *) getPaletteItemForClassName:(NSString *)name{
+    for(PaletteItem * pi in paletteItems){
+        if([pi.className isEqualToString:@"name"]){
+            return  pi;
+        }
+    }
+    
+    return nil;
+}
 @end
