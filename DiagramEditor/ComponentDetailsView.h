@@ -19,6 +19,7 @@
     __weak IBOutlet UILabel *typeLabel;
     
     AppDelegate * dele;
+    __weak IBOutlet UILabel *classLabel;
     
     //Component * temp;
     __weak IBOutlet UITableView *outConnectionsTable;
