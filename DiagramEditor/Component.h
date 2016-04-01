@@ -29,7 +29,7 @@
 
     CAShapeLayer * backgroundLayer;
     
-    UIView * resizeView;
+    //UIView * resizeView;
     
     float prevPinchScale;
     

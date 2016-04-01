@@ -41,17 +41,25 @@
     outConnectionsTable.delegate = self;
     outConnectionsTable.dataSource = self;
     
-    // Do any additional setup after loading the view.
+    //remove all subviews from previewcomponentView
+    NSArray *vtr = [previewComponentView subviews];
+    for (UIView *v in vtr) {
+        [v removeFromSuperview];
+    }
     
-    //CGRect oldFrame = previewComponent.frame;
-    //temp = [[Component alloc] initWithFrame:CGRectMake(0, 0, oldFrame.size.width, oldFrame.size.height)];
-    previewComponent.fillColor = comp.fillColor;
+
+    NSData * buff = [NSKeyedArchiver archivedDataWithRootObject:comp];
+    previewComponent = [NSKeyedUnarchiver unarchiveObjectWithData:buff];
     
-    previewComponent.type = comp.type;
-    previewComponent.shapeType = comp.shapeType;
-    previewComponent.name = comp.name;
-    previewComponent.isImage = comp.isImage;
-    previewComponent.image = comp.image;
+    CGRect frame = previewComponent.frame;
+    frame.origin.x = 0;
+    frame.origin.y = 0;
+    frame.size.width = previewComponentView.frame.size.width;
+    frame.size.height = previewComponentView.frame.size.height;
+    [previewComponent setFrame:frame];
+    
+    [previewComponentView addSubview:previewComponent];
+    
     [previewComponent prepare];
     [previewComponent updateNameLabel];
 
@@ -103,7 +111,9 @@
     }
     
     
-    [previewComponent setNeedsDisplay];
+    //[previewComponent setNeedsDisplay];
+    
+    classLabel.text = comp.className;
     
     //Tap to close
     
@@ -139,7 +149,7 @@
         
     }
 }
-
+/*
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     NSString * new = [nameTextField.text stringByReplacingCharactersInRange:range withString:string];
     if(new.length > 0){
@@ -150,7 +160,7 @@
     }
     else
         return NO;
-}
+}*/
 
 
 - (IBAction)deleteCurrentComponent:(id)sender {
@@ -262,6 +272,7 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
                         }
                     }
                     [comp updateNameLabel];
+                    [previewComponent updateNameLabel];
                     //[previewComponent updateNameLabel];
 
                     
@@ -269,7 +280,7 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
                 }
                 return atvc;
                 
-            }else if([type isEqualToString:@"EBoolean"]){
+            }else if([type isEqualToString:@"EBoolean"] || [type isEqualToString:@"EBooleanObject"]){
                 BooleanAttributeTableViewCell * batvc = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
                 if(batvc == nil){
                     NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"BooleanAttributeTableViewCell"
@@ -299,7 +310,7 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
                                                                   owner:self
                                                                 options:nil];
                     gatvc = [nib objectAtIndex:0];
-                    gatvc.nameLabel.text = attr.name;
+                    gatvc.nameLabel.text =  [NSString stringWithFormat:@"%@: %@", attr.name, attr.type];//attr.name;
                     //gatvc.typeLabel.text = attr.type;
                     gatvc.backgroundColor = [UIColor clearColor];
                 }

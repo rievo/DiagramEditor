@@ -14,8 +14,8 @@
 
 @interface ComponentDetailsView : UIView <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>{
     
-    __weak IBOutlet Component *previewComponent;
-    __weak IBOutlet UITextField *nameTextField;
+    __weak IBOutlet UIView *previewComponentView;
+    Component * previewComponent;
     __weak IBOutlet UILabel *typeLabel;
     
     AppDelegate * dele;

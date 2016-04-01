@@ -33,6 +33,10 @@ FOUNDATION_EXPORT NSString *const DASH_DOT;
 #pragma mark Decorators
 #define decoratorSize 10
 
+
+#pragma mark Scale nodes on editor view
+#define scaleFactor 1.2f
+
 @interface Constants : NSObject
 
 @end

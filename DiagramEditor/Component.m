@@ -576,12 +576,15 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     for(ClassAttribute * attr in self.attributes){
         if(attr.isLabel == YES){
             text = [text stringByAppendingString:attr.currentValue];
+            text = [text stringByAppendingString:@" "];
         }
     }
     
     //textLayer.string = name;
     textLayer.string = text;
-    [self setNeedsDisplay];
+    //[self setNeedsDisplay];
+    [textLayer setNeedsDisplay];
+    [textLayer display];
 }
 
 

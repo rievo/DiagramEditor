@@ -18,6 +18,8 @@
 
 #import "NoDraggableComponentView.h"
 
+#import "Constants.h"
+
 #define fileExtension @"demiso"
 
 @import Foundation;
@@ -251,7 +253,7 @@
                 
                 Component * comp = [sender getComponentForThisPaletteItem];
                 comp.canvas = self.view;
-                [comp setFrame:CGRectMake(0, 0, sender.width.floatValue, sender.height.floatValue)];
+                [comp setFrame:CGRectMake(0, 0, sender.width.floatValue * scaleFactor, sender.height.floatValue * scaleFactor)];
                 [comp setCenter:pointInSV];
                 [comp fitNameLabel];
                 

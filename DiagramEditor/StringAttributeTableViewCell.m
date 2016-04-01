@@ -81,8 +81,10 @@ replacementString:(NSString *)string{
     }
     
     [comp updateNameLabel];
-    [detailsPreview setNeedsDisplay];
+    
     [detailsPreview updateNameLabel];
+    [detailsPreview setNeedsDisplay];
+    [comp updateNameLabel];
     return YES;
     //}else
     //    return NO;
