@@ -800,10 +800,19 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         BOOL result = [elv reloadView];
         
         if(result == true){ //Show possible connections
-            [evc.view addSubview:elv];
-            [elv setFrame:evc.view.frame];
-            [elv setDelegate:self];
-            return kNotYet;
+            
+            //Do we have just one or more?
+            
+            if(elv.edges.count == 1){
+                connectionToDo = [elv.edges objectAtIndex:0];
+                return nil;
+            }else{
+                [evc.view addSubview:elv];
+                [elv setFrame:evc.view.frame];
+                [elv setDelegate:self];
+                return kNotYet;
+            }
+            
         }else{ //No possible connections
             return @"There are no possible connections to do between those classes";
         }

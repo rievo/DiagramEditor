@@ -495,7 +495,7 @@
     
     
     
-    /*
+    
     NSDictionary * dic = @{NSForegroundColorAttributeName: fontColor,
                            NSFontAttributeName: font};
     
@@ -504,7 +504,7 @@
     for(int c = 0; c < dele.connections.count;c++){
         conn = [dele.connections objectAtIndex:c];
         
-        NSAttributedString * str = [[NSAttributedString alloc] initWithString:conn.name
+        NSAttributedString * str = [[NSAttributedString alloc] initWithString: [conn getName]
                                                                    attributes:dic];
         
         
@@ -514,7 +514,7 @@
         
         float halfw = strSize.width / 2;
         [str drawAtPoint:CGPointMake( conn.controlPoint.x - halfw, conn.controlPoint.y-5)];
-    }*/
+    }
     
     
     

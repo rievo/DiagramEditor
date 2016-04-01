@@ -42,5 +42,6 @@
 
 -(void)retrieveAttributesForThisClassName;
 -(void)retrieveConnectionGraphicInfo;
+-(NSString *)getName;
 
 @end

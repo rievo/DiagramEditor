@@ -13,7 +13,7 @@
 
 @interface EdgeListView : UIView<UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>{
     
-    NSMutableArray * edges;
+    
     AppDelegate * dele;
     id delegate;
 }
@@ -22,6 +22,7 @@
 
 @property (nonatomic, retain) id delegate;
 
+@property NSMutableArray * edges;
 
 @property Component * sourceComponent;
 @property Component * targetComponent;

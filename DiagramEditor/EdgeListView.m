@@ -14,7 +14,7 @@
 @implementation EdgeListView
 
 
-@synthesize table, background, delegate, sourceComponent, targetComponent;
+@synthesize table, background, delegate, sourceComponent, targetComponent, edges;
 
 
 

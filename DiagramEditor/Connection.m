@@ -11,13 +11,14 @@
 #import "AppDelegate.h"
 #import "PaletteItem.h"
 #import "ColorPalette.h"
+#import "ClassAttribute.h"
 
 #import "Constants.h"
 
 @implementation Connection
 
 
-@synthesize  source, target, arrowPath,controlPoint, className, attributes, sourceDecorator, targetDecorator, references, instancesOfClassesDictionary, lineWidth, lineStyle, lineColorNameString, lineColor;
+@synthesize  source, target, arrowPath,controlPoint, className, attributes, sourceDecorator, targetDecorator, references, instancesOfClassesDictionary, lineWidth, lineStyle, lineColorNameString, lineColor, debugDescription;
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -128,6 +129,19 @@
 
     }
     return self;
+}
+
+-(NSString *)getName{
+    NSString * temp = @"";
+    
+    for(ClassAttribute * ca in attributes){
+        if(ca.isLabel == YES){
+            temp = [temp stringByAppendingString:ca.currentValue];
+            temp = [temp stringByAppendingString:@""];
+        }
+    }
+    
+    return temp;
 }
 
 
