@@ -601,17 +601,28 @@
              
              //[serverFilesArray removeAllObjects];
              
-             NSString * code = [dic objectForKey:@"code"];
+             
+             
+             NSDictionary * errorDic = [dic objectForKey:@"error"];
+             NSString * codenum = [errorDic objectForKey:@"code"];
+             NSString * code = [NSString stringWithFormat:@"%@", codenum];
              
              if([code isEqualToString:@"200"]){ //Good :)
                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
-                                                                 message:@"Diagram saved properly on server"
+                                                                 message:@"Diagram was save on server"
                                                                 delegate:self
                                                        cancelButtonTitle:@"OK"
                                                        otherButtonTitles:nil];
                  [alert show];
                  
-             }else{ //Error
+             }else if([code isEqualToString:@"300"]){
+                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                 message:@"There is a diagram with that name on server. Please retry with another name"
+                                                                delegate:self
+                                                       cancelButtonTitle:@"OK"
+                                                       otherButtonTitles:nil];
+                 [alert show];
+             }else{//Default error
                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                                  message:[NSString stringWithFormat:@"Info: %@", connectionError]
                                                                 delegate:self
