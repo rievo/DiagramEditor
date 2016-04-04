@@ -60,6 +60,8 @@
 //Stream
 @property NSOutputStream * output;
 
+@property Component * fingeredComponent;
+
 
 -(int)getOutConnectionsForComponent: (Component *)comp
                              ofType: (NSString * )type;

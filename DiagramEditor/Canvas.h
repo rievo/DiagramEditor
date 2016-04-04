@@ -19,6 +19,8 @@
     
     UIColor * fontColor;
     UIFont * font;
+    
+    UIColor * highlightColor;
 }
 
 @property double xArrowStart;

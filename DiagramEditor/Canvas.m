@@ -59,6 +59,8 @@
 
 -(void)prepareCanvas{
     
+    highlightColor = [UIColor colorWithRed:210/255.0 green:144/255.0 blue:212/255.0 alpha:0.5];
+    
     dele = [[UIApplication sharedApplication]delegate];
     
     fontColor = [UIColor blackColor];
@@ -181,6 +183,14 @@
      UIBezierPath * back = [UIBezierPath bezierPathWithRect:self.frame];
      [[dele blue0]setFill];
      [back fill];*/
+    
+    
+    //Draw rectangle on fingered component
+    
+    UIBezierPath * fingeredPath = [UIBezierPath bezierPathWithRoundedRect:dele.fingeredComponent.frame cornerRadius:1.0];
+    [fingeredPath setLineWidth:0];
+    [highlightColor setFill];
+    [fingeredPath fill];
     
     
     Component * compOut = nil;

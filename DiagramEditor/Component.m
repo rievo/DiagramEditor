@@ -318,7 +318,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
             
         }
         
-        
+        dele.fingeredComponent = nil;
     }
     else if (sender.state == UIGestureRecognizerStateBegan){
         AudioServicesPlayAlertSound(1352);
@@ -349,7 +349,24 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         [dele.can setYArrowStart:oldCenter.y];
         
         
-    }else if(sender.state == UIGestureRecognizerStateChanged){
+    }
+    else if(sender.state == UIGestureRecognizerStateChanged){
+        
+        
+        //draw mark on this component
+        
+        Component * temp;
+        
+        for(int i = 0; i< [dele.components count]; i++){
+            temp = [dele.components objectAtIndex:i];
+            
+            if(CGRectContainsPoint(temp.frame, translatedPoint)){
+                dele.fingeredComponent = temp;
+                break;
+            }
+            dele.fingeredComponent = nil;
+        }
+        
         
         [dele.can setXArrowEnd:translatedPoint.x];
         [dele.can setYArrowEnd:translatedPoint.y];
