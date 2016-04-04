@@ -10,24 +10,12 @@
 #import "Connection.h"
 #import "ClassAttribute.h"
 #import "Constants.h"
+#import <CoreGraphics/CoreGraphics.h>
 
-
-#define xmargin 15
-#define ymargin 10
-
-
-#define curveMove 60
-
-
-#define defradius 5
 
 
 #define pi 3.14159265359
-#define radiansToDegrees( radians ) ( ( radians ) * ( 180.0 / M_PI ) )
-#define   DEGREES_TO_RADIANS(degrees)  ((pi * degrees)/ 180)
 
-
-#define lineWitdh 2.0
 
 @implementation Canvas
 
@@ -520,13 +508,19 @@
         
         CGSize strSize = [str size];
         
-        //[str drawAtPoint:CGPointMake(left.x +b + xmargin, y + e - ymargin)];
-        
+
         float halfw = strSize.width / 2;
-        [str drawAtPoint:CGPointMake( conn.controlPoint.x - halfw, conn.controlPoint.y-5)];
+        
+        
+        CGPoint sourceAnchor = [self getAnchorPointFromComponent:conn.source toComponent:conn.target andRadius:defradius + conn.source.frame.size.width / 2];
+        CGPoint targetAnchor = [self getAnchorPointFromComponent:conn.target toComponent:conn.source andRadius:defradius + conn.target.frame.size.width / 2];
+        
+        
+        CGPoint strpoint = CGPointMake(QuadBezier(0.5,sourceAnchor.x, conn.controlPoint.x, targetAnchor.x), QuadBezier(0.5, sourceAnchor.y, conn.controlPoint.y, targetAnchor.y));
+        
+        
+        [str drawAtPoint:CGPointMake( strpoint.x - halfw, strpoint.y-5)];
     }
-    
-    
     
     
     if(xArrowStart> 0 && yArrowStart> 0){
@@ -542,6 +536,18 @@
     
     
     
+}
+
+
+float QuadBezier(float t, float start, float c1, float end)
+{
+    CGFloat t_ = (1.0 - t);
+    CGFloat tt_ = t_ * t_;
+    CGFloat tt = t * t;
+    
+    return start * tt_
+    + 2.0 *  c1 * t_ * t
+    + end * tt;
 }
 
 - (void) repaintCanvas : (NSNotification *) notification {

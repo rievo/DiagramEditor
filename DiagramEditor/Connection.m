@@ -141,6 +141,8 @@
         }
     }
     
+    temp = [temp stringByAppendingString:className];
+    
     return temp;
 }
 

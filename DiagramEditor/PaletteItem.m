@@ -20,7 +20,7 @@
 #import "AppDelegate.h"
 #import "Reference.h"
 
-#define handSize 15
+#import "Constants.h"
 
 @implementation PaletteItem
 

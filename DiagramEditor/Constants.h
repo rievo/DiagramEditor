@@ -35,7 +35,22 @@ FOUNDATION_EXPORT NSString *const DASH_DOT;
 
 
 #pragma mark Scale nodes on editor view
-#define scaleFactor 1.2f
+#define scaleFactor 1.3f
+
+
+#define handSize 15
+
+
+#pragma mark Canvas constants
+#define canvasxmargin 15
+#define ymargin 10
+#define curveMove 60
+#define defradius 5
+#define radiansToDegrees( radians ) ( ( radians ) * ( 180.0 / M_PI ) )
+#define   DEGREES_TO_RADIANS(degrees)  ((pi * degrees)/ 180)
+#define lineWitdh 2.0
+
+
 
 @interface Constants : NSObject
 
