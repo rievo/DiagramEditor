@@ -40,9 +40,6 @@
     
     PasteView *rootView ;
     
-    
-    
-    BOOL loadingADiagram;
     NSString * content;
     UIActivityIndicatorView *activityIndicator;
     

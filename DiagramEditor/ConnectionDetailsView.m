@@ -16,7 +16,8 @@
 
 
 
-@synthesize delegate, sourceLabel, targetLabel, background, connection;
+@synthesize delegate, background, connection;
+
 
 - (void)awakeFromNib {
     UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
@@ -47,11 +48,7 @@
 }
 
 -(void)prepare{
-    //nameTextField.text = connection.name;
-    //attributesTable.delegate = self;
-    //attributesTable.dataSource = self;
-    sourceLabel.text = [NSString stringWithFormat:@"%@",connection.source.name];
-    targetLabel.text = [NSString stringWithFormat:@"%@", connection.target.name];
+
     
     
     associatedComponentsArray = [[NSMutableArray alloc] init];
@@ -80,6 +77,43 @@
     }
     
     [attributesTable reloadData];
+    
+    
+    //Load components preview
+    
+    NSData * sourceBuf = [NSKeyedArchiver archivedDataWithRootObject:connection.source];
+    NSData * targetBuf = [NSKeyedArchiver archivedDataWithRootObject:connection.target];
+    
+    sourceComp = [NSKeyedUnarchiver unarchiveObjectWithData:sourceBuf];
+    targetComp = [NSKeyedUnarchiver unarchiveObjectWithData:targetBuf];
+    
+    CGRect srect = sourceComp.bounds;
+    CGRect trect = targetComp.bounds;
+    
+    
+    [sourceComp setFrame:srect];
+    [targetComp setFrame:trect];
+    
+    
+    //Remove all subviews from containers
+    
+    NSArray *viewsToRemove = [sourceComponentViewContainer subviews];
+    for (UIView *v in viewsToRemove) {
+        [v removeFromSuperview];
+    }
+    NSArray *vtr = [targetComponentViewContainer subviews];
+    for (UIView *v in vtr) {
+        [v removeFromSuperview];
+    }
+    
+    
+    [sourceComponentViewContainer addSubview:sourceComp];
+    [targetComponentViewContainer addSubview:targetComp];
+    
+    [targetComp updateNameLabel];
+    [sourceComp updateNameLabel];
+
+    
 }
 
 

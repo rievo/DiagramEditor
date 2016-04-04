@@ -64,7 +64,7 @@
     [subPaletteGroup setFrame:CGRectMake(subPaletteGroup.frame.origin.x, subPaletteGroup.frame.origin.y, paletteFileGroup.frame.size.width, paletteFileGroup.frame.size.height)];
     
     
-    loadingADiagram = NO;
+    dele.loadingADiagram = NO;
     content = nil;
     
     
@@ -135,7 +135,7 @@
 
 
 -(void)viewWillAppear:(BOOL)animated{
-    loadingADiagram = NO;
+     dele.loadingADiagram = NO;
 }
 
 #pragma mark Recover files from server and local device
@@ -1102,7 +1102,7 @@
                                         encoding:NSUTF8StringEncoding
                                            error:&error];
     
-    loadingADiagram = YES;
+     dele.loadingADiagram = YES;
     
     
     
@@ -1151,14 +1151,21 @@
 -(void)parseXMLDiagramWithText:(NSString *)text{
     NSDictionary * dic = [NSDictionary dictionaryWithXMLString:text];
     
-    NSDictionary * nodeDic = [dic objectForKey:@"Nodes"];
+    
+    
+    
+    //diagram
+    NSDictionary * diagramDic = [dic objectForKey:@"diagram"];
+    
+    NSDictionary * nodeDic = [diagramDic objectForKey:@"nodes"];
+    
     NSArray * nodes = [nodeDic objectForKey:@"node"];
     
     if([nodes isKindOfClass:[NSDictionary class]]){
         nodes = [[NSArray alloc]initWithObjects:nodes, nil];
     }
     
-    NSDictionary * edgesDic = [dic objectForKey:@"Edges"];
+    NSDictionary * edgesDic = [diagramDic objectForKey:@"edges"];
     NSArray * edges = [edgesDic objectForKey:@"edge"];
     
     if([edges isKindOfClass:[NSDictionary class]]){
@@ -1167,30 +1174,21 @@
     /*NSDictionary * palDic = [dic objectForKey:@"palette_name"];
      NSString * paletteName = [palDic objectForKey:@"_name"];*/
     
-    NSDictionary * subpaldic = [dic objectForKey:@"subpalette"];
+    NSDictionary * subpaldic = [diagramDic objectForKey:@"subpalette"];
     NSString * subpalette= [subpaldic objectForKey:@"_name"];
     
     dele = [[UIApplication sharedApplication]delegate];
     dele.subPalette = subpalette;
     
     
+    //TODO: it may have palette content embedded
     
-    NSMutableArray * loadedComponents = [[NSMutableArray alloc] init];
-    for(NSDictionary * dic in nodes){
-        Component * comp = [self componentFromDictionary:dic];
-        [loadedComponents addObject:comp];
-    }
-    
-    NSMutableArray * loadedConnections = [[NSMutableArray alloc] init];
-    for(NSDictionary * dic in edges){
-        Connection * conn = [self connectionFromDictionary:dic andComponentsArray:loadedComponents];
-        [loadedConnections addObject:conn];
-    }
-    
-    dele.components = loadedComponents;
-    dele.connections = loadedConnections;
-    
-    
+
+    NSDictionary * paletteNameDic = [diagramDic objectForKey:@"palette_name"];
+    NSString * paletteName = [paletteNameDic objectForKey:@"_name"];
+    NSArray * parts = [paletteName componentsSeparatedByString:@"."];
+    tempPaletteFile = parts[0];
+    paletteName = parts[0];
     //Try loading palette with that name
     NSString * paletteContent = [self loadPaletteNamed:tempPaletteFile];
     
@@ -1218,7 +1216,7 @@
             
             
             //Reset things
-            loadingADiagram = NO;
+             dele.loadingADiagram = NO;
             dele.subPalette = nil;
             paletteContent = nil;
         }else{
@@ -1229,19 +1227,35 @@
             
             dele.paletteItems = [[NSMutableArray alloc] initWithArray:palette.paletteItems];
             [refreshTimer invalidate];
-            
-            //TODO: Si estamos cargando un diagrama viejo, tengo que quedarme solo con la subpaleta
-            if (loadingADiagram) {
-                
-            }
+
             
             dele.currentPaletteFileName = tempPaletteFile;
             BOOL result = [self completePaletteForJSONAttributes];
+            
+            
+            
+            NSMutableArray * loadedComponents = [[NSMutableArray alloc] init];
+            for(NSDictionary * dic in nodes){
+                Component * comp = [self componentFromDictionary:dic];
+                
+                [loadedComponents addObject:comp];
+            }
+            
+            NSMutableArray * loadedConnections = [[NSMutableArray alloc] init];
+            for(NSDictionary * dic in edges){
+                Connection * conn = [self connectionFromDictionary:dic andComponentsArray:loadedComponents];
+                [loadedConnections addObject:conn];
+            }
+            
+            dele.components = loadedComponents;
+            dele.connections = loadedConnections;
+            
             
             if(result == YES){ //Tenemos el json y todo lo demás
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     //[self performSegueWithIdentifier:@"showEditor" sender:self];
+                    dele.loadingADiagram = YES;
                     
                     [self performSegueWithIdentifier:@"showEditor" sender:self];
                     //[self presentViewController:vc animated:YES completion:nil];
@@ -1408,28 +1422,36 @@
 #pragma mark Component methods
 
 -(Component *)componentFromDictionary: (NSDictionary *)dic{
-    Component * temp = [[Component alloc] init];
+   
+    
+    
+    
     
     NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
     f.numberStyle = NSNumberFormatterDecimalStyle;
     
     
     NSString * compId = [dic objectForKey:@"_id"];
+    
+    
     float x = [[dic objectForKey:@"_x"]floatValue];
     float y = [[dic objectForKey:@"_y"]floatValue];
-    NSString * shape = [dic objectForKey:@"_shape_type"];
+    float width = [[dic objectForKey:@"_width"]floatValue];
+    float height = [[dic objectForKey:@"_height"]floatValue];
+    
+    Component * temp = [[Component alloc] initWithFrame:CGRectMake(x, y, width, height)];
+    [temp prepare];
     
     NSString * colorString = [dic objectForKey:@"_color"];
     NSString * type = [dic objectForKey:@"_type"];
     
-    float width = [[dic objectForKey:@"_width"]floatValue];
-    float height = [[dic objectForKey:@"_height"]floatValue];
+
     
     NSString * className = [dic objectForKey:@"_className"];
     
     [temp setFrame:CGRectMake(0, 0, width, height)];
     temp.center = CGPointMake(x, y);
-    temp.shapeType = shape;
+    //temp.shapeType = shape;
     temp.componentId = compId;
     temp.colorString = colorString;
     temp.fillColor = [ColorPalette colorForString:colorString];
@@ -1448,29 +1470,53 @@
 
     for(NSDictionary * ad in attrDic){
         NSString * aname = [ad objectForKey:@"_name"];
-        NSString * adefVal = [ad objectForKey:@"_default_value"];
-        NSString * maxStr = [ad objectForKey:@"_max"];
-        NSString * minStr = [ad objectForKey:@"_min"];
+        //NSString * adefVal = [ad objectForKey:@"_default_value"];
+        //NSString * maxStr = [ad objectForKey:@"_max"];
+        //NSString * minStr = [ad objectForKey:@"_min"];
 
-        NSNumber *amax = [f numberFromString:maxStr];
-        NSNumber *amin = [f numberFromString:minStr];
+        //NSNumber *amax = [f numberFromString:maxStr];
+        //NSNumber *amin = [f numberFromString:minStr];
         
         NSString * acurrVal = [ad objectForKey:@"_current_value"];
-        NSString * atype = [ad objectForKey:@"_type"];
+        //NSString * atype = [ad objectForKey:@"_type"];
         
         ClassAttribute * atr = [[ClassAttribute alloc] init];
         atr.name = aname;
-        atr.defaultValue = adefVal;
-        atr.max = amax;
-        atr.min = amin;
-        atr.type = atype;
+        //atr.defaultValue = adefVal;
+        //atr.max = amax;
+        //atr.min = amin;
+        //atr.type = atype;
         atr.currentValue = acurrVal;
+        
+
+        
+        
+        [dele completeClassAttribute:atr withClasName:temp.className];
         
         [temp.attributes addObject:atr];
         
     }
     
     
+    
+    //Complete this Component for its paletteItem
+    
+    for(PaletteItem * pi in dele.paletteItems){
+        if([pi.className isEqualToString:temp.className]){
+            //Me falta shape type
+            temp.shapeType = pi.shapeType;
+            temp.colorString = pi.colorString;
+            temp.fillColor = pi.fillColor;
+            temp.borderColor = pi.borderColor;
+            temp.isImage = pi.isImage;
+            temp.borderStyleString = pi.borderStyleString;
+            temp.borderWidth = pi.borderWidth;
+            
+            
+            
+            [temp updateNameLabel];
+        }
+    }
     
     
     return temp;
@@ -1480,7 +1526,7 @@
                      andComponentsArray: (NSMutableArray *)components{
     Connection * conn = [[Connection alloc]init];
     
-    NSString * name = [dic objectForKey:@"_name"];
+    
     NSString * sourceId = [dic objectForKey:@"_source"];
     NSString * targetId = [dic objectForKey:@"_target"];
     NSString * className = [dic objectForKey:@"_className"];
@@ -1503,6 +1549,19 @@
     conn.source = source;
     conn.target = target;
     conn.className = className;
+    
+    
+    for(PaletteItem * pi in dele.paletteItems){
+        if([pi.className isEqualToString:conn.className]){
+            conn.lineColor = pi.lineColor;
+            conn.lineColorNameString = pi.lineColorNameString;
+            conn.lineWidth = pi.lineWidth;
+            conn.lineStyle = pi.lineStyle;
+            
+            conn.sourceDecorator = pi.sourceDecoratorName;
+            conn.targetDecorator = pi.targetDecoratorName;
+        }
+    }
     
     
     return conn;
@@ -1627,18 +1686,7 @@
 - (IBAction)cancelSubpaletteSelection:(id)sender {
     
     
-    //Everything to nil
-    
-    /*palettes = nil;
-    tempPaletteFile = nil;
-    loadingADiagram = NO;
-    content = nil;
-    
-    dele.paletteItems= nil;
-    dele.elementsDictionary = nil;
-    dele.currentPaletteFileName = nil;
-    dele.subPalette = nil;
-    dele.graphicR = nil;*/
+
     
     [palette resetPalette];
     
@@ -1648,7 +1696,7 @@
     dele.currentPaletteFileName = nil;
     dele.subPalette = nil;
     dele.graphicR = nil;
-    loadingADiagram = NO;
+    dele.loadingADiagram = NO;
     content = nil;
     palettes = [[NSMutableArray alloc ]init];
     tempPaletteFile = nil;
@@ -1775,7 +1823,6 @@
     
     
     //Go to editor
-    int r =2;
     
 
     

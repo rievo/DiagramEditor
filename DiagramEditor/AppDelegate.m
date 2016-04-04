@@ -12,6 +12,7 @@
 #import "ConfigureDiagramViewController.h"
 #import "EditorViewController.h"
 #import "PaletteItem.h"
+#import "ClassAttribute.h"
 
 @interface AppDelegate ()
 
@@ -19,7 +20,7 @@
 
 @implementation AppDelegate
 
-@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR, evc, blue0, blue1, blue2, elementsDictionary, manager, ecoreContent, output;
+@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR, evc, blue0, blue1, blue2, elementsDictionary, manager, ecoreContent, output, loadingADiagram;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -41,6 +42,7 @@
     
     elementsDictionary = [[NSMutableDictionary alloc] init];
     
+    loadingADiagram  = NO;
     
     manager = [[MCManager alloc] init];
     
@@ -175,5 +177,30 @@
     }
     
     return nil;
+}
+
+-(void) completeClassAttribute:(ClassAttribute *)ca
+                  withClasName:(NSString *)className{
+    
+    for(PaletteItem * pi in paletteItems){
+        
+        if([pi.className isEqualToString:className]){
+            for(ClassAttribute * tempatt in pi.attributes){
+                if([tempatt.name isEqualToString:ca.name]){
+                    
+                    //tempatt have what we want
+                    ca.defaultValue = tempatt.defaultValue;
+                    ca.max = [NSNumber numberWithInteger:tempatt.max.intValue];
+                    ca.min = [NSNumber numberWithInteger:tempatt.min.intValue];
+                    ca.type = [tempatt.type copy];
+                    
+                    if([pi.labelsAttributesArray containsObject:tempatt.name]){ //EL nombre de este atributo está entre los marcados como label
+                        ca.isLabel = YES;
+                    }
+                }
+            }
+        }
+        
+    }
 }
 @end

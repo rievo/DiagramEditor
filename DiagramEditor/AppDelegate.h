@@ -14,7 +14,7 @@
 @class Canvas;
 @class Component;
 @class PaletteItem;
-
+@class ClassAttribute;
 @class EditorViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
@@ -46,6 +46,9 @@
 @property NSDictionary * graphicR;
 
 
+@property BOOL loadingADiagram;
+
+
 //Generate XML
 @property NSString * graphicRContent;
 @property NSString * ecoreContent;
@@ -68,6 +71,9 @@
 -(void)recoverInfoFromData: (NSData *)data;
 
 -(PaletteItem *) getPaletteItemForClassName:(NSString *)name;
+
+-(void) completeClassAttribute:(ClassAttribute *)ca
+                  withClasName:(NSString *)className;
 
 @end
 

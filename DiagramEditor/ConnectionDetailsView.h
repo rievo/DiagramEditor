@@ -16,6 +16,7 @@
 @end
 
 @class Connection;
+@class Component;
 
 @interface ConnectionDetailsView : UIView<UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>{
     id delegate;
@@ -24,17 +25,17 @@
     
     NSMutableArray * attributesArray;
     __weak IBOutlet UITableView *attributesTable;
+    
+    
+    __weak IBOutlet UIView *sourceComponentViewContainer;
+    __weak IBOutlet UIView *targetComponentViewContainer;
+    
+    Component * sourceComp;
+    Component * targetComp;
 }
 
 @property (nonatomic, retain) id delegate;
 
-//@property (weak, nonatomic) IBOutlet UITextField *nameTextField;
-
-@property (weak, nonatomic) IBOutlet UILabel *sourceLabel;
-
-@property (weak, nonatomic) IBOutlet UILabel *targetLabel;
-
-//@property (weak, nonatomic) IBOutlet UITableView *attributesTable;
 @property (weak, nonatomic) IBOutlet UIView *background;
 
 

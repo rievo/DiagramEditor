@@ -178,9 +178,9 @@
 - (void)drawRect:(CGRect)rect {
     
     /*//Draw background
-    UIBezierPath * back = [UIBezierPath bezierPathWithRect:self.frame];
-    [[dele blue0]setFill];
-    [back fill];*/
+     UIBezierPath * back = [UIBezierPath bezierPathWithRect:self.frame];
+     [[dele blue0]setFill];
+     [back fill];*/
     
     
     Component * compOut = nil;
@@ -540,13 +540,16 @@
         Component * temp = nil;
         for(int i = 0; i<dele.components.count; i++){
             temp = [dele.components objectAtIndex:i];
+            NSString * label = @"";
             
             for(ClassAttribute * atr in  temp.attributes){
-                if([atr.name isEqualToString:@"name"]){
-                    temp.textLayer.string = atr.currentValue;
-                    [temp updateNameLabel];
+                
+                if(atr.isLabel){
+                    label = [label stringByAppendingString:atr.currentValue];
                 }
             }
+            temp.textLayer.string = label;
+            [temp updateNameLabel];
             
             [temp setNeedsDisplay];
         }
@@ -554,7 +557,7 @@
         [self setNeedsDisplay];
     });
     
-   
+    
 }
 
 
@@ -568,37 +571,37 @@
 
 #pragma mark rotate PNG
 /*- (UIImage *)imageRotatedByDegrees:(UIImage*)oldImage rads:(CGFloat)rads{
-    //Calculate the size of the rotated view's containing box for our drawing space
-    UIView *rotatedViewBox = [[UIView alloc] initWithFrame:CGRectMake(0,0,oldImage.size.width, oldImage.size.height)];
-    CGAffineTransform t = CGAffineTransformMakeRotation(rads);
-    rotatedViewBox.transform = t;
-    CGSize rotatedSize = rotatedViewBox.frame.size;
-    
-    //Create the bitmap context
-    UIGraphicsBeginImageContext(rotatedSize);
-    CGContextRef bitmap = UIGraphicsGetCurrentContext();
-    
-    //Move the origin to the middle of the image so we will rotate and scale around the center.
-    CGContextTranslateCTM(bitmap, rotatedSize.width/2, rotatedSize.height/2);
-    
-    //Rotate the image context
-    CGContextRotateCTM(bitmap, rads);
-    
-    //Now, draw the rotated/scaled image into the context
-    CGContextScaleCTM(bitmap, 1.0, -1.0);
-    CGContextDrawImage(bitmap, CGRectMake(-oldImage.size.width / 2, -oldImage.size.height / 2, oldImage.size.width, oldImage.size.height), [oldImage CGImage]);
-    
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return newImage;
-}*/
+ //Calculate the size of the rotated view's containing box for our drawing space
+ UIView *rotatedViewBox = [[UIView alloc] initWithFrame:CGRectMake(0,0,oldImage.size.width, oldImage.size.height)];
+ CGAffineTransform t = CGAffineTransformMakeRotation(rads);
+ rotatedViewBox.transform = t;
+ CGSize rotatedSize = rotatedViewBox.frame.size;
+ 
+ //Create the bitmap context
+ UIGraphicsBeginImageContext(rotatedSize);
+ CGContextRef bitmap = UIGraphicsGetCurrentContext();
+ 
+ //Move the origin to the middle of the image so we will rotate and scale around the center.
+ CGContextTranslateCTM(bitmap, rotatedSize.width/2, rotatedSize.height/2);
+ 
+ //Rotate the image context
+ CGContextRotateCTM(bitmap, rads);
+ 
+ //Now, draw the rotated/scaled image into the context
+ CGContextScaleCTM(bitmap, 1.0, -1.0);
+ CGContextDrawImage(bitmap, CGRectMake(-oldImage.size.width / 2, -oldImage.size.height / 2, oldImage.size.width, oldImage.size.height), [oldImage CGImage]);
+ 
+ UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+ UIGraphicsEndImageContext();
+ return newImage;
+ }*/
 
 
 #pragma mark Paths for decorators
 +(UIBezierPath *)getInputArrowPath{
     UIBezierPath * path = [[UIBezierPath alloc]init];
     float halfDec = decoratorSize / 2.0;
-
+    
     
     [path moveToPoint:CGPointMake(0 -halfDec, 0-halfDec)];
     [path addLineToPoint:CGPointMake(decoratorSize-halfDec , halfDec-halfDec)];
@@ -606,7 +609,7 @@
     [path moveToPoint:CGPointMake(decoratorSize-halfDec,halfDec-halfDec)];
     [path addLineToPoint:CGPointMake(0-halfDec, halfDec-halfDec)];
     
-
+    
     
     [path setLineWidth:lineWitdh];
     
@@ -629,7 +632,7 @@
     [path addLineToPoint:CGPointMake(halfDec-halfDec, 0-halfDec)];
     [path closePath];
     [path setLineWidth:lineWitdh];
-
+    
     return path;
 }
 
@@ -690,7 +693,7 @@
     [path moveToPoint:CGPointMake(0 -halfDec, halfDec-halfDec)];
     [path addLineToPoint:CGPointMake(decoratorSize-halfDec, halfDec-halfDec)];
     [path setLineWidth:lineWitdh];
-
+    
     return path;
 }
 

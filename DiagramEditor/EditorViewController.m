@@ -112,7 +112,7 @@
     
     
     //Si estoy cargando un fichero
-    if(dele.components.count != 0){
+    if(dele.loadingADiagram){
         
         for(Component * comp in dele.components){
             [canvas addSubview:comp];
@@ -722,7 +722,7 @@
     //[writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
     
     /*  DIAGRAM   */
-    [writer writeStartElement:@"Diagram"];
+    [writer writeStartElement:@"diagram"];
     
     [writer writeStartElement:@"palette_name"];
     [writer writeAttribute:@"name" value: dele.currentPaletteFileName];
@@ -733,7 +733,7 @@
     [writer writeEndElement];
     
     
-    [writer writeStartElement:@"Nodes"];
+    [writer writeStartElement:@"nodes"];
     Component * temp = nil;
     for(int i = 0; i< dele.components.count; i++){
         temp = [dele.components objectAtIndex:i];
@@ -770,7 +770,7 @@
     [writer writeEndElement];//Close nodes
     
     
-    [writer writeStartElement:@"Edges"];
+    [writer writeStartElement:@"edges"];
     Connection * c = nil;
     for(int i = 0; i<dele.connections.count; i++){
         c = [dele.connections objectAtIndex:i];
@@ -798,12 +798,12 @@
     
     NSString * result = @""; //result = [result stringByAppendingString:@""];
     result = [result stringByAppendingString:@"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"];
-    result = [result stringByAppendingString:@"<DiagramEditor>"];
+    result = [result stringByAppendingString:@"<diagrameditor>"];
     
     //GraphicR
-    result = [result stringByAppendingString:@"<graphicR>"];
+    result = [result stringByAppendingString:@"<graphicr>"];
     result = [result stringByAppendingString:grRToWrite];
-    result = [result stringByAppendingString:@"</graphicR>"];
+    result = [result stringByAppendingString:@"</graphicr>"];
     
     //Diagram
     result = [result stringByAppendingString:@"\n"];
@@ -815,7 +815,7 @@
     result = [result stringByAppendingString:ecoreToWrite]; //TODO: heere
     result = [result stringByAppendingString:@"</metamodel>"];
     
-    result = [result stringByAppendingString:@"</DiagramEditor>"];
+    result = [result stringByAppendingString:@"</diagrameditor>"];
     
     return result;
 }
