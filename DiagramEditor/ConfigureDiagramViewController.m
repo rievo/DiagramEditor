@@ -1142,7 +1142,9 @@
 
 -(NSString *)extractPaletteNameFromXMLDiagram:(NSString *)cont{
     NSDictionary * dic = [NSDictionary dictionaryWithXMLString:cont];
-    NSDictionary * palDic = [dic objectForKey:@"palette_name"];
+    
+    NSDictionary * diag = [dic objectForKey:@"diagram"];
+    NSDictionary * palDic = [diag objectForKey:@"palette_name"];
     NSString * paletteName = [palDic objectForKey:@"_name"];
     
     return paletteName;
@@ -1512,7 +1514,7 @@
             temp.borderStyleString = pi.borderStyleString;
             temp.borderWidth = pi.borderWidth;
             
-            
+            temp.image = [pi.image copy];
             
             [temp updateNameLabel];
         }
@@ -1819,6 +1821,8 @@
     [refreshTimer invalidate];
     
     
+    
+    dele.loadingADiagram = YES;
     [self parseXMLDiagramWithText:contentToParse];
     
     
@@ -1826,7 +1830,7 @@
     
 
     
-    
+    //Complete everything
     return YES;
 }
 

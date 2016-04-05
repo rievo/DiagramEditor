@@ -11,6 +11,8 @@
 #import "ReferenceTableViewCell.h"
 #import "AppDelegate.h"
 #import "Component.h"
+#import "PaletteItem.h"
+#import "NoDraggableComponentView.h"
 
 @implementation ConnectionDetailsView
 
@@ -45,6 +47,27 @@
 }
 
 - (IBAction)associateNewInstance:(id)sender {
+    /*
+    PaletteItem * pi = nil;
+    
+    AppDelegate * dele = [[UIApplication sharedApplication]delegate];
+    
+    for(pi in dele.paletteItems){
+        if([pi.className isEqualToString:connection.className]){
+            
+            NoDraggableComponentView * nod = [[[NSBundle mainBundle] loadNibNamed:@"NoDraggableComponentView"
+                                                                            owner:self
+                                                                          options:nil] objectAtIndex:0];
+            
+            nod.elementName = pi.className;
+            nod.paletteItem = pi;
+            
+            [nod updateNameLabel];
+            [nod setFrame:self.frame];
+            [self addSubview:nod];
+        }
+    }*/
+   
 }
 
 -(void)prepare{

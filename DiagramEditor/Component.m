@@ -911,7 +911,20 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         [ndv reloadInfo];
         
         ndv.connection = conn;
+        
+        CGPoint oldCenter = ndv.center;
+        [ndv setCenter:CGPointMake(ndv.center.x, ndv.center.y + ndv.frame.size.height)];
         [canvas addSubview:ndv];
+        
+        
+        [UIView animateWithDuration:0.2
+                              delay:0.0
+                            options:UIViewAnimationOptionCurveEaseOut
+                         animations:^{
+                             [ndv setCenter:oldCenter];
+                         }
+                         completion:^(BOOL finished) {
+                         }];
     }
     
    
