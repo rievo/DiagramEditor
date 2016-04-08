@@ -20,7 +20,7 @@
 
 @implementation AppDelegate
 
-@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR, evc, blue0, blue1, blue2, elementsDictionary, manager, ecoreContent, output, loadingADiagram, fingeredComponent;
+@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR, evc, blue0, blue1, blue2, elementsDictionary, manager, ecoreContent, loadingADiagram, fingeredComponent, serverId, currentMasterId, myPeerId;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -46,9 +46,74 @@
     
     manager = [[MCManager alloc] init];
     
+    //Load my peer Id
+    
+    myPeerId = [[MCPeerID alloc] initWithDisplayName:[UIDevice currentDevice].name];
+    serverId = nil;
+    currentMasterId = nil;
+    
     fingeredComponent = nil;
     
+    
+    //Escucho las notificaciones
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(didReceiveData:) name:kReceivedData object:nil];
+    
+    
     return YES;
+}
+
+-(void)didReceiveData: (NSNotification *)not{
+    //NSLog(@"received data");
+    
+    NSDictionary * dic = [not userInfo];
+    
+    MCPeerID * from = [dic objectForKey:@"peerID"];
+    NSData * receivedData = [dic objectForKey:@"data"];
+    
+    NSDictionary * dataDic = [NSKeyedUnarchiver unarchiveObjectWithData:receivedData];
+    
+    
+    NSString * msg = [dataDic objectForKey:@"msg"];
+    
+    if([msg isEqualToString:kInitialInfoFromServer]){ //First message
+        //Replace all
+        NSData * appDeleData = [dataDic objectForKey:@"data"];
+        NSDictionary * dic = [NSKeyedUnarchiver unarchiveObjectWithData:appDeleData];
+        
+        //NSLog(@"-> %@",[[dic allKeys]description]);
+        self.components = [dic objectForKey:@"components"];
+        self.connections = [dic objectForKey:@"connections"];
+        self.currentPaletteFileName = [dic objectForKey:@"currPalFilNam"];
+        self.paletteItems = [dic objectForKey:@"paletteItems"];
+        self.subPalette = [dic objectForKey:@"subpalette"];
+        self.elementsDictionary = [dic objectForKey:@"elementsDictionary"];
+        
+        loadingADiagram = YES;
+        
+        
+        ConfigureDiagramViewController * cc = (ConfigureDiagramViewController *)  self.window.rootViewController;
+        [cc performSegueWithIdentifier:@"showEditor" sender:self];
+    }else if([msg isEqualToString:kUpdateData]){
+        //NSLog(@"Tengo que actualizarme");
+        NSData * appdeleData = [dataDic objectForKey:@"data"];
+        NSDictionary * dic = [NSKeyedUnarchiver unarchiveObjectWithData:appdeleData];
+        
+        NSArray * subViews = [self.can subviews];
+        for(UIView * sub in subViews){
+            [sub removeFromSuperview];
+        }
+        
+        self.components = [dic objectForKey:@"components"];
+        self.connections = [dic objectForKey:@"connections"];
+        self.elementsDictionary = [dic objectForKey:@"elementsDictionary"];
+        
+        for(int i = 0; i< components.count; i++){
+            [self.can addSubview: [components objectAtIndex:i]];
+        }
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
+    }
 }
 
 

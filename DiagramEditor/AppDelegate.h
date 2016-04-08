@@ -57,8 +57,12 @@
 //Multipeer Connectivity
 @property MCManager * manager;
 
-//Stream
-@property NSOutputStream * output;
+@property MCPeerID * serverId;
+@property MCPeerID * myPeerId;
+@property MCPeerID * currentMasterId;
+
+
+
 
 @property Component * fingeredComponent;
 
@@ -70,6 +74,9 @@
 
 
 -(NSData *) packElementsInfo;
+-(NSData *) packAppDelegate;
+
+
 -(void)recoverInfoFromData: (NSData *)data;
 
 -(PaletteItem *) getPaletteItemForClassName:(NSString *)name;

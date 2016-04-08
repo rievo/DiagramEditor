@@ -32,6 +32,7 @@
     CGPoint outCenter;
     
     Component * temporalComponent;
+    __weak IBOutlet UILabel *instancesCountLabel;
 }
 
 - (IBAction)addCurrentNode:(id)sender;

@@ -21,18 +21,23 @@
 @interface ConnectionDetailsView : UIView<UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>{
     id delegate;
     NSMutableArray * associatedComponentsArray;
-    __weak IBOutlet UITableView *instancesTable;
     
     NSMutableArray * attributesArray;
-    __weak IBOutlet UITableView *attributesTable;
-    
+    __weak IBOutlet UITableView *informationTable;
+
     
     __weak IBOutlet UIView *sourceComponentViewContainer;
     __weak IBOutlet UIView *targetComponentViewContainer;
     
     Component * sourceComp;
     Component * targetComp;
+    
+
 }
+
+@property BOOL instancesCollapsed;
+@property BOOL attributesCollapsed;
+
 
 @property (nonatomic, retain) id delegate;
 

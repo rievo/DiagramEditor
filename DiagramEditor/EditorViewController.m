@@ -1176,11 +1176,14 @@
     [dele.manager.browser dismissViewControllerAnimated:YES completion:nil];
     sharingDiagram = NO;
     
+    [resendTimer invalidate];
     resendTimer = nil;
 }
 
 -(void)browserViewControllerDidFinish:(MCBrowserViewController *)browserViewController{
     [dele.manager.browser dismissViewControllerAnimated:YES completion:nil];
+    
+    
     sharingDiagram = YES;
     
     resendTimer = [NSTimer scheduledTimerWithTimeInterval:0.5f
@@ -1189,6 +1192,29 @@
                                                  userInfo:nil
                                                   repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:resendTimer forMode:NSRunLoopCommonModes];
+    
+    
+    //Mandamos la información inicial
+    
+    NSMutableDictionary * dicToSend = [[NSMutableDictionary alloc] init];
+
+    NSData * deleData  =[dele packAppDelegate];
+    
+    [dicToSend setObject:deleData forKey:@"data"];
+    [dicToSend setObject:kInitialInfoFromServer forKey:@"msg"];
+    
+    NSData * allData = [NSKeyedArchiver archivedDataWithRootObject:dicToSend];
+    
+    
+    
+    NSError * error = nil;
+    [dele.manager.session sendData:allData
+toPeers:dele.manager.session.connectedPeers
+withMode:MCSessionSendDataReliable
+                             error:&error];
+    
+    int r =2;
+    
     /*NSData * appDeleData = [dele packImportantInfo];
     
     [dele.output write:appDeleData.bytes maxLength:appDeleData.length];*/
@@ -1202,9 +1228,23 @@
     NSLog(@"resend");
     NSData * appDeleData = [dele packElementsInfo];
     
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+    
+    [dic setObject:appDeleData forKey:@"data"];
+    [dic setObject:kUpdateData forKey:@"msg"];
+    
+    NSData * allData = [NSKeyedArchiver archivedDataWithRootObject:dic];
+    [dele.manager.session sendData:allData
+                           toPeers:dele.manager.session.connectedPeers
+                          withMode:MCSessionSendDataReliable
+                             error:nil];
+    
+    //NSData * appDeleData = [dele packElementsInfo];
+    
     //NSData * appDeleData = [[NSString stringWithFormat:@"Hellou :D"]dataUsingEncoding:NSUTF8StringEncoding];
     
-    [dele.output write:appDeleData.bytes maxLength:appDeleData.length];
+    //TODO: Send info
+    
     /*NSArray * peers = dele.manager.session.connectedPeers;
     NSError * error = nil;
     [dele.manager.session sendData:appDeledata

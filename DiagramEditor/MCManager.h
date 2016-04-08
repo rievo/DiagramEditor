@@ -13,12 +13,8 @@
 
 @class AppDelegate;
 
-@interface MCManager : NSObject<MCSessionDelegate, NSStreamDelegate>{
+@interface MCManager : NSObject<MCSessionDelegate>{
     AppDelegate * dele;
-    
-    
-    NSMutableData * data;
-    //NSInteger bytesRead;
 }
 
 @property (strong, nonatomic) MCPeerID * peerId;

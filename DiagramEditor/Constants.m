@@ -31,6 +31,11 @@ NSString *const DOT = @"dot";
 NSString *const DASH_DOT = @"dash_dot";
 
 
+#pragma mark Collaboration
+NSString * const kInitialInfoFromServer = @"kInitialInfoFromServer";
+NSString * const kChangedState = @"kChangedState";
+NSString * const kReceivedData = @"kReceivedData";
+NSString * const kUpdateData = @"kUpdateData";
 @implementation Constants
 
 @end

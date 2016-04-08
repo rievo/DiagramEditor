@@ -8,6 +8,7 @@
 
 #import "MCManager.h"
 #import "AppDelegate.h"
+#import "Constants.h"
 
 @implementation MCManager
 
@@ -39,7 +40,7 @@
 }
 
 -(void)startAdvertising{
-    NSLog(@"Empiezo a spamear el servicio %@", SERVICE_NAME);
+    NSLog(@"Empiezo a spamear el servicio %@ que hago", SERVICE_NAME);
     if (advertiser == nil) {
         advertiser = [[MCAdvertiserAssistant alloc] initWithServiceType:SERVICE_NAME
                                                           discoveryInfo:nil
@@ -55,38 +56,14 @@
 }
 
 -(void)session:(MCSession *)sess peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state{
-    if(state == MCSessionStateConnected){
-        
-        NSLog(@"Session peer connected");
-        //receivingAppDeleGoEditor
-        
-        //Create stream
-        NSError * error = nil;
-        
-        NSOutputStream * output = [session startStreamWithName:@"stream"
-                                                        toPeer:peerID
-                                                         error:&error];
-        
-        if(error){return;}
-        
-        [output scheduleInRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
-        [output open];
-        
-        dele.output = output;
-        
-        //Load editor or prepare for first data exchange
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"receivingAppDeleGoEditor"
-                                                           object: nil];
 
-    }else if(state == MCSessionStateConnecting){
-        NSLog(@"Connecting...");
-    }else{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
-                                                        message:[NSString stringWithFormat:@"%@ disconnected from session", peerId]                                                        delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-    }
+    NSDictionary * userInfo = @{@"peerID":peerID, @"state":@(state)};
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:kChangedState
+                                                            object:nil
+                                                          userInfo:userInfo];
+    });
+    
     
 }
 
@@ -97,17 +74,32 @@
     //Repaint canvas
      [[NSNotificationCenter defaultCenter]postNotificationName:@"receivedNewAppdelegate"
                                                         object: nil];*/
+    /*
+    NSMutableDictionary * dataDic = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    
+    NSString * msg = [dataDic objectForKey:@"msg"];
+    
+    if([msg isEqualToString:kInitialInfoFromServer]){ //Es la primera vez, me llega todo
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"receivedNewAppdelegate"
+                                                           object: nil];
+    }else{
+        NSLog(@"Unknown message");
+    }*/
+    
+    NSDictionary * userInfo = @{@"peerID":peerID, @"data":data};
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:kReceivedData
+                                                            object:nil
+                                                          userInfo:userInfo];
+    });
+    
 }
 
 -(void)session:(MCSession *)session
 didReceiveStream:(NSInputStream *)stream
       withName:(NSString *)streamName
       fromPeer:(MCPeerID *)peerID{
-    
-    NSLog(@"session didReceiveStreamWithNameFromPeer");
-    stream.delegate = self;
-    [stream scheduleInRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
-    [stream open];
     
 }
 
@@ -120,54 +112,5 @@ didReceiveStream:(NSInputStream *)stream
 }
 
 
-#pragma mark NSStreamDelegate
--(void)stream:(NSStream *)stream handleEvent:(NSStreamEvent)eventCode{
-    NSLog(@"stream handle event");
-    
-    switch (eventCode) {
-        case NSStreamEventOpenCompleted:
-            data = [NSMutableData data];
-            break;
-            
-        case NSStreamEventEndEncountered:
-            data = [NSMutableData data];
-            break;
-            
-        case NSStreamEventHasBytesAvailable:{
-            NSInputStream * is = (NSInputStream *)stream;
-
-            
-            NSUInteger bytesRead = 0;
-            
-            /*len = [(NSInputStream *)stream read:buf maxLength:1024];*/
-
-            
-            while ([is hasBytesAvailable]) {
-                uint8_t buf[1024];
-                bytesRead = [(NSInputStream *)stream read:buf maxLength:1024];
-                [data appendBytes:(const void *)buf length:bytesRead];
-                //bytesRead = bytesRead + len;
-            }
-            
-            //NSLog(@"data: %@", data);
-            
-            NSLog(@"bytesread = %lu", bytesRead);
-            
-            NSString * recovered = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-            NSLog(@"Recovered: %@", recovered);
-            
-            data = [NSMutableData data];
-            
-            //[dele recoverInfoFromData:data];
-            //data es lo que quiero
-            // [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
-
-            break;
-        }
-            
-        default:
-            break;
-    }
-}
 
 @end

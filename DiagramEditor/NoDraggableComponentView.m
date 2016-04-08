@@ -39,6 +39,12 @@
     outCenter = CGPointMake(container.center.x, background.frame.size.height + itemInfoGroup.frame.size.height);
     
     [itemInfoGroup setHidden:YES];
+    
+     [self updateInstancesCount];
+}
+
+-(void)updateInstancesCount{
+    instancesCountLabel.text = [NSString stringWithFormat:@"%lu", thisArray.count];
 }
 
 -(void)updateNameLabel{
@@ -106,6 +112,7 @@
 - (IBAction)cancelItemInfo:(id)sender {
     [self hideAndResetItemInfoGroup];
     temporalComponent = nil;
+     [self updateInstancesCount];
 }
 
 - (IBAction)confirmSaveNode:(id)sender {
@@ -114,6 +121,7 @@
     temporalComponent = nil;
     
     [self hideAndResetItemInfoGroup];
+     [self updateInstancesCount];
 }
 
 
@@ -256,7 +264,7 @@
     
     if(tableView == attributesTable){
         if([[temporalComponent.attributes objectAtIndex:indexPath.row] isKindOfClass:[ClassAttribute class]]){
-            return 47;
+            return 35;
         }else{
             return 0;
         }
@@ -290,6 +298,8 @@
             [thisArray removeObject:comp];
             [table reloadData];
             [self hideAndResetItemInfoGroup];
+            
+            [self updateInstancesCount];
         }
     }
 

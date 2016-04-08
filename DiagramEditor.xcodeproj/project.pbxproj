@@ -63,6 +63,8 @@
 		F16C7DCB1C578D4B00CA9B25 /* ConnectionDetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = F16C7DCA1C578D4B00CA9B25 /* ConnectionDetailsView.m */; };
 		F16C7DCD1C57AD2900CA9B25 /* SureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F16C7DCC1C57AD2900CA9B25 /* SureView.xib */; };
 		F16C7DD01C57AD4400CA9B25 /* SureView.m in Sources */ = {isa = PBXBuildFile; fileRef = F16C7DCF1C57AD4400CA9B25 /* SureView.m */; };
+		F170A8651CB7ABE20077082F /* downArrowBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = F170A8631CB7ABE20077082F /* downArrowBlack.png */; };
+		F170A8661CB7ABE20077082F /* upArrowBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = F170A8641CB7ABE20077082F /* upArrowBlack.png */; };
 		F171FA751C885F0C005C37D4 /* go.png in Resources */ = {isa = PBXBuildFile; fileRef = F171FA741C885F0C005C37D4 /* go.png */; };
 		F1786DE51C561ADA00963663 /* BooleanAttributeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1786DE41C561ADA00963663 /* BooleanAttributeTableViewCell.xib */; };
 		F1786DE81C561AF200963663 /* BooleanAttributeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1786DE71C561AF200963663 /* BooleanAttributeTableViewCell.m */; };
@@ -101,6 +103,8 @@
 		F1B789931C60F045001B6DB4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1B789921C60F045001B6DB4 /* UIKit.framework */; };
 		F1B789991C60F064001B6DB4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1B789981C60F064001B6DB4 /* CoreGraphics.framework */; };
 		F1B7899B1C610292001B6DB4 /* Minus-100.png in Resources */ = {isa = PBXBuildFile; fileRef = F1B7899A1C610292001B6DB4 /* Minus-100.png */; };
+		F1C417B81CB66F120075234C /* CustomTableHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = F1C417B71CB66F120075234C /* CustomTableHeader.m */; };
+		F1C417BA1CB66F2D0075234C /* CustomTableHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1C417B91CB66F2D0075234C /* CustomTableHeader.xib */; };
 		F1C6347B1C2842C30072912D /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C6347A1C2842C30072912D /* camera.png */; };
 		F1F29C691C64C8F70035F0B6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1F29C681C64C8F70035F0B6 /* AudioToolbox.framework */; };
 /* End PBXBuildFile section */
@@ -189,6 +193,8 @@
 		F16C7DCC1C57AD2900CA9B25 /* SureView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SureView.xib; sourceTree = "<group>"; };
 		F16C7DCE1C57AD4400CA9B25 /* SureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SureView.h; sourceTree = "<group>"; };
 		F16C7DCF1C57AD4400CA9B25 /* SureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SureView.m; sourceTree = "<group>"; };
+		F170A8631CB7ABE20077082F /* downArrowBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = downArrowBlack.png; sourceTree = "<group>"; };
+		F170A8641CB7ABE20077082F /* upArrowBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upArrowBlack.png; sourceTree = "<group>"; };
 		F171FA741C885F0C005C37D4 /* go.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = go.png; sourceTree = "<group>"; };
 		F1786DE41C561ADA00963663 /* BooleanAttributeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BooleanAttributeTableViewCell.xib; sourceTree = "<group>"; };
 		F1786DE61C561AF200963663 /* BooleanAttributeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BooleanAttributeTableViewCell.h; sourceTree = "<group>"; };
@@ -243,6 +249,9 @@
 		F1B789961C60F05D001B6DB4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F1B789981C60F064001B6DB4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		F1B7899A1C610292001B6DB4 /* Minus-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Minus-100.png"; sourceTree = "<group>"; };
+		F1C417B61CB66F120075234C /* CustomTableHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableHeader.h; sourceTree = "<group>"; };
+		F1C417B71CB66F120075234C /* CustomTableHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableHeader.m; sourceTree = "<group>"; };
+		F1C417B91CB66F2D0075234C /* CustomTableHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomTableHeader.xib; sourceTree = "<group>"; };
 		F1C6347A1C2842C30072912D /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
 		F1F29C681C64C8F70035F0B6 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -339,6 +348,9 @@
 				F16C7DC71C578D3900CA9B25 /* ConnectionDetailsView.xib */,
 				F16C7DC91C578D4B00CA9B25 /* ConnectionDetailsView.h */,
 				F16C7DCA1C578D4B00CA9B25 /* ConnectionDetailsView.m */,
+				F1C417B61CB66F120075234C /* CustomTableHeader.h */,
+				F1C417B91CB66F2D0075234C /* CustomTableHeader.xib */,
+				F1C417B71CB66F120075234C /* CustomTableHeader.m */,
 			);
 			name = DetailsViews;
 			sourceTree = "<group>";
@@ -417,6 +429,8 @@
 		F17B75AE1C22D9D500AB1B57 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				F170A8631CB7ABE20077082F /* downArrowBlack.png */,
+				F170A8641CB7ABE20077082F /* upArrowBlack.png */,
 				F15BE9FE1CABC60E00EDABA5 /* hidePaletteEditor.png */,
 				F15BEA001CABC62400EDABA5 /* showPaletteEditor.png */,
 				F16C35C41C98277F006F4255 /* users.png */,
@@ -583,6 +597,7 @@
 				F14181C91C68DCB600E838F9 /* settings.png in Resources */,
 				F16C35C51C98277F006F4255 /* users.png in Resources */,
 				F1AB3B161C22B19800EDBB1D /* resize.png in Resources */,
+				F1C417BA1CB66F2D0075234C /* CustomTableHeader.xib in Resources */,
 				F16C7DC81C578D3900CA9B25 /* ConnectionDetailsView.xib in Resources */,
 				F163C5391C9D6501007824D2 /* hand.png in Resources */,
 				F1431E8E1C5249F7006A45BC /* ComponentDetailsView.xib in Resources */,
@@ -602,6 +617,7 @@
 				F16C7DCD1C57AD2900CA9B25 /* SureView.xib in Resources */,
 				F15865111C85A2B5007D2E75 /* CloudDiagramsExplorer.xib in Resources */,
 				F17B75A91C22D6E100AB1B57 /* newDocument.png in Resources */,
+				F170A8661CB7ABE20077082F /* upArrowBlack.png in Resources */,
 				F153796F1C919B2F001D8FFB /* ClassesFilterView.xib in Resources */,
 				F1786DEF1C56410200963663 /* SaveNameView.xib in Resources */,
 				F19C25901C43AB8B0002E490 /* palette.png in Resources */,
@@ -619,6 +635,7 @@
 				F147B44B1C636FB400A8F5E7 /* test.graphicR in Resources */,
 				F18A55E61C845CDD00B134F0 /* NoDraggableClassesView.xib in Resources */,
 				F107E4661C722229007DD29E /* ThinkingView.xib in Resources */,
+				F170A8651CB7ABE20077082F /* downArrowBlack.png in Resources */,
 				F157993D1C86FE030009D4C7 /* CloudFileCollectionViewCell.xib in Resources */,
 				F163AFE41C7B173300BAE67C /* DFAAutomaton.graphicR in Resources */,
 				F10AB80C1C50E85100DE6DCE /* ok.png in Resources */,
@@ -675,6 +692,7 @@
 				F1A20A7E1C1981290037C05D /* XMLDictionary.m in Sources */,
 				F1853A031C5253740015A9E0 /* StringAttributeTableViewCell.m in Sources */,
 				F158651C1C85AA59007D2E75 /* DiagramFile.m in Sources */,
+				F1C417B81CB66F120075234C /* CustomTableHeader.m in Sources */,
 				F157993B1C86FDE00009D4C7 /* CloudFileCollectionViewCell.m in Sources */,
 				F16C7DD01C57AD4400CA9B25 /* SureView.m in Sources */,
 				F1786DF71C5664AB00963663 /* ExploreFilesView.m in Sources */,

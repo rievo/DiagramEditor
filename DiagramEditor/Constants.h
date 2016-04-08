@@ -52,6 +52,12 @@ FOUNDATION_EXPORT NSString *const DASH_DOT;
 
 
 
+#pragma mark Collaboration
+FOUNDATION_EXPORT NSString *const kInitialInfoFromServer;
+FOUNDATION_EXPORT NSString *const kChangedState;
+FOUNDATION_EXPORT NSString *const kReceivedData;
+FOUNDATION_EXPORT NSString *const kUpdateData;
+
 @interface Constants : NSObject
 
 @end

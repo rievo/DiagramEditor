@@ -13,12 +13,19 @@
 #import "Component.h"
 #import "PaletteItem.h"
 #import "NoDraggableComponentView.h"
+#import "ClassAttribute.h"
+
+#import "StringAttributeTableViewCell.h"
+#import "BooleanAttributeTableViewCell.h"
+#import "GenericAttributeTableViewCell.h"
+
+#import "CustomTableHeader.h"
 
 @implementation ConnectionDetailsView
 
 
 
-@synthesize delegate, background, connection;
+@synthesize delegate, background, connection,instancesCollapsed, attributesCollapsed;
 
 
 - (void)awakeFromNib {
@@ -26,6 +33,11 @@
     [background addGestureRecognizer:tapgr];
     [tapgr setDelegate:self];
     
+    informationTable.delegate = self;
+    informationTable.dataSource = self;
+    
+    instancesCollapsed = YES;
+    attributesCollapsed = YES;
     //[nameTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
 }
 
@@ -77,8 +89,8 @@
     associatedComponentsArray = [[NSMutableArray alloc] init];
     //Llenamos ese array con las instancias asociadas a esta conexión
     
-    instancesTable.delegate = self;
-    instancesTable.dataSource = self;
+    //instancesTable.delegate = self;
+    //instancesTable.dataSource = self;
     
     
     for (NSString * key in [connection.instancesOfClassesDictionary allKeys]) {
@@ -90,7 +102,7 @@
         }
     }
     
-    [instancesTable reloadData];
+    //[instancesTable reloadData];
     
     attributesArray = [[NSMutableArray alloc] init];
     
@@ -99,8 +111,11 @@
         [attributesArray addObject:[connection.attributes objectAtIndex:i]];
     }
     
-    [attributesTable reloadData];
+    //[attributesTable reloadData];
     
+    
+    sourceComponentViewContainer.backgroundColor = [UIColor clearColor];
+    targetComponentViewContainer.backgroundColor = [UIColor clearColor];
     
     //Load components preview
     
@@ -110,8 +125,8 @@
     sourceComp = [NSKeyedUnarchiver unarchiveObjectWithData:sourceBuf];
     targetComp = [NSKeyedUnarchiver unarchiveObjectWithData:targetBuf];
     
-    CGRect srect = sourceComp.bounds;
-    CGRect trect = targetComp.bounds;
+    CGRect srect = sourceComponentViewContainer.bounds;
+    CGRect trect = targetComponentViewContainer.bounds;
     
     
     [sourceComp setFrame:srect];
@@ -151,17 +166,35 @@
 
 #pragma mark UITableViewDelegate methods
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
+    return 2;
 }
 
+
+-(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
+   
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    if (tableView == instancesTable) {
-        return associatedComponentsArray.count;
+    
+    if(section == 0){ //Attributes
+        if(attributesCollapsed == YES)
+            return 0;
+        else
+            return attributesArray.count;
+    }else if(section == 1){ //Instances
+        if(instancesCollapsed == YES)
+            return 0;
+        else
+            return  associatedComponentsArray.count;
     }else{
         return 0;
     }
-    
+    /*if (tableView == instancesTable) {
+        return associatedComponentsArray.count;
+    }else{
+        return 0;
+    }*/
+    //return 0;
 }
 
 
@@ -169,11 +202,15 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *MyIdentifier = @"MyIdentifier";
+    static NSString *MyIdentifier = @"cdvcell";
     
     UITableViewCell *cell = nil;
     
-    if(tableView == instancesTable){
+    if(indexPath.section == 0){ //Attributes
+    
+        return nil;
+        
+    }else if(indexPath.section == 1){ //Instances
         Component * c = [associatedComponentsArray objectAtIndex:indexPath.row];
         
         
@@ -188,7 +225,26 @@
         cell.textLabel.adjustsFontSizeToFitWidth = YES;
         cell.textLabel.minimumScaleFactor = 0.5;
         cell.textLabel.text = [NSString stringWithFormat:@"--: %@", c.name];
+    }else{
+        return nil;
     }
+    
+   /* if(tableView == instancesTable){
+        Component * c = [associatedComponentsArray objectAtIndex:indexPath.row];
+        
+        
+        cell= [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+        
+        if (cell == nil)
+        {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                          reuseIdentifier:MyIdentifier] ;
+        }
+        cell.backgroundColor = [UIColor clearColor];
+        cell.textLabel.adjustsFontSizeToFitWidth = YES;
+        cell.textLabel.minimumScaleFactor = 0.5;
+        cell.textLabel.text = [NSString stringWithFormat:@"--: %@", c.name];
+    }*/
     
 
     return cell;
@@ -198,7 +254,16 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
     
-    if(tableView == instancesTable){
+    //if(indexPath.section == 0){ //Attributes
+    //    return 0;
+    //}else if(indexPath.section == 1){ //Instances
+    /*    NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"ReferenceTableViewCell"
+                                                      owner:self
+                                                    options:nil];
+        ReferenceTableViewCell * temp = [nib objectAtIndex:0];
+        return temp.frame.size.height;*/
+    //}
+    /*if(tableView == instancesTable){
         NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"ReferenceTableViewCell"
                                                       owner:self
                                                     options:nil];
@@ -206,7 +271,8 @@
         return temp.frame.size.height;
     }else{
         return 30;
-    }
+    }*/
+    return 30;
 
 }
 
@@ -224,5 +290,35 @@
 }
 
 
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    CustomTableHeader * head = [[[NSBundle mainBundle]loadNibNamed:@"CustomTableHeader" owner:self options:nil]objectAtIndex:0];
+    head.sectionIndex = section;
+    head.containerTable = tableView;
+    head.owner = self;
+    if(section == 0){//Attributes
+        head.sectionNameLabel.text = @"Attributes";
+        head.countLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)attributesArray.count];
+        
+        if(attributesCollapsed == true){
+            head.openCloseOutlet.image  = [UIImage imageNamed:@"downArrowBlack"];
 
+        }else{
+             head.openCloseOutlet.image  = [UIImage imageNamed:@"upArrowBlack"];
+        }
+        
+    }else if(section == 1){ //Instances
+        head.sectionNameLabel.text = @"References";
+        head.countLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)associatedComponentsArray.count];
+        if(instancesCollapsed == true){
+            head.openCloseOutlet.image  = [UIImage imageNamed:@"downArrowBlack"];
+            
+        }else{
+            head.openCloseOutlet.image  = [UIImage imageNamed:@"upArrowBlack"];
+        }
+    }else{
+        
+    }
+    
+    return head;
+}
 @end

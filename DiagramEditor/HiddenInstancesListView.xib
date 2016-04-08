@@ -14,25 +14,44 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OGh-Yw-bzN">
                     <rect key="frame" x="0.0" y="0.0" width="346" height="463"/>
                     <subviews>
-                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Ea-lW-uom">
-                            <rect key="frame" x="58" y="69" width="240" height="386"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Ea-lW-uom">
+                            <rect key="frame" x="53" y="39" width="240" height="386"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Choose an instance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="elJ-cM-7ft">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose an instance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="elJ-cM-7ft">
                                     <rect key="frame" x="45" y="15" width="151" height="21"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="151" id="GLD-8g-4a8"/>
+                                        <constraint firstAttribute="height" constant="21" id="hiO-F0-hL2"/>
+                                    </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="t2X-g6-f64">
-                                    <rect key="frame" x="0.0" y="44" width="240" height="334"/>
+                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="t2X-g6-f64">
+                                    <rect key="frame" x="8" y="50" width="224" height="328"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </tableView>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="t2X-g6-f64" secondAttribute="bottom" constant="8" id="38h-W8-0Qb"/>
+                                <constraint firstAttribute="width" constant="240" id="8Wx-d3-Zpz"/>
+                                <constraint firstItem="t2X-g6-f64" firstAttribute="leading" secondItem="4Ea-lW-uom" secondAttribute="leading" constant="8" id="AMR-Kl-Orc"/>
+                                <constraint firstAttribute="height" constant="386" id="JU8-ak-auR"/>
+                                <constraint firstItem="t2X-g6-f64" firstAttribute="top" secondItem="elJ-cM-7ft" secondAttribute="bottom" constant="14" id="dGx-4O-9lc"/>
+                                <constraint firstItem="elJ-cM-7ft" firstAttribute="top" secondItem="4Ea-lW-uom" secondAttribute="top" constant="15" id="eLP-dg-DN4"/>
+                                <constraint firstAttribute="trailing" secondItem="t2X-g6-f64" secondAttribute="trailing" constant="8" id="mbp-Rn-fDl"/>
+                                <constraint firstItem="elJ-cM-7ft" firstAttribute="centerX" secondItem="4Ea-lW-uom" secondAttribute="centerX" id="p4a-Gl-PJ6"/>
+                            </constraints>
                         </view>
                     </subviews>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="4Ea-lW-uom" firstAttribute="centerY" secondItem="OGh-Yw-bzN" secondAttribute="centerY" id="2pO-Kg-IS8"/>
+                        <constraint firstItem="4Ea-lW-uom" firstAttribute="centerX" secondItem="OGh-Yw-bzN" secondAttribute="centerX" id="gFT-gk-Pme"/>
+                        <constraint firstItem="4Ea-lW-uom" firstAttribute="top" secondItem="OGh-Yw-bzN" secondAttribute="top" constant="39" id="r2w-mS-cDu"/>
+                    </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="calibratedWhite"/>
