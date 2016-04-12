@@ -681,7 +681,8 @@
             image = [UIImage imageNamed:@"localFilled"];
         }
         
-        cell.textLabel.text = pf.name;
+        NSArray * array = [pf.name componentsSeparatedByString:@"."];
+        cell.textLabel.text = array[0];
         cell.accessoryView = [[ UIImageView alloc ] initWithImage:image];
         [cell.accessoryView setFrame:CGRectMake(0, 0, 20, 20)];
         

@@ -69,7 +69,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     if(textLayer == nil){
         textLayer = [[CATextLayer alloc] init];
         
-        textLayer.foregroundColor = [UIColor blackColor].CGColor;
+        textLayer.foregroundColor = [UIColor clearColor].CGColor;
         CGRect rect = CGRectMake(0 - self.bounds.size.width /2, 0-20, self.frame.size.width * 2,20);
         textLayer.frame = rect;
         textLayer.contentsScale = [UIScreen mainScreen].scale;
@@ -420,6 +420,8 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     
     UIBezierPath * path = nil;
     
+    [borderColor setStroke];
+    
     if([shapeType isEqualToString:@"graphicR:Ellipse"]){
         
         path = [UIBezierPath bezierPathWithOvalInRect:fixed];
@@ -443,7 +445,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         //fixed.origin.y = fixed.origin.y + 4*lw;
         
         path = [[UIBezierPath alloc] init];
-        [[UIColor blackColor] setStroke];
+        ///[[UIColor blackColor] setStroke];
         //[[UIColor whiteColor] setFill];
         [fillColor setFill];
         [path setLineWidth:lw];
@@ -460,7 +462,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         //fixed = CGRectMake(fixed.origin.x + 2*lw, fixed.origin.y + 2*lw, fixed.size.width, fixed.size.height);
         //fixed = self.frame;
        path = [[UIBezierPath alloc] init];
-        [[UIColor blackColor]setStroke];
+        //[[UIColor blackColor]setStroke];
         [fillColor setFill];
         [path setLineWidth:lw];
         
@@ -479,7 +481,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         path = [[UIBezierPath alloc] init];
         [path setLineWidth:lw/2];
         [[UIColor whiteColor]setFill];
-        [[UIColor blackColor]setStroke];
+        //[[UIColor blackColor]setStroke];
         [path moveToPoint:corner];
         [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width/7 *6, fixed.origin.y + 0)];
         [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width/7 *6, fixed.origin.y + fixed.size.height/7.0)];
@@ -493,7 +495,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         
         path = [[UIBezierPath alloc] init];
         
-        [[UIColor blackColor] setStroke];
+        //[[UIColor blackColor] setStroke];
         [fillColor setFill];
         
         [path setLineWidth:lw];
@@ -509,7 +511,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         [image drawInRect:fixed];
     }else if([shapeType isEqualToString:@"graphicR:Rectangle"]){
         path = [[UIBezierPath alloc] init];
-        [[UIColor blackColor] setStroke];
+        //[[UIColor blackColor] setStroke];
         [fillColor setFill];
         
         [path setLineWidth:lw];
@@ -1110,6 +1112,28 @@ withSelectedComponent:(Component *)comp
         
         self.containerReference  = [coder decodeObjectForKey:@"containerReference"];
         self.parentClassArray  = [coder decodeObjectForKey:@"parentClassArray"];
+        
+        self.backgroundColor = [UIColor clearColor];
+        
+        [self setUserInteractionEnabled:YES];
+        
+        [self addTapGestureRecognizer];
+        
+        
+        textLayer = [[CATextLayer alloc] init];
+        
+        textLayer.foregroundColor = [UIColor clearColor].CGColor;
+        CGRect rect = CGRectMake(0 - self.bounds.size.width /2, 0-20, self.frame.size.width * 2,20);
+        textLayer.frame = rect;
+        textLayer.contentsScale = [UIScreen mainScreen].scale;
+        [textLayer setFont:@"Helvetica-Light"];
+        [textLayer setFontSize:14];
+        textLayer.alignmentMode = kCAAlignmentCenter;
+        textLayer.truncationMode = kCATruncationStart;
+        textLayer.backgroundColor = [UIColor clearColor].CGColor;
+        [self.layer addSublayer:textLayer];
+
+        [self updateNameLabel];
 
     }
     return self;

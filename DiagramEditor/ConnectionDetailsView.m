@@ -224,7 +224,7 @@
         cell.backgroundColor = [UIColor clearColor];
         cell.textLabel.adjustsFontSizeToFitWidth = YES;
         cell.textLabel.minimumScaleFactor = 0.5;
-        cell.textLabel.text = [NSString stringWithFormat:@"--: %@", c.name];
+        cell.textLabel.text = [NSString stringWithFormat:@"· %@", c.name];
     }else{
         return nil;
     }

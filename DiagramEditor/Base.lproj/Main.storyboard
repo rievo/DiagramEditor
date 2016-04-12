@@ -140,6 +140,16 @@
                                     <action selector="changeSearchSessions:" destination="rN5-PV-uVv" eventType="valueChanged" id="8y9-tV-Dy8"/>
                                 </connections>
                             </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Look for sessions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jo4-hN-ubP">
+                                <rect key="frame" x="142" y="35" width="126" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="FbO-NJ-GjS"/>
+                                    <constraint firstAttribute="width" constant="126" id="gCG-Qs-uVQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                <color key="textColor" red="0.7137255072593689" green="0.74901962280273438" blue="0.81960785388946533" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.22745098039215686" green="0.30588235294117649" blue="0.47058823529411764" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -157,12 +167,14 @@
                             <constraint firstItem="qXz-ja-TaN" firstAttribute="centerY" secondItem="y0X-PL-KAD" secondAttribute="centerY" id="M7N-dp-5ZR"/>
                             <constraint firstItem="NFu-5F-w0i" firstAttribute="top" secondItem="0OT-qN-y9n" secondAttribute="bottom" constant="20" id="PeE-Zh-AHn"/>
                             <constraint firstItem="Fem-NR-cIc" firstAttribute="leading" secondItem="49n-J5-Ec4" secondAttribute="trailing" constant="8" id="QZV-0Z-fTS"/>
+                            <constraint firstItem="49n-J5-Ec4" firstAttribute="leading" secondItem="jo4-hN-ubP" secondAttribute="trailing" constant="8" id="SDy-Xo-73f"/>
                             <constraint firstItem="qXz-ja-TaN" firstAttribute="centerY" secondItem="iEf-WE-QBC" secondAttribute="centerY" constant="21" id="dbW-FO-jJT"/>
                             <constraint firstItem="Fem-NR-cIc" firstAttribute="top" secondItem="Oza-78-sY5" secondAttribute="bottom" constant="20" id="fMc-L2-VHb"/>
                             <constraint firstItem="0Fe-7V-wER" firstAttribute="leading" secondItem="iEf-WE-QBC" secondAttribute="leadingMargin" constant="18" id="gVe-a4-tI9"/>
                             <constraint firstItem="pzm-22-k2O" firstAttribute="top" secondItem="1WE-VM-4s3" secondAttribute="bottom" constant="3" id="ksS-zd-Z3w"/>
                             <constraint firstItem="49n-J5-Ec4" firstAttribute="top" secondItem="Oza-78-sY5" secondAttribute="bottom" constant="30" id="lls-Ob-YNX"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Fem-NR-cIc" secondAttribute="trailing" constant="-11" id="nYl-ao-f9r"/>
+                            <constraint firstItem="jo4-hN-ubP" firstAttribute="top" secondItem="Oza-78-sY5" secondAttribute="bottom" constant="35" id="qMT-HX-dVx"/>
                             <constraint firstItem="0Fe-7V-wER" firstAttribute="top" secondItem="Oza-78-sY5" secondAttribute="bottom" constant="30" id="wx2-TU-Bci"/>
                             <constraint firstItem="NFu-5F-w0i" firstAttribute="centerX" secondItem="iEf-WE-QBC" secondAttribute="centerX" id="xrl-pT-iIb"/>
                             <constraint firstItem="pzm-22-k2O" firstAttribute="top" secondItem="Rcu-8g-tKj" secondAttribute="bottom" constant="3" id="zGg-Ta-ZGG"/>
@@ -428,6 +440,14 @@
                                     <constraint firstAttribute="height" constant="82" id="nKl-SJ-dHB"/>
                                 </constraints>
                             </scrollView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QlS-jI-KSu" userLabel="SessionUserListContainer">
+                                <rect key="frame" x="294" y="194" width="98" height="211"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="211" id="WR0-zS-JRl"/>
+                                    <constraint firstAttribute="width" constant="98" id="dsd-Y5-omy"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.13725490200000001" green="0.21176470589999999" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -441,6 +461,7 @@
                             <constraint firstItem="3b3-aY-7QT" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="20" id="MwF-cl-ueo"/>
                             <constraint firstItem="uUY-Bf-x28" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="20" id="Mz0-Fv-UBQ"/>
                             <constraint firstItem="bKe-dJ-Azz" firstAttribute="top" secondItem="9YV-kE-mug" secondAttribute="bottom" constant="20" id="QAa-qh-1Y6"/>
+                            <constraint firstItem="QlS-jI-KSu" firstAttribute="centerY" secondItem="j52-t0-ne9" secondAttribute="centerY" id="R4c-bl-ljV"/>
                             <constraint firstAttribute="leadingMargin" secondItem="ZbX-xh-hJ7" secondAttribute="leading" id="Rcs-yX-UX6"/>
                             <constraint firstItem="npt-04-keg" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="20" id="SAI-Xe-YYU"/>
                             <constraint firstItem="L72-M5-gdo" firstAttribute="leading" secondItem="YCF-FE-eUA" secondAttribute="trailing" constant="14" id="Smn-Iw-y6C"/>
@@ -448,6 +469,7 @@
                             <constraint firstItem="PyO-ue-whg" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="20" id="Yxs-yk-n8K"/>
                             <constraint firstItem="KOd-BW-gdm" firstAttribute="leading" secondItem="ZbX-xh-hJ7" secondAttribute="trailing" constant="8" id="b4q-9B-n2c"/>
                             <constraint firstAttribute="trailingMargin" secondItem="KOd-BW-gdm" secondAttribute="trailing" constant="9" id="ejc-1s-K2F"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="QlS-jI-KSu" secondAttribute="trailing" constant="-20" id="hZz-Rc-6Uk"/>
                             <constraint firstAttribute="trailingMargin" secondItem="uUY-Bf-x28" secondAttribute="trailing" id="j7g-nu-GWa"/>
                             <constraint firstItem="bKe-dJ-Azz" firstAttribute="top" secondItem="ZbX-xh-hJ7" secondAttribute="bottom" constant="20" id="kaS-fK-1SZ"/>
                             <constraint firstItem="npt-04-keg" firstAttribute="leading" secondItem="L72-M5-gdo" secondAttribute="trailing" constant="8" id="lFJ-Qm-W6S"/>
@@ -477,6 +499,7 @@
                         <outlet property="saveButton" destination="L72-M5-gdo" id="GSJ-zJ-TBk"/>
                         <outlet property="saveDiagram" destination="L72-M5-gdo" id="E3S-B7-bXL"/>
                         <outlet property="scrollView" destination="9YV-kE-mug" id="hAn-7K-qvv"/>
+                        <outlet property="sessionListContainer" destination="QlS-jI-KSu" id="q2C-u0-iGP"/>
                         <outlet property="shareButtonOutlet" destination="N0x-kF-Nfy" id="KKn-bs-LqV"/>
                         <outlet property="showHidePaletteOutlet" destination="ZbX-xh-hJ7" id="A6j-dw-Ypp"/>
                         <segue destination="uka-zo-c1V" kind="popoverPresentation" identifier="showComponentsView" popoverAnchorView="npt-04-keg" id="NXG-Cd-7Kc">

@@ -130,20 +130,8 @@
     
     dele.evc = self;
     
-    
-    //Set slider
-    //if(palette.contentSize.width > palette.frame.size.width){
-    //slider.maximumValue = palette.frame.size.width -palette.contentSize.width ;
-    //slider.minimumValue = 0;
-    
-    //NSLog(@"palette.contentSize: w:%f h:%f", palette.contentSize.width, palette.contentSize.height);
-   // NSLog(@"slider.maxval = %f", slider.maximumValue);
-    ///NSLog(@"palette.frame = w:%f  h%f ", palette.frame.size.width, palette.frame.size.height);
-    //}else{
-    //[slider setHidden:YES];
-    //}
-    
-    //NSLog(@"pags = %.2f", ceil(palette.frame.size.width / palette.contentSize.width ));
+    [sessionListContainer setHidden:YES];
+
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didReceiveNewAppDeleInfo)
@@ -1173,6 +1161,7 @@
 }
 
 -(void)browserViewControllerWasCancelled:(MCBrowserViewController *)browserViewController{
+    [dele.manager.session disconnect];
     [dele.manager.browser dismissViewControllerAnimated:YES completion:nil];
     sharingDiagram = NO;
     
@@ -1182,7 +1171,22 @@
 
 -(void)browserViewControllerDidFinish:(MCBrowserViewController *)browserViewController{
     [dele.manager.browser dismissViewControllerAnimated:YES completion:nil];
+    [usersListView removeFromSuperview];
     
+    [sessionListContainer setHidden:NO];
+    
+    usersListView = [[[NSBundle mainBundle]loadNibNamed:@"SessionUsersView"
+                                                  owner:self
+                                                options:nil]objectAtIndex:0];
+    
+    [usersListView setFrame:CGRectMake(0,
+                                      0,
+                                      sessionListContainer.frame.size.width,
+                                      sessionListContainer.frame.size.height)];
+    
+    
+    [usersListView prepare];
+    [sessionListContainer addSubview:usersListView];
     
     sharingDiagram = YES;
     
@@ -1206,7 +1210,6 @@
     NSData * allData = [NSKeyedArchiver archivedDataWithRootObject:dicToSend];
     
     
-    
     NSError * error = nil;
     [dele.manager.session sendData:allData
 toPeers:dele.manager.session.connectedPeers
@@ -1219,6 +1222,7 @@ withMode:MCSessionSendDataReliable
     
     [dele.output write:appDeleData.bytes maxLength:appDeleData.length];*/
     
+
 
     
 }

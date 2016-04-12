@@ -15,6 +15,7 @@
 #import "SaveNameView.h"
 #import "SureView.h"
 #import "EdgeListView.h"
+#import "SessionUsersView.h"
 
 @class Palette;
 @class PaletteItem;
@@ -83,7 +84,11 @@ EdgeListDelegate, MCBrowserViewControllerDelegate>{
     CGRect paletteRect;
     CGRect collapsedRect;
     
-    //__weak IBOutlet UIView *paletteAndSliderGroup;
+    
+    SessionUsersView *usersListView;
+    __weak IBOutlet UIView *sessionListContainer;
+    
+
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 

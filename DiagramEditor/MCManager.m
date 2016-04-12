@@ -68,23 +68,7 @@
 }
 
 -(void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID{
-    //Actualizamos
-    /*[dele recoverInfoFromData:data];
-    
-    //Repaint canvas
-     [[NSNotificationCenter defaultCenter]postNotificationName:@"receivedNewAppdelegate"
-                                                        object: nil];*/
-    /*
-    NSMutableDictionary * dataDic = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    
-    NSString * msg = [dataDic objectForKey:@"msg"];
-    
-    if([msg isEqualToString:kInitialInfoFromServer]){ //Es la primera vez, me llega todo
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"receivedNewAppdelegate"
-                                                           object: nil];
-    }else{
-        NSLog(@"Unknown message");
-    }*/
+
     
     NSDictionary * userInfo = @{@"peerID":peerID, @"data":data};
     
