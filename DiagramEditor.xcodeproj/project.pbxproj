@@ -84,6 +84,7 @@
 		F17D1C081C7F1EDC0080EA29 /* reload.png in Resources */ = {isa = PBXBuildFile; fileRef = F17D1C071C7F1EDC0080EA29 /* reload.png */; };
 		F1801F3B1C774137005BA437 /* cloudFilled.png in Resources */ = {isa = PBXBuildFile; fileRef = F1801F3A1C774137005BA437 /* cloudFilled.png */; };
 		F1801F3D1C77413E005BA437 /* localFilled.png in Resources */ = {isa = PBXBuildFile; fileRef = F1801F3C1C77413E005BA437 /* localFilled.png */; };
+		F181349C1CBCF169000AE209 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = F181349B1CBCF169000AE209 /* menu.png */; };
 		F18510781C1824C8004EC4C8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F18510771C1824C8004EC4C8 /* main.m */; };
 		F185107B1C1824C8004EC4C8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F185107A1C1824C8004EC4C8 /* AppDelegate.m */; };
 		F18510811C1824C8004EC4C8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F185107F1C1824C8004EC4C8 /* Main.storyboard */; };
@@ -222,6 +223,7 @@
 		F17D1C071C7F1EDC0080EA29 /* reload.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reload.png; sourceTree = "<group>"; };
 		F1801F3A1C774137005BA437 /* cloudFilled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloudFilled.png; sourceTree = "<group>"; };
 		F1801F3C1C77413E005BA437 /* localFilled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = localFilled.png; sourceTree = "<group>"; };
+		F181349B1CBCF169000AE209 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
 		F18510731C1824C8004EC4C8 /* DiagramEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiagramEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F18510771C1824C8004EC4C8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F18510791C1824C8004EC4C8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -437,6 +439,7 @@
 		F17B75AE1C22D9D500AB1B57 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				F181349B1CBCF169000AE209 /* menu.png */,
 				F16733F11CBBD6C500E76C3A /* upArrowBlack.png */,
 				F16733EF1CBBD6C000E76C3A /* downArrowBlack.png */,
 				F15BE9FE1CABC60E00EDABA5 /* hidePaletteEditor.png */,
@@ -644,6 +647,7 @@
 				F147B44B1C636FB400A8F5E7 /* test.graphicR in Resources */,
 				F18A55E61C845CDD00B134F0 /* NoDraggableClassesView.xib in Resources */,
 				F107E4661C722229007DD29E /* ThinkingView.xib in Resources */,
+				F181349C1CBCF169000AE209 /* menu.png in Resources */,
 				F157993D1C86FE030009D4C7 /* CloudFileCollectionViewCell.xib in Resources */,
 				F163AFE41C7B173300BAE67C /* DFAAutomaton.graphicR in Resources */,
 				F10AB80C1C50E85100DE6DCE /* ok.png in Resources */,

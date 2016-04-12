@@ -95,6 +95,9 @@ didReceiveStream:(NSInputStream *)stream
     
 }
 
-
+- (void) session:(MCSession *)session didReceiveCertificate:(NSArray *)certificate fromPeer:(MCPeerID *)peerID certificateHandler:(void (^)(BOOL accept))certificateHandler
+{
+    certificateHandler(YES);
+}
 
 @end

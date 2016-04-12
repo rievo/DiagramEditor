@@ -13,17 +13,10 @@
 @implementation SessionUsersView
 
 @synthesize table;
-/*
+
 -(void)awakeFromNib{
-    usersArray = [[NSMutableArray alloc] init];
-    //[self recoverUsersFromAppDelegateSession];
-    
-    table.delegate = self;
-    table.dataSource = self;
-    dele = [[UIApplication sharedApplication]delegate];
-}*/
 
-
+}
 
 
 -(void)recoverUsersFromAppDelegateSession{
@@ -34,6 +27,7 @@
     for(id thing in peers){
         [usersArray addObject:thing];
     }
+    [table reloadData];
 }
 
 -(void)prepare{
@@ -57,7 +51,7 @@
     MCPeerID * peer = [dic objectForKey:@"peeerID"];
     MCSessionState state = [[dic objectForKey:@"state"]integerValue];
     
-    if(state == MCSessionStateNotConnected){
+    /*if(state == MCSessionStateNotConnected){
         //Me he desconectado
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
                                                         message:@"Ha sido desconectado"
@@ -66,9 +60,9 @@
                                               otherButtonTitles:nil];
         [alert show];
 
-    }
+    }*/
     
-    NSLog(@"Somebody changed state");
+    NSLog(@"%@ changed state to %ld", peer.displayName, (long)state);
     [self recoverUsersFromAppDelegateSession];
 }
 

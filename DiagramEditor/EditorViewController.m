@@ -450,12 +450,33 @@
                                                            
                                                            NSString * txt = [self generateXML];
                                                            
-                                                           controller = [[MFMailComposeViewController alloc] init];
-                                                           controller.mailComposeDelegate = self;
-                                                           [controller setSubject:@"Diagram test"];
-                                                           //[controller setMessageBody:@"Hello there." isHTML:NO];
-                                                           [controller setMessageBody:txt isHTML:NO];
-                                                           [self presentViewController:controller animated:YES completion:nil];
+                                                           if ([MFMailComposeViewController canSendMail]) {
+                                                               if(dele.components.count > 0){
+                                                                   controller = [[MFMailComposeViewController alloc] init];
+                                                                   controller.mailComposeDelegate = self;
+                                                                   [controller setSubject:@"Diagram test"];
+                                                                   //[controller setMessageBody:@"Hello there." isHTML:NO];
+                                                                   [controller setMessageBody:txt isHTML:NO];
+                                                                   [self presentViewController:controller animated:YES completion:nil];
+                                                               }else{
+                                                                   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                                                                   message:@"There are no components"
+                                                                                                                  delegate:self
+                                                                                                         cancelButtonTitle:@"OK"
+                                                                                                         otherButtonTitles:nil];
+                                                                   [alert show];
+                                                               }
+                                                               
+                                                           }else{
+                                                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                                                               message:@"Email cannot be sent. Remenber to configure your mail account on device configuration"
+                                                                                                              delegate:self
+                                                                                                     cancelButtonTitle:@"OK"
+                                                                                                     otherButtonTitles:nil];
+                                                               [alert show];
+                                                           }
+                                                           
+                                                           
                                                        }];
     
     UIAlertAction * saveondevice = [UIAlertAction actionWithTitle:@"Local save"
@@ -925,11 +946,35 @@
                                                          style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction * _Nonnull action) {
                                                            
-                                                           controller = [[MFMailComposeViewController alloc] init];
-                                                           controller.mailComposeDelegate = self;
-                                                           [controller setSubject:@"Digram image text"];
-                                                           [controller addAttachmentData:data mimeType:@"image/png" fileName:@"photo"];
-                                                           [self presentViewController:controller animated:YES completion:nil];
+                                                           if(dele.components.count >  0){
+                                                               
+                                                               if ([MFMailComposeViewController canSendMail]) {
+                                                                   if(controller == nil)
+                                                                       controller = [[MFMailComposeViewController alloc] init];
+                                                                   controller.mailComposeDelegate = self;
+                                                                   [controller setSubject:@"Digram image text"];
+                                                                   [controller addAttachmentData:data mimeType:@"image/png" fileName:@"photo"];
+                                                                   [self presentViewController:controller animated:YES completion:nil];
+                                                               }else{
+                                                                   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                                                                   message:@"Email cannot be sent. Remenber to configure your mail account on device configuration"
+                                                                                                                  delegate:self
+                                                                                                         cancelButtonTitle:@"OK"
+                                                                                                         otherButtonTitles:nil];
+                                                                   [alert show];
+                                                               }
+                                                               
+
+                                                           }else{
+                                                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
+                                                                                                               message:@"Email cannot be sent due to there are no components."
+                                                                                                              delegate:self
+                                                                                                     cancelButtonTitle:@"OK"
+                                                                                                     otherButtonTitles:nil];
+                                                               [alert show];
+                                                           }
+                                                           
+                                                           
                                                        }];
     
     UIAlertAction * saveondevice = [UIAlertAction actionWithTitle:@"Save on camera roll"
