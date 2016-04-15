@@ -53,10 +53,13 @@
     
     
     canvas = [[Canvas alloc] initWithFrame:CGRectMake(0, 0, canvasW, canvasW)];
-    canvas.backgroundColor = [dele blue4];
+
     [canvas prepareCanvas];
     dele.can = canvas;
     dele.originalCanvasRect = canvas.frame;
+    //canvas.backgroundColor = [dele blue0];
+    canvas.backgroundColor = [UIColor colorWithRed:218/255.0 green:224/255.0 blue:235/255.0 alpha:0.6];
+    [canvas setNeedsDisplay];
     
     //Add canvas to scrollView contents
     [scrollView addSubview:canvas];
@@ -131,19 +134,162 @@
     dele.evc = self;
     
     [sessionListContainer setHidden:YES];
-
+    
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didReceiveNewAppDeleInfo)
                                                  name:@"receivedNewAppdelegate"
                                                object:nil];
+    
+    
+    //kIWantToBeMaster
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleNewMasterPetition:)
+                                                 name:kIWantToBeMaster
+                                               object:nil];
+    //kYouAreTheNewMaster
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleIAmTheNewMaster:)
+                                                 name:kYouAreTheNewMaster
+                                               object:nil];
+    
+    //kMasterPetitionDenied
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handlePetitionDenied:)
+                                                 name:kMasterPetitionDenied
+                                               object:nil];
+    
 }
 
+-(void)handlePetitionDenied:(NSNotification *)not{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@":("
+                                                    message:@"No me dejan ser el master"
+                                                   delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
+
+
+-(void)handleIAmTheNewMaster:(NSNotification *)not{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info:"
+                                                    message:@"You are the new master now"
+                                                   delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+    //Ignoro las actualizaciones del servidor
+    
+    //Hide ask for master
+    [askForMasterButton setHidden:YES];
+}
+
+
+-(void)handleNewMasterPetition:(NSNotification *)not{
+    
+    NSDictionary * dic = not.userInfo;
+    
+    MCPeerID * whoAsk = [dic objectForKey:@"peerID"];
+    
+    UIAlertController * alert=   [UIAlertController
+                                  alertControllerWithTitle:@"New petition"
+                                  message:[NSString stringWithFormat:@"Peer \"%@\" wants to be master. Allow him?", whoAsk.displayName]
+                                  preferredStyle:UIAlertControllerStyleAlert];
+    
+    
+    
+    UIAlertAction* ok = [UIAlertAction
+                         actionWithTitle:@"Allow him"
+                         style:UIAlertActionStyleDefault
+                         handler:^(UIAlertAction * action)
+                         {
+                             
+                             [self makeNewMasterToPeer:whoAsk];
+                             [alert dismissViewControllerAnimated:YES completion:nil];
+                             NSLog(@"Se lo he concedido");
+                             
+                         }];
+    UIAlertAction* cancel = [UIAlertAction
+                             actionWithTitle:@"Deny petition"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                 
+                                 [self sendDenyMasterToPeer:whoAsk];
+                                 [alert dismissViewControllerAnimated:YES completion:nil];
+                                 NSLog(@"No se lo he concedido");
+                             }];
+    
+    [alert addAction:ok];
+    [alert addAction:cancel];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+    
+}
 -(void)didReceiveNewAppDeleInfo{
     [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
 }
 
 
+
+
+-(void)makeNewMasterToPeer:(MCPeerID *)peer{
+
+    dele.currentMasterId.peerID = peer;
+    //TODO: update peer UUID
+    
+    //Send back you are new master
+    
+    
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:peer forKey:@"peerID"];
+    [dic setObject:kYouAreTheNewMaster forKey:@"msg"];
+    
+    NSLog(@"Sending you are new master");
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dic];
+    NSError * error = nil;
+    
+    [dele.manager.session sendData:data
+                           toPeers:dele.manager.session.connectedPeers
+                          withMode:MCSessionSendDataReliable
+                             error:&error];
+    
+    if(!error){
+        NSLog(@"Mandado al nuevo master");
+    }else{
+        NSLog(@"Error %@", [error description]);
+    }
+    
+    
+
+
+    
+}
+
+-(void)sendDenyMasterToPeer:(MCPeerID *)peer{
+    
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:peer forKey:@"peerID"];
+    [dic setObject:kMasterPetitionDenied forKey:@"msg"];
+    NSLog(@"You shall not pass");
+    
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dic];
+    NSError * error = nil;
+    
+    
+    [dele.manager.session sendData:data
+                           toPeers:dele.manager.session.connectedPeers
+                          withMode:MCSessionSendDataReliable
+                             error:&error];
+    
+    if(!error){
+        NSLog(@"Denied sended");
+    }else{
+        NSLog(@"Error %@", [error description]);
+    }
+
+}
 
 #pragma mark Show/Hide detailsView
 -(void)showDetailsView{
@@ -734,7 +880,7 @@
         NSString * str = ecoreParts[i];
         ecoreToWrite = [ecoreToWrite stringByAppendingString:str];
     }
-
+    
     
     
     //Generate XML
@@ -758,7 +904,7 @@
     for(int i = 0; i< dele.components.count; i++){
         temp = [dele.components objectAtIndex:i];
         [writer writeStartElement:@"node"];
-
+        
         //[writer writeAttribute:@"shape_type" value:temp.shapeType];
         [writer writeAttribute:@"x" value: [[NSNumber numberWithFloat:temp.center.x]description]];
         [writer writeAttribute:@"y" value: [[NSNumber numberWithFloat:temp.center.y]description]];
@@ -778,7 +924,7 @@
                 [writer writeAttribute:@"current_value" value:ca.currentValue];
             else
                 [writer writeAttribute:@"current_value" value:@""];
-
+            
             //[writer writeAttribute:@"max" value:[ca.max description]];
             //[writer writeAttribute:@"min" value:[ca.min description]];
             //[writer writeAttribute:@"type" value:ca.type];
@@ -810,11 +956,11 @@
     
     //remove <xmlLine from diagramString
     /*NSString * finalDiagString = @"";
-    NSArray * diagArray = [diagramString componentsSeparatedByString:@"\">"];
-    for(int i = 1; i< diagArray.count; i++){
-        NSString * str = diagArray[i];
-        finalDiagString = [finalDiagString stringByAppendingString:str];
-    }*/
+     NSArray * diagArray = [diagramString componentsSeparatedByString:@"\">"];
+     for(int i = 1; i< diagArray.count; i++){
+     NSString * str = diagArray[i];
+     finalDiagString = [finalDiagString stringByAppendingString:str];
+     }*/
     
     NSString * result = @""; //result = [result stringByAppendingString:@""];
     result = [result stringByAppendingString:@"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"];
@@ -964,7 +1110,7 @@
                                                                    [alert show];
                                                                }
                                                                
-
+                                                               
                                                            }else{
                                                                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
                                                                                                                message:@"Email cannot be sent due to there are no components."
@@ -1225,9 +1371,9 @@
                                                 options:nil]objectAtIndex:0];
     
     [usersListView setFrame:CGRectMake(0,
-                                      0,
-                                      sessionListContainer.frame.size.width,
-                                      sessionListContainer.frame.size.height)];
+                                       0,
+                                       sessionListContainer.frame.size.width,
+                                       sessionListContainer.frame.size.height)];
     
     
     [usersListView prepare];
@@ -1243,10 +1389,23 @@
     [[NSRunLoop currentRunLoop] addTimer:resendTimer forMode:NSRunLoopCommonModes];
     
     
-    //Mandamos la información inicial
+    //Set that I'm the server
+    dele.serverId = [[PeerInfo alloc] init];
+    dele.serverId.peerUUID = dele.myPeerInfo.peerUUID;
+    dele.serverId.peerID =  dele.myPeerInfo.peerID ;
+    
+    //Set that I'm the first master
+    dele.currentMasterId = [[PeerInfo alloc] init];
+    dele.currentMasterId.peerUUID = dele.myPeerInfo.peerUUID;
+    dele.currentMasterId.peerID = dele.myPeerInfo.peerID ;
+    
+    
+    //Send initial info
     
     NSMutableDictionary * dicToSend = [[NSMutableDictionary alloc] init];
-
+    
+    
+    
     NSData * deleData  =[dele packAppDelegate];
     
     [dicToSend setObject:deleData forKey:@"data"];
@@ -1257,18 +1416,18 @@
     
     NSError * error = nil;
     [dele.manager.session sendData:allData
-toPeers:dele.manager.session.connectedPeers
-withMode:MCSessionSendDataReliable
+                           toPeers:dele.manager.session.connectedPeers
+                          withMode:MCSessionSendDataReliable
                              error:&error];
     
     int r =2;
     
     /*NSData * appDeleData = [dele packImportantInfo];
+     
+     [dele.output write:appDeleData.bytes maxLength:appDeleData.length];*/
     
-    [dele.output write:appDeleData.bytes maxLength:appDeleData.length];*/
     
-
-
+    
     
 }
 
@@ -1295,11 +1454,11 @@ withMode:MCSessionSendDataReliable
     //TODO: Send info
     
     /*NSArray * peers = dele.manager.session.connectedPeers;
-    NSError * error = nil;
-    [dele.manager.session sendData:appDeledata
-                           toPeers:peers
-                          withMode:MCSessionSendDataReliable
-                             error:&error];*/
+     NSError * error = nil;
+     [dele.manager.session sendData:appDeledata
+     toPeers:peers
+     withMode:MCSessionSendDataReliable
+     error:&error];*/
 }
 
 
@@ -1318,24 +1477,51 @@ withMode:MCSessionSendDataReliable
     }
 }
 
+- (IBAction)iWantToBeTheNewMaster:(id)sender {
+    NSError * error = nil;
+   // NSArray * peers = [[NSArray alloc] initWithObjects:dele.manager, nil];
+    
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:dele.myPeerInfo.peerID forKey:@"peerID"];
+    [dic setObject:kIWantToBeMaster forKey:@"msg"];
+    
+    NSLog(@"I will ask to be the new master");
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dic];
+    
+    [dele.manager.session sendData:data
+                           toPeers:dele.manager.session.connectedPeers
+                          withMode:MCSessionSendDataReliable error:&error];
+    
+    if(error != nil){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:[error description]
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }else{
+        
+    }
+}
+
 -(void)collapsePalette{
     
     /*CGRect thisRect = CGRectMake(paletteRect.origin.x,
-                                 paletteRect.origin.y,
-                                 0,
-                                 paletteRect.size.height);
-    [showHidePaletteOutlet setEnabled:NO];
-
-    [UIView animateWithDuration:0.3
-                          delay:0.0
-                        options:UIViewAnimationOptionCurveEaseOut
-                     animations:^{
-                         [palette setFrame:thisRect];
-                     }
-                     completion:^(BOOL finished) {
-                         [palette setHidden:YES];
-                         [showHidePaletteOutlet setEnabled:YES];
-                     }];*/
+     paletteRect.origin.y,
+     0,
+     paletteRect.size.height);
+     [showHidePaletteOutlet setEnabled:NO];
+     
+     [UIView animateWithDuration:0.3
+     delay:0.0
+     options:UIViewAnimationOptionCurveEaseOut
+     animations:^{
+     [palette setFrame:thisRect];
+     }
+     completion:^(BOOL finished) {
+     [palette setHidden:YES];
+     [showHidePaletteOutlet setEnabled:YES];
+     }];*/
     [palette setHidden:YES];
 }
 

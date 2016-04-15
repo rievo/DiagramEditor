@@ -10,6 +10,7 @@
 
 #import "MCManager.h"
 #import "Constants.h"
+#import "PeerInfo.h"
 
 @class Canvas;
 @class Component;
@@ -45,6 +46,8 @@
 
 @property NSDictionary * graphicR;
 
+@property NSString * myUUIDString;
+
 
 @property BOOL loadingADiagram;
 
@@ -57,9 +60,9 @@
 //Multipeer Connectivity
 @property MCManager * manager;
 
-@property MCPeerID * serverId;
-@property MCPeerID * myPeerId;
-@property MCPeerID * currentMasterId;
+@property PeerInfo * serverId;
+@property PeerInfo * myPeerInfo;
+@property PeerInfo * currentMasterId;
 
 
 

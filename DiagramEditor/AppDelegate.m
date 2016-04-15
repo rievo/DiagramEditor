@@ -20,7 +20,7 @@
 
 @implementation AppDelegate
 
-@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR, evc, blue0, blue1, blue2, elementsDictionary, manager, ecoreContent, loadingADiagram, fingeredComponent, serverId, currentMasterId, myPeerId;
+@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR, evc, blue0, blue1, blue2, elementsDictionary, manager, ecoreContent, loadingADiagram, fingeredComponent, serverId, currentMasterId, myPeerInfo, myUUIDString;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -48,18 +48,32 @@
     
     //Load my peer Id
     
-    myPeerId = [[MCPeerID alloc] initWithDisplayName:[UIDevice currentDevice].name];
+    
     serverId = nil;
     currentMasterId = nil;
     
     fingeredComponent = nil;
     
     
+    //Get my uuid
+    NSUserDefaults * prefs = [NSUserDefaults standardUserDefaults];
+    NSString * UUID = [prefs stringForKey:@"UUID"];
+    if(!UUID){
+        NSString * myuuid = [[NSUUID UUID] UUIDString];
+        [prefs setObject:myuuid forKey:@"UUID"];
+    }
+    
+    myPeerInfo = [[PeerInfo alloc] init];
+    myPeerInfo.peerUUID = UUID;
+    myPeerInfo.peerID =[[MCPeerID alloc] initWithDisplayName:[UIDevice currentDevice].name];
+    
     //Escucho las notificaciones
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(didReceiveData:) name:kReceivedData object:nil];
     
     
+    currentMasterId = nil;
+    serverId = nil;
     return YES;
 }
 
@@ -68,7 +82,6 @@
     
     NSDictionary * dic = [not userInfo];
     
-    MCPeerID * from = [dic objectForKey:@"peerID"];
     NSData * receivedData = [dic objectForKey:@"data"];
     
     NSDictionary * dataDic = [NSKeyedUnarchiver unarchiveObjectWithData:receivedData];
@@ -88,6 +101,9 @@
         self.paletteItems = [dic objectForKey:@"paletteItems"];
         self.subPalette = [dic objectForKey:@"subpalette"];
         self.elementsDictionary = [dic objectForKey:@"elementsDictionary"];
+        
+        self.serverId = [dic objectForKey:@"serverId"];
+        self.currentMasterId = [dic objectForKey:@"currentMasterId"];
         
         loadingADiagram = YES;
         
@@ -113,8 +129,42 @@
         }
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
+    }else if([msg isEqualToString:kIWantToBeMaster]){
+        MCPeerID * who = [dataDic objectForKey:@"peerID"];
+        NSLog(@"\n\n\n--------------\n%@ pide ser el máster\n----------\n\n", who.displayName);
+        
+        NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+        [dic setObject:who forKey:@"peerID"];
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:kIWantToBeMaster object:nil userInfo:dic];
+        
+    }else if([msg isEqualToString:kYouAreTheNewMaster]){
+        //[self reactToIAmTheNewMaster];
+        MCPeerID * who = [dataDic objectForKey:@"peerID"];
+        
+        if([who.displayName isEqualToString: myPeerInfo.peerID.displayName]){
+            NSLog(@"\n\n\n--------------\n%@ me ha concedido ser el máster\n----------\n\n", who.displayName);
+            [[NSNotificationCenter defaultCenter]postNotificationName:kYouAreTheNewMaster object:nil userInfo:dic];
+        }else{
+            NSLog(@"I'm not the receiver, just ignore this");
+        }
+        
+
+    }else if([msg isEqualToString:kMasterPetitionDenied]){
+        MCPeerID * who = [dataDic objectForKey:@"peerID"];
+        
+        if([who.displayName isEqualToString: myPeerInfo.peerID.displayName]){
+            NSLog(@"\n\n\n--------------\n%@ me ha denegado ser el máster\n----------\n\n", who.displayName);
+            [[NSNotificationCenter defaultCenter]postNotificationName:kMasterPetitionDenied object:nil userInfo:dic];
+        }else{
+            NSLog(@"I'm not the receiver, just ignore this");
+        }
     }
 }
+
+//-(void)reactToIAmTheNewMaster{
+//
+//}
 
 
 
@@ -203,6 +253,15 @@
     if(graphicR != nil)
         [dic setObject:graphicR forKey:@"graphicR"];
     
+    //Server info
+    if(serverId != nil)
+        [dic setObject:serverId forKey:@"serverId"];
+    
+    //Master info
+    if(currentMasterId != nil)
+        [dic setObject:currentMasterId forKey:@"currentMasterId"];
+    
+    
     NSData * data = [NSKeyedArchiver archivedDataWithRootObject:dic];
     return data;
 }
@@ -234,6 +293,10 @@
     currentPaletteFileName  = [myDictionary objectForKey:@"currPalFilNam"];
     subPalette = [myDictionary objectForKey:@"subpalette"];
     graphicR = [myDictionary objectForKey:@"graphicR"];
+    serverId = [myDictionary objectForKey:@"serverId"];
+    currentMasterId = [myDictionary objectForKey:@"currentMasterId"];
+    
+    NSLog(@"\n--------------------\nEl master es %@\n--------------------\n", currentMasterId.peerID.displayName);
 }
 
 -(PaletteItem *) getPaletteItemForClassName:(NSString *)name{

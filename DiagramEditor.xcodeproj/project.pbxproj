@@ -14,6 +14,10 @@
 		F10AB80B1C50E85100DE6DCE /* cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = F10AB8091C50E85100DE6DCE /* cancel.png */; };
 		F10AB80C1C50E85100DE6DCE /* ok.png in Resources */ = {isa = PBXBuildFile; fileRef = F10AB80A1C50E85100DE6DCE /* ok.png */; };
 		F10AB80F1C50E9FB00DE6DCE /* PasteView.m in Sources */ = {isa = PBXBuildFile; fileRef = F10AB80E1C50E9FB00DE6DCE /* PasteView.m */; };
+		F10CC8E61CBF8CED007F2B11 /* PeerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F10CC8E51CBF8CED007F2B11 /* PeerInfo.m */; };
+		F10CC8EA1CBFA332007F2B11 /* master.png in Resources */ = {isa = PBXBuildFile; fileRef = F10CC8E91CBFA332007F2B11 /* master.png */; };
+		F10CC8EC1CC0E0CF007F2B11 /* showPaletteEditor.png in Resources */ = {isa = PBXBuildFile; fileRef = F10CC8EB1CC0E0CF007F2B11 /* showPaletteEditor.png */; };
+		F10CC8EE1CC0E133007F2B11 /* hidePaletteEditor.png in Resources */ = {isa = PBXBuildFile; fileRef = F10CC8ED1CC0E133007F2B11 /* hidePaletteEditor.png */; };
 		F10F0FA31C1AF67000165561 /* ColorPalette.m in Sources */ = {isa = PBXBuildFile; fileRef = F10F0FA21C1AF67000165561 /* ColorPalette.m */; };
 		F1154E0B1C8D841500E98E49 /* automatonImage.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F1154E0A1C8D841500E98E49 /* automatonImage.graphicR */; };
 		F1391F1C1CBB9765004BAD71 /* SessionUsersView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1391F1B1CBB9765004BAD71 /* SessionUsersView.m */; };
@@ -41,8 +45,8 @@
 		F1587B041C19BC4600E963BE /* Palette.m in Sources */ = {isa = PBXBuildFile; fileRef = F1587B031C19BC4600E963BE /* Palette.m */; };
 		F15A96091C27F69100ACA6FA /* XMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = F15A96081C27F69100ACA6FA /* XMLWriter.m */; };
 		F15ADC1E1C92BEF40068142E /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = F15ADC1D1C92BEF40068142E /* share.png */; };
-		F15BE9FF1CABC60E00EDABA5 /* hidePaletteEditor.png in Resources */ = {isa = PBXBuildFile; fileRef = F15BE9FE1CABC60E00EDABA5 /* hidePaletteEditor.png */; };
-		F15BEA011CABC62400EDABA5 /* showPaletteEditor.png in Resources */ = {isa = PBXBuildFile; fileRef = F15BEA001CABC62400EDABA5 /* showPaletteEditor.png */; };
+		F15BE9FF1CABC60E00EDABA5 /* hidePaletteEditorOld.png in Resources */ = {isa = PBXBuildFile; fileRef = F15BE9FE1CABC60E00EDABA5 /* hidePaletteEditorOld.png */; };
+		F15BEA011CABC62400EDABA5 /* showPaletteEditorOld.png in Resources */ = {isa = PBXBuildFile; fileRef = F15BEA001CABC62400EDABA5 /* showPaletteEditorOld.png */; };
 		F163AFE41C7B173300BAE67C /* DFAAutomaton.graphicR in Resources */ = {isa = PBXBuildFile; fileRef = F163AFE31C7B173300BAE67C /* DFAAutomaton.graphicR */; };
 		F163AFE61C7B1A1B00BAE67C /* tapDark.png in Resources */ = {isa = PBXBuildFile; fileRef = F163AFE51C7B1A1B00BAE67C /* tapDark.png */; };
 		F163AFEA1C7B1ABE00BAE67C /* tap.png in Resources */ = {isa = PBXBuildFile; fileRef = F163AFE91C7B1ABE00BAE67C /* tap.png */; };
@@ -122,6 +126,11 @@
 		F10AB80A1C50E85100DE6DCE /* ok.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ok.png; sourceTree = "<group>"; };
 		F10AB80D1C50E9FB00DE6DCE /* PasteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasteView.h; sourceTree = "<group>"; };
 		F10AB80E1C50E9FB00DE6DCE /* PasteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasteView.m; sourceTree = "<group>"; };
+		F10CC8E41CBF8CED007F2B11 /* PeerInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeerInfo.h; sourceTree = "<group>"; };
+		F10CC8E51CBF8CED007F2B11 /* PeerInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeerInfo.m; sourceTree = "<group>"; };
+		F10CC8E91CBFA332007F2B11 /* master.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = master.png; sourceTree = "<group>"; };
+		F10CC8EB1CC0E0CF007F2B11 /* showPaletteEditor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = showPaletteEditor.png; sourceTree = "<group>"; };
+		F10CC8ED1CC0E133007F2B11 /* hidePaletteEditor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hidePaletteEditor.png; sourceTree = "<group>"; };
 		F10F0FA11C1AF67000165561 /* ColorPalette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPalette.h; sourceTree = "<group>"; };
 		F10F0FA21C1AF67000165561 /* ColorPalette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorPalette.m; sourceTree = "<group>"; };
 		F1154E0A1C8D841500E98E49 /* automatonImage.graphicR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = automatonImage.graphicR; sourceTree = "<group>"; };
@@ -162,8 +171,8 @@
 		F15A96071C27F69100ACA6FA /* XMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLWriter.h; sourceTree = "<group>"; };
 		F15A96081C27F69100ACA6FA /* XMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLWriter.m; sourceTree = "<group>"; };
 		F15ADC1D1C92BEF40068142E /* share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share.png; sourceTree = "<group>"; };
-		F15BE9FE1CABC60E00EDABA5 /* hidePaletteEditor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hidePaletteEditor.png; sourceTree = "<group>"; };
-		F15BEA001CABC62400EDABA5 /* showPaletteEditor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = showPaletteEditor.png; sourceTree = "<group>"; };
+		F15BE9FE1CABC60E00EDABA5 /* hidePaletteEditorOld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hidePaletteEditorOld.png; sourceTree = "<group>"; };
+		F15BEA001CABC62400EDABA5 /* showPaletteEditorOld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = showPaletteEditorOld.png; sourceTree = "<group>"; };
 		F163AFE31C7B173300BAE67C /* DFAAutomaton.graphicR */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = DFAAutomaton.graphicR; sourceTree = "<group>"; };
 		F163AFE51C7B1A1B00BAE67C /* tapDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tapDark.png; sourceTree = "<group>"; };
 		F163AFE91C7B1ABE00BAE67C /* tap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tap.png; sourceTree = "<group>"; };
@@ -281,6 +290,8 @@
 			isa = PBXGroup;
 			children = (
 				F1A20A831C198A540037C05D /* PaletteItem.h */,
+				F10CC8E41CBF8CED007F2B11 /* PeerInfo.h */,
+				F10CC8E51CBF8CED007F2B11 /* PeerInfo.m */,
 				F1A20A841C198A540037C05D /* PaletteItem.m */,
 				F1685EA31C18294A0094097E /* Component.h */,
 				F1685EA41C18294A0094097E /* Component.m */,
@@ -440,10 +451,13 @@
 			isa = PBXGroup;
 			children = (
 				F181349B1CBCF169000AE209 /* menu.png */,
+				F10CC8E91CBFA332007F2B11 /* master.png */,
 				F16733F11CBBD6C500E76C3A /* upArrowBlack.png */,
 				F16733EF1CBBD6C000E76C3A /* downArrowBlack.png */,
-				F15BE9FE1CABC60E00EDABA5 /* hidePaletteEditor.png */,
-				F15BEA001CABC62400EDABA5 /* showPaletteEditor.png */,
+				F15BE9FE1CABC60E00EDABA5 /* hidePaletteEditorOld.png */,
+				F10CC8ED1CC0E133007F2B11 /* hidePaletteEditor.png */,
+				F15BEA001CABC62400EDABA5 /* showPaletteEditorOld.png */,
+				F10CC8EB1CC0E0CF007F2B11 /* showPaletteEditor.png */,
 				F16C35C41C98277F006F4255 /* users.png */,
 				F15ADC1D1C92BEF40068142E /* share.png */,
 				F15379781C91A25C001D8FFB /* search.png */,
@@ -577,7 +591,7 @@
 				TargetAttributes = {
 					F18510721C1824C8004EC4C8 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = ZYL4LPJD6J;
+						DevelopmentTeam = TEAF832HEC;
 					};
 				};
 			};
@@ -605,6 +619,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F1853A001C52533E0015A9E0 /* StringAttributeTableViewCell.xib in Resources */,
+				F10CC8EE1CC0E133007F2B11 /* hidePaletteEditor.png in Resources */,
 				F14181C91C68DCB600E838F9 /* settings.png in Resources */,
 				F16C35C51C98277F006F4255 /* users.png in Resources */,
 				F1AB3B161C22B19800EDBB1D /* resize.png in Resources */,
@@ -621,7 +636,7 @@
 				F19C258E1C43AB580002E490 /* back.png in Resources */,
 				F1B7899B1C610292001B6DB4 /* Minus-100.png in Resources */,
 				F10AB8081C50E7E200DE6DCE /* PasteView.xib in Resources */,
-				F15BEA011CABC62400EDABA5 /* showPaletteEditor.png in Resources */,
+				F15BEA011CABC62400EDABA5 /* showPaletteEditorOld.png in Resources */,
 				F1786DED1C56222B00963663 /* GenericAttributeTableViewCell.xib in Resources */,
 				F16733F21CBBD6C500E76C3A /* upArrowBlack.png in Resources */,
 				F147B43E1C63507100A8F5E7 /* EdgeListView.xib in Resources */,
@@ -633,7 +648,7 @@
 				F153796F1C919B2F001D8FFB /* ClassesFilterView.xib in Resources */,
 				F1786DEF1C56410200963663 /* SaveNameView.xib in Resources */,
 				F19C25901C43AB8B0002E490 /* palette.png in Resources */,
-				F15BE9FF1CABC60E00EDABA5 /* hidePaletteEditor.png in Resources */,
+				F15BE9FF1CABC60E00EDABA5 /* hidePaletteEditorOld.png in Resources */,
 				F1154E0B1C8D841500E98E49 /* automatonImage.graphicR in Resources */,
 				F1801F3D1C77413E005BA437 /* localFilled.png in Resources */,
 				F1801F3B1C774137005BA437 /* cloudFilled.png in Resources */,
@@ -647,6 +662,7 @@
 				F147B44B1C636FB400A8F5E7 /* test.graphicR in Resources */,
 				F18A55E61C845CDD00B134F0 /* NoDraggableClassesView.xib in Resources */,
 				F107E4661C722229007DD29E /* ThinkingView.xib in Resources */,
+				F10CC8EA1CBFA332007F2B11 /* master.png in Resources */,
 				F181349C1CBCF169000AE209 /* menu.png in Resources */,
 				F157993D1C86FE030009D4C7 /* CloudFileCollectionViewCell.xib in Resources */,
 				F163AFE41C7B173300BAE67C /* DFAAutomaton.graphicR in Resources */,
@@ -655,6 +671,7 @@
 				F18A8E201C7C5A5900D87C00 /* circle.png in Resources */,
 				F153797E1C91B9EA001D8FFB /* RowSwitchTableViewCell.xib in Resources */,
 				F1786DE51C561ADA00963663 /* BooleanAttributeTableViewCell.xib in Resources */,
+				F10CC8EC1CC0E0CF007F2B11 /* showPaletteEditor.png in Resources */,
 				F18510811C1824C8004EC4C8 /* Main.storyboard in Resources */,
 				F1391F1E1CBB9770004BAD71 /* SessionUsersView.xib in Resources */,
 				F1786DF41C56649B00963663 /* ExploreFilesView.xib in Resources */,
@@ -708,6 +725,7 @@
 				F158651C1C85AA59007D2E75 /* DiagramFile.m in Sources */,
 				F1C417B81CB66F120075234C /* CustomTableHeader.m in Sources */,
 				F157993B1C86FDE00009D4C7 /* CloudFileCollectionViewCell.m in Sources */,
+				F10CC8E61CBF8CED007F2B11 /* PeerInfo.m in Sources */,
 				F16C7DD01C57AD4400CA9B25 /* SureView.m in Sources */,
 				F1786DF71C5664AB00963663 /* ExploreFilesView.m in Sources */,
 				F18510781C1824C8004EC4C8 /* main.m in Sources */,

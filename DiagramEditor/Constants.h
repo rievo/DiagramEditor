@@ -57,6 +57,9 @@ FOUNDATION_EXPORT NSString *const kInitialInfoFromServer;
 FOUNDATION_EXPORT NSString *const kChangedState;
 FOUNDATION_EXPORT NSString *const kReceivedData;
 FOUNDATION_EXPORT NSString *const kUpdateData;
+FOUNDATION_EXPORT NSString *const kIWantToBeMaster;
+FOUNDATION_EXPORT NSString *const kYouAreTheNewMaster;
+FOUNDATION_EXPORT NSString *const kMasterPetitionDenied;
 
 @interface Constants : NSObject
 

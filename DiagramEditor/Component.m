@@ -362,6 +362,15 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
             
             if(CGRectContainsPoint(temp.frame, translatedPoint)){
                 dele.fingeredComponent = temp;
+                
+                //TODO: Check if possible connections
+                
+               /* BOOL res = [self checkIntegrityForSource:self andTarget:dele.fingeredComponent];
+                if(res == true){
+                    NSLog(@"Puedor");
+                }else{
+                    NSLog(@"No puedoor");
+                }*/
                 break;
             }
             dele.fingeredComponent = nil;
@@ -371,6 +380,8 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         [dele.can setXArrowEnd:translatedPoint.x];
         [dele.can setYArrowEnd:translatedPoint.y];
         [dele.can setNeedsDisplay];
+        
+        
     }
 }
 

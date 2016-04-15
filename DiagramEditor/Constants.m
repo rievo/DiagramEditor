@@ -36,6 +36,10 @@ NSString * const kInitialInfoFromServer = @"kInitialInfoFromServer";
 NSString * const kChangedState = @"kChangedState";
 NSString * const kReceivedData = @"kReceivedData";
 NSString * const kUpdateData = @"kUpdateData";
+NSString * const kIWantToBeMaster = @"kIWantToBeMaster";
+NSString * const kYouAreTheNewMaster = @"kYouAreTheNewMaster";
+NSString * const kMasterPetitionDenied = @"kMasterPetitionDenied";
+
 @implementation Constants
 
 @end

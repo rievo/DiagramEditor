@@ -89,6 +89,7 @@ EdgeListDelegate, MCBrowserViewControllerDelegate>{
     __weak IBOutlet UIView *sessionListContainer;
     
 
+    __weak IBOutlet UIButton *askForMasterButton;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
@@ -109,6 +110,8 @@ EdgeListDelegate, MCBrowserViewControllerDelegate>{
 - (IBAction) valueChanged:(id)sender event:(UIControlEvents)event ;
 
 - (IBAction)expandOrCollapsePalette:(id)sender;
+
+- (IBAction)iWantToBeTheNewMaster:(id)sender;
 
 
 @end
