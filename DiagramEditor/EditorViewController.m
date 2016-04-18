@@ -33,6 +33,10 @@
 @synthesize scrollView, loadedContent;
 
 - (void)viewDidLoad {
+    
+    //TODO: QUITAR ESTO
+    //º[askForMasterButton setHidden:YES];
+    
     [super viewDidLoad];
     
     canvasW = 1500;
@@ -1381,7 +1385,7 @@
     
     sharingDiagram = YES;
     
-    resendTimer = [NSTimer scheduledTimerWithTimeInterval:0.5f
+    resendTimer = [NSTimer scheduledTimerWithTimeInterval:resendTime
                                                    target:self
                                                  selector:@selector(resendInfo)
                                                  userInfo:nil

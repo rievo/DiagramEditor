@@ -61,6 +61,9 @@ FOUNDATION_EXPORT NSString *const kIWantToBeMaster;
 FOUNDATION_EXPORT NSString *const kYouAreTheNewMaster;
 FOUNDATION_EXPORT NSString *const kMasterPetitionDenied;
 
+#pragma mark Resend timer
+#define resendTime 0.2
+
 @interface Constants : NSObject
 
 @end
