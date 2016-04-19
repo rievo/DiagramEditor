@@ -14,8 +14,12 @@
     
     AppDelegate * dele;
     NSMutableArray * usersArray;
+    
+    CGPoint goodCenter;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *table;
 -(void)prepare;
+
+@property BOOL isHidden;
 @end

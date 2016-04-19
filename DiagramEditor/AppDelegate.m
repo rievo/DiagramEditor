@@ -130,13 +130,30 @@
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
     }else if([msg isEqualToString:kIWantToBeMaster]){
-        MCPeerID * who = [dataDic objectForKey:@"peerID"];
-        NSLog(@"\n\n\n--------------\n%@ pide ser el máster\n----------\n\n", who.displayName);
         
-        NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
-        [dic setObject:who forKey:@"peerID"];
+        NSString * myName = self.myPeerInfo.peerID.displayName;
+        NSString * serverName = self.serverId.peerID.displayName;
         
-        [[NSNotificationCenter defaultCenter]postNotificationName:kIWantToBeMaster object:nil userInfo:dic];
+        if([myName isEqualToString:serverName]){
+            MCPeerID * who = [dataDic objectForKey:@"peerID"];
+            NSLog(@"\n\n\n--------------\n%@ pide ser el máster\n----------\n\n", who.displayName);
+            
+            NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+            [dic setObject:who forKey:@"peerID"];
+            
+            [[NSNotificationCenter defaultCenter]postNotificationName:kIWantToBeMaster object:nil userInfo:dic];
+        }
+        
+        /*else{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Meh"
+                                                            message:@"Alguien quiere ser el master, pero yo no soy el server"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }*/
+        
+        
         
     }else if([msg isEqualToString:kYouAreTheNewMaster]){
         //[self reactToIAmTheNewMaster];

@@ -206,6 +206,7 @@
                         atvc.comp = temporalComponent;
                         atvc.associatedAttribute = attr;
                         atvc.textField.text = attr.currentValue;
+                        atvc.textField.textColor = dele.blue4;
 
                     }
                     return atvc;
@@ -218,8 +219,10 @@
                                                                     options:nil];
                         batvc = [nib objectAtIndex:0];
                         batvc.nameLabel.text = attr.name;
+                        batvc.nameLabel.textColor = dele.blue4;
                         //batvc.typeLabel.text = attr.type;
                         batvc.backgroundColor = [UIColor clearColor];
+                        
                         
                     }
                     return batvc;
@@ -231,6 +234,7 @@
                                                                     options:nil];
                         gatvc = [nib objectAtIndex:0];
                         gatvc.nameLabel.text = attr.name;
+                        gatvc.nameLabel.textColor = dele.blue4;
                         //gatvc.typeLabel.text = attr.type;
                         gatvc.backgroundColor = [UIColor clearColor];
                     }

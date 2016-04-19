@@ -1437,7 +1437,7 @@
 
 
 -(void)resendInfo{
-    NSLog(@"resend");
+    //NSLog(@"resend");
     NSData * appDeleData = [dele packElementsInfo];
     
     NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];

@@ -12,7 +12,7 @@
 
 @implementation SessionUsersView
 
-@synthesize table;
+@synthesize table, isHidden;
 
 -(void)awakeFromNib{
 
@@ -27,6 +27,10 @@
     for(id thing in peers){
         [usersArray addObject:thing];
     }
+    
+    //Add myself
+    
+    [usersArray addObject:dele.myPeerInfo.peerID];
     [table reloadData];
 }
 
@@ -41,6 +45,51 @@
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(somebodyChangedState:) name:kChangedState object:nil];
 
+    
+    UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    [self addGestureRecognizer:tapgr];
+    
+    isHidden = false;
+    goodCenter = self.center;
+}
+
+
+
+-(void)handleTap:(UITapGestureRecognizer *)recog{
+    NSLog(@"tocado");
+    
+    [self showOrHide];
+}
+
+-(void)showOrHide{
+    if(isHidden == YES){ //Show
+        NSLog(@"show");
+        /*[UIView animateWithDuration:0.2
+                              delay:0.0
+                            options:UIViewAnimationOptionCurveEaseOut
+                         animations:^{
+                            
+                             CGPoint newcenter = goodCenter;
+                             newcenter.x = newcenter.x + self.bounds.size.width -20;
+                             
+                             [self setCenter:newcenter];
+                         }
+                         completion:nil];*/
+        //Animate in
+        isHidden = NO;
+    }else{ //Hide
+        NSLog(@"Hide");
+        /*[UIView animateWithDuration:0.2
+                              delay:0.0
+                            options:UIViewAnimationOptionCurveEaseOut
+                         animations:^{
+                             
+                             [self setCenter:goodCenter];
+                         }
+                         completion:nil];*/
+        //Animate out
+        isHidden = YES;
+    }
 }
 
 
@@ -92,11 +141,19 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                       reuseIdentifier:MyIdentifier] ;
         cell.textLabel.text = peer.displayName;
-        cell.textLabel.textColor = dele.blue1;
+       
         cell.backgroundColor = [UIColor clearColor];
         cell.separatorInset = UIEdgeInsetsZero;
         cell.textLabel.adjustsFontSizeToFitWidth = YES;
         [cell.textLabel setMinimumScaleFactor:0.5];
+        
+        
+        
+        if(peer  == dele.myPeerInfo.peerID){
+            cell.textLabel.textColor = dele.blue0;
+        }else{
+            cell.textLabel.textColor = dele.blue1;
+        }
     }
     return cell;
 }
@@ -119,7 +176,6 @@
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
 }
-
 
 
 @end
