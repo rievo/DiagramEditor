@@ -17,7 +17,7 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CuW-Y7-D2m">
                             <rect key="frame" x="38" y="19" width="240" height="537"/>
                             <subviews>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="The created connection has a reference to a no draggable class. Do you want to associate an instance to her?" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Lt-nS-bho">
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="The created connection has a reference to a no draggable class. Do you want to associate an instance to it?" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Lt-nS-bho">
                                     <rect key="frame" x="27" y="30" width="187" height="104"/>
                                     <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
