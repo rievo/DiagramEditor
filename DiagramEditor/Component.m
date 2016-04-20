@@ -615,6 +615,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     //[self setNeedsDisplay];
     [textLayer setNeedsDisplay];
     [textLayer display];
+    [self setNeedsDisplay];
 }
 
 

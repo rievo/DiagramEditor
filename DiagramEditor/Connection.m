@@ -122,7 +122,7 @@
         
         self.lineWidth =[coder decodeObjectForKey:@"lineWidth"];
         self.lineStyle = [coder decodeObjectForKey:@"lineStyle"];
-        self.lineColor = [coder decodeObjectForKey:@"linecolor"];
+        self.lineColor = [coder decodeObjectForKey:@"lineColor"];
         self.lineColorNameString = [coder decodeObjectForKey:@"lineColorNameString"];
         
         self.instancesOfClassesDictionary = [coder decodeObjectForKey:@"instancesOfClassesDictionary"];
