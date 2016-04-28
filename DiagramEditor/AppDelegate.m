@@ -111,7 +111,11 @@
         ConfigureDiagramViewController * cc = (ConfigureDiagramViewController *)  self.window.rootViewController;
         [cc performSegueWithIdentifier:@"showEditor" sender:self];
     }else if([msg isEqualToString:kUpdateData]){
-        //NSLog(@"Tengo que actualizarme");
+        
+        // if([self amITheMaster]){ //If I'm the master, ignore updates
+        
+        //}else{
+        //Lo hago sí o sí
         NSData * appdeleData = [dataDic objectForKey:@"data"];
         NSDictionary * dic = [NSKeyedUnarchiver unarchiveObjectWithData:appdeleData];
         
@@ -120,15 +124,38 @@
             [sub removeFromSuperview];
         }
         
-        self.components = [dic objectForKey:@"components"];
-        self.connections = [dic objectForKey:@"connections"];
-        self.elementsDictionary = [dic objectForKey:@"elementsDictionary"];
+        
+        //Solo sobreescribo todo si no soy el máster
+        
+        if([self amITheMaster]){
+            
+        }else{
+            self.components = [dic objectForKey:@"components"];
+            self.connections = [dic objectForKey:@"connections"];
+            self.elementsDictionary = [dic objectForKey:@"elementsDictionary"];
+        }
+        
+        
+        
+        //Lo hago sí o sí
+        
+        self.serverId = [dic objectForKey:@"serverId"];
+        self.currentMasterId = [dic objectForKey:@"currentMasterId"];
         
         for(int i = 0; i< components.count; i++){
             [self.can addSubview: [components objectAtIndex:i]];
         }
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateMasterButton object:nil];
+        //}
+        
+        
+        /*
+         
+         */
+        
     }else if([msg isEqualToString:kIWantToBeMaster]){
         
         NSString * myName = self.myPeerInfo.peerID.displayName;
@@ -142,17 +169,9 @@
             [dic setObject:who forKey:@"peerID"];
             
             [[NSNotificationCenter defaultCenter]postNotificationName:kIWantToBeMaster object:nil userInfo:dic];
+        }else{ //Somebody has asked for being the new master, but not me
+            
         }
-        
-        /*else{
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Meh"
-                                                            message:@"Alguien quiere ser el master, pero yo no soy el server"
-                                                           delegate:self
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-            [alert show];
-        }*/
-        
         
         
     }else if([msg isEqualToString:kYouAreTheNewMaster]){
@@ -162,11 +181,13 @@
         if([who.displayName isEqualToString: myPeerInfo.peerID.displayName]){
             NSLog(@"\n\n\n--------------\n%@ me ha concedido ser el máster\n----------\n\n", who.displayName);
             [[NSNotificationCenter defaultCenter]postNotificationName:kYouAreTheNewMaster object:nil userInfo:dic];
-        }else{
+        }else{ //Somebody is the new master
             NSLog(@"I'm not the receiver, just ignore this");
+            
+            //Update máster button
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateMasterButton object:nil];
         }
         
-
     }else if([msg isEqualToString:kMasterPetitionDenied]){
         MCPeerID * who = [dataDic objectForKey:@"peerID"];
         
@@ -293,6 +314,14 @@
     if(elementsDictionary != nil)
         [dic setObject:elementsDictionary forKey:@"elementsDictionary"];
     
+    //Server info
+    if(serverId != nil)
+        [dic setObject:serverId forKey:@"serverId"];
+    
+    //Master info
+    if(currentMasterId != nil)
+        [dic setObject:currentMasterId forKey:@"currentMasterId"];
+    
     
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dic];
     
@@ -349,5 +378,17 @@
         }
         
     }
+}
+
+-(BOOL)amITheMaster{
+    BOOL result = false;
+    
+    if([self.currentMasterId.peerID.displayName isEqualToString:myPeerInfo.peerID.displayName]){
+        result = true;
+    }else{
+        result = false;
+    }
+    
+    return result;
 }
 @end

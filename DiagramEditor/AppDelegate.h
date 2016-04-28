@@ -87,5 +87,7 @@
 -(void) completeClassAttribute:(ClassAttribute *)ca
                   withClasName:(NSString *)className;
 
+-(BOOL)amITheMaster;
+
 @end
 

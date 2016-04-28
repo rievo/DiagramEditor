@@ -12,7 +12,7 @@
 
 @implementation SessionUsersView
 
-@synthesize table, isHidden;
+@synthesize table, hidden;
 
 -(void)awakeFromNib{
 
@@ -43,54 +43,27 @@
     [table reloadData];
     
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(somebodyChangedState:) name:kChangedState object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(somebodyChangedState:)
+                                                name:kChangedState
+                                              object:nil];
 
     
-    UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                             action:@selector(handleTap:)];
+    [tapgr setCancelsTouchesInView:NO];
+    tapgr.delegate = self;
     [self addGestureRecognizer:tapgr];
     
-    isHidden = false;
+    hidden = NO;
     goodCenter = self.center;
 }
 
 
 
 -(void)handleTap:(UITapGestureRecognizer *)recog{
-    NSLog(@"tocado");
-    
-    [self showOrHide];
+    [self removeFromSuperview];
 }
 
--(void)showOrHide{
-    if(isHidden == YES){ //Show
-        NSLog(@"show");
-        /*[UIView animateWithDuration:0.2
-                              delay:0.0
-                            options:UIViewAnimationOptionCurveEaseOut
-                         animations:^{
-                            
-                             CGPoint newcenter = goodCenter;
-                             newcenter.x = newcenter.x + self.bounds.size.width -20;
-                             
-                             [self setCenter:newcenter];
-                         }
-                         completion:nil];*/
-        //Animate in
-        isHidden = NO;
-    }else{ //Hide
-        NSLog(@"Hide");
-        /*[UIView animateWithDuration:0.2
-                              delay:0.0
-                            options:UIViewAnimationOptionCurveEaseOut
-                         animations:^{
-                             
-                             [self setCenter:goodCenter];
-                         }
-                         completion:nil];*/
-        //Animate out
-        isHidden = YES;
-    }
-}
 
 
 -(void)somebodyChangedState:(NSNotification *)not{
@@ -140,19 +113,20 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                       reuseIdentifier:MyIdentifier] ;
-        cell.textLabel.text = peer.displayName;
+        
        
         cell.backgroundColor = [UIColor clearColor];
         cell.separatorInset = UIEdgeInsetsZero;
         cell.textLabel.adjustsFontSizeToFitWidth = YES;
         [cell.textLabel setMinimumScaleFactor:0.5];
         
+         cell.textLabel.textColor = dele.blue1;
         
         
         if(peer  == dele.myPeerInfo.peerID){
-            cell.textLabel.textColor = dele.blue0;
+            cell.textLabel.text = [NSString stringWithFormat:@"-> %@",peer.displayName];
         }else{
-            cell.textLabel.textColor = dele.blue1;
+           cell.textLabel.text = peer.displayName;
         }
     }
     return cell;
@@ -177,5 +151,17 @@
     }
 }
 
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    
+    if(touch.view == background){
+        return YES;
+    }else{
+        return NO;
+    }
+
+    
+}
 
 @end

@@ -86,7 +86,7 @@ EdgeListDelegate, MCBrowserViewControllerDelegate>{
     
     
     SessionUsersView *usersListView;
-    __weak IBOutlet UIView *sessionListContainer;
+    __weak IBOutlet UIButton *showUsersPeersViewButton;
     
 
     __weak IBOutlet UIButton *askForMasterButton;
@@ -113,5 +113,6 @@ EdgeListDelegate, MCBrowserViewControllerDelegate>{
 
 - (IBAction)iWantToBeTheNewMaster:(id)sender;
 
+- (IBAction)showUsersList:(id)sender;
 
 @end

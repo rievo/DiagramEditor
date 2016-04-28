@@ -553,6 +553,8 @@ float QuadBezier(float t, float start, float c1, float end)
 - (void) repaintCanvas : (NSNotification *) notification {
     
     dispatch_async(dispatch_get_main_queue(), ^{
+        
+        
         Component * temp = nil;
         for(int i = 0; i<dele.components.count; i++){
             temp = [dele.components objectAtIndex:i];

@@ -9,17 +9,18 @@
 #import <UIKit/UIKit.h>
 @class AppDelegate;
 
-@interface SessionUsersView : UIView <UITableViewDelegate, UITableViewDataSource>{
+@interface SessionUsersView : UIView <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>{
     
     
     AppDelegate * dele;
     NSMutableArray * usersArray;
     
     CGPoint goodCenter;
+    __weak IBOutlet UIView *background;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *table;
 -(void)prepare;
 
-@property BOOL isHidden;
+@property BOOL hidden;
 @end

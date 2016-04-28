@@ -34,8 +34,9 @@
 
 - (void)viewDidLoad {
     
-    //TODO: QUITAR ESTO
-    //º[askForMasterButton setHidden:YES];
+    
+    
+    [askForMasterButton setHidden:YES];
     
     [super viewDidLoad];
     
@@ -137,8 +138,8 @@
     
     dele.evc = self;
     
-    [sessionListContainer setHidden:YES];
-    
+    //[sessionListContainer setHidden:YES];
+
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didReceiveNewAppDeleInfo)
@@ -163,6 +164,21 @@
                                                  name:kMasterPetitionDenied
                                                object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleUpdateMasterButton:)
+                                                 name:kUpdateMasterButton
+                                               object:nil];
+    
+    
+    [showUsersPeersViewButton setHidden:YES];
+}
+
+-(void) handleUpdateMasterButton:(NSNotification *)not{
+    if([dele amITheMaster] == YES){
+        [askForMasterButton setHidden:YES];
+    }else{
+        [askForMasterButton setHidden:NO];
+    }
 }
 
 -(void)handlePetitionDenied:(NSNotification *)not{
@@ -1362,26 +1378,30 @@
     
     [resendTimer invalidate];
     resendTimer = nil;
+    
+    [showUsersPeersViewButton setHidden:YES];
 }
 
 -(void)browserViewControllerDidFinish:(MCBrowserViewController *)browserViewController{
     [dele.manager.browser dismissViewControllerAnimated:YES completion:nil];
     [usersListView removeFromSuperview];
     
-    [sessionListContainer setHidden:NO];
+    [showUsersPeersViewButton setHidden:NO];
     
     usersListView = [[[NSBundle mainBundle]loadNibNamed:@"SessionUsersView"
                                                   owner:self
                                                 options:nil]objectAtIndex:0];
     
-    [usersListView setFrame:CGRectMake(0,
+    /*[usersListView setFrame:CGRectMake(0,
                                        0,
                                        sessionListContainer.frame.size.width,
-                                       sessionListContainer.frame.size.height)];
+                                       sessionListContainer.frame.size.height)];*/
     
     
     [usersListView prepare];
-    [sessionListContainer addSubview:usersListView];
+    
+    
+    //[sessionListContainer addSubview:usersListView];
     
     sharingDiagram = YES;
     
@@ -1506,6 +1526,11 @@
     }else{
         
     }
+}
+
+- (IBAction)showUsersList:(id)sender {
+    [usersListView setFrame:self.view.frame];
+    [self.view addSubview:usersListView];
 }
 
 -(void)collapsePalette{
