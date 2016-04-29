@@ -69,7 +69,7 @@
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="background" destination="Dy5-Oa-t9K" id="hiv-Le-7D3"/>
+                <outlet property="background" destination="bf5-tZ-15l" id="lQu-an-4kd"/>
                 <outlet property="table" destination="Wf1-0X-lbC" id="GLY-fO-qS4"/>
             </connections>
             <point key="canvasLocation" x="334" y="253"/>

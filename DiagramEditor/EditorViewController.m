@@ -203,6 +203,15 @@
     
     //Hide ask for master
     [askForMasterButton setHidden:YES];
+    
+    //Send my things
+    NSLog(@"Start sending");
+    resendTimer = [NSTimer scheduledTimerWithTimeInterval:resendTime
+                                                   target:self
+                                                 selector:@selector(resendInfo)
+                                                 userInfo:nil
+                                                  repeats:YES];
+    [[NSRunLoop mainRunLoop]addTimer:resendTimer forMode:NSRunLoopCommonModes];
 }
 
 
@@ -260,6 +269,10 @@
     //TODO: update peer UUID
     
     //Send back you are new master
+    
+    //Invalidate my timer
+    [resendTimer invalidate];
+    resendTimer = nil;
     
     
     NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];

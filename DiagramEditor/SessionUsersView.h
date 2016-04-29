@@ -22,5 +22,5 @@
 @property (weak, nonatomic) IBOutlet UITableView *table;
 -(void)prepare;
 
-@property BOOL hidden;
+
 @end

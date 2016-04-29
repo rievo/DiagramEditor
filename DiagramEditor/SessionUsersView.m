@@ -12,7 +12,7 @@
 
 @implementation SessionUsersView
 
-@synthesize table, hidden;
+@synthesize table;
 
 -(void)awakeFromNib{
 
@@ -54,7 +54,6 @@
     tapgr.delegate = self;
     [self addGestureRecognizer:tapgr];
     
-    hidden = NO;
     goodCenter = self.center;
 }
 
