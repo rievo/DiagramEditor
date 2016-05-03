@@ -88,6 +88,6 @@
                   withClasName:(NSString *)className;
 
 -(BOOL)amITheMaster;
-
+-(BOOL)amITheServer;
 @end
 

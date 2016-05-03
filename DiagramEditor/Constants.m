@@ -40,6 +40,7 @@ NSString * const kIWantToBeMaster = @"kIWantToBeMaster";
 NSString * const kYouAreTheNewMaster = @"kYouAreTheNewMaster";
 NSString * const kMasterPetitionDenied = @"kMasterPetitionDenied";
 NSString * const kUpdateMasterButton = @"kUpdateMasterButton";
+NSString * const kNewMasterData = @"kNewMasterData";
 
 @implementation Constants
 

@@ -119,10 +119,7 @@
         NSData * appdeleData = [dataDic objectForKey:@"data"];
         NSDictionary * dic = [NSKeyedUnarchiver unarchiveObjectWithData:appdeleData];
         
-        NSArray * subViews = [self.can subviews];
-        for(UIView * sub in subViews){
-            [sub removeFromSuperview];
-        }
+        
         
         
         //Solo sobreescribo todo si no soy el máster
@@ -130,9 +127,19 @@
         if([self amITheMaster]){
             
         }else{
+            NSArray * subViews = [self.can subviews];
+            for(UIView * sub in subViews){
+                [sub removeFromSuperview];
+            }
+            
             self.components = [dic objectForKey:@"components"];
             self.connections = [dic objectForKey:@"connections"];
             self.elementsDictionary = [dic objectForKey:@"elementsDictionary"];
+            
+            for(int i = 0; i< components.count; i++){
+                [self.can addSubview: [components objectAtIndex:i]];
+                [[components objectAtIndex:i]prepare];
+            }
         }
         
         
@@ -142,9 +149,7 @@
         self.serverId = [dic objectForKey:@"serverId"];
         self.currentMasterId = [dic objectForKey:@"currentMasterId"];
         
-        for(int i = 0; i< components.count; i++){
-            [self.can addSubview: [components objectAtIndex:i]];
-        }
+
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
         
@@ -196,6 +201,32 @@
             [[NSNotificationCenter defaultCenter]postNotificationName:kMasterPetitionDenied object:nil userInfo:dic];
         }else{
             NSLog(@"I'm not the receiver, just ignore this");
+        }
+    }else if([msg isEqualToString:kNewMasterData]){
+        if([self amITheServer]){ //If I am the server, I should update my self with master's info
+            
+            NSData * appdeleData = [dataDic objectForKey:@"data"];
+            NSDictionary * dic = [NSKeyedUnarchiver unarchiveObjectWithData:appdeleData];
+            
+            NSArray * subViews = [self.can subviews];
+            for(UIView * sub in subViews){
+                [sub removeFromSuperview];
+            }
+            
+            self.components = [dic objectForKey:@"components"];
+            self.connections = [dic objectForKey:@"connections"];
+            self.elementsDictionary = [dic objectForKey:@"elementsDictionary"];
+            
+            
+            for(int i = 0; i< components.count; i++){
+                [self.can addSubview: [components objectAtIndex:i]];
+                [[components objectAtIndex:i]prepare];
+            }
+            
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateMasterButton object:nil];
+
         }
     }
 }
@@ -384,6 +415,18 @@
     BOOL result = false;
     
     if([self.currentMasterId.peerID.displayName isEqualToString:myPeerInfo.peerID.displayName]){
+        result = true;
+    }else{
+        result = false;
+    }
+    
+    return result;
+}
+
+-(BOOL)amITheServer{
+    BOOL result = false;
+    
+    if([self.serverId.peerID.displayName isEqualToString:myPeerInfo.peerID.displayName]){
         result = true;
     }else{
         result = false;

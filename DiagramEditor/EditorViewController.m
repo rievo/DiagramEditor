@@ -178,6 +178,12 @@
         [askForMasterButton setHidden:YES];
     }else{
         [askForMasterButton setHidden:NO];
+        
+        //If I am not the server, invalidate timer
+        if(![dele amITheServer]){
+            [resendTimer invalidate];
+            resendTimer = nil;
+        }
     }
 }
 
@@ -208,7 +214,7 @@
     NSLog(@"Start sending");
     resendTimer = [NSTimer scheduledTimerWithTimeInterval:resendTime
                                                    target:self
-                                                 selector:@selector(resendInfo)
+                                                 selector:@selector(sendMasterInfo)
                                                  userInfo:nil
                                                   repeats:YES];
     [[NSRunLoop mainRunLoop]addTimer:resendTimer forMode:NSRunLoopCommonModes];
@@ -270,9 +276,11 @@
     
     //Send back you are new master
     
+    
+    //NO!!! Because I need to send my things
     //Invalidate my timer
-    [resendTimer invalidate];
-    resendTimer = nil;
+    //[resendTimer invalidate];
+    //resendTimer = nil;
     
     
     NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
@@ -1468,6 +1476,25 @@
     
 }
 
+-(void)sendMasterInfo{
+    
+    NSData * appDeleData = [dele packElementsInfo];
+    
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+    
+    [dic setObject:appDeleData forKey:@"data"];
+    [dic setObject:kNewMasterData forKey:@"msg"];
+    //Only servr should receive this
+    
+    NSError * error = nil;
+    
+    NSData * allData = [NSKeyedArchiver archivedDataWithRootObject:dic];
+    [dele.manager.session sendData:allData
+                           toPeers:dele.manager.session.connectedPeers
+                          withMode:MCSessionSendDataReliable
+                             error:&error];
+}
+
 
 -(void)resendInfo{
     //NSLog(@"resend");
@@ -1478,24 +1505,13 @@
     [dic setObject:appDeleData forKey:@"data"];
     [dic setObject:kUpdateData forKey:@"msg"];
     
+    NSError * error = nil;
+    
     NSData * allData = [NSKeyedArchiver archivedDataWithRootObject:dic];
     [dele.manager.session sendData:allData
                            toPeers:dele.manager.session.connectedPeers
                           withMode:MCSessionSendDataReliable
-                             error:nil];
-    
-    //NSData * appDeleData = [dele packElementsInfo];
-    
-    //NSData * appDeleData = [[NSString stringWithFormat:@"Hellou :D"]dataUsingEncoding:NSUTF8StringEncoding];
-    
-    //TODO: Send info
-    
-    /*NSArray * peers = dele.manager.session.connectedPeers;
-     NSError * error = nil;
-     [dele.manager.session sendData:appDeledata
-     toPeers:peers
-     withMode:MCSessionSendDataReliable
-     error:&error];*/
+                             error:&error];
 }
 
 
@@ -1515,30 +1531,52 @@
 }
 
 - (IBAction)iWantToBeTheNewMaster:(id)sender {
-    NSError * error = nil;
-   // NSArray * peers = [[NSArray alloc] initWithObjects:dele.manager, nil];
     
-    NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
-    [dic setObject:dele.myPeerInfo.peerID forKey:@"peerID"];
-    [dic setObject:kIWantToBeMaster forKey:@"msg"];
-    
-    NSLog(@"I will ask to be the new master");
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dic];
-    
-    [dele.manager.session sendData:data
-                           toPeers:dele.manager.session.connectedPeers
-                          withMode:MCSessionSendDataReliable error:&error];
-    
-    if(error != nil){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                        message:[error description]
+    if([dele amITheServer]){
+        //Make myself the master
+        dele.currentMasterId.peerID = dele.myPeerInfo.peerID;
+        
+        //Preparar los componentes
+        
+        for(Component * c in dele.components){
+            [c prepare];
+        }
+        
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
+                                                        message:@"You are the master now"
                                                        delegate:self
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];
     }else{
+        NSError * error = nil;
+        // NSArray * peers = [[NSArray alloc] initWithObjects:dele.manager, nil];
         
+        NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+        [dic setObject:dele.myPeerInfo.peerID forKey:@"peerID"];
+        [dic setObject:kIWantToBeMaster forKey:@"msg"];
+        
+        NSLog(@"I will ask to be the new master");
+        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dic];
+        
+        [dele.manager.session sendData:data
+                               toPeers:dele.manager.session.connectedPeers
+                              withMode:MCSessionSendDataReliable error:&error];
+        
+        if(error != nil){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                            message:[error description]
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }else{
+            
+        }
     }
+    
+
 }
 
 - (IBAction)showUsersList:(id)sender {

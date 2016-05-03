@@ -117,6 +117,15 @@
     
     //Tap to close
     
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(updateThisView:)
+                                                 name:@"repaintCanvas" object:nil];
+    
+}
+
+-(void)updateThisView: (NSNotification *)not{
+    [self setNeedsDisplay];
 }
 
 - (IBAction)closeDetailsViw:(id)sender {

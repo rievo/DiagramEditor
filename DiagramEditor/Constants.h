@@ -60,6 +60,7 @@ FOUNDATION_EXPORT NSString *const kUpdateData;
 FOUNDATION_EXPORT NSString *const kIWantToBeMaster;
 FOUNDATION_EXPORT NSString *const kYouAreTheNewMaster;
 FOUNDATION_EXPORT NSString *const kMasterPetitionDenied;
+FOUNDATION_EXPORT NSString *const kNewMasterData;
 
 FOUNDATION_EXPORT NSString *const kUpdateMasterButton;
 

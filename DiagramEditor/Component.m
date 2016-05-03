@@ -388,38 +388,45 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
 
 -(void)handlePanComp:(UIPanGestureRecognizer *)sender{
     
-    CGPoint translatedPoint =  [sender locationInView: dele.can];
-    
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
-    
-    if(sender.state == UIGestureRecognizerStateBegan){
+    if([dele amITheMaster]){
         
-    }else if(sender.state == UIGestureRecognizerStateChanged){
-        //NSLog(@"moooved");
-        [dele.can setNeedsDisplay];
+        CGPoint translatedPoint =  [sender locationInView: dele.can];
         
-        float halfW;
-        float halfh;
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
         
-        halfW = self.frame.size.width / 2;
-        halfh = self.frame.size.height / 2;
-        
-        
-        if(translatedPoint.x <  halfW)
-            translatedPoint.x = halfW;
-        if(translatedPoint.x > dele.originalCanvasRect.size.width - halfW)
-            translatedPoint.x = dele.originalCanvasRect.size.width - halfW;
-        
-        if(translatedPoint.y < halfh)
-            translatedPoint.y = halfh;
-        if(translatedPoint.y > dele.originalCanvasRect.size.height - halfh)
-            translatedPoint.y = dele.originalCanvasRect.size.height - halfh;
-        
-        self.center = translatedPoint;
-        
-    }else if(sender.state == UIGestureRecognizerStateEnded){
-        [dele.can setNeedsDisplay];
+        if(sender.state == UIGestureRecognizerStateBegan){
+            
+        }else if(sender.state == UIGestureRecognizerStateChanged){
+            //NSLog(@"moooved");
+            [dele.can setNeedsDisplay];
+            
+            float halfW;
+            float halfh;
+            
+            halfW = self.frame.size.width / 2;
+            halfh = self.frame.size.height / 2;
+            
+            
+            if(translatedPoint.x <  halfW)
+                translatedPoint.x = halfW;
+            if(translatedPoint.x > dele.originalCanvasRect.size.width - halfW)
+                translatedPoint.x = dele.originalCanvasRect.size.width - halfW;
+            
+            if(translatedPoint.y < halfh)
+                translatedPoint.y = halfh;
+            if(translatedPoint.y > dele.originalCanvasRect.size.height - halfh)
+                translatedPoint.y = dele.originalCanvasRect.size.height - halfh;
+            
+            self.center = translatedPoint;
+            
+        }else if(sender.state == UIGestureRecognizerStateEnded){
+            [dele.can setNeedsDisplay];
+        }
+
+    }else{
+        //I am not the master. I have to ignore this
     }
+    
 }
 
 

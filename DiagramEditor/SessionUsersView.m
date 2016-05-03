@@ -55,9 +55,16 @@
     [self addGestureRecognizer:tapgr];
     
     goodCenter = self.center;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleUpdateMasterButton:)
+                                                 name:kUpdateMasterButton
+                                               object:nil];
 }
 
-
+-(void)handleUpdateMasterButton: (NSNotification *)not{
+    [self recoverUsersFromAppDelegateSession];
+}
 
 -(void)handleTap:(UITapGestureRecognizer *)recog{
     [self removeFromSuperview];
@@ -119,14 +126,20 @@
         cell.textLabel.adjustsFontSizeToFitWidth = YES;
         [cell.textLabel setMinimumScaleFactor:0.5];
         
-         cell.textLabel.textColor = dele.blue1;
+        cell.textLabel.textColor = dele.blue1;
+        
+        NSString * text = peer.displayName;
         
         
-        if(peer  == dele.myPeerInfo.peerID){
-            cell.textLabel.text = [NSString stringWithFormat:@"-> %@",peer.displayName];
-        }else{
-           cell.textLabel.text = peer.displayName;
+        if(peer  == dele.serverId.peerID){
+            text = [text stringByAppendingString:@" (S)"];
         }
+        
+        if(peer == dele.currentMasterId.peerID){
+            text = [text stringByAppendingString:@" (M)"];
+        }
+        
+        cell.textLabel.text = text;
     }
     return cell;
 }
