@@ -388,7 +388,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
 
 -(void)handlePanComp:(UIPanGestureRecognizer *)sender{
     
-    if([dele amITheMaster]){
+    if([dele amITheMaster] || dele.manager.session.connectedPeers.count == 0){
         
         CGPoint translatedPoint =  [sender locationInView: dele.can];
         

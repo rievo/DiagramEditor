@@ -402,7 +402,7 @@
 -(void)handlePan:(UIPanGestureRecognizer *)recog{
     PaletteItem * sender = (PaletteItem *)recog.view;
     
-    if([dele amITheMaster]){
+    if([dele amITheMaster] || dele.manager.session.connectedPeers.count == 0){
         CGPoint p = [recog locationInView:self.view];
         
         if(recog.state == UIGestureRecognizerStateBegan && ![sender.type isEqualToString:@"graphicR:Edge"]){
@@ -778,16 +778,16 @@
     NSString *base64Encoded = [imageData base64EncodedStringWithOptions:0];
     [dic setObject:base64Encoded forKey:@"imageData"];
     
-    NSError *error;
+    NSError *jsonError = nil;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic
                                                        options:0 // Pass 0 if you don't care about the readability of the generated string
-                                                         error:&error];
+                                                         error:&jsonError];
     
     NSString *string = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding] ;
     
     NSData * data = [string dataUsingEncoding:NSUTF8StringEncoding];
     
-    if(!error){
+    if(jsonError == nil){
         NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://diagrameditorserver.herokuapp.com/diagrams?json=true"]];
         //NSURLRequest * urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:2.0];
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
@@ -815,13 +815,13 @@
              
              
              
-             NSDictionary * errorDic = [dic objectForKey:@"error"];
-             NSString * codenum = [errorDic objectForKey:@"code"];
-             NSString * code = [NSString stringWithFormat:@"%@", codenum];
+             //NSDictionary * errorDic = [dic objectForKey:@"error"];
+             NSString * code = [dic objectForKey:@"code"];
+           
              
              if([code isEqualToString:@"200"]){ //Good :)
                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
-                                                                 message:@"Diagram was save on server"
+                                                                 message:@"Diagram saved on server"
                                                                 delegate:self
                                                        cancelButtonTitle:@"OK"
                                                        otherButtonTitles:nil];
