@@ -84,6 +84,7 @@ EdgeListDelegate, MCBrowserViewControllerDelegate>{
     CGRect paletteRect;
     CGRect collapsedRect;
     
+    __weak IBOutlet UIButton *collaborationButton;
     
     SessionUsersView *usersListView;
     __weak IBOutlet UIButton *showUsersPeersViewButton;

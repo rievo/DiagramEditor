@@ -504,6 +504,7 @@
                     <connections>
                         <outlet property="askForMasterButton" destination="fVi-At-lwc" id="K99-p1-d1K"/>
                         <outlet property="cameraOutlet" destination="uUY-Bf-x28" id="8QP-k4-baA"/>
+                        <outlet property="collaborationButton" destination="Y5T-CR-Azl" id="naV-Or-Mao"/>
                         <outlet property="newDiagram" destination="YCF-FE-eUA" id="yt6-v6-sNy"/>
                         <outlet property="palette" destination="KOd-BW-gdm" id="frF-Rk-gkH"/>
                         <outlet property="saveButton" destination="L72-M5-gdo" id="GSJ-zJ-TBk"/>

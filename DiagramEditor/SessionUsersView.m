@@ -115,8 +115,8 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
     MCPeerID * peer = [usersArray objectAtIndex:indexPath.row];
-    if (cell == nil)
-    {
+    //if (cell == nil)
+    //{
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                       reuseIdentifier:MyIdentifier] ;
         
@@ -135,12 +135,12 @@
             text = [text stringByAppendingString:@" (S)"];
         }
         
-        if(peer == dele.currentMasterId.peerID){
+        if(peer.displayName == dele.currentMasterId.peerID.displayName){
             text = [text stringByAppendingString:@" (M)"];
         }
         
         cell.textLabel.text = text;
-    }
+    //}
     return cell;
 }
 

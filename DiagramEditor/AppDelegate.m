@@ -112,13 +112,10 @@
         [cc performSegueWithIdentifier:@"showEditor" sender:self];
     }else if([msg isEqualToString:kUpdateData]){
         
-        // if([self amITheMaster]){ //If I'm the master, ignore updates
-        
-        //}else{
+
         //Lo hago sí o sí
         NSData * appdeleData = [dataDic objectForKey:@"data"];
         NSDictionary * dic = [NSKeyedUnarchiver unarchiveObjectWithData:appdeleData];
-        
         
         
         
@@ -154,12 +151,7 @@
         [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateMasterButton object:nil];
-        //}
-        
-        
-        /*
-         
-         */
+
         
     }else if([msg isEqualToString:kIWantToBeMaster]){
         

@@ -30,7 +30,8 @@
         //Para cuando haga la búsqueda
         browser = [[MCBrowserViewController alloc] initWithServiceType:SERVICE_NAME
                                                                session:session];
-        browser.maximumNumberOfPeers = 15;
+        //browser.maximumNumberOfPeers = 15;
+        [browser setMaximumNumberOfPeers:15];
         //Para cuando me promocione
         advertiser = [[MCAdvertiserAssistant alloc] initWithServiceType:SERVICE_NAME
                                                           discoveryInfo:nil

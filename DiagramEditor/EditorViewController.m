@@ -174,6 +174,7 @@
 }
 
 -(void) handleUpdateMasterButton:(NSNotification *)not{
+    
     if([dele amITheMaster] == YES){
         [askForMasterButton setHidden:YES];
     }else{
@@ -184,6 +185,16 @@
             [resendTimer invalidate];
             resendTimer = nil;
         }
+    }
+    
+    
+    //Disable create connection
+    if([dele amITheServer] == TRUE){
+        [collaborationButton setEnabled:YES];
+        [collaborationButton setAlpha:1.0];
+    }else{
+        [collaborationButton setEnabled:NO];
+        [collaborationButton setAlpha:0.5];
     }
 }
 
