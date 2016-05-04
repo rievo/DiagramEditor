@@ -391,92 +391,97 @@
 -(void)handlePan:(UIPanGestureRecognizer *)recog{
     PaletteItem * sender = (PaletteItem *)recog.view;
     
-    CGPoint p = [recog locationInView:self.view];
-    
-    if(recog.state == UIGestureRecognizerStateBegan && ![sender.type isEqualToString:@"graphicR:Edge"]){
-        //Creamos el icono temporal
-        tempIcon = [[PaletteItem alloc] init];
-        tempIcon.type = sender.type;
-        tempIcon.dialog = sender.dialog;
-        tempIcon.width = sender.width;
-        tempIcon.height = sender.height;
-        tempIcon.shapeType = sender.shapeType;
-        [tempIcon setFrame:sender.frame];
-        [tempIcon setAlpha:0.2];
-        tempIcon.center = p;
-        tempIcon.backgroundColor = [UIColor blackColor];
-        [self.view addSubview:tempIcon];
-    }else if(recog.state == UIGestureRecognizerStateChanged&& ![sender.type isEqualToString:@"graphicR:Edge"]){
-        //Movemos el icono temporal
-        tempIcon.center = p;
-    }else if(recog.state == UIGestureRecognizerStateEnded&& ![sender.type isEqualToString:@"graphicR:Edge"]){
-        //Retiramos el icono temporal
-        [tempIcon removeFromSuperview];
-        tempIcon = nil;
+    if([dele amITheMaster]){
+        CGPoint p = [recog locationInView:self.view];
         
-        //Check if point is inside canvas.
-        
-        CGPoint pointInSV = [self.view convertPoint:p toView:canvas];
-        
-        if(CGRectContainsPoint(scrollView.frame, p)){
-            //Añadimos un Component al lienzo
-            if([sender.type isEqualToString:@"graphicR:Node"]){
-                //It is a node
-                NSLog(@"Creating a node");
-                
-                
-                
-                Component * comp = [sender getComponentForThisPaletteItem];
-                comp.canvas = self.view;
-                [comp setFrame:CGRectMake(0, 0, sender.width.floatValue * scaleFactor, sender.height.floatValue * scaleFactor)];
-                [comp setCenter:pointInSV];
-                [comp fitNameLabel];
-                
-                
-                [dele.components addObject:comp];
-                [comp updateNameLabel];
-                [canvas addSubview:comp];
-                
-            }else if([sender.type isEqualToString:@"graphicR:Edge"]){
-                //It is an edge
-                
-                //Comprobamos si hay alguna relación cerca
-                //En caso de que la haya, esa relación pasará a ser del tipo arrastrado
-                
-                //sender.attributes tiene los atributos
-                //
-                
-                Connection * con;
-                for(int  i = 0; i< dele.connections.count; i++){
-                    con = [dele.connections objectAtIndex:i];
-                    BOOL res = [canvas isPoint:pointInSV
-                                withinDistance:10.0
-                                        ofPath:con.arrowPath.CGPath];
+        if(recog.state == UIGestureRecognizerStateBegan && ![sender.type isEqualToString:@"graphicR:Edge"]){
+            //Creamos el icono temporal
+            tempIcon = [[PaletteItem alloc] init];
+            tempIcon.type = sender.type;
+            tempIcon.dialog = sender.dialog;
+            tempIcon.width = sender.width;
+            tempIcon.height = sender.height;
+            tempIcon.shapeType = sender.shapeType;
+            [tempIcon setFrame:sender.frame];
+            [tempIcon setAlpha:0.2];
+            tempIcon.center = p;
+            tempIcon.backgroundColor = [UIColor blackColor];
+            [self.view addSubview:tempIcon];
+        }else if(recog.state == UIGestureRecognizerStateChanged&& ![sender.type isEqualToString:@"graphicR:Edge"]){
+            //Movemos el icono temporal
+            tempIcon.center = p;
+        }else if(recog.state == UIGestureRecognizerStateEnded&& ![sender.type isEqualToString:@"graphicR:Edge"]){
+            //Retiramos el icono temporal
+            [tempIcon removeFromSuperview];
+            tempIcon = nil;
+            
+            //Check if point is inside canvas.
+            
+            CGPoint pointInSV = [self.view convertPoint:p toView:canvas];
+            
+            if(CGRectContainsPoint(scrollView.frame, p)){
+                //Añadimos un Component al lienzo
+                if([sender.type isEqualToString:@"graphicR:Node"]){
+                    //It is a node
+                    NSLog(@"Creating a node");
                     
-                    if(res == true){
-                        //Set that connection to sender
-                        //con.reference = sender;
-                        NSLog(@"Change reference type");
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
-                                                                        message:@"Changing connection type"
-                                                                       delegate:self
-                                                              cancelButtonTitle:@"OK"
-                                                              otherButtonTitles:nil];
-                        [alert show];
+                    
+                    
+                    Component * comp = [sender getComponentForThisPaletteItem];
+                    comp.canvas = self.view;
+                    [comp setFrame:CGRectMake(0, 0, sender.width.floatValue * scaleFactor, sender.height.floatValue * scaleFactor)];
+                    [comp setCenter:pointInSV];
+                    [comp fitNameLabel];
+                    
+                    
+                    [dele.components addObject:comp];
+                    [comp updateNameLabel];
+                    [canvas addSubview:comp];
+                    
+                }else if([sender.type isEqualToString:@"graphicR:Edge"]){
+                    //It is an edge
+                    
+                    //Comprobamos si hay alguna relación cerca
+                    //En caso de que la haya, esa relación pasará a ser del tipo arrastrado
+                    
+                    //sender.attributes tiene los atributos
+                    //
+                    
+                    Connection * con;
+                    for(int  i = 0; i< dele.connections.count; i++){
+                        con = [dele.connections objectAtIndex:i];
+                        BOOL res = [canvas isPoint:pointInSV
+                                    withinDistance:10.0
+                                            ofPath:con.arrowPath.CGPath];
                         
-                        con.attributes = sender.attributes;
-                        
-                    }else{
-                        //Nothing to do
+                        if(res == true){
+                            //Set that connection to sender
+                            //con.reference = sender;
+                            NSLog(@"Change reference type");
+                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
+                                                                            message:@"Changing connection type"
+                                                                           delegate:self
+                                                                  cancelButtonTitle:@"OK"
+                                                                  otherButtonTitles:nil];
+                            [alert show];
+                            
+                            con.attributes = sender.attributes;
+                            
+                        }else{
+                            //Nothing to do
+                        }
                     }
                 }
+            }else{
+                NSLog(@"There is no canvas on this point.");
             }
-        }else{
-            NSLog(@"There is no canvas on this point.");
+            
+            
         }
-        
-        
+
     }
+    
+    
 }
 
 
@@ -1549,6 +1554,8 @@
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];
+        
+        [askForMasterButton setHidden:YES];
     }else{
         NSError * error = nil;
         // NSArray * peers = [[NSArray alloc] initWithObjects:dele.manager, nil];

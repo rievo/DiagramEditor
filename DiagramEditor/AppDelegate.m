@@ -168,7 +168,7 @@
         
         if([myName isEqualToString:serverName]){
             MCPeerID * who = [dataDic objectForKey:@"peerID"];
-            NSLog(@"\n\n\n--------------\n%@ pide ser el máster\n----------\n\n", who.displayName);
+            NSLog(@"\n\n\n--------------\n%@ ask to be the new master\n----------\n\n", who.displayName);
             
             NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
             [dic setObject:who forKey:@"peerID"];
@@ -184,7 +184,7 @@
         MCPeerID * who = [dataDic objectForKey:@"peerID"];
         
         if([who.displayName isEqualToString: myPeerInfo.peerID.displayName]){
-            NSLog(@"\n\n\n--------------\n%@ me ha concedido ser el máster\n----------\n\n", who.displayName);
+            NSLog(@"\n\n\n--------------\n%@ granted me to be the master\n----------\n\n", who.displayName);
             [[NSNotificationCenter defaultCenter]postNotificationName:kYouAreTheNewMaster object:nil userInfo:dic];
         }else{ //Somebody is the new master
             NSLog(@"I'm not the receiver, just ignore this");
@@ -197,7 +197,7 @@
         MCPeerID * who = [dataDic objectForKey:@"peerID"];
         
         if([who.displayName isEqualToString: myPeerInfo.peerID.displayName]){
-            NSLog(@"\n\n\n--------------\n%@ me ha denegado ser el máster\n----------\n\n", who.displayName);
+            NSLog(@"\n\n\n--------------\n%@ dennied me to be the master\n----------\n\n", who.displayName);
             [[NSNotificationCenter defaultCenter]postNotificationName:kMasterPetitionDenied object:nil userInfo:dic];
         }else{
             NSLog(@"I'm not the receiver, just ignore this");
