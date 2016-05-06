@@ -91,6 +91,27 @@ EdgeListDelegate, MCBrowserViewControllerDelegate>{
     
 
     __weak IBOutlet UIButton *askForMasterButton;
+    
+    
+    
+    BOOL showingPossibleAlerts;
+    __weak IBOutlet UIButton *alerts;
+    __weak IBOutlet UIImageView *exclamationAlert;
+    __weak IBOutlet UIImageView *interrogationAlert;
+    __weak IBOutlet UIImageView *arrowAlert;
+    
+    UIImageView * temporalAlertIcon;
+    
+    CGRect exclamationFrame;
+    CGRect interrogationFrame;
+    CGRect arrowFrame;
+    
+    
+    CGPoint alertsCenter;
+    CGPoint exclamationCenter;
+    CGPoint interrogationCenter;
+    CGPoint arrowCenter;
+    
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
@@ -115,5 +136,6 @@ EdgeListDelegate, MCBrowserViewControllerDelegate>{
 - (IBAction)iWantToBeTheNewMaster:(id)sender;
 
 - (IBAction)showUsersList:(id)sender;
+- (IBAction)showPossibleAlerts:(id)sender;
 
 @end

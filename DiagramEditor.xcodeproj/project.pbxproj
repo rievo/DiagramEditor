@@ -113,6 +113,10 @@
 		F1C417BA1CB66F2D0075234C /* CustomTableHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1C417B91CB66F2D0075234C /* CustomTableHeader.xib */; };
 		F1C6347B1C2842C30072912D /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C6347A1C2842C30072912D /* camera.png */; };
 		F1F29C691C64C8F70035F0B6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1F29C681C64C8F70035F0B6 /* AudioToolbox.framework */; };
+		F1FEE70B1CDCA63400FD4E9B /* botarrow.png in Resources */ = {isa = PBXBuildFile; fileRef = F1FEE7071CDCA63400FD4E9B /* botarrow.png */; };
+		F1FEE70C1CDCA63400FD4E9B /* question.png in Resources */ = {isa = PBXBuildFile; fileRef = F1FEE7081CDCA63400FD4E9B /* question.png */; };
+		F1FEE70D1CDCA63400FD4E9B /* exclamation.png in Resources */ = {isa = PBXBuildFile; fileRef = F1FEE7091CDCA63400FD4E9B /* exclamation.png */; };
+		F1FEE70E1CDCA63400FD4E9B /* alerts.png in Resources */ = {isa = PBXBuildFile; fileRef = F1FEE70A1CDCA63400FD4E9B /* alerts.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -268,6 +272,10 @@
 		F1C417B91CB66F2D0075234C /* CustomTableHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomTableHeader.xib; sourceTree = "<group>"; };
 		F1C6347A1C2842C30072912D /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
 		F1F29C681C64C8F70035F0B6 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		F1FEE7071CDCA63400FD4E9B /* botarrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = botarrow.png; sourceTree = "<group>"; };
+		F1FEE7081CDCA63400FD4E9B /* question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = question.png; sourceTree = "<group>"; };
+		F1FEE7091CDCA63400FD4E9B /* exclamation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = exclamation.png; sourceTree = "<group>"; };
+		F1FEE70A1CDCA63400FD4E9B /* alerts.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alerts.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -448,6 +456,7 @@
 		F17B75AE1C22D9D500AB1B57 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				F1FEE7001CDCA51C00FD4E9B /* actions */,
 				F181349B1CBCF169000AE209 /* menu.png */,
 				F10CC8EF1CC518D1007F2B11 /* masterBox.png */,
 				F10CC8E91CBFA332007F2B11 /* master.png */,
@@ -554,6 +563,17 @@
 			name = palettes;
 			sourceTree = "<group>";
 		};
+		F1FEE7001CDCA51C00FD4E9B /* actions */ = {
+			isa = PBXGroup;
+			children = (
+				F1FEE7071CDCA63400FD4E9B /* botarrow.png */,
+				F1FEE7081CDCA63400FD4E9B /* question.png */,
+				F1FEE7091CDCA63400FD4E9B /* exclamation.png */,
+				F1FEE70A1CDCA63400FD4E9B /* alerts.png */,
+			);
+			name = actions;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -622,9 +642,13 @@
 				F1AB3B161C22B19800EDBB1D /* resize.png in Resources */,
 				F1C417BA1CB66F2D0075234C /* CustomTableHeader.xib in Resources */,
 				F16C7DC81C578D3900CA9B25 /* ConnectionDetailsView.xib in Resources */,
+				F1FEE70C1CDCA63400FD4E9B /* question.png in Resources */,
+				F1FEE70E1CDCA63400FD4E9B /* alerts.png in Resources */,
 				F163C5391C9D6501007824D2 /* hand.png in Resources */,
 				F1431E8E1C5249F7006A45BC /* ComponentDetailsView.xib in Resources */,
+				F1FEE70B1CDCA63400FD4E9B /* botarrow.png in Resources */,
 				F15379741C919B9A001D8FFB /* AttributesFilterView.xib in Resources */,
+				F1FEE70D1CDCA63400FD4E9B /* exclamation.png in Resources */,
 				F15379791C91A25C001D8FFB /* search.png in Resources */,
 				F171FA751C885F0C005C37D4 /* go.png in Resources */,
 				F18510861C1824C8004EC4C8 /* LaunchScreen.storyboard in Resources */,

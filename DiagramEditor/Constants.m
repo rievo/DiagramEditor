@@ -42,6 +42,11 @@ NSString * const kMasterPetitionDenied = @"kMasterPetitionDenied";
 NSString * const kUpdateMasterButton = @"kUpdateMasterButton";
 NSString * const kNewMasterData = @"kNewMasterData";
 
+NSString * const kExclamation = @"kExclamation";
+NSString * const kInterrogation = @"kInterrogation";
+NSString * const kArrow = @"kArrow";
+NSString * const kNewAlert = @"kNewAlert";
+
 @implementation Constants
 
 @end

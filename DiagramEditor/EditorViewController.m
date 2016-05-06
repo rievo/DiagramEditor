@@ -169,9 +169,44 @@
                                                  name:kUpdateMasterButton
                                                object:nil];
     
+    //kNewAlert
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleNewAlert:)
+                                                 name:kNewAlert
+                                               object:nil];
     
     [showUsersPeersViewButton setHidden:YES];
+    
+    arrowFrame = arrowAlert.frame;
+    interrogationFrame = interrogationAlert.frame;
+    exclamationFrame = exclamationAlert.frame;
+    
+    arrowCenter = arrowAlert.center;
+    interrogationCenter = interrogationAlert.center;
+    exclamationCenter = exclamationAlert.center;
+    alertsCenter = alerts.center;
+    
+    [interrogationAlert setUserInteractionEnabled:YES];
+    [exclamationAlert setUserInteractionEnabled:YES];
+    [arrowAlert setUserInteractionEnabled:YES];
+    
+    showingPossibleAlerts = NO;
+    [interrogationAlert setHidden:YES];
+    [exclamationAlert setHidden:YES];
+    [arrowAlert setHidden:YES];
+    
+    UIPanGestureRecognizer *panalertInt = [[UIPanGestureRecognizer alloc] initWithTarget:self
+                                                                               action:@selector(handleAlertPan:)];
+    UIPanGestureRecognizer *panalertEx = [[UIPanGestureRecognizer alloc] initWithTarget:self
+                                                                                 action:@selector(handleAlertPan:)];
+    UIPanGestureRecognizer *panalertArr = [[UIPanGestureRecognizer alloc] initWithTarget:self
+                                                                                 action:@selector(handleAlertPan:)];
+    [interrogationAlert addGestureRecognizer:panalertInt];
+    [arrowAlert addGestureRecognizer:panalertArr];
+    [exclamationAlert addGestureRecognizer:panalertEx];
+    
 }
+
 
 -(void) handleUpdateMasterButton:(NSNotification *)not{
     
@@ -1051,6 +1086,8 @@
     [dele.connections removeAllObjects];
     [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
     
+    [dele.manager.session disconnect];
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -1602,24 +1639,219 @@
     [self.view addSubview:usersListView];
 }
 
+#pragma mark Alert buttons
+
+- (IBAction)showPossibleAlerts:(id)sender {
+    if(showingPossibleAlerts == YES){ //Hide them
+        [self hideAlerts];
+    }else{ //They are hidden, show them
+        [self showAlerts];
+    }
+}
+
+
+-(void)showAlerts{
+    //Do animations
+    
+    [exclamationAlert setCenter:alertsCenter];
+    [interrogationAlert setCenter:alertsCenter];
+    [arrowAlert setCenter:alertsCenter];
+    
+    [UIView animateWithDuration:0.1
+                          delay:0.0
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         [exclamationAlert setHidden:NO];
+                         [exclamationAlert setCenter:exclamationCenter];
+                     } completion:^(BOOL finished) {
+                         [UIView animateWithDuration:0.1
+                                               delay:0.0
+                                             options:UIViewAnimationOptionCurveEaseOut
+                                          animations:^{
+                                              [interrogationAlert setHidden:NO];
+                                              [interrogationAlert setCenter:interrogationCenter];
+                                          } completion:^(BOOL finished) {
+                                              [UIView animateWithDuration:0.1
+                                                                    delay:0.0
+                                                                  options:UIViewAnimationOptionCurveEaseOut
+                                                               animations:^{
+                                                                   [arrowAlert setHidden:NO];
+                                                                   [arrowAlert setCenter:arrowCenter];
+                                                               } completion:^(BOOL finished) {
+                                                                    showingPossibleAlerts = YES;
+                                                               }];
+                                          }];
+                     }];
+    
+    
+    
+    
+    
+
+}
+
+-(void)hideAlerts{
+    //Do animations
+    [UIView animateWithDuration:0.1
+                          delay:0.0
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         
+                         [arrowAlert setCenter:alertsCenter];
+                     } completion:^(BOOL finished) {
+                         [arrowAlert setHidden:YES];
+                         [UIView animateWithDuration:0.1
+                                               delay:0.0
+                                             options:UIViewAnimationOptionCurveEaseOut
+                                          animations:^{
+                                              
+                                              [interrogationAlert setCenter:alertsCenter];
+                                          } completion:^(BOOL finished) {
+                                              [interrogationAlert setHidden:YES];
+                                              [UIView animateWithDuration:0.1
+                                                                    delay:0.0
+                                                                  options:UIViewAnimationOptionCurveEaseOut
+                                                               animations:^{
+                                                                   
+                                                                   [exclamationAlert setCenter:alertsCenter];
+                                                               } completion:^(BOOL finished) {
+                                                                   [exclamationAlert setHidden: YES];
+                                                                   showingPossibleAlerts = NO;
+                                                               }];
+                                          }];
+                     }];
+
+}
+
+-(void)handleAlertPan:(UIPanGestureRecognizer *)recog{
+    UIImageView * view = (UIImageView* )recog.view;
+    /*
+    if(view == exclamationAlert){
+        NSLog(@" !! ");
+    }else if(view == interrogationAlert){
+        NSLog(@" ?? ");
+    }else if(view == arrowAlert){
+        NSLog(@" arrow ");
+    }*/
+    
+    CGPoint point = [recog locationInView:self.view];
+    
+    
+    if(recog.state == UIGestureRecognizerStateBegan){
+        UIImage * image = [view.image copy];
+        temporalAlertIcon = [[UIImageView alloc] initWithFrame:view.frame ];
+        temporalAlertIcon.image = image;
+        temporalAlertIcon.center = point;
+        [self.view addSubview:temporalAlertIcon];
+    }else if(recog.state == UIGestureRecognizerStateChanged){
+        [temporalAlertIcon setCenter:point];
+    }else if(recog.state == UIGestureRecognizerStateEnded){
+        [temporalAlertIcon removeFromSuperview];
+        
+        CGPoint pointInSV = [self.view convertPoint:point toView:canvas];
+        
+        [self sendAlert:view onPoint:pointInSV];
+        temporalAlertIcon = nil;
+    }
+    
+}
+
+-(void)sendAlert:(UIImageView *)view
+         onPoint:(CGPoint)point{
+    
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:kNewAlert forKey:@"msg"];
+    
+    [dic setObject:dele.myPeerInfo.peerID forKey:@"who"];
+    
+    
+    
+    
+    if(view == exclamationAlert){
+        [dic setObject:kExclamation forKey:@"alertType"];
+    }else if(view == interrogationAlert){
+        [dic setObject:kInterrogation forKey:@"alertType"];
+    }else if(view == arrowAlert){
+        [dic setObject:kArrow forKey:@"alertType"];;
+    }
+    NSValue * val = [NSValue valueWithCGPoint:point];
+    [dic setObject:val forKey:@"where"];
+    
+    
+
+    
+    NSError * error = nil;
+    
+    NSData * allData = [NSKeyedArchiver archivedDataWithRootObject:dic];
+    [dele.manager.session sendData:allData
+                           toPeers:dele.manager.session.connectedPeers
+                          withMode:MCSessionSendDataReliable
+                             error:&error];
+    
+    if(error != nil){
+        NSLog(@"ERROR SENDING ALERT");
+    }
+}
+
+-(void)handleNewAlert:(NSNotification *)not{
+    NSDictionary * dic = [not userInfo];
+    
+    NSValue * whereVal = [dic objectForKey:@"where"];
+    CGPoint where = [whereVal CGPointValue];
+    
+    MCPeerID * who = [dic objectForKey:@"who"];
+    
+    NSString * type = [dic objectForKey:@"alertType"];
+    
+    
+    UIImageView * imageView = [[UIImageView alloc] initWithFrame:alerts.frame];
+    
+    imageView.center = where;
+    
+    if([type isEqualToString:kArrow]){
+        imageView.image = arrowAlert.image;
+    }else if([type isEqualToString:kInterrogation]){
+        imageView.image = interrogationAlert.image;
+    }else if([type isEqualToString:kExclamation]){
+        imageView.image = exclamationAlert.image;
+    }
+    
+    
+    [canvas addSubview:imageView];
+    
+    
+    NSMutableDictionary * whatView = [[NSMutableDictionary alloc] init];
+    [whatView setObject:imageView forKey:@"view"];
+    
+    NSTimer * removeTimer;
+    
+    removeTimer = [NSTimer scheduledTimerWithTimeInterval:stayAlertTime
+                                       target:self
+                   
+                                                 selector:@selector(removeAlert:)
+                                     userInfo:whatView
+                                      repeats:NO];
+    
+    [[NSRunLoop mainRunLoop]addTimer:removeTimer forMode:NSRunLoopCommonModes];
+
+
+}
+
+-(void)removeAlert: (NSTimer * )sender{
+    NSDictionary * dic = sender.userInfo;
+    
+    UIImageView * view = [dic objectForKey:@"view"];
+    
+    [view removeFromSuperview];
+    
+    [sender invalidate];
+    sender = nil;
+}
+
+#pragma mark Collapse or showing palette
 -(void)collapsePalette{
     
-    /*CGRect thisRect = CGRectMake(paletteRect.origin.x,
-     paletteRect.origin.y,
-     0,
-     paletteRect.size.height);
-     [showHidePaletteOutlet setEnabled:NO];
-     
-     [UIView animateWithDuration:0.3
-     delay:0.0
-     options:UIViewAnimationOptionCurveEaseOut
-     animations:^{
-     [palette setFrame:thisRect];
-     }
-     completion:^(BOOL finished) {
-     [palette setHidden:YES];
-     [showHidePaletteOutlet setEnabled:YES];
-     }];*/
+
     [palette setHidden:YES];
 }
 

@@ -447,6 +447,38 @@
                                     <action selector="showUsersList:" destination="b9M-0K-SdS" eventType="touchUpInside" id="Xeq-Wf-heR"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wb5-EY-8bb">
+                                <rect key="frame" x="24" y="66" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="8Yr-5O-KhZ"/>
+                                    <constraint firstAttribute="height" constant="40" id="aRn-LY-oci"/>
+                                </constraints>
+                                <state key="normal" image="alerts.png"/>
+                                <connections>
+                                    <action selector="showPossibleAlerts:" destination="b9M-0K-SdS" eventType="touchUpInside" id="SyT-BE-oR5"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="exclamation.png" translatesAutoresizingMaskIntoConstraints="NO" id="J5e-Vs-3e3">
+                                <rect key="frame" x="69" y="66" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="ZvK-Db-35s"/>
+                                    <constraint firstAttribute="width" constant="40" id="cQl-ag-3Fg"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="question.png" translatesAutoresizingMaskIntoConstraints="NO" id="WFY-dG-iOb">
+                                <rect key="frame" x="69" y="114" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="018-ba-7Sn"/>
+                                    <constraint firstAttribute="height" constant="40" id="cmT-9X-tEV"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="botarrow.png" translatesAutoresizingMaskIntoConstraints="NO" id="L7T-zs-Gi3">
+                                <rect key="frame" x="24" y="114" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="BLy-Dy-DNE"/>
+                                    <constraint firstAttribute="height" constant="40" id="c9v-2r-Oiu"/>
+                                </constraints>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hEJ-JO-Gjo">
                                 <rect key="frame" x="240" y="20" width="32" height="32"/>
                                 <constraints>
@@ -466,25 +498,33 @@
                             <constraint firstItem="uUY-Bf-x28" firstAttribute="leading" secondItem="N0x-kF-Nfy" secondAttribute="trailing" constant="16" id="9zO-7g-XSL"/>
                             <constraint firstItem="Y5T-CR-Azl" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="20" id="E0n-r3-dsC"/>
                             <constraint firstItem="3b3-aY-7QT" firstAttribute="leading" secondItem="PyO-ue-whg" secondAttribute="trailing" constant="22" id="Fkd-YI-8Dh"/>
+                            <constraint firstItem="wb5-EY-8bb" firstAttribute="leading" secondItem="j52-t0-ne9" secondAttribute="leadingMargin" constant="4" id="Jq4-xS-Pxh"/>
                             <constraint firstItem="qfw-RW-wH7" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="60" id="MNf-lD-neO"/>
                             <constraint firstItem="3b3-aY-7QT" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="20" id="MwF-cl-ueo"/>
                             <constraint firstItem="uUY-Bf-x28" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="20" id="Mz0-Fv-UBQ"/>
+                            <constraint firstItem="WFY-dG-iOb" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="114" id="Plh-xG-FRj"/>
+                            <constraint firstItem="L7T-zs-Gi3" firstAttribute="leading" secondItem="j52-t0-ne9" secondAttribute="leadingMargin" constant="4" id="PvQ-OE-J4j"/>
                             <constraint firstItem="bKe-dJ-Azz" firstAttribute="top" secondItem="9YV-kE-mug" secondAttribute="bottom" constant="20" id="QAa-qh-1Y6"/>
                             <constraint firstAttribute="leadingMargin" secondItem="ZbX-xh-hJ7" secondAttribute="leading" id="Rcs-yX-UX6"/>
                             <constraint firstItem="npt-04-keg" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="20" id="SAI-Xe-YYU"/>
                             <constraint firstItem="L72-M5-gdo" firstAttribute="leading" secondItem="YCF-FE-eUA" secondAttribute="trailing" constant="14" id="Smn-Iw-y6C"/>
+                            <constraint firstItem="wb5-EY-8bb" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="66" id="ThL-bu-bjn"/>
                             <constraint firstAttribute="leadingMargin" secondItem="YCF-FE-eUA" secondAttribute="leading" id="WEb-cL-tT2"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fVi-At-lwc" secondAttribute="trailing" constant="7" id="WNm-oM-AXW"/>
                             <constraint firstItem="PyO-ue-whg" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="20" id="Yxs-yk-n8K"/>
                             <constraint firstItem="KOd-BW-gdm" firstAttribute="leading" secondItem="ZbX-xh-hJ7" secondAttribute="trailing" constant="8" id="b4q-9B-n2c"/>
                             <constraint firstItem="qfw-RW-wH7" firstAttribute="centerX" secondItem="j52-t0-ne9" secondAttribute="centerX" id="bqe-bg-lUG"/>
+                            <constraint firstItem="WFY-dG-iOb" firstAttribute="leading" secondItem="j52-t0-ne9" secondAttribute="leadingMargin" constant="49" id="dgc-vt-F3G"/>
                             <constraint firstAttribute="trailingMargin" secondItem="KOd-BW-gdm" secondAttribute="trailing" constant="9" id="ejc-1s-K2F"/>
+                            <constraint firstItem="J5e-Vs-3e3" firstAttribute="leading" secondItem="wb5-EY-8bb" secondAttribute="trailing" constant="5" id="hy1-XS-07z"/>
+                            <constraint firstItem="J5e-Vs-3e3" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="66" id="idW-JC-NtS"/>
                             <constraint firstAttribute="trailingMargin" secondItem="uUY-Bf-x28" secondAttribute="trailing" id="j7g-nu-GWa"/>
                             <constraint firstItem="bKe-dJ-Azz" firstAttribute="top" secondItem="ZbX-xh-hJ7" secondAttribute="bottom" constant="20" id="kaS-fK-1SZ"/>
                             <constraint firstItem="npt-04-keg" firstAttribute="leading" secondItem="L72-M5-gdo" secondAttribute="trailing" constant="8" id="lFJ-Qm-W6S"/>
                             <constraint firstAttribute="trailingMargin" secondItem="9YV-kE-mug" secondAttribute="trailing" id="lXg-Vd-PYS"/>
                             <constraint firstItem="L72-M5-gdo" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="20" id="lxr-5E-rOO"/>
                             <constraint firstItem="hEJ-JO-Gjo" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="20" id="ojc-Va-SmP"/>
+                            <constraint firstItem="L7T-zs-Gi3" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="114" id="omp-Qw-Wm0"/>
                             <constraint firstItem="YCF-FE-eUA" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="20" id="pI1-Al-IHu"/>
                             <constraint firstItem="3b3-aY-7QT" firstAttribute="leading" secondItem="Y5T-CR-Azl" secondAttribute="trailing" constant="8" id="qw8-bd-dGI"/>
                             <constraint firstItem="bKe-dJ-Azz" firstAttribute="top" secondItem="KOd-BW-gdm" secondAttribute="bottom" constant="25" id="yNB-47-NfV"/>
@@ -502,9 +542,13 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="alerts" destination="wb5-EY-8bb" id="ulZ-py-hzx"/>
+                        <outlet property="arrowAlert" destination="L7T-zs-Gi3" id="z4D-rh-PlG"/>
                         <outlet property="askForMasterButton" destination="fVi-At-lwc" id="K99-p1-d1K"/>
                         <outlet property="cameraOutlet" destination="uUY-Bf-x28" id="8QP-k4-baA"/>
                         <outlet property="collaborationButton" destination="Y5T-CR-Azl" id="naV-Or-Mao"/>
+                        <outlet property="exclamationAlert" destination="J5e-Vs-3e3" id="gtH-4S-VS4"/>
+                        <outlet property="interrogationAlert" destination="WFY-dG-iOb" id="E7D-4f-tUe"/>
                         <outlet property="newDiagram" destination="YCF-FE-eUA" id="yt6-v6-sNy"/>
                         <outlet property="palette" destination="KOd-BW-gdm" id="frF-Rk-gkH"/>
                         <outlet property="saveButton" destination="L72-M5-gdo" id="GSJ-zJ-TBk"/>
@@ -524,14 +568,18 @@
         </scene>
     </scenes>
     <resources>
+        <image name="alerts.png" width="100" height="100"/>
         <image name="arrow.png" width="100" height="100"/>
         <image name="back.png" width="100" height="100"/>
+        <image name="botarrow.png" width="104" height="104"/>
         <image name="camera.png" width="100" height="100"/>
+        <image name="exclamation.png" width="100" height="100"/>
         <image name="go.png" width="100" height="100"/>
         <image name="masterBox.png" width="100" height="100"/>
         <image name="newDocument.png" width="100" height="100"/>
         <image name="open.png" width="100" height="100"/>
         <image name="palette.png" width="100" height="100"/>
+        <image name="question.png" width="100" height="100"/>
         <image name="save.png" width="100" height="100"/>
         <image name="search.png" width="100" height="100"/>
         <image name="settings.png" width="100" height="100"/>

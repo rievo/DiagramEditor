@@ -126,7 +126,8 @@
         }else{
             NSArray * subViews = [self.can subviews];
             for(UIView * sub in subViews){
-                [sub removeFromSuperview];
+                if(![sub isKindOfClass:[UIImageView class]])
+                    [sub removeFromSuperview];
             }
             
             self.components = [dic objectForKey:@"components"];
@@ -220,6 +221,22 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateMasterButton object:nil];
 
         }
+    }else if([msg isEqualToString:kNewAlert]){
+        NSValue * whereVal = [dataDic objectForKey:@"where"];
+        //CGPoint where = [whereVal CGPointValue];
+        
+        NSString * type = [dataDic objectForKey:@"alertType"];
+        MCPeerID * who = [dataDic objectForKey:@"who"];
+        
+        //NSLog(@"%@ manda una alerta de tipo %@ en la pos (%f,%f)", who.displayName, type, where.x, where.y);
+       
+        
+        NSMutableDictionary * relinfo = [[NSMutableDictionary alloc] init];
+        [relinfo setObject:whereVal forKey:@"where"];
+        [relinfo setObject:who forKey:@"who"];
+        [relinfo setObject:type forKey:@"alertType"];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNewAlert object:nil userInfo:relinfo];
     }
 }
 

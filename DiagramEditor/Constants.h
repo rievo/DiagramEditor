@@ -64,8 +64,16 @@ FOUNDATION_EXPORT NSString *const kNewMasterData;
 
 FOUNDATION_EXPORT NSString *const kUpdateMasterButton;
 
+FOUNDATION_EXPORT NSString *const kExclamation;
+FOUNDATION_EXPORT NSString *const kInterrogation;
+FOUNDATION_EXPORT NSString *const kArrow;
+FOUNDATION_EXPORT NSString *const kNewAlert;
+
+#define stayAlertTime 5
+
 #pragma mark Resend timer
 #define resendTime 0.3
+
 
 @interface Constants : NSObject
 
