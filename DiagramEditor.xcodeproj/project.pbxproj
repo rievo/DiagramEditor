@@ -117,6 +117,9 @@
 		F1FEE70C1CDCA63400FD4E9B /* question.png in Resources */ = {isa = PBXBuildFile; fileRef = F1FEE7081CDCA63400FD4E9B /* question.png */; };
 		F1FEE70D1CDCA63400FD4E9B /* exclamation.png in Resources */ = {isa = PBXBuildFile; fileRef = F1FEE7091CDCA63400FD4E9B /* exclamation.png */; };
 		F1FEE70E1CDCA63400FD4E9B /* alerts.png in Resources */ = {isa = PBXBuildFile; fileRef = F1FEE70A1CDCA63400FD4E9B /* alerts.png */; };
+		F1FEE7111CE07F1C00FD4E9B /* DrawingAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = F1FEE7101CE07F1C00FD4E9B /* DrawingAlert.m */; };
+		F1FEE7131CE099FF00FD4E9B /* note.png in Resources */ = {isa = PBXBuildFile; fileRef = F1FEE7121CE099FF00FD4E9B /* note.png */; };
+		F1FEE7151CE09A0D00FD4E9B /* drawForm.png in Resources */ = {isa = PBXBuildFile; fileRef = F1FEE7141CE09A0D00FD4E9B /* drawForm.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -276,6 +279,10 @@
 		F1FEE7081CDCA63400FD4E9B /* question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = question.png; sourceTree = "<group>"; };
 		F1FEE7091CDCA63400FD4E9B /* exclamation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = exclamation.png; sourceTree = "<group>"; };
 		F1FEE70A1CDCA63400FD4E9B /* alerts.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alerts.png; sourceTree = "<group>"; };
+		F1FEE70F1CE07F1C00FD4E9B /* DrawingAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingAlert.h; sourceTree = "<group>"; };
+		F1FEE7101CE07F1C00FD4E9B /* DrawingAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingAlert.m; sourceTree = "<group>"; };
+		F1FEE7121CE099FF00FD4E9B /* note.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = note.png; sourceTree = "<group>"; };
+		F1FEE7141CE09A0D00FD4E9B /* drawForm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drawForm.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -341,6 +348,8 @@
 				F107E4621C72221A007DD29E /* ThinkingView.h */,
 				F107E4631C72221A007DD29E /* ThinkingView.m */,
 				F107E4651C722229007DD29E /* ThinkingView.xib */,
+				F1FEE70F1CE07F1C00FD4E9B /* DrawingAlert.h */,
+				F1FEE7101CE07F1C00FD4E9B /* DrawingAlert.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -566,6 +575,8 @@
 		F1FEE7001CDCA51C00FD4E9B /* actions */ = {
 			isa = PBXGroup;
 			children = (
+				F1FEE7121CE099FF00FD4E9B /* note.png */,
+				F1FEE7141CE09A0D00FD4E9B /* drawForm.png */,
 				F1FEE7071CDCA63400FD4E9B /* botarrow.png */,
 				F1FEE7081CDCA63400FD4E9B /* question.png */,
 				F1FEE7091CDCA63400FD4E9B /* exclamation.png */,
@@ -645,6 +656,7 @@
 				F1FEE70C1CDCA63400FD4E9B /* question.png in Resources */,
 				F1FEE70E1CDCA63400FD4E9B /* alerts.png in Resources */,
 				F163C5391C9D6501007824D2 /* hand.png in Resources */,
+				F1FEE7151CE09A0D00FD4E9B /* drawForm.png in Resources */,
 				F1431E8E1C5249F7006A45BC /* ComponentDetailsView.xib in Resources */,
 				F1FEE70B1CDCA63400FD4E9B /* botarrow.png in Resources */,
 				F15379741C919B9A001D8FFB /* AttributesFilterView.xib in Resources */,
@@ -684,6 +696,7 @@
 				F107E4661C722229007DD29E /* ThinkingView.xib in Resources */,
 				F10CC8EA1CBFA332007F2B11 /* master.png in Resources */,
 				F181349C1CBCF169000AE209 /* menu.png in Resources */,
+				F1FEE7131CE099FF00FD4E9B /* note.png in Resources */,
 				F157993D1C86FE030009D4C7 /* CloudFileCollectionViewCell.xib in Resources */,
 				F163AFE41C7B173300BAE67C /* DFAAutomaton.graphicR in Resources */,
 				F10AB80C1C50E85100DE6DCE /* ok.png in Resources */,
@@ -742,6 +755,7 @@
 				F1685EA21C18289E0094097E /* EditorViewController.m in Sources */,
 				F1A20A7E1C1981290037C05D /* XMLDictionary.m in Sources */,
 				F1853A031C5253740015A9E0 /* StringAttributeTableViewCell.m in Sources */,
+				F1FEE7111CE07F1C00FD4E9B /* DrawingAlert.m in Sources */,
 				F158651C1C85AA59007D2E75 /* DiagramFile.m in Sources */,
 				F1C417B81CB66F120075234C /* CustomTableHeader.m in Sources */,
 				F157993B1C86FDE00009D4C7 /* CloudFileCollectionViewCell.m in Sources */,

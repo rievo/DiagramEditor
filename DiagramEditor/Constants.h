@@ -70,6 +70,7 @@ FOUNDATION_EXPORT NSString *const kArrow;
 FOUNDATION_EXPORT NSString *const kNewAlert;
 
 #define stayAlertTime 5
+#define alertsAnimationDuration 0.075
 
 #pragma mark Resend timer
 #define resendTime 0.3

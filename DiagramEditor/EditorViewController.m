@@ -19,6 +19,7 @@
 #import "NoDraggableComponentView.h"
 
 #import "Constants.h"
+#import "DrawingAlert.h"
 
 #define fileExtension @"demiso"
 
@@ -58,7 +59,7 @@
     
     
     canvas = [[Canvas alloc] initWithFrame:CGRectMake(0, 0, canvasW, canvasW)];
-
+    
     [canvas prepareCanvas];
     dele.can = canvas;
     dele.originalCanvasRect = canvas.frame;
@@ -139,7 +140,7 @@
     dele.evc = self;
     
     //[sessionListContainer setHidden:YES];
-
+    
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didReceiveNewAppDeleInfo)
@@ -177,32 +178,40 @@
     
     [showUsersPeersViewButton setHidden:YES];
     
-    arrowFrame = arrowAlert.frame;
+    //arrowFrame = arrowAlert.frame;
     interrogationFrame = interrogationAlert.frame;
     exclamationFrame = exclamationAlert.frame;
+    noteFrame = noteAlert.frame;
+    drawFrame = drawAlert.frame;
     
-    arrowCenter = arrowAlert.center;
+    //arrowCenter = arrowAlert.center;
     interrogationCenter = interrogationAlert.center;
     exclamationCenter = exclamationAlert.center;
     alertsCenter = alerts.center;
+    drawCenter = drawAlert.center;
+    noteCenter = noteAlert.center;
     
     [interrogationAlert setUserInteractionEnabled:YES];
     [exclamationAlert setUserInteractionEnabled:YES];
-    [arrowAlert setUserInteractionEnabled:YES];
+    [noteAlert setUserInteractionEnabled:YES];
+    [drawAlert setUserInteractionEnabled:YES];
+    //[arrowAlert setUserInteractionEnabled:YES];
     
     showingPossibleAlerts = NO;
     [interrogationAlert setHidden:YES];
     [exclamationAlert setHidden:YES];
-    [arrowAlert setHidden:YES];
+    [noteAlert setHidden:YES];
+    [drawAlert setHidden:YES];
+    //[arrowAlert setHidden:YES];
     
     UIPanGestureRecognizer *panalertInt = [[UIPanGestureRecognizer alloc] initWithTarget:self
-                                                                               action:@selector(handleAlertPan:)];
+                                                                                  action:@selector(handleAlertPan:)];
     UIPanGestureRecognizer *panalertEx = [[UIPanGestureRecognizer alloc] initWithTarget:self
                                                                                  action:@selector(handleAlertPan:)];
-    UIPanGestureRecognizer *panalertArr = [[UIPanGestureRecognizer alloc] initWithTarget:self
-                                                                                 action:@selector(handleAlertPan:)];
+    //UIPanGestureRecognizer *panalertArr = [[UIPanGestureRecognizer alloc] initWithTarget:self
+    //                                                                             action:@selector(handleAlertPan:)];
     [interrogationAlert addGestureRecognizer:panalertInt];
-    [arrowAlert addGestureRecognizer:panalertArr];
+    //[arrowAlert addGestureRecognizer:panalertArr];
     [exclamationAlert addGestureRecognizer:panalertEx];
     
 }
@@ -316,7 +325,7 @@
 
 
 -(void)makeNewMasterToPeer:(MCPeerID *)peer{
-
+    
     dele.currentMasterId.peerID = peer;
     //TODO: update peer UUID
     
@@ -349,8 +358,8 @@
     }
     
     
-
-
+    
+    
     
 }
 
@@ -375,7 +384,7 @@
     }else{
         NSLog(@"Error %@", [error description]);
     }
-
+    
 }
 
 #pragma mark Show/Hide detailsView
@@ -524,7 +533,7 @@
             
             
         }
-
+        
     }
     
     
@@ -852,7 +861,7 @@
              
              //NSDictionary * errorDic = [dic objectForKey:@"error"];
              NSString * code = [dic objectForKey:@"code"];
-           
+             
              
              if([code isEqualToString:@"200"]){ //Good :)
                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
@@ -1467,9 +1476,9 @@
                                                 options:nil]objectAtIndex:0];
     
     /*[usersListView setFrame:CGRectMake(0,
-                                       0,
-                                       sessionListContainer.frame.size.width,
-                                       sessionListContainer.frame.size.height)];*/
+     0,
+     sessionListContainer.frame.size.width,
+     sessionListContainer.frame.size.height)];*/
     
     
     [usersListView prepare];
@@ -1631,7 +1640,7 @@
         }
     }
     
-
+    
 }
 
 - (IBAction)showUsersList:(id)sender {
@@ -1655,30 +1664,42 @@
     
     [exclamationAlert setCenter:alertsCenter];
     [interrogationAlert setCenter:alertsCenter];
-    [arrowAlert setCenter:alertsCenter];
+    [drawAlert setCenter:alertsCenter];
+    [noteAlert setCenter:alertsCenter];
+    //[arrowAlert setCenter:alertsCenter];
     
-    [UIView animateWithDuration:0.1
+    [UIView animateWithDuration:alertsAnimationDuration
                           delay:0.0
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
                          [exclamationAlert setHidden:NO];
                          [exclamationAlert setCenter:exclamationCenter];
                      } completion:^(BOOL finished) {
-                         [UIView animateWithDuration:0.1
+                         [UIView animateWithDuration:alertsAnimationDuration
                                                delay:0.0
                                              options:UIViewAnimationOptionCurveEaseOut
                                           animations:^{
                                               [interrogationAlert setHidden:NO];
                                               [interrogationAlert setCenter:interrogationCenter];
                                           } completion:^(BOOL finished) {
-                                              [UIView animateWithDuration:0.1
+                                              [UIView animateWithDuration:alertsAnimationDuration
                                                                     delay:0.0
                                                                   options:UIViewAnimationOptionCurveEaseOut
                                                                animations:^{
-                                                                   [arrowAlert setHidden:NO];
-                                                                   [arrowAlert setCenter:arrowCenter];
+                                                                   [noteAlert setHidden:NO];
+                                                                   [noteAlert setCenter:noteCenter];
+                                                                   
                                                                } completion:^(BOOL finished) {
-                                                                    showingPossibleAlerts = YES;
+                                                                   [UIView animateWithDuration:alertsAnimationDuration
+                                                                                         delay:0.0
+                                                                                       options:UIViewAnimationOptionCurveEaseOut
+                                                                                    animations:^{
+                                                                                        [drawAlert setHidden:NO];
+                                                                                        [drawAlert setCenter:drawCenter];
+                                                                                        
+                                                                                    } completion:^(BOOL finished) {
+                                                                                        showingPossibleAlerts = YES;
+                                                                                    }];
                                                                }];
                                           }];
                      }];
@@ -1687,52 +1708,64 @@
     
     
     
-
+    
 }
 
 -(void)hideAlerts{
     //Do animations
-    [UIView animateWithDuration:0.1
+    [UIView animateWithDuration:alertsAnimationDuration
                           delay:0.0
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
-                         
-                         [arrowAlert setCenter:alertsCenter];
+                         [drawAlert setCenter:alertsCenter];
+                         //[arrowAlert setCenter:alertsCenter];
                      } completion:^(BOOL finished) {
-                         [arrowAlert setHidden:YES];
-                         [UIView animateWithDuration:0.1
+                         [drawAlert setHidden:YES];
+                         
+                         [UIView animateWithDuration:alertsAnimationDuration
                                                delay:0.0
                                              options:UIViewAnimationOptionCurveEaseOut
                                           animations:^{
-                                              
-                                              [interrogationAlert setCenter:alertsCenter];
+                                              [noteAlert setCenter:alertsCenter];
+
                                           } completion:^(BOOL finished) {
-                                              [interrogationAlert setHidden:YES];
-                                              [UIView animateWithDuration:0.1
+                                              [noteAlert setHidden:YES];
+                                              
+                                              [UIView animateWithDuration:alertsAnimationDuration
                                                                     delay:0.0
                                                                   options:UIViewAnimationOptionCurveEaseOut
                                                                animations:^{
                                                                    
-                                                                   [exclamationAlert setCenter:alertsCenter];
+                                                                   [interrogationAlert setCenter:alertsCenter];
                                                                } completion:^(BOOL finished) {
-                                                                   [exclamationAlert setHidden: YES];
-                                                                   showingPossibleAlerts = NO;
+                                                                   [interrogationAlert setHidden:YES];
+                                                                   [UIView animateWithDuration:alertsAnimationDuration
+                                                                                         delay:0.0
+                                                                                       options:UIViewAnimationOptionCurveEaseOut
+                                                                                    animations:^{
+                                                                                        
+                                                                                        [exclamationAlert setCenter:alertsCenter];
+                                                                                    } completion:^(BOOL finished) {
+                                                                                        [exclamationAlert setHidden: YES];
+                                                                                        showingPossibleAlerts = NO;
+                                                                                    }];
                                                                }];
                                           }];
+                         
                      }];
-
+    
 }
 
 -(void)handleAlertPan:(UIPanGestureRecognizer *)recog{
     UIImageView * view = (UIImageView* )recog.view;
     /*
-    if(view == exclamationAlert){
-        NSLog(@" !! ");
-    }else if(view == interrogationAlert){
-        NSLog(@" ?? ");
-    }else if(view == arrowAlert){
-        NSLog(@" arrow ");
-    }*/
+     if(view == exclamationAlert){
+     NSLog(@" !! ");
+     }else if(view == interrogationAlert){
+     NSLog(@" ?? ");
+     }else if(view == arrowAlert){
+     NSLog(@" arrow ");
+     }*/
     
     CGPoint point = [recog locationInView:self.view];
     
@@ -1778,7 +1811,7 @@
     [dic setObject:val forKey:@"where"];
     
     
-
+    
     
     NSError * error = nil;
     
@@ -1826,15 +1859,33 @@
     NSTimer * removeTimer;
     
     removeTimer = [NSTimer scheduledTimerWithTimeInterval:stayAlertTime
-                                       target:self
+                                                   target:self
                    
                                                  selector:@selector(removeAlert:)
-                                     userInfo:whatView
-                                      repeats:NO];
+                                                 userInfo:whatView
+                                                  repeats:NO];
     
     [[NSRunLoop mainRunLoop]addTimer:removeTimer forMode:NSRunLoopCommonModes];
-
-
+    
+    
+    //Add Drawing alert
+    DrawingAlert * da = [[DrawingAlert alloc] initWithFrame:imageView.frame];
+    [canvas addSubview:da];
+    [da setNeedsDisplay];
+    
+    CGRect bigRect = CGRectMake(da.center.x -50, da.center.y -50, 100, 100);
+    
+    
+    [UIView animateWithDuration:10.0
+                          delay:0.0
+                        options:UIViewAnimationOptionCurveEaseIn
+                     animations:^{
+                         //da.transform = CGAffineTransformMakeScale(2.5, 2.5);
+                         da.center = CGPointMake(500, 500);
+                     }
+                     completion:^(BOOL finished) {
+                         
+                     }];
 }
 
 -(void)removeAlert: (NSTimer * )sender{
@@ -1851,7 +1902,7 @@
 #pragma mark Collapse or showing palette
 -(void)collapsePalette{
     
-
+    
     [palette setHidden:YES];
 }
 

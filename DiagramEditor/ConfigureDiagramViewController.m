@@ -844,7 +844,7 @@
     
     [ac addAction:loadFromServer];
     [ac addAction:loadFromLocal];
-    [ac addAction:pasteFromText];
+    //[ac addAction:pasteFromText];
     [ac addAction:cancel];
     
     

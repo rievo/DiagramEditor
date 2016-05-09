@@ -98,6 +98,8 @@ EdgeListDelegate, MCBrowserViewControllerDelegate>{
     __weak IBOutlet UIButton *alerts;
     __weak IBOutlet UIImageView *exclamationAlert;
     __weak IBOutlet UIImageView *interrogationAlert;
+    __weak IBOutlet UIImageView *noteAlert;
+    __weak IBOutlet UIImageView *drawAlert;
     __weak IBOutlet UIImageView *arrowAlert;
     
     UIImageView * temporalAlertIcon;
@@ -105,12 +107,16 @@ EdgeListDelegate, MCBrowserViewControllerDelegate>{
     CGRect exclamationFrame;
     CGRect interrogationFrame;
     CGRect arrowFrame;
+    CGRect drawFrame;
+    CGRect noteFrame;
     
     
     CGPoint alertsCenter;
     CGPoint exclamationCenter;
     CGPoint interrogationCenter;
     CGPoint arrowCenter;
+    CGPoint drawCenter;
+    CGPoint noteCenter;
     
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
