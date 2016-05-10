@@ -74,8 +74,12 @@
     
     currentMasterId = nil;
     serverId = nil;
+    
+
+    
     return YES;
 }
+
 
 -(void)didReceiveData: (NSNotification *)not{
     //NSLog(@"received data");
@@ -228,6 +232,8 @@
         NSString * type = [dataDic objectForKey:@"alertType"];
         MCPeerID * who = [dataDic objectForKey:@"who"];
         
+        NSString * noteText = [dataDic objectForKey:@"noteText"];
+        
         //NSLog(@"%@ manda una alerta de tipo %@ en la pos (%f,%f)", who.displayName, type, where.x, where.y);
        
         
@@ -236,13 +242,19 @@
         [relinfo setObject:who forKey:@"who"];
         [relinfo setObject:type forKey:@"alertType"];
         
+        if(noteText != nil)
+            [relinfo setObject:noteText forKey:@"noteText"];
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:kNewAlert object:nil userInfo:relinfo];
+    }else if([msg isEqualToString:kDisconnectYourself]){
+        MCPeerID * who = [dataDic objectForKey:@"who"];
+        if([who.displayName isEqualToString:myPeerInfo.peerID.displayName]){ //It's for me
+            [manager.session disconnect];
+        }else{
+            NSLog(@"Somebody has been kicked from session");
+        }
     }
 }
-
-//-(void)reactToIAmTheNewMaster{
-//
-//}
 
 
 

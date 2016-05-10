@@ -9,6 +9,7 @@
 #import "SessionUsersView.h"
 #import "AppDelegate.h"
 #import "MCManager.h"
+#import "Constants.h"
 
 @implementation SessionUsersView
 
@@ -17,6 +18,7 @@
 -(void)awakeFromNib{
 
 }
+
 
 
 -(void)recoverUsersFromAppDelegateSession{
@@ -55,11 +57,11 @@
     [self addGestureRecognizer:tapgr];
     
     goodCenter = self.center;
-    
+    /*
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleUpdateMasterButton:)
                                                  name:kUpdateMasterButton
-                                               object:nil];
+                                               object:nil];*/
 }
 
 -(void)handleUpdateMasterButton: (NSNotification *)not{
@@ -161,6 +163,68 @@
     if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
+}
+
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    //Obviously, if this returns no, the edit option won't even populate
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView
+commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
+forRowAtIndexPath:(NSIndexPath *)indexPath {
+    //Nothing gets called here if you invoke `tableView:editActionsForRowAtIndexPath:` according to Apple docs so just leave this method blank
+}
+
+-(NSArray *)tableView:(UITableView *)tableView
+editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewRowAction *expel = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault
+                                                                     title:@"Expel"
+                                                                   handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
+    {
+        [self expelPeerAtIndexPath:indexPath];
+    }];
+    
+    UITableViewRowAction *promote = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault
+                                                                       title:@"Promote"
+                                                                     handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
+    {
+        [self promotePeerAtIndexPath:indexPath];
+    }];
+    
+    expel.backgroundColor = dele.blue1;
+    promote.backgroundColor = dele.blue2;
+    
+    return @[expel, promote]; //array with all the buttons you want. 1,2,3, etc...
+}
+
+
+-(void)expelPeerAtIndexPath:(NSIndexPath *)ip{
+    MCPeerID * pid = [usersArray objectAtIndex:ip.row];
+    NSLog(@"Expel : %@", pid.displayName);
+    
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:pid forKey:@"who"];
+    
+    [[NSNotificationCenter defaultCenter]postNotificationName:kUsersTableExpelPeer
+                                                       object:nil
+                                                     userInfo:dic];
+    
+    [table endEditing:YES];
+
+}
+
+-(void)promotePeerAtIndexPath:(NSIndexPath *)ip{
+    MCPeerID * pid = [usersArray objectAtIndex:ip.row];
+    NSLog(@"Promote: %@", pid.displayName);
+    
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:pid forKey:@"who"];
+    [[NSNotificationCenter defaultCenter]postNotificationName:kUsersTablePromotePeer
+                                                       object:nil
+                                                     userInfo:dic];
+    [table endEditing:YES];
 }
 
 

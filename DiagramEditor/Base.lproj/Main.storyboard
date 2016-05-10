@@ -563,10 +563,9 @@
                         <outlet property="drawAlert" destination="Vvf-ZE-0T7" id="aW5-yP-7oO"/>
                         <outlet property="exclamationAlert" destination="J5e-Vs-3e3" id="gtH-4S-VS4"/>
                         <outlet property="interrogationAlert" destination="WFY-dG-iOb" id="E7D-4f-tUe"/>
-                        <outlet property="newDiagram" destination="YCF-FE-eUA" id="yt6-v6-sNy"/>
+                        <outlet property="newDiagram" destination="YCF-FE-eUA" id="g2I-9n-K3W"/>
                         <outlet property="noteAlert" destination="hZ5-DG-Iz6" id="WA4-VQ-nm3"/>
                         <outlet property="palette" destination="KOd-BW-gdm" id="frF-Rk-gkH"/>
-                        <outlet property="saveButton" destination="L72-M5-gdo" id="GSJ-zJ-TBk"/>
                         <outlet property="saveDiagram" destination="L72-M5-gdo" id="E3S-B7-bXL"/>
                         <outlet property="scrollView" destination="9YV-kE-mug" id="hAn-7K-qvv"/>
                         <outlet property="shareButtonOutlet" destination="N0x-kF-Nfy" id="KKn-bs-LqV"/>

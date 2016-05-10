@@ -63,11 +63,16 @@ FOUNDATION_EXPORT NSString *const kMasterPetitionDenied;
 FOUNDATION_EXPORT NSString *const kNewMasterData;
 
 FOUNDATION_EXPORT NSString *const kUpdateMasterButton;
-
+FOUNDATION_EXPORT NSString *const kNoteType;
 FOUNDATION_EXPORT NSString *const kExclamation;
 FOUNDATION_EXPORT NSString *const kInterrogation;
-FOUNDATION_EXPORT NSString *const kArrow;
+
 FOUNDATION_EXPORT NSString *const kNewAlert;
+
+FOUNDATION_EXPORT NSString *const kUsersTableExpelPeer;
+FOUNDATION_EXPORT NSString *const kUsersTablePromotePeer;
+
+FOUNDATION_EXPORT NSString *const kDisconnectYourself;
 
 #define stayAlertTime 5
 #define alertsAnimationDuration 0.075

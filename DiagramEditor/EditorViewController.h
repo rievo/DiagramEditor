@@ -48,7 +48,7 @@ EdgeListDelegate, MCBrowserViewControllerDelegate>{
     
     
     //Button outlets
-    __weak IBOutlet UIButton *saveButton;
+   // __weak IBOutlet UIButton *saveButton;
     
     
     
@@ -118,6 +118,9 @@ EdgeListDelegate, MCBrowserViewControllerDelegate>{
     CGPoint drawCenter;
     CGPoint noteCenter;
     
+    
+    NSString * tempNoteContent;
+    NSString * noteToShow;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 

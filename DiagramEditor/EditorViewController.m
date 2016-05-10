@@ -176,6 +176,18 @@
                                                  name:kNewAlert
                                                object:nil];
     
+    
+    //kUsersTableExpelPeer
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleExpelPeer:)
+                                                 name:kUsersTableExpelPeer
+                                               object:nil];
+    //kUsersTablePromotePeer
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handlePromotePeer:)
+                                                 name:kUsersTablePromotePeer
+                                               object:nil];
+    
     [showUsersPeersViewButton setHidden:YES];
     
     //arrowFrame = arrowAlert.frame;
@@ -208,13 +220,16 @@
                                                                                   action:@selector(handleAlertPan:)];
     UIPanGestureRecognizer *panalertEx = [[UIPanGestureRecognizer alloc] initWithTarget:self
                                                                                  action:@selector(handleAlertPan:)];
-    //UIPanGestureRecognizer *panalertArr = [[UIPanGestureRecognizer alloc] initWithTarget:self
-    //                                                                             action:@selector(handleAlertPan:)];
+    
+    
+    UIPanGestureRecognizer *panalertNote = [[UIPanGestureRecognizer alloc] initWithTarget:self
+                                                                                   action:@selector(handleAlertPan:)];
     [interrogationAlert addGestureRecognizer:panalertInt];
-    //[arrowAlert addGestureRecognizer:panalertArr];
+    [noteAlert addGestureRecognizer:panalertNote];
     [exclamationAlert addGestureRecognizer:panalertEx];
     
 }
+
 
 
 -(void) handleUpdateMasterButton:(NSNotification *)not{
@@ -317,10 +332,42 @@
     [self presentViewController:alert animated:YES completion:nil];
     
 }
+
 -(void)didReceiveNewAppDeleInfo{
     [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
 }
 
+
+
+-(void) handlePromotePeer:(NSNotification *)not{
+    NSDictionary * dic = [not userInfo];
+    MCPeerID * who = [dic objectForKey:@"who"];
+    [self makeNewMasterToPeer:who];
+}
+-(void) handleExpelPeer:(NSNotification *)not{
+    
+    NSDictionary * dd = [not userInfo];
+    MCPeerID * peer = [dd objectForKey:@"who"];
+    
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:peer forKey:@"peerID"];
+    [dic setObject:kDisconnectYourself forKey:@"msg"];
+    
+    NSLog(@"Sending disconnect yourself");
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dic];
+    NSError * error = nil;
+    
+    [dele.manager.session sendData:data
+                           toPeers:dele.manager.session.connectedPeers
+                          withMode:MCSessionSendDataReliable
+                             error:&error];
+    
+    if(!error){
+        NSLog(@"Disconnect sended");
+    }else{
+        NSLog(@"Error %@", [error description]);
+    }
+}
 
 
 
@@ -790,8 +837,8 @@
     
     UIPopoverPresentationController * popover = ac.popoverPresentationController;
     if(popover){
-        popover.sourceView = saveButton;
-        //popover.sourceRect = sender.bounds;
+        popover.sourceView = saveDiagram;
+        popover.sourceRect = saveDiagram.frame;
         popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
     }
     
@@ -1727,7 +1774,7 @@
                                              options:UIViewAnimationOptionCurveEaseOut
                                           animations:^{
                                               [noteAlert setCenter:alertsCenter];
-
+                                              
                                           } completion:^(BOOL finished) {
                                               [noteAlert setHidden:YES];
                                               
@@ -1779,12 +1826,39 @@
     }else if(recog.state == UIGestureRecognizerStateChanged){
         [temporalAlertIcon setCenter:point];
     }else if(recog.state == UIGestureRecognizerStateEnded){
+        
         [temporalAlertIcon removeFromSuperview];
-        
         CGPoint pointInSV = [self.view convertPoint:point toView:canvas];
-        
-        [self sendAlert:view onPoint:pointInSV];
         temporalAlertIcon = nil;
+        
+        if(recog.view == noteAlert){
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Enter text:"
+                                                                           message:nil
+                                                                    preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK"
+                                                                    style:UIAlertActionStyleDefault
+                                                                  handler:^(UIAlertAction * action) {
+                                                                      
+                                                                      
+                                                                      tempNoteContent= ((UITextField *)[alert.textFields objectAtIndex:0]).text;
+                                                                      
+                                                                      [self sendAlert:view onPoint:pointInSV];
+                                                                  }];
+            
+            [alert addAction:defaultAction];
+            
+            
+            [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+                //textField.placeholder = @"Input data...";
+            }];
+            
+            [self presentViewController:alert animated:YES completion:nil];
+            
+        }else{
+            [self sendAlert:view onPoint:pointInSV];
+        }
+        
     }
     
 }
@@ -1804,8 +1878,10 @@
         [dic setObject:kExclamation forKey:@"alertType"];
     }else if(view == interrogationAlert){
         [dic setObject:kInterrogation forKey:@"alertType"];
-    }else if(view == arrowAlert){
-        [dic setObject:kArrow forKey:@"alertType"];;
+    }else if(view == noteAlert){
+        [dic setObject:kNoteType forKey:@"alertType"];
+        [dic setObject:tempNoteContent forKey:@"noteText"];
+        tempNoteContent = nil;
     }
     NSValue * val = [NSValue valueWithCGPoint:point];
     [dic setObject:val forKey:@"where"];
@@ -1830,7 +1906,7 @@
     NSDictionary * dic = [not userInfo];
     
     NSValue * whereVal = [dic objectForKey:@"where"];
-    CGPoint where = [whereVal CGPointValue];
+    CGPoint where = [whereVal CGPointValue];
     
     MCPeerID * who = [dic objectForKey:@"who"];
     
@@ -1841,8 +1917,13 @@
     
     imageView.center = where;
     
-    if([type isEqualToString:kArrow]){
-        imageView.image = arrowAlert.image;
+    if([type isEqualToString:kNoteType]){
+        imageView.image = noteAlert.image;
+        [imageView setUserInteractionEnabled:YES];
+        UITapGestureRecognizer * showNotecontent = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                           action:@selector(showNoteContent:)];
+        [imageView addGestureRecognizer:showNotecontent];
+        noteToShow = [dic objectForKey:@"noteText"];
     }else if([type isEqualToString:kInterrogation]){
         imageView.image = interrogationAlert.image;
     }else if([type isEqualToString:kExclamation]){
@@ -1852,7 +1933,7 @@
     
     [canvas addSubview:imageView];
     
-    
+    /*
     NSMutableDictionary * whatView = [[NSMutableDictionary alloc] init];
     [whatView setObject:imageView forKey:@"view"];
     
@@ -1865,9 +1946,9 @@
                                                  userInfo:whatView
                                                   repeats:NO];
     
-    [[NSRunLoop mainRunLoop]addTimer:removeTimer forMode:NSRunLoopCommonModes];
+    [[NSRunLoop mainRunLoop]addTimer:removeTimer forMode:NSRunLoopCommonModes];*/
     
-    
+    /*
     //Add Drawing alert
     DrawingAlert * da = [[DrawingAlert alloc] initWithFrame:imageView.frame];
     [canvas addSubview:da];
@@ -1885,7 +1966,24 @@
                      }
                      completion:^(BOOL finished) {
                          
-                     }];
+                     }];*/
+}
+
+-(void)showNoteContent:(UITapGestureRecognizer *)recog{
+    NSLog(@"%@",noteToShow);
+    
+    UIAlertView *alertK2;
+    alertK2 = [[UIAlertView alloc]
+               initWithTitle:@"Note"
+               message:noteToShow
+               delegate: self
+               cancelButtonTitle:@"OK"
+               otherButtonTitles:nil];
+    
+    
+    alertK2.alertViewStyle= UIAlertControllerStyleActionSheet;
+    [alertK2 show];
+    
 }
 
 -(void)removeAlert: (NSTimer * )sender{

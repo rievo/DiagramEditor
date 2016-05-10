@@ -44,8 +44,13 @@ NSString * const kNewMasterData = @"kNewMasterData";
 
 NSString * const kExclamation = @"kExclamation";
 NSString * const kInterrogation = @"kInterrogation";
-NSString * const kArrow = @"kArrow";
+NSString * const kNoteType = @"kNoteType";
 NSString * const kNewAlert = @"kNewAlert";
+
+NSString * const kUsersTableExpelPeer = @"kUsersTableExpelPeer";
+NSString * const kUsersTablePromotePeer = @"kUsersTablePromotePeer";
+NSString * const kDisconnectYourself = @"kDisconnectYourself";
+
 
 @implementation Constants
 
