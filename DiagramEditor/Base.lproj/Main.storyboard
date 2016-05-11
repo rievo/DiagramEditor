@@ -495,6 +495,17 @@
                                     <action selector="showPossibleAlerts:" destination="b9M-0K-SdS" eventType="touchUpInside" id="SyT-BE-oR5"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pU0-Rb-Alt">
+                                <rect key="frame" x="315" y="149" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="4Pm-lZ-Qce"/>
+                                    <constraint firstAttribute="height" constant="50" id="keM-wk-KoK"/>
+                                </constraints>
+                                <state key="normal" image="chat.png"/>
+                                <connections>
+                                    <action selector="showChat:" destination="b9M-0K-SdS" eventType="touchUpInside" id="B9K-l6-Ys5"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.13725490200000001" green="0.21176470589999999" blue="0.37647058820000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -511,6 +522,7 @@
                             <constraint firstItem="3b3-aY-7QT" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="20" id="MwF-cl-ueo"/>
                             <constraint firstItem="uUY-Bf-x28" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="20" id="Mz0-Fv-UBQ"/>
                             <constraint firstItem="hZ5-DG-Iz6" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="198" id="NRy-Vm-aCr"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="pU0-Rb-Alt" secondAttribute="trailing" constant="7" id="NqF-kv-vus"/>
                             <constraint firstItem="WFY-dG-iOb" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="154" id="Plh-xG-FRj"/>
                             <constraint firstItem="bKe-dJ-Azz" firstAttribute="top" secondItem="9YV-kE-mug" secondAttribute="bottom" constant="20" id="QAa-qh-1Y6"/>
                             <constraint firstAttribute="leadingMargin" secondItem="ZbX-xh-hJ7" secondAttribute="leading" id="Rcs-yX-UX6"/>
@@ -540,6 +552,7 @@
                             <constraint firstItem="7bh-UT-OeV" firstAttribute="top" secondItem="KEc-Zc-HGD" secondAttribute="bottom" constant="43" id="nfl-B1-fvq"/>
                             <constraint firstItem="hEJ-JO-Gjo" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="20" id="ojc-Va-SmP"/>
                             <constraint firstItem="YCF-FE-eUA" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="20" id="pI1-Al-IHu"/>
+                            <constraint firstItem="pU0-Rb-Alt" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="149" id="q1p-9L-asN"/>
                             <constraint firstItem="3b3-aY-7QT" firstAttribute="leading" secondItem="Y5T-CR-Azl" secondAttribute="trailing" constant="8" id="qw8-bd-dGI"/>
                             <constraint firstItem="bKe-dJ-Azz" firstAttribute="top" secondItem="KOd-BW-gdm" secondAttribute="bottom" constant="25" id="yNB-47-NfV"/>
                             <constraint firstItem="N0x-kF-Nfy" firstAttribute="top" secondItem="7bh-UT-OeV" secondAttribute="bottom" constant="20" id="z0O-Iv-k4g"/>
@@ -586,6 +599,7 @@
         <image name="arrow.png" width="100" height="100"/>
         <image name="back.png" width="100" height="100"/>
         <image name="camera.png" width="100" height="100"/>
+        <image name="chat.png" width="100" height="100"/>
         <image name="drawForm.png" width="100" height="100"/>
         <image name="exclamation.png" width="100" height="100"/>
         <image name="go.png" width="100" height="100"/>

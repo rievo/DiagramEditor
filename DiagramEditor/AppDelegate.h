@@ -12,11 +12,13 @@
 #import "Constants.h"
 #import "PeerInfo.h"
 
+
 @class Canvas;
 @class Component;
 @class PaletteItem;
 @class ClassAttribute;
 @class EditorViewController;
+@class ChatView;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -65,7 +67,7 @@
 @property PeerInfo * currentMasterId;
 
 
-
+@property ChatView * chat;
 
 @property Component * fingeredComponent;
 

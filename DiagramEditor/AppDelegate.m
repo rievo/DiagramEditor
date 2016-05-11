@@ -13,6 +13,7 @@
 #import "EditorViewController.h"
 #import "PaletteItem.h"
 #import "ClassAttribute.h"
+#import "ChatView.h"
 
 @interface AppDelegate ()
 
@@ -75,7 +76,7 @@
     currentMasterId = nil;
     serverId = nil;
     
-
+    _chat = nil;
     
     return YES;
 }

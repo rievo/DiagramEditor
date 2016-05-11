@@ -20,6 +20,7 @@
 
 #import "Constants.h"
 #import "DrawingAlert.h"
+#import "ChatView.h"
 
 #define fileExtension @"demiso"
 
@@ -258,7 +259,7 @@
 }
 
 -(void)handlePetitionDenied:(NSNotification *)not{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@":("
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
                                                     message:@"No me dejan ser el master"
                                                    delegate:self
                                           cancelButtonTitle:@"OK"
@@ -269,7 +270,7 @@
 
 
 -(void)handleIAmTheNewMaster:(NSNotification *)not{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info:"
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
                                                     message:@"You are the new master now"
                                                    delegate:self
                                           cancelButtonTitle:@"OK"
@@ -1703,6 +1704,20 @@
     }else{ //They are hidden, show them
         [self showAlerts];
     }
+}
+
+- (IBAction)showChat:(id)sender {
+    if(dele.chat == nil){
+        dele.chat = [[[NSBundle mainBundle] loadNibNamed:@"ChatView"
+                                                   owner:self
+                                                 options:nil] objectAtIndex:0];
+        
+        [dele.chat prepare];
+    }
+    
+    //Show
+    [dele.chat setFrame:self.view.frame];
+    [self.view addSubview:dele.chat];
 }
 
 

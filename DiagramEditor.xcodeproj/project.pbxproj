@@ -120,6 +120,13 @@
 		F1FEE7111CE07F1C00FD4E9B /* DrawingAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = F1FEE7101CE07F1C00FD4E9B /* DrawingAlert.m */; };
 		F1FEE7131CE099FF00FD4E9B /* note.png in Resources */ = {isa = PBXBuildFile; fileRef = F1FEE7121CE099FF00FD4E9B /* note.png */; };
 		F1FEE7151CE09A0D00FD4E9B /* drawForm.png in Resources */ = {isa = PBXBuildFile; fileRef = F1FEE7141CE09A0D00FD4E9B /* drawForm.png */; };
+		F1FEE72A1CE3693200FD4E9B /* ChatView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1FEE7241CE3693200FD4E9B /* ChatView.m */; };
+		F1FEE72B1CE3693200FD4E9B /* ChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1FEE7261CE3693200FD4E9B /* ChatTableViewCell.m */; };
+		F1FEE72C1CE3693200FD4E9B /* ChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1FEE7271CE3693200FD4E9B /* ChatTableViewCell.xib */; };
+		F1FEE72D1CE3693200FD4E9B /* send.png in Resources */ = {isa = PBXBuildFile; fileRef = F1FEE7281CE3693200FD4E9B /* send.png */; };
+		F1FEE72E1CE3693200FD4E9B /* ChatView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1FEE7291CE3693200FD4E9B /* ChatView.xib */; };
+		F1FEE7301CE36C1500FD4E9B /* chat.png in Resources */ = {isa = PBXBuildFile; fileRef = F1FEE72F1CE36C1500FD4E9B /* chat.png */; };
+		F1FEE7331CE36E2000FD4E9B /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = F1FEE7321CE36E2000FD4E9B /* Message.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -283,6 +290,16 @@
 		F1FEE7101CE07F1C00FD4E9B /* DrawingAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingAlert.m; sourceTree = "<group>"; };
 		F1FEE7121CE099FF00FD4E9B /* note.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = note.png; sourceTree = "<group>"; };
 		F1FEE7141CE09A0D00FD4E9B /* drawForm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drawForm.png; sourceTree = "<group>"; };
+		F1FEE7231CE3693200FD4E9B /* ChatView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatView.h; sourceTree = "<group>"; };
+		F1FEE7241CE3693200FD4E9B /* ChatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatView.m; sourceTree = "<group>"; };
+		F1FEE7251CE3693200FD4E9B /* ChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTableViewCell.h; sourceTree = "<group>"; };
+		F1FEE7261CE3693200FD4E9B /* ChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTableViewCell.m; sourceTree = "<group>"; };
+		F1FEE7271CE3693200FD4E9B /* ChatTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatTableViewCell.xib; sourceTree = "<group>"; };
+		F1FEE7281CE3693200FD4E9B /* send.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = send.png; sourceTree = "<group>"; };
+		F1FEE7291CE3693200FD4E9B /* ChatView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatView.xib; sourceTree = "<group>"; };
+		F1FEE72F1CE36C1500FD4E9B /* chat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chat.png; sourceTree = "<group>"; };
+		F1FEE7311CE36E2000FD4E9B /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
+		F1FEE7321CE36E2000FD4E9B /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -439,6 +456,8 @@
 				F1391F1A1CBB9765004BAD71 /* SessionUsersView.h */,
 				F1391F1B1CBB9765004BAD71 /* SessionUsersView.m */,
 				F1391F1D1CBB9770004BAD71 /* SessionUsersView.xib */,
+				F1FEE7311CE36E2000FD4E9B /* Message.h */,
+				F1FEE7321CE36E2000FD4E9B /* Message.m */,
 			);
 			name = MultipeerConnectivity;
 			sourceTree = "<group>";
@@ -465,6 +484,7 @@
 		F17B75AE1C22D9D500AB1B57 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				F1FEE72F1CE36C1500FD4E9B /* chat.png */,
 				F1FEE7001CDCA51C00FD4E9B /* actions */,
 				F181349B1CBCF169000AE209 /* menu.png */,
 				F10CC8EF1CC518D1007F2B11 /* masterBox.png */,
@@ -528,6 +548,7 @@
 		F18510751C1824C8004EC4C8 /* DiagramEditor */ = {
 			isa = PBXGroup;
 			children = (
+				F1FEE7221CE3692200FD4E9B /* Chat */,
 				F16C35BD1C98246F006F4255 /* MultipeerConnectivity */,
 				F153796D1C919AC0001D8FFB /* ComponentSearch */,
 				F1431E8C1C5249D4006A45BC /* Views */,
@@ -583,6 +604,20 @@
 				F1FEE70A1CDCA63400FD4E9B /* alerts.png */,
 			);
 			name = actions;
+			sourceTree = "<group>";
+		};
+		F1FEE7221CE3692200FD4E9B /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				F1FEE7231CE3693200FD4E9B /* ChatView.h */,
+				F1FEE7241CE3693200FD4E9B /* ChatView.m */,
+				F1FEE7251CE3693200FD4E9B /* ChatTableViewCell.h */,
+				F1FEE7261CE3693200FD4E9B /* ChatTableViewCell.m */,
+				F1FEE7271CE3693200FD4E9B /* ChatTableViewCell.xib */,
+				F1FEE7281CE3693200FD4E9B /* send.png */,
+				F1FEE7291CE3693200FD4E9B /* ChatView.xib */,
+			);
+			name = Chat;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -675,6 +710,7 @@
 				F147B43E1C63507100A8F5E7 /* EdgeListView.xib in Resources */,
 				F163AFEE1C7B1B5E00BAE67C /* NoDraggableComponentView.xib in Resources */,
 				F16C7DCD1C57AD2900CA9B25 /* SureView.xib in Resources */,
+				F1FEE72C1CE3693200FD4E9B /* ChatTableViewCell.xib in Resources */,
 				F10CC8F01CC518D1007F2B11 /* masterBox.png in Resources */,
 				F15865111C85A2B5007D2E75 /* CloudDiagramsExplorer.xib in Resources */,
 				F17B75A91C22D6E100AB1B57 /* newDocument.png in Resources */,
@@ -683,9 +719,11 @@
 				F1786DEF1C56410200963663 /* SaveNameView.xib in Resources */,
 				F19C25901C43AB8B0002E490 /* palette.png in Resources */,
 				F15BE9FF1CABC60E00EDABA5 /* hidePaletteEditorOld.png in Resources */,
+				F1FEE72D1CE3693200FD4E9B /* send.png in Resources */,
 				F1801F3D1C77413E005BA437 /* localFilled.png in Resources */,
 				F1801F3B1C774137005BA437 /* cloudFilled.png in Resources */,
 				F10AB80B1C50E85100DE6DCE /* cancel.png in Resources */,
+				F1FEE72E1CE3693200FD4E9B /* ChatView.xib in Resources */,
 				F163AFE61C7B1A1B00BAE67C /* tapDark.png in Resources */,
 				F18510831C1824C8004EC4C8 /* Assets.xcassets in Resources */,
 				F17D1C081C7F1EDC0080EA29 /* reload.png in Resources */,
@@ -706,6 +744,7 @@
 				F1786DE51C561ADA00963663 /* BooleanAttributeTableViewCell.xib in Resources */,
 				F10CC8EC1CC0E0CF007F2B11 /* showPaletteEditor.png in Resources */,
 				F18510811C1824C8004EC4C8 /* Main.storyboard in Resources */,
+				F1FEE7301CE36C1500FD4E9B /* chat.png in Resources */,
 				F1391F1E1CBB9770004BAD71 /* SessionUsersView.xib in Resources */,
 				F1786DF41C56649B00963663 /* ExploreFilesView.xib in Resources */,
 				F10AB8061C50E53100DE6DCE /* open.png in Resources */,
@@ -740,14 +779,17 @@
 				F1685E9F1C1827FB0094097E /* ConfigureDiagramViewController.m in Sources */,
 				F1786DEC1C56222B00963663 /* GenericAttributeTableViewCell.m in Sources */,
 				F16C7DC61C57821800CA9B25 /* ReferenceTableViewCell.m in Sources */,
+				F1FEE72A1CE3693200FD4E9B /* ChatView.m in Sources */,
 				F1685EA51C18294A0094097E /* Component.m in Sources */,
 				F1A20A851C198A540037C05D /* PaletteItem.m in Sources */,
+				F1FEE72B1CE3693200FD4E9B /* ChatTableViewCell.m in Sources */,
 				F18A55E91C845CF500B134F0 /* NoDraggableClassesView.m in Sources */,
 				F16C35C01C98247A006F4255 /* MCManager.m in Sources */,
 				F1587B041C19BC4600E963BE /* Palette.m in Sources */,
 				F17B75B31C22DBFE00AB1B57 /* ComponentsListViewController.m in Sources */,
 				F1B4861E1C46604700752157 /* PaletteFile.m in Sources */,
 				F15379721C919B42001D8FFB /* ClassesFilterView.m in Sources */,
+				F1FEE7331CE36E2000FD4E9B /* Message.m in Sources */,
 				F15379771C919BA3001D8FFB /* AttributesFilterView.m in Sources */,
 				F18A55EE1C8487C200B134F0 /* HiddenInstancesListView.m in Sources */,
 				F1391F1C1CBB9765004BAD71 /* SessionUsersView.m in Sources */,

@@ -147,4 +147,5 @@ EdgeListDelegate, MCBrowserViewControllerDelegate>{
 - (IBAction)showUsersList:(id)sender;
 - (IBAction)showPossibleAlerts:(id)sender;
 
+- (IBAction)showChat:(id)sender;
 @end
