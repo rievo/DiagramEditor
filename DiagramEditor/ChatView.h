@@ -17,6 +17,11 @@
     
     NSMutableDictionary * dic;
     AppDelegate * dele;
+    
+    UIFont * whoFont;
+    UIFont * bodyFont;
+    
+    NSDateFormatter *dateFormatter ;
 }
 
 - (IBAction)sendMessage:(id)sender;

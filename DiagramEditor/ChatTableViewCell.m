@@ -10,7 +10,7 @@
 
 @implementation ChatTableViewCell
 
-@synthesize textLabel;
+@synthesize textLabel, whoLabel;
 
 
 - (void)awakeFromNib {

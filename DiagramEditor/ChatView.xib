@@ -18,7 +18,7 @@
                             <rect key="frame" x="32" y="26" width="403" height="702"/>
                             <subviews>
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Ldr-iA-05I">
-                                    <rect key="frame" x="27" y="654" width="298" height="40"/>
+                                    <rect key="frame" x="8" y="654" width="339" height="40"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="40" id="xo4-je-KE9"/>
@@ -42,7 +42,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M2p-Hq-cPi">
-                                    <rect key="frame" x="333" y="654" width="40" height="40"/>
+                                    <rect key="frame" x="355" y="654" width="40" height="40"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="40" id="6aX-BT-O2s"/>
                                         <constraint firstAttribute="height" constant="40" id="yQv-lH-o4h"/>
@@ -56,14 +56,14 @@
                             <color key="backgroundColor" red="0.35686275362968445" green="0.42745098471641541" blue="0.57254904508590698" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="cjn-hC-Ltl" secondAttribute="trailing" constant="30" id="6vC-ic-qpH"/>
-                                <constraint firstItem="Ldr-iA-05I" firstAttribute="leading" secondItem="c1C-Ep-uC9" secondAttribute="leading" constant="27" id="Avf-CA-abp"/>
+                                <constraint firstItem="Ldr-iA-05I" firstAttribute="leading" secondItem="c1C-Ep-uC9" secondAttribute="leading" constant="8" id="Avf-CA-abp"/>
                                 <constraint firstItem="Ldr-iA-05I" firstAttribute="top" secondItem="cjn-hC-Ltl" secondAttribute="bottom" constant="8" id="DEE-gt-ZN4"/>
                                 <constraint firstItem="cjn-hC-Ltl" firstAttribute="top" secondItem="e7g-dF-OBf" secondAttribute="bottom" constant="8" id="Jhr-rH-uRL"/>
                                 <constraint firstAttribute="bottom" secondItem="M2p-Hq-cPi" secondAttribute="bottom" constant="8" id="Nd8-Ae-y7q"/>
                                 <constraint firstItem="e7g-dF-OBf" firstAttribute="centerX" secondItem="c1C-Ep-uC9" secondAttribute="centerX" constant="-1" id="Qsb-Du-H73"/>
                                 <constraint firstAttribute="bottom" secondItem="Ldr-iA-05I" secondAttribute="bottom" constant="8" id="SR8-cF-dgg"/>
                                 <constraint firstItem="M2p-Hq-cPi" firstAttribute="top" secondItem="cjn-hC-Ltl" secondAttribute="bottom" constant="8" id="j2P-ca-T5h"/>
-                                <constraint firstAttribute="trailing" secondItem="M2p-Hq-cPi" secondAttribute="trailing" constant="30" id="kbS-HO-p4T"/>
+                                <constraint firstAttribute="trailing" secondItem="M2p-Hq-cPi" secondAttribute="trailing" constant="8" id="kbS-HO-p4T"/>
                                 <constraint firstItem="e7g-dF-OBf" firstAttribute="top" secondItem="c1C-Ep-uC9" secondAttribute="top" constant="8" id="mY1-L5-Igk"/>
                                 <constraint firstItem="M2p-Hq-cPi" firstAttribute="leading" secondItem="Ldr-iA-05I" secondAttribute="trailing" constant="8" id="pwK-EI-mIx"/>
                                 <constraint firstItem="cjn-hC-Ltl" firstAttribute="leading" secondItem="c1C-Ep-uC9" secondAttribute="leading" constant="27" id="zP6-NW-4ht"/>
@@ -99,6 +99,6 @@
         </view>
     </objects>
     <resources>
-        <image name="send.png" width="104" height="104"/>
+        <image name="send.png" width="100" height="100"/>
     </resources>
 </document>

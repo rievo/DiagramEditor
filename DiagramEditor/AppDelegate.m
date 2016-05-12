@@ -14,6 +14,7 @@
 #import "PaletteItem.h"
 #import "ClassAttribute.h"
 #import "ChatView.h"
+#import "Message.h"
 
 @interface AppDelegate ()
 
@@ -21,7 +22,7 @@
 
 @implementation AppDelegate
 
-@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR, evc, blue0, blue1, blue2, elementsDictionary, manager, ecoreContent, loadingADiagram, fingeredComponent, serverId, currentMasterId, myPeerInfo, myUUIDString;
+@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR, evc, blue0, blue1, blue2, elementsDictionary, manager, ecoreContent, loadingADiagram, fingeredComponent, serverId, currentMasterId, myPeerInfo, myUUIDString, chat;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -76,7 +77,7 @@
     currentMasterId = nil;
     serverId = nil;
     
-    _chat = nil;
+    chat = nil;
     
     return YES;
 }
@@ -112,6 +113,13 @@
         
         loadingADiagram = YES;
         
+        if(chat == nil){
+            chat = [[[NSBundle mainBundle] loadNibNamed:@"ChatView"
+                                                       owner:self
+                                                     options:nil] objectAtIndex:0];
+            
+            [chat prepare];
+        }
         
         ConfigureDiagramViewController * cc = (ConfigureDiagramViewController *)  self.window.rootViewController;
         [cc performSegueWithIdentifier:@"showEditor" sender:self];
@@ -254,6 +262,26 @@
         }else{
             NSLog(@"Somebody has been kicked from session");
         }
+    }else if([msg isEqualToString:kNewChatMessage]){
+        /*MCPeerID * who = [dataDic objectForKey:@"who"];
+        if([who.displayName isEqualToString:myPeerInfo.peerID.displayName]){ //It's for me
+            [manager.session disconnect];
+        }else{
+            NSLog(@"Somebody has been kicked from session");
+        }*/
+        
+        
+        
+        Message * message = [dataDic objectForKey:@"message"];
+        NSLog(@"%@ said: %@", message.who.displayName, message.content);
+        
+        NSMutableDictionary * relinfo = [[NSMutableDictionary alloc] init];
+        [relinfo setObject:message forKey:@"message"];
+        
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kNewChatMessage
+                                                            object:nil
+                                                          userInfo:relinfo];
     }
 }
 

@@ -1575,7 +1575,16 @@
                           withMode:MCSessionSendDataReliable
                              error:&error];
     
-    int r =2;
+    
+    
+    //Prepare chat
+    if(dele.chat == nil){
+        dele.chat = [[[NSBundle mainBundle] loadNibNamed:@"ChatView"
+                                                   owner:self
+                                                 options:nil] objectAtIndex:0];
+        
+        [dele.chat prepare];
+    }
     
     /*NSData * appDeleData = [dele packImportantInfo];
      
@@ -1707,13 +1716,13 @@
 }
 
 - (IBAction)showChat:(id)sender {
-    if(dele.chat == nil){
+    /*if(dele.chat == nil){
         dele.chat = [[[NSBundle mainBundle] loadNibNamed:@"ChatView"
                                                    owner:self
                                                  options:nil] objectAtIndex:0];
         
         [dele.chat prepare];
-    }
+    }*/
     
     //Show
     [dele.chat setFrame:self.view.frame];

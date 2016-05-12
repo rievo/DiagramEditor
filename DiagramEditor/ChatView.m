@@ -49,7 +49,30 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     dic = [[NSMutableDictionary alloc] init];
     
     dele = [[UIApplication sharedApplication]delegate];
+    
+    whoFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:9.0];
+    bodyFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:11.0];
+    
+    dateFormatter = [[NSDateFormatter alloc] init];
+    //[dateFormatter setDateFormat:@"HH:mm dd-MM-YYYY "];
+    [dateFormatter setDateFormat:@"HH:mm"];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleNewMessage:)
+                                                 name:kNewChatMessage
+                                               object:nil];
 }
+
+
+-(void)handleNewMessage:(NSNotification *)not{
+    NSDictionary * notdic = [not userInfo];
+    Message * received = [notdic objectForKey:@"message"];
+    
+    [messagesArray addObject:received];
+    [table reloadData];
+}
+
 
 -(void)sendMessageAndClear{
     //Send message
@@ -59,8 +82,14 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     mess.date = [NSDate date];
     mess.who = dele.myPeerInfo.peerID;
     
-   
+    
+    [self sendMessageToPeers:mess];
+    
+    //Add to my database
     [messagesArray addObject:mess];
+
+    
+    
     [table reloadData];
     
     
@@ -100,8 +129,38 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         Message * msg = messagesArray[indexPath.row];
         cell.textLabel.text = [NSString stringWithFormat:@"%@\n", msg.content];
         cell.textLabel.numberOfLines = 0;
+        cell.textLabel.font = bodyFont;
+        
         [dic setObject:cell forKey:indexPath];
-    
+        
+        cell.whoLabel.text = msg.who.displayName;
+        cell.whoLabel.font = whoFont;
+        
+        
+        NSMutableDictionary * views = [[NSMutableDictionary alloc] init];
+        [views setObject:cell.container forKey:@"container"];
+        
+        cell.container.layer.cornerRadius = 5;
+        cell.container.layer.masksToBounds = YES;
+        
+        if([msg.who.displayName isEqualToString:dele.myPeerInfo.peerID.displayName]){ //I send it -> Right
+            [cell.contentView addConstraints:[NSLayoutConstraint
+                                              constraintsWithVisualFormat:@"[container]|"
+                                              options:0
+                                              metrics:nil
+                                              views:views]];
+        }else{ //-> Left
+            [cell.contentView addConstraints:[NSLayoutConstraint
+                                              constraintsWithVisualFormat:@"|[container]"
+                                              options:0
+                                              metrics:nil
+                                              views:views]];
+        }
+        
+        //Date
+        
+        NSString *formattedDateString = [dateFormatter stringFromDate:msg.date];
+        cell.dateLabel.text = formattedDateString;
     }
     
     
@@ -120,7 +179,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     if(indexPath.row > messagesArray.count)
         return 0;
     else
-     return (TOP_MARGIN + labelSize.height + BOTTOM_MARGIN);
+     return (TOP_MARGIN + labelSize.height + BOTTOM_MARGIN + cell.whoLabel.frame.size.height);
     
 
 }
@@ -204,6 +263,29 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     return YES;
 }
 
+
+-(void)sendMessageToPeers: (Message *)message{
+    NSMutableDictionary * sendDic = [[NSMutableDictionary alloc] init];
+    
+    [sendDic setObject:kNewChatMessage forKey:@"msg"];
+    [sendDic setObject:message forKey:@"message"];
+    [sendDic setObject:message.who forKey:@"who"];
+    
+    
+    
+    NSError * error = nil;
+    
+    NSData * allData = [NSKeyedArchiver archivedDataWithRootObject:sendDic];
+    [dele.manager.session sendData:allData
+                           toPeers:dele.manager.session.connectedPeers
+                          withMode:MCSessionSendDataReliable
+                             error:&error];
+    
+    if(error != nil){
+        NSLog(@"ERROR SENDING chat message");
+    }
+
+}
 
 
 

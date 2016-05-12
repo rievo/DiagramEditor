@@ -74,6 +74,8 @@ FOUNDATION_EXPORT NSString *const kUsersTablePromotePeer;
 
 FOUNDATION_EXPORT NSString *const kDisconnectYourself;
 
+FOUNDATION_EXPORT NSString *const kNewChatMessage;
+
 #define stayAlertTime 5
 #define alertsAnimationDuration 0.075
 

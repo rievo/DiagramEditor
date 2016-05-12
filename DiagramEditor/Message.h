@@ -10,7 +10,7 @@
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 
 
-@interface Message : NSObject
+@interface Message : NSObject <NSCoding>
 
 
 @property NSString * content;

@@ -10,5 +10,8 @@
 
 @interface ChatTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *textLabel;
+@property (weak, nonatomic) IBOutlet UILabel *whoLabel;
+@property (weak, nonatomic) IBOutlet UIView *container;
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 
 @end
