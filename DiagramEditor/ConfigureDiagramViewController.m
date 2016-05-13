@@ -965,6 +965,20 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self loadLocalFiles];
     });
+    
+    NSError * jsonError;
+    NSString * jsonPath = [documentsDirectory stringByAppendingPathComponent:@"/Jsons"];
+    NSString * jsonName = [NSString stringWithFormat:@"%@/%@", jsonPath, pf.name];
+    BOOL jsonSuccess = [fileManager removeItemAtPath:jsonName error:&jsonError];
+    
+    if (jsonSuccess) {
+        NSLog(@"Json %@ removed", pf.name);
+    }
+    else
+    {
+        NSLog(@"Error removing json");
+    }
+    //Remove json
 }
 
 #pragma mark ShowOptions popup
@@ -1470,14 +1484,15 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
 -(NSString *)loadPaletteNamed: (NSString *)name{
     
     //Search on local palettes
+    NSString * pal  = nil;
+    pal = [self searchOnLocalPalettes:name];
     
-    //NSString * con = [self searchOnLocalPalettes:name];
-    //TODO: Search on server palettes
-    NSString * pal = [self searchOnServerPalettes:name];
+    if(pal == nil)
+       pal= [self searchOnServerPalettes:name];
     
-    if(pal == nil){
+    /*if(pal == nil){
         
-    }
+    }*/
     return pal;
 }
 
@@ -1588,7 +1603,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 -(NSString *)searchOnLocalPalettes: (NSString *)name{
-    NSString * temp = nil;
+    /*NSString * temp = nil;
     
     NSArray * bpaths = [[NSBundle mainBundle] pathsForResourcesOfType:@".graphicR" inDirectory:nil];
     for(NSString * path in bpaths){
@@ -1604,7 +1619,38 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     
     
-    return temp;
+    return temp;*/
+    
+    //Load local palettes
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
+    
+    NSString *palettePath = [documentsDirectory stringByAppendingPathComponent:@"/Palettes"];
+    
+    
+    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:palettePath error:NULL];
+    
+    
+    for (int count = 0; count < (int)[directoryContent count]; count++)
+    {
+        NSString * nameins = directoryContent[count];
+        if([nameins isEqualToString:name]){
+            NSString * path = [NSString stringWithFormat:@"%@/%@", palettePath, directoryContent[count]];
+            NSString* contentins = [NSString stringWithContentsOfFile:path
+                                                             encoding:NSUTF8StringEncoding
+                                                                error:NULL];
+            return contentins;
+        }
+        /*NSString * path = [NSString stringWithFormat:@"%@/%@", palettePath, directoryContent[count]];
+        NSString* contentins = [NSString stringWithContentsOfFile:path
+                                                         encoding:NSUTF8StringEncoding
+                                                            error:NULL];
+        
+*/
+
+    }
+    
+    return nil;
 }
 
 #pragma mark Component methods
