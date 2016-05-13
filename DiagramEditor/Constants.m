@@ -11,6 +11,8 @@
 
 NSString *const SERVICE_NAME = @"demiso";
 
+NSString * const kJsons = @"Jsons";
+NSString * const kPalettes = @"Palettes";
 
 #pragma mark decorators
 NSString *const NO_DECORATION = @"nodecoration";

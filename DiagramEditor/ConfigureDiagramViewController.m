@@ -906,6 +906,30 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     });
     
     
+    //Download Json
+    NSString * jsonContent = [self searchJSONonServer:pf.name];
+    NSError * jsonError = nil;
+    
+    if(jsonContent == nil){
+        NSLog(@"Json was not found on server");
+    }else{
+        NSLog(@"Json was found on server. Let's save it");
+        NSString * jsonPath = [documentsDirectory stringByAppendingPathComponent:@"/Jsons"];
+        
+        NSString * jsonName = [NSString stringWithFormat:@"%@/%@", jsonPath, pf.name];
+        [jsonContent writeToFile:jsonName
+                     atomically:NO
+                       encoding:NSStringEncodingConversionAllowLossy
+                          error:&jsonError];
+        
+        if(jsonError == nil){
+            NSLog(@"json was properly saved");
+        }else{
+            NSLog(@"Error downloading the json");
+        }
+
+    }
+    
 }
 
 -(void)removeFileAtIndexPath:(NSIndexPath *)ip{
@@ -1777,11 +1801,39 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
 -(NSString *)searchJsonNamed:(NSString *)name{
     NSString * result = nil;
     
-    result = [self searchJSONonServer:name];
+    result = [self searchLocalJSON:name];
+    
+    if(result == nil)
+        result = [self searchJSONonServer:name];
+    
     return result;
 }
 
 -(NSString *)searchLocalJSON:(NSString *)name{
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    
+    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
+    
+    NSString *palettePath = [documentsDirectory stringByAppendingPathComponent:@"/Jsons"];
+    
+    
+    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:palettePath error:NULL];
+    
+    for (int count = 0; count < (int)[directoryContent count]; count++){
+        NSString * jname = directoryContent[count];
+        if([jname isEqualToString:name]){
+            
+            //Read this and return
+            NSString * path = [NSString stringWithFormat:@"%@/%@", palettePath, directoryContent[count]];
+            NSString* contentins = [NSString stringWithContentsOfFile:path
+                                                             encoding:NSUTF8StringEncoding
+                                                                error:NULL];
+            return contentins;
+            
+            
+        }
+    }
     return nil;
 }
 

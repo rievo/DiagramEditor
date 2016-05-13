@@ -10,6 +10,9 @@
 
 FOUNDATION_EXPORT NSString *const SERVICE_NAME;
 
+FOUNDATION_EXPORT NSString *const kJsons;
+FOUNDATION_EXPORT NSString *const kPalettes;
+
 
 #pragma mark Decorators
 FOUNDATION_EXPORT NSString *const NO_DECORATION;
