@@ -79,6 +79,21 @@
     
     chat = nil;
     
+    
+    //Create Palettes folder if doesn't exists
+    NSError *error;
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
+    
+    NSString *palettePath = [documentsDirectory stringByAppendingPathComponent:@"/Palettes"];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:palettePath])
+        [[NSFileManager defaultManager] createDirectoryAtPath:palettePath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
+    
+    //Create Jsons folder
+    NSString * jsonPath = [documentsDirectory stringByAppendingPathComponent:@"/Jsons"];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:jsonPath])
+        [[NSFileManager defaultManager] createDirectoryAtPath:jsonPath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
+    
     return YES;
 }
 

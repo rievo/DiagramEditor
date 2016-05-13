@@ -141,13 +141,55 @@
 #pragma mark Recover files from server and local device
 
 -(void)loadLocalFiles{
+    
+    //Remove local files from array
+    NSMutableArray * toRemove = [[NSMutableArray alloc] init];
+    for(PaletteFile * pf in filesArray){
+        if(pf.fromServer == NO){
+            [toRemove addObject:pf];
+        }
+    }
+    
+    [filesArray removeObjectsInArray:toRemove];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
+    
+    NSString *palettePath = [documentsDirectory stringByAppendingPathComponent:@"/Palettes"];
+    
+    
+    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:palettePath error:NULL];
+    
+    
+    for (int count = 0; count < (int)[directoryContent count]; count++)
+    {
+        NSString * path = [NSString stringWithFormat:@"%@/%@", palettePath, directoryContent[count]];
+        NSString* contentins = [NSString stringWithContentsOfFile:path
+                                                      encoding:NSUTF8StringEncoding
+                                                         error:NULL];
+
+        PaletteFile * pf = [[PaletteFile alloc] init];
+        NSArray * components = [path componentsSeparatedByString:@"/"];
+        
+        pf.name = [components objectAtIndex:components.count -1];
+        pf.content = contentins;
+        pf.fromServer = false;
+        
+        [filesArray addObject:pf];
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [filesTable reloadData];
+    });
+   
+    
     //NSFileManager  *manager = [NSFileManager defaultManager];
     // the preferred way to get the apps documents directory
     //NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     //NSString *documentsDirectory = [paths objectAtIndex:0];
     
     
-    
+    /*
     //Load from bundle
     NSArray * bpaths = [[NSBundle mainBundle] pathsForResourcesOfType:@".graphicR" inDirectory:nil];
     NSString * contentstr = nil;
@@ -167,7 +209,7 @@
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [filesTable reloadData];
-    });
+    });*/
     
     
 }
@@ -589,7 +631,7 @@
             [self performSegueWithIdentifier:@"showEditor" sender:self];
         }else{
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                            message:@"No tenemos el Json asociado :("
+                                                            message:@"Json is not accesible"
                                                            delegate:self
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil];
@@ -785,6 +827,96 @@
 }
 
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    //Obviously, if this returns no, the edit option won't even populate
+    return YES;
+}
+
+ 
+- (void)tableView:(UITableView *)tableView
+commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
+forRowAtIndexPath:(NSIndexPath *)indexPath {
+    //Nothing gets called here if you invoke `tableView:editActionsForRowAtIndexPath:` according to Apple docs so just leave this method blank
+}
+
+
+
+-(NSArray *)tableView:(UITableView *)tableView
+editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    PaletteFile * pf = [filesArray objectAtIndex:indexPath.row];
+    
+
+    
+    if(pf.fromServer == YES){ //From server
+        UITableViewRowAction *download = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault
+                                                                         title:@"Download"
+                                                                       handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
+                                       {
+                                           download.backgroundColor = dele.blue1;
+                                           [self downloadFileAtIndexPath:indexPath];
+                                       }];
+        return @[download];
+    }else{ //Local file
+        UITableViewRowAction *remove = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive
+                                                                           title:@"Delete"
+                                                                         handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
+                                         {
+                                             [self removeFileAtIndexPath:indexPath];
+                                         }];
+        return @[remove];
+    }
+}
+
+-(void)downloadFileAtIndexPath:(NSIndexPath *)ip{
+
+    PaletteFile * pf = filesArray[ip.row];
+    
+    NSError * error = nil;
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
+    NSString *palettePath = [documentsDirectory stringByAppendingPathComponent:@"/Palettes"];
+    
+    NSString * fileName = [NSString stringWithFormat:@"%@/%@", palettePath, pf.name];
+    
+    [pf.content writeToFile:fileName
+              atomically:NO
+                encoding:NSStringEncodingConversionAllowLossy
+                   error:&error];
+    
+    if(error != nil){
+        NSLog(@"%@", [error localizedDescription]);
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"There was a problem downloading file"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }else{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
+                                                        message:@"The palette has been download"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //[filesTable reloadData];
+        //[filesTable endEditing:YES];
+        [self loadLocalFiles];
+    });
+    
+    
+}
+
+-(void)removeFileAtIndexPath:(NSIndexPath *)ip{
+    
+}
+
+#pragma mark ShowOptions popup
+
+
 -(void)showOptionsPopup{
     
     UIAlertController * ac  = [UIAlertController alertControllerWithTitle:nil
@@ -897,7 +1029,7 @@
     NSString * jsonString = [self searchJsonNamed:tempPaletteFile];
     
     if(jsonString == nil){
-        NSLog(@"Error, no tenemos el json");
+        NSLog(@"Error, we don't have the Json");
         return NO;
     }else{ //We have the json :)
         NSError *jsonError;
