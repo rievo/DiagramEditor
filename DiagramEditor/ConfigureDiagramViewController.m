@@ -902,8 +902,6 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        //[filesTable reloadData];
-        //[filesTable endEditing:YES];
         [self loadLocalFiles];
     });
     
@@ -911,7 +909,38 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 -(void)removeFileAtIndexPath:(NSIndexPath *)ip{
+    PaletteFile * pf = filesArray[ip.row];
     
+    NSError * error = nil;
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
+    NSString *palettePath = [documentsDirectory stringByAppendingPathComponent:@"/Palettes"];
+    
+    NSString * fileName = [NSString stringWithFormat:@"%@/%@", palettePath, pf.name];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL success = [fileManager removeItemAtPath:fileName error:&error];
+    if (success) {
+        UIAlertView *removedSuccessFullyAlert = [[UIAlertView alloc] initWithTitle:@"Congratulations:"
+                                                                           message:@"Successfully removed"
+                                                                          delegate:self
+                                                                 cancelButtonTitle:@"Ok"
+                                                                 otherButtonTitles:nil];
+        [removedSuccessFullyAlert show];
+    }
+    else
+    {
+        UIAlertView *removedSuccessFullyAlert = [[UIAlertView alloc] initWithTitle:@"Error:"
+                                                                           message:@"Palette was no removed"
+                                                                          delegate:self
+                                                                 cancelButtonTitle:@"Ok"
+                                                                 otherButtonTitles:nil];
+        [removedSuccessFullyAlert show];
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self loadLocalFiles];
+    });
 }
 
 #pragma mark ShowOptions popup
