@@ -118,9 +118,11 @@ EdgeListDelegate, MCBrowserViewControllerDelegate>{
     CGPoint drawCenter;
     CGPoint noteCenter;
     
+    __weak IBOutlet UIButton *chatButton;
     
     NSString * tempNoteContent;
     NSString * noteToShow;
+    MCPeerID * whoSendTheNote;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 

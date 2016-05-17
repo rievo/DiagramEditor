@@ -18,6 +18,7 @@
     // Initialization code
     textLabel.numberOfLines = 0;
     textLabel.font = [UIFont fontWithName:@"Helvetica" size:13.0];
+    self.backgroundColor = [UIColor clearColor];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

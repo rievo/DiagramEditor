@@ -144,28 +144,38 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         
         NSMutableDictionary * views = [[NSMutableDictionary alloc] init];
         [views setObject:cell.container forKey:@"container"];
+        [views setObject:cell.fromMeTriangle forKey:@"fromMe"];
+        [views setObject:cell.fromThemTriangle forKey:@"fromThemTriangle"];
         
         cell.container.layer.cornerRadius = 5;
         cell.container.layer.masksToBounds = YES;
         
         if([msg.who.displayName isEqualToString:dele.myPeerInfo.peerID.displayName]){ //I send it -> Right
             [cell.contentView addConstraints:[NSLayoutConstraint
-                                              constraintsWithVisualFormat:@"[container]|"
+                                              constraintsWithVisualFormat:@"[fromMe]|"
                                               options:0
                                               metrics:nil
                                               views:views]];
+            [cell.fromThemTriangle setHidden:YES];
         }else{ //-> Left
             [cell.contentView addConstraints:[NSLayoutConstraint
-                                              constraintsWithVisualFormat:@"|[container]"
+                                              constraintsWithVisualFormat:@"|[fromThemTriangle]"
                                               options:0
                                               metrics:nil
                                               views:views]];
+            [cell.fromMeTriangle setHidden:YES];
         }
         
         //Date
         
         NSString *formattedDateString = [dateFormatter stringFromDate:msg.date];
         cell.dateLabel.text = formattedDateString;
+        
+        CGSize labelSize = [cell.textLabel sizeThatFits:CGSizeMake(cell.textLabel.frame.size.width, CGFLOAT_MAX)];
+        
+        CGRect frame = cell.frame;
+        frame.size.width = labelSize.width + 30;
+        [cell setFrame:frame];
     }
     
     

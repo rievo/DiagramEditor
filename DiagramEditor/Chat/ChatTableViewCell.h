@@ -13,5 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *whoLabel;
 @property (weak, nonatomic) IBOutlet UIView *container;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *fromMeTriangle;
+@property (weak, nonatomic) IBOutlet UIImageView *fromThemTriangle;
 
 @end

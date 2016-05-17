@@ -572,6 +572,7 @@
                         <outlet property="alerts" destination="wb5-EY-8bb" id="ulZ-py-hzx"/>
                         <outlet property="askForMasterButton" destination="fVi-At-lwc" id="K99-p1-d1K"/>
                         <outlet property="cameraOutlet" destination="uUY-Bf-x28" id="8QP-k4-baA"/>
+                        <outlet property="chatButton" destination="pU0-Rb-Alt" id="ugt-5h-rhn"/>
                         <outlet property="collaborationButton" destination="Y5T-CR-Azl" id="naV-Or-Mao"/>
                         <outlet property="drawAlert" destination="Vvf-ZE-0T7" id="aW5-yP-7oO"/>
                         <outlet property="exclamationAlert" destination="J5e-Vs-3e3" id="gtH-4S-VS4"/>

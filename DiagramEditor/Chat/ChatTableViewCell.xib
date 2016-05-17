@@ -15,6 +15,15 @@
                 <rect key="frame" x="0.0" y="0.0" width="323" height="69"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="leTriangle.png" translatesAutoresizingMaskIntoConstraints="NO" id="RtR-S9-JjM">
+                        <rect key="frame" x="288" y="51" width="15" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="15" id="7hU-oK-Hhi"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="15" id="Dmf-fL-lcO"/>
+                            <constraint firstAttribute="height" constant="15" id="KiE-al-bkm"/>
+                            <constraint firstAttribute="width" constant="15" id="YND-ZG-xtc"/>
+                        </constraints>
+                    </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6dx-eD-wzv" userLabel="container">
                         <rect key="frame" x="43" y="7" width="250" height="59"/>
                         <subviews>
@@ -29,13 +38,6 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OZ5-Ao-sMm">
-                                <rect key="frame" x="8" y="19" width="242" height="40"/>
-                                <color key="backgroundColor" red="1" green="0.33779633620689653" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ZMf-SY-OGg">
                                 <rect key="frame" x="154" y="0.0" width="88" height="19"/>
                                 <constraints>
@@ -44,6 +46,13 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="0.66054482984293195" green="0.66054482984293195" blue="0.66054482984293195" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OZ5-Ao-sMm">
+                                <rect key="frame" x="8" y="19" width="242" height="40"/>
+                                <color key="backgroundColor" red="1" green="0.33779633620689653" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -61,23 +70,43 @@
                             <constraint firstItem="OZ5-Ao-sMm" firstAttribute="leading" secondItem="6dx-eD-wzv" secondAttribute="leading" constant="8" id="zqJ-Z8-drU"/>
                         </constraints>
                     </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="riTriangle.png" translatesAutoresizingMaskIntoConstraints="NO" id="cCH-dI-QQm">
+                        <rect key="frame" x="32" y="52" width="15" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="15" id="7k3-AO-fAR"/>
+                            <constraint firstAttribute="width" constant="15" id="Kk6-BZ-tJz"/>
+                            <constraint firstAttribute="height" constant="15" id="QhB-OA-Cxw"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="15" id="XPn-pI-CCM"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <color key="backgroundColor" red="0.32660351346876682" green="0.42219131765624052" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstAttribute="topMargin" secondItem="6dx-eD-wzv" secondAttribute="top" constant="1" id="5dX-xe-jp0"/>
+                    <constraint firstItem="cCH-dI-QQm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="24" id="5lg-Dv-ZBu"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="cCH-dI-QQm" secondAttribute="bottom" constant="-6" id="AZV-rB-3on"/>
                     <constraint firstAttribute="bottomMargin" secondItem="6dx-eD-wzv" secondAttribute="bottom" constant="-5" id="BgD-Yd-0S8"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="6dx-eD-wzv" secondAttribute="trailing" constant="22" id="dwM-fa-hBU"/>
-                    <constraint firstItem="6dx-eD-wzv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="35" id="fKp-9L-7rR"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="RtR-S9-JjM" secondAttribute="trailing" constant="12" id="NVv-zx-TDf"/>
+                    <constraint firstItem="6dx-eD-wzv" firstAttribute="leading" secondItem="cCH-dI-QQm" secondAttribute="trailing" constant="-4" id="TCk-Qf-jrC"/>
+                    <constraint firstItem="RtR-S9-JjM" firstAttribute="leading" secondItem="OZ5-Ao-sMm" secondAttribute="trailing" constant="-5" id="VSq-9Z-HPm"/>
+                    <constraint firstItem="RtR-S9-JjM" firstAttribute="leading" secondItem="6dx-eD-wzv" secondAttribute="trailing" constant="-5" id="bUY-Hx-Fre"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="RtR-S9-JjM" secondAttribute="bottom" constant="-5" id="vMZ-2n-wfZ"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="1" green="0.95180869204966345" blue="0.99209860084808577" alpha="0.0" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="container" destination="6dx-eD-wzv" id="dOR-nm-C3B"/>
                 <outlet property="dateLabel" destination="ZMf-SY-OGg" id="FaU-AJ-WBs"/>
+                <outlet property="fromMeTriangle" destination="RtR-S9-JjM" id="fcq-mt-p6r"/>
+                <outlet property="fromThemTriangle" destination="cCH-dI-QQm" id="SzF-3z-yrK"/>
                 <outlet property="textLabel" destination="OZ5-Ao-sMm" id="PXh-Eg-qZQ"/>
                 <outlet property="whoLabel" destination="uSX-Kd-Qfx" id="xBY-xc-saH"/>
             </connections>
             <point key="canvasLocation" x="361.5" y="434"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="leTriangle.png" width="30" height="30"/>
+        <image name="riTriangle.png" width="30" height="30"/>
+    </resources>
 </document>

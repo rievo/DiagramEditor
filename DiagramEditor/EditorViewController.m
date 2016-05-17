@@ -21,6 +21,7 @@
 #import "Constants.h"
 #import "DrawingAlert.h"
 #import "ChatView.h"
+#import "Alert.h"
 
 #define fileExtension @"demiso"
 
@@ -39,6 +40,7 @@
     
     
     [askForMasterButton setHidden:YES];
+    [chatButton setHidden:YES];
     
     [super viewDidLoad];
     
@@ -235,6 +237,8 @@
 
 -(void) handleUpdateMasterButton:(NSNotification *)not{
     
+    
+    [chatButton setHidden:NO];
     if([dele amITheMaster] == YES){
         [askForMasterButton setHidden:YES];
     }else{
@@ -280,6 +284,7 @@
     
     //Hide ask for master
     [askForMasterButton setHidden:YES];
+    [chatButton setHidden:NO];
     
     //Send my things
     NSLog(@"Start sending");
@@ -1514,6 +1519,9 @@
 }
 
 -(void)browserViewControllerDidFinish:(MCBrowserViewController *)browserViewController{
+    [askForMasterButton setHidden:YES]; //I will be the first master
+    [chatButton setHidden:NO];
+    
     [dele.manager.browser dismissViewControllerAnimated:YES completion:nil];
     [usersListView removeFromSuperview];
     
@@ -1670,6 +1678,7 @@
         [alert show];
         
         [askForMasterButton setHidden:YES];
+        [chatButton setHidden:NO];
     }else{
         NSError * error = nil;
         // NSArray * peers = [[NSArray alloc] initWithObjects:dele.manager, nil];
@@ -1932,33 +1941,49 @@
     CGPoint where = [whereVal CGPointValue];
     
     MCPeerID * who = [dic objectForKey:@"who"];
+    whoSendTheNote = who;
+    
     
     NSString * type = [dic objectForKey:@"alertType"];
     
     
-    UIImageView * imageView = [[UIImageView alloc] initWithFrame:alerts.frame];
+    //UIImageView * imageView = [[UIImageView alloc] initWithFrame:alerts.frame];
     
-    imageView.center = where;
+    Alert * alert = [[Alert alloc] init];
+    CGRect  new = alerts.frame;
+    new.size.width = new.size.width * 1.5;
+    new.size.height = new.size.height * 1.5;
+    
+    [alert setFrame:new];
+    [alert setCenter:where];
+    
+    //imageView.center = where;
     
     if([type isEqualToString:kNoteType]){
-        imageView.image = noteAlert.image;
-        [imageView setUserInteractionEnabled:YES];
+
+        alert.image = noteAlert.image;
+        [alert setUserInteractionEnabled:YES];
         UITapGestureRecognizer * showNotecontent = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                            action:@selector(showNoteContent:)];
-        [imageView addGestureRecognizer:showNotecontent];
-        noteToShow = [dic objectForKey:@"noteText"];
+        [alert addGestureRecognizer:showNotecontent];
+        alert.text = [dic objectForKey:@"noteText"];
+
+        
     }else if([type isEqualToString:kInterrogation]){
-        imageView.image = interrogationAlert.image;
+        //imageView.image = interrogationAlert.image;
+        alert.image = interrogationAlert.image;
     }else if([type isEqualToString:kExclamation]){
-        imageView.image = exclamationAlert.image;
+        //imageView.image = exclamationAlert.image;
+        alert.image = exclamationAlert.image;
     }
     
     
-    [canvas addSubview:imageView];
+    //[canvas addSubview:imageView];
+    [canvas addSubview:alert];
     
-    /*
+    
     NSMutableDictionary * whatView = [[NSMutableDictionary alloc] init];
-    [whatView setObject:imageView forKey:@"view"];
+    [whatView setObject:alert forKey:@"view"];
     
     NSTimer * removeTimer;
     
@@ -1969,54 +1994,18 @@
                                                  userInfo:whatView
                                                   repeats:NO];
     
-    [[NSRunLoop mainRunLoop]addTimer:removeTimer forMode:NSRunLoopCommonModes];*/
+    [[NSRunLoop mainRunLoop]addTimer:removeTimer forMode:NSRunLoopCommonModes];
     
-    /*
-    //Add Drawing alert
-    DrawingAlert * da = [[DrawingAlert alloc] initWithFrame:imageView.frame];
-    [canvas addSubview:da];
-    [da setNeedsDisplay];
-    
-    CGRect bigRect = CGRectMake(da.center.x -50, da.center.y -50, 100, 100);
-    
-    
-    [UIView animateWithDuration:10.0
-                          delay:0.0
-                        options:UIViewAnimationOptionCurveEaseIn
-                     animations:^{
-                         //da.transform = CGAffineTransformMakeScale(2.5, 2.5);
-                         da.center = CGPointMake(500, 500);
-                     }
-                     completion:^(BOOL finished) {
-                         
-                     }];*/
+
 }
 
 -(void)showNoteContent:(UITapGestureRecognizer *)recog{
-    /*
-    NSLog(@"%@",noteToShow);
+
+    Alert * sender = (Alert *)recog.view;
     
-    UIAlertView *alertK2;
-    alertK2 = [[UIAlertView alloc]
-               initWithTitle:@"Note"
-               message:noteToShow
-               delegate: self
-               cancelButtonTitle:@"OK"
-               otherButtonTitles:nil];
-    
-    
-    alertK2.alertViewStyle= UIAlertControllerStyleActionSheet;
-    [alertK2 show];
-     
-     UIAlertAction * deleteAction = [UIAlertAction actionWithTitle:@"Delete"
-     style:UIAlertActionStyleDestructive
-     handler:^(UIAlertAction * _Nonnull action) {
-     [recog.view removeFromSuperview];
-     }];
-     */
     UIAlertController * alert=   [UIAlertController
                                   alertControllerWithTitle: @"Note"
-                                  message:noteToShow
+                                  message:sender.text
                                   preferredStyle:UIAlertControllerStyleAlert];
     
     

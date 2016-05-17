@@ -63,6 +63,8 @@
     
     [self setUserInteractionEnabled:YES];
     
+     self.backgroundColor = [UIColor colorWithRed:218/255.0 green:224/255.0 blue:235/255.0 alpha:0.6];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(repaintCanvas:)
                                                  name:@"repaintCanvas" object:nil];
