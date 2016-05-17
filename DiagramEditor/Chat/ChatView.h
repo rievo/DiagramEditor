@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
-@interface ChatView : UIView<UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate>{
+@interface ChatView : UIView<UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UIGestureRecognizerDelegate>{
     CGFloat animatedDistance;
     __weak IBOutlet UITextView *tv;
     __weak IBOutlet UITableView *table;

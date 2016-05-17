@@ -1869,9 +1869,9 @@
                                                                       
                                                                       [self sendAlert:view onPoint:pointInSV];
                                                                   }];
+
             
             [alert addAction:defaultAction];
-            
             
             [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
                 //textField.placeholder = @"Input data...";
@@ -1910,8 +1910,7 @@
     NSValue * val = [NSValue valueWithCGPoint:point];
     [dic setObject:val forKey:@"where"];
     
-    
-    
+    //TODO: Add this note to myself
     
     NSError * error = nil;
     
@@ -1994,6 +1993,7 @@
 }
 
 -(void)showNoteContent:(UITapGestureRecognizer *)recog{
+    /*
     NSLog(@"%@",noteToShow);
     
     UIAlertView *alertK2;
@@ -2007,7 +2007,37 @@
     
     alertK2.alertViewStyle= UIAlertControllerStyleActionSheet;
     [alertK2 show];
+     
+     UIAlertAction * deleteAction = [UIAlertAction actionWithTitle:@"Delete"
+     style:UIAlertActionStyleDestructive
+     handler:^(UIAlertAction * _Nonnull action) {
+     [recog.view removeFromSuperview];
+     }];
+     */
+    UIAlertController * alert=   [UIAlertController
+                                  alertControllerWithTitle: @"Note"
+                                  message:noteToShow
+                                  preferredStyle:UIAlertControllerStyleAlert];
     
+    
+    UIAlertAction * deleteAction = [UIAlertAction actionWithTitle:@"Delete"
+                                                            style:UIAlertActionStyleDestructive
+                                                          handler:^(UIAlertAction * _Nonnull action) {
+                                                              [recog.view removeFromSuperview];
+                                                               [alert dismissViewControllerAnimated:YES completion:nil];
+                                                          }];
+    
+    UIAlertAction * okAction = [UIAlertAction actionWithTitle:@"Ok"
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * _Nonnull action) {
+                                                              [alert dismissViewControllerAnimated:YES completion:nil];
+                                                          }];
+    
+    [alert addAction:deleteAction];
+    [alert addAction:okAction];
+    
+    [alert setModalPresentationStyle:UIModalPresentationFormSheet];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 -(void)removeAlert: (NSTimer * )sender{

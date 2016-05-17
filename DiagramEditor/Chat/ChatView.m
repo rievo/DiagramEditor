@@ -62,6 +62,11 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                                              selector:@selector(handleNewMessage:)
                                                  name:kNewChatMessage
                                                object:nil];
+    
+    
+    UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    [background addGestureRecognizer:tapgr];
+    [tapgr setDelegate:self];
 }
 
 
@@ -285,6 +290,25 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         NSLog(@"ERROR SENDING chat message");
     }
 
+}
+
+
+
+
+-(void)handleTap: (UITapGestureRecognizer *)recog{
+    [self removeFromSuperview];
+}
+
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    
+    [self endEditing:YES];
+    if (touch.view != background) { // accept only touchs on superview, not accept touchs on subviews
+        return NO;
+    }
+    
+    return YES;
 }
 
 

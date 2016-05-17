@@ -8,7 +8,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="70" id="KGk-i7-Jjw" customClass="ChatTableViewCell">
+        <tableViewCell alpha="0.0" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="70" id="KGk-i7-Jjw" customClass="ChatTableViewCell">
             <rect key="frame" x="0.0" y="0.0" width="323" height="70"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -62,7 +62,7 @@
                         </constraints>
                     </view>
                 </subviews>
-                <color key="backgroundColor" red="0.33518478864303625" green="0.42613888076152051" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
+                <color key="backgroundColor" red="0.32660351346876682" green="0.42219131765624052" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstAttribute="topMargin" secondItem="6dx-eD-wzv" secondAttribute="top" constant="1" id="5dX-xe-jp0"/>
                     <constraint firstAttribute="bottomMargin" secondItem="6dx-eD-wzv" secondAttribute="bottom" constant="-5" id="BgD-Yd-0S8"/>

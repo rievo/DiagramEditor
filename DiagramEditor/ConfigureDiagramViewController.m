@@ -956,7 +956,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     else
     {
         UIAlertView *removedSuccessFullyAlert = [[UIAlertView alloc] initWithTitle:@"Error:"
-                                                                           message:@"Palette was no removed"
+                                                                           message:@"Palette was not removed"
                                                                           delegate:self
                                                                  cancelButtonTitle:@"Ok"
                                                                  otherButtonTitles:nil];
