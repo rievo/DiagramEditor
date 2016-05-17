@@ -111,53 +111,6 @@
 }
 
 
-/*
-#pragma mark UITableViewDelegate methods
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;    //count of section
-}
-
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [filesArray count];
-}
-
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView
-         cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *MyIdentifier = @"MyIdentifier";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
-    DiagramFile * temp = [filesArray objectAtIndex:indexPath.row];
-    
-    if (cell == nil)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                      reuseIdentifier:MyIdentifier] ;
-        cell.textLabel.text = temp.name;
-        cell.textLabel.textColor = dele.blue4;
-        cell.backgroundColor = [UIColor clearColor];
-        
-        cell.detailTextLabel.text = temp.dateString;
-        cell.detailTextLabel.textColor = dele.blue4;
-    }
-    return cell;
-}
-
-
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    [self removeFromSuperview];
-    DiagramFile * file = [filesArray objectAtIndex:indexPath.row];
-    [delegate closeExplorerWithSelectedDiagramFile:file];
-}*/
-
-
 #pragma mark UICollectionView methods
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section {
     return filesArray.count;
@@ -181,18 +134,11 @@
 
     return cell;
     
-    
-    /*UICollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor whiteColor];
-    return cell;*/
+
     
 }
-// 4
-/*- (UICollectionReusableView *)collectionView:
- (UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
- {
- return [[UICollectionReusableView alloc] init];
- }*/
+
+
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -204,13 +150,35 @@
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
     // TODO: Deselect item
 }
+/*
+-(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
+    return 20;
+}
+
+-(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
+    return 20;
+}*/
+ /*
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+    return UIEdgeInsetsMake(0, 50, 0, 0);
+}*/
 
 
 #pragma mark – UICollectionViewDelegateFlowLayout
 
 //Da el tamaño de las celdas
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(120, 140);
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout*)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+     DiagramFile * df = [filesArray objectAtIndex:indexPath.row];
+    
+    float xIWant = 100;
+    
+    float xIHave =df.previewImage.size.width;
+    float yIHave =df.previewImage.size.height;
+
+    
+    return CGSizeMake(xIWant, yIHave * xIWant / xIHave);
 }
 
 @end
