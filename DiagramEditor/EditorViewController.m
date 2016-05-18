@@ -1931,12 +1931,26 @@
     }else if(view == noteAlert){
         [dic setObject:kNoteType forKey:@"alertType"];
         [dic setObject:tempNoteContent forKey:@"noteText"];
-        tempNoteContent = nil;
+        
     }
     NSValue * val = [NSValue valueWithCGPoint:point];
     [dic setObject:val forKey:@"where"];
     
     //TODO: Add this note to myself
+    
+    Alert * alert = [[Alert alloc] init];
+    alert.frame = alerts.frame;
+    alert.center  = point;
+    alert.text = tempNoteContent;
+    alert.image = noteAlert.image;
+    
+    UITapGestureRecognizer * showNotecontent = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                       action:@selector(showNoteContent:)];
+    [alert addGestureRecognizer:showNotecontent];
+    [alert setUserInteractionEnabled:YES];
+    
+    [canvas addSubview:alert];
+    tempNoteContent = nil;
     
     NSError * error = nil;
     

@@ -17,6 +17,8 @@
     
     CGPoint goodCenter;
     __weak IBOutlet UIView *background;
+    
+    NSMutableDictionary * cells;
 }
 
 @property (weak, nonatomic) IBOutlet UITableView *table;

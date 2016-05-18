@@ -829,7 +829,10 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     //Obviously, if this returns no, the edit option won't even populate
-    return YES;
+    if(tableView == filesTable)
+        return YES;
+    else
+        return NO;
 }
 
  
@@ -855,6 +858,8 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
                                            download.backgroundColor = dele.blue1;
                                            [self downloadFileAtIndexPath:indexPath];
                                        }];
+        download.backgroundColor = dele.blue1;
+       
         return @[download];
     }else{ //Local file
         UITableViewRowAction *remove = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive

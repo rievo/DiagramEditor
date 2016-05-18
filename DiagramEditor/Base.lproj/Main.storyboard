@@ -34,7 +34,7 @@
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NFu-5F-w0i">
                                 <rect key="frame" x="295" y="75" width="259" height="492"/>
                                 <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Rcu-8g-tKj">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" bounces="NO" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Rcu-8g-tKj">
                                         <rect key="frame" x="41" y="36" width="199" height="378"/>
                                         <color key="backgroundColor" red="0.50980392156862742" green="0.56470588235294117" blue="0.67843137254901964" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>

@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "MCManager.h"
 #import "Constants.h"
+#import "PeerInfo.h"
 
 @implementation SessionUsersView
 
@@ -37,6 +38,8 @@
 }
 
 -(void)prepare{
+    
+    cells = [[NSMutableDictionary alloc] init];
     table.dataSource = self;
     table.delegate = self;
     [table setLayoutMargins:UIEdgeInsetsZero];
@@ -122,7 +125,8 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                       reuseIdentifier:MyIdentifier] ;
         
-       
+    
+    
         cell.backgroundColor = [UIColor clearColor];
         cell.separatorInset = UIEdgeInsetsZero;
         cell.textLabel.adjustsFontSizeToFitWidth = YES;
@@ -142,6 +146,8 @@
         }
         
         cell.textLabel.text = text;
+    
+    //[cells setObject:cell forKey:indexPath];
     //}
     return cell;
 }
@@ -168,35 +174,55 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     //Obviously, if this returns no, the edit option won't even populate
-    return YES;
+    MCPeerID * peer = [usersArray objectAtIndex:indexPath.row];
+    
+    if(peer  == dele.serverId.peerID){
+        return NO;
+    }else{
+         return YES;
+    }
+    
+    
+   
 }
 
 - (void)tableView:(UITableView *)tableView
 commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
 forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     //Nothing gets called here if you invoke `tableView:editActionsForRowAtIndexPath:` according to Apple docs so just leave this method blank
 }
 
 -(NSArray *)tableView:(UITableView *)tableView
 editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewRowAction *expel = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault
-                                                                     title:@"Expel"
-                                                                   handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
-    {
-        [self expelPeerAtIndexPath:indexPath];
-    }];
     
-    UITableViewRowAction *promote = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault
-                                                                       title:@"Promote"
-                                                                     handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
-    {
-        [self promotePeerAtIndexPath:indexPath];
-    }];
+   /* MCPeerID * peer = [usersArray objectAtIndex:indexPath.row];
     
-    expel.backgroundColor = dele.blue1;
-    promote.backgroundColor = dele.blue2;
+    if([peer.displayName isEqualToString:dele.serverId.peerID.displayName]){ //We can't expel the master
+        return @[];
+    }else{*/
+        
+        UITableViewRowAction *expel = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault
+                                                                         title:@"Expel"
+                                                                       handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
+                                       {
+                                           [self expelPeerAtIndexPath:indexPath];
+                                       }];
+        
+        UITableViewRowAction *promote = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault
+                                                                           title:@"Promote"
+                                                                         handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
+                                         {
+                                             [self promotePeerAtIndexPath:indexPath];
+                                         }];
+        
+        expel.backgroundColor = dele.blue1;
+        promote.backgroundColor = dele.blue2;
+        
+        return @[expel, promote]; //array with all the buttons you want. 1,2,3, etc...
+    //}
     
-    return @[expel, promote]; //array with all the buttons you want. 1,2,3, etc...
+    
 }
 
 
