@@ -54,6 +54,9 @@ NSString * const kUsersTablePromotePeer = @"kUsersTablePromotePeer";
 NSString * const kDisconnectYourself = @"kDisconnectYourself";
 NSString * const kNewChatMessage = @"kNewChatMessage";
 
+NSString * const kGoOut = @"kGoOut";
+
+
 @implementation Constants
 
 @end

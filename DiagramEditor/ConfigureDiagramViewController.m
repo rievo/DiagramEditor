@@ -1264,7 +1264,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
                     ref.min = [f numberFromString:[rdic objectForKey:@"min"]];
                 }
                 
-                ref.containment = [rdic objectForKey:@"containment"];
+                ref.containment = [[rdic objectForKey:@"containment"]boolValue];
                 ref.target = [rdic objectForKey:@"target"];
                 ref.opposite = [rdic objectForKey:@"opposite"];
                 

@@ -44,7 +44,7 @@
 }
 
 -(void)updateInstancesCount{
-    instancesCountLabel.text = [NSString stringWithFormat:@"%lu", thisArray.count];
+    instancesCountLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)thisArray.count];
 }
 
 -(void)updateNameLabel{

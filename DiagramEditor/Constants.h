@@ -79,6 +79,7 @@ FOUNDATION_EXPORT NSString *const kDisconnectYourself;
 
 FOUNDATION_EXPORT NSString *const kNewChatMessage;
 
+FOUNDATION_EXPORT NSString *const kGoOut;
 #define stayAlertTime 3
 #define alertsAnimationDuration 0.075
 

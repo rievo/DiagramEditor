@@ -191,6 +191,12 @@
                                                  name:kUsersTablePromotePeer
                                                object:nil];
     
+    //kGoOut
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleGoOut:)
+                                                 name:kGoOut
+                                               object:nil];
+    
     [showUsersPeersViewButton setHidden:YES];
     
     //arrowFrame = arrowAlert.frame;
@@ -234,7 +240,7 @@
 }
 
 
-
+#pragma mark Notificationhandlers
 -(void) handleUpdateMasterButton:(NSNotification *)not{
     
     
@@ -262,9 +268,20 @@
     }
 }
 
+-(void)handleGoOut:(NSNotification*)not{
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
+                                                    message:@"You have been disconnected from session"
+                                                   delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
 -(void)handlePetitionDenied:(NSNotification *)not{
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
-                                                    message:@"No me dejan ser el master"
+                                                    message:@"You cannot be the new master"
                                                    delegate:self
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];

@@ -271,21 +271,18 @@
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kNewAlert object:nil userInfo:relinfo];
     }else if([msg isEqualToString:kDisconnectYourself]){
-        MCPeerID * who = [dataDic objectForKey:@"who"];
+        MCPeerID * who = [dataDic objectForKey:@"peerID"];
         if([who.displayName isEqualToString:myPeerInfo.peerID.displayName]){ //It's for me
             [manager.session disconnect];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kGoOut
+                                                                object:nil
+                                                              userInfo:nil];
         }else{
             NSLog(@"Somebody has been kicked from session");
         }
     }else if([msg isEqualToString:kNewChatMessage]){
-        /*MCPeerID * who = [dataDic objectForKey:@"who"];
-        if([who.displayName isEqualToString:myPeerInfo.peerID.displayName]){ //It's for me
-            [manager.session disconnect];
-        }else{
-            NSLog(@"Somebody has been kicked from session");
-        }*/
-        
-        
+
         
         Message * message = [dataDic objectForKey:@"message"];
         NSLog(@"%@ said: %@", message.who.displayName, message.content);
