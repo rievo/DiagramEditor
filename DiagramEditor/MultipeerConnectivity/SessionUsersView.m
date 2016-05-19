@@ -239,6 +239,8 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [table endEditing:YES];
 
+    //Reload table
+    [self recoverUsersFromAppDelegateSession];
 }
 
 -(void)promotePeerAtIndexPath:(NSIndexPath *)ip{
