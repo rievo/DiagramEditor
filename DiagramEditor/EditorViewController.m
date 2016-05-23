@@ -22,6 +22,8 @@
 #import "DrawingAlert.h"
 #import "ChatView.h"
 #import "Alert.h"
+#import "Message.h"
+#import "NoteView.h"
 
 #define fileExtension @"demiso"
 
@@ -51,6 +53,9 @@
     dele = [[UIApplication sharedApplication]delegate];
     
     dele.manager.browser.delegate = self;
+    
+    if(dele.notesArray == nil)
+        dele.notesArray = [[NSMutableArray alloc] init];
     
     
     //Show-hide palette
@@ -130,6 +135,16 @@
             [canvas addSubview:comp];
             [comp updateNameLabel];
         }
+        
+        //Load notes
+        for(Alert * al in dele.notesArray){
+            al.image = noteAlert.image;
+            [canvas addSubview:al];
+            [al setUserInteractionEnabled:YES];
+            UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showNoteContent:)];
+            [al addGestureRecognizer:tapgr];
+        }
+        
         //repaint canvas
         [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
     }else{
@@ -1107,6 +1122,8 @@
     [writer writeEndElement];//Close nodes
     
     
+
+    
     [writer writeStartElement:@"edges"];
     Connection * c = nil;
     for(int i = 0; i<dele.connections.count; i++){
@@ -1120,18 +1137,52 @@
     }
     [writer writeEndElement];
     
+    //Write chat inside the diagram
+    if (dele.messagesArray != nil && dele.messagesArray.count > 0){
+        [writer writeStartElement:@"chat"];
+        
+        for(Message * msg in dele.messagesArray){
+            [writer writeStartElement:@"msg"];
+            [writer writeAttribute:@"who" value:msg.who.displayName];
+            [writer writeAttribute:@"date" value:[msg.date description]];
+            [writer writeAttribute:@"content" value:msg.content];
+            [writer writeEndElement];
+        }
+        //Close chat
+        [writer writeEndElement];
+    }
+    
+    
+    //Save notes
+    if (dele.notesArray != nil && dele.notesArray.count > 0){
+        [writer writeStartElement:@"notes"];
+        
+        for(Alert * al in dele.notesArray){
+            /*[writer writeStartElement:@"msg"];
+            [writer writeAttribute:@"who" value:msg.who.displayName];
+            [writer writeAttribute:@"date" value:[msg.date description]];
+            [writer writeAttribute:@"content" value:msg.content];
+            [writer writeEndElement];*/
+            [writer writeStartElement:@"note"];
+            [writer writeAttribute:@"who" value:al.who.displayName];
+            [writer writeAttribute:@"date" value:[al.date description]];
+            [writer writeAttribute:@"content" value:al.text];
+            [writer writeAttribute:@"x" value:[[NSNumber numberWithInt:(int)al.center.x]description]];
+            [writer writeAttribute:@"y" value:[[NSNumber numberWithInt:(int)al.center.y]description]];
+            [writer writeEndElement];
+        }
+        //Close chat
+        [writer writeEndElement];
+    }
+
+    
     [writer writeEndElement];//Close diagram
-    //[writer writeEndDocument];
+    
+
+
     
     NSString * diagramString = [writer toString];
-    
-    //remove <xmlLine from diagramString
-    /*NSString * finalDiagString = @"";
-     NSArray * diagArray = [diagramString componentsSeparatedByString:@"\">"];
-     for(int i = 1; i< diagArray.count; i++){
-     NSString * str = diagArray[i];
-     finalDiagString = [finalDiagString stringByAppendingString:str];
-     }*/
+
     
     NSString * result = @""; //result = [result stringByAppendingString:@""];
     result = [result stringByAppendingString:@"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"];
@@ -1149,7 +1200,7 @@
     
     //Ecore
     result = [result stringByAppendingString:@"<metamodel>"];
-    result = [result stringByAppendingString:ecoreToWrite]; //TODO: heere
+    result = [result stringByAppendingString:ecoreToWrite];
     result = [result stringByAppendingString:@"</metamodel>"];
     
     result = [result stringByAppendingString:@"</diagrameditor>"];
@@ -1943,6 +1994,8 @@
     alert.frame = alerts.frame;
     alert.center  = point;
     alert.text = tempNoteContent;
+    alert.date = [NSDate date];
+    alert.who = dele.myPeerInfo.peerID;
     //alert.image = noteAlert.image;
     
     if(view == exclamationAlert){
@@ -1959,6 +2012,8 @@
     [alert setUserInteractionEnabled:YES];
     
     [canvas addSubview:alert];
+    [dele.notesArray addObject:alert];
+    
     //Add self destruct
     NSMutableDictionary * whatView = [[NSMutableDictionary alloc] init];
     [whatView setObject:alert forKey:@"view"];
@@ -2038,6 +2093,8 @@
     //[canvas addSubview:imageView];
     [canvas addSubview:alert];
     
+    [dele.notesArray addObject:alert];
+    
     
     NSMutableDictionary * whatView = [[NSMutableDictionary alloc] init];
     [whatView setObject:alert forKey:@"view"];
@@ -2059,7 +2116,7 @@
 }
 
 -(void)showNoteContent:(UITapGestureRecognizer *)recog{
-    
+    /*
     Alert * sender = (Alert *)recog.view;
     
     UIAlertController * alert=   [UIAlertController
@@ -2085,7 +2142,29 @@
     [alert addAction:okAction];
     
     [alert setModalPresentationStyle:UIModalPresentationFormSheet];
-    [self presentViewController:alert animated:YES completion:nil];
+    [self presentViewController:alert animated:YES completion:nil];*/
+    
+    
+    Alert * sender = (Alert *)recog.view;
+    
+    NoteView * nv = [[[NSBundle mainBundle] loadNibNamed:@"NoteView"
+                                                   owner:self
+                                                 options:nil] objectAtIndex:0];
+    [nv setFrame:self.view.frame];
+    
+    nv.contentTextView.text = sender.text;
+    nv.whoLabel.text = sender.who.displayName;
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    [dateFormat setDateFormat:@"HH:mm:ss"];
+    
+    
+    NSDate * dateToParse = sender.date;
+
+    nv.dateLabel.text = [dateFormat stringFromDate:dateToParse];
+
+    [self.view addSubview:nv];
+    [dele.notesArray addObject:sender];
 }
 
 -(void)removeAlert: (NSTimer * )sender{

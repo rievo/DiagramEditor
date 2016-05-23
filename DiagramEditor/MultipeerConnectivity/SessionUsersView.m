@@ -84,6 +84,15 @@
     MCPeerID * peer = [dic objectForKey:@"peeerID"];
     MCSessionState state = [[dic objectForKey:@"state"]integerValue];
     
+    if([peer.displayName isEqualToString:dele.myPeerInfo.peerID.displayName] && state == MCSessionStateNotConnected){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
+                                                        message:@"Ha sido desconectado"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    
     /*if(state == MCSessionStateNotConnected){
         //Me he desconectado
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"

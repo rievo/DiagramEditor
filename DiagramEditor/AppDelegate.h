@@ -71,6 +71,9 @@
 
 @property Component * fingeredComponent;
 
+@property NSMutableArray * messagesArray;
+@property NSMutableArray * notesArray;
+
 
 -(int)getOutConnectionsForComponent: (Component *)comp
                              ofType: (NSString * )type;

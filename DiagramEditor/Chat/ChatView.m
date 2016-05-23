@@ -43,8 +43,11 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 }
 
 -(void)prepare{
+    
+    dele = [[UIApplication sharedApplication]delegate];
+    
     //tf.delegate = self;
-    messagesArray = [[NSMutableArray alloc] init];
+    dele.messagesArray = [[NSMutableArray alloc] init];
     tv.delegate = self;
     
     [table setDelegate:self];
@@ -136,7 +139,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     NSDictionary * notdic = [not userInfo];
     Message * received = [notdic objectForKey:@"message"];
     
-    [messagesArray addObject:received];
+    [dele.messagesArray addObject:received];
     [table reloadData];
 }
 
@@ -153,7 +156,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     [self sendMessageToPeers:mess];
     
     //Add to my database
-    [messagesArray addObject:mess];
+    [dele.messagesArray addObject:mess];
 
     
     
@@ -176,7 +179,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return [messagesArray count];    //count number of row from counting array hear cataGorry is An Array
+    return [dele.messagesArray count];    //count number of row from counting array hear cataGorry is An Array
 }
 
 
@@ -193,7 +196,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                                                       owner:self
                                                     options:nil];
         cell = nib[0];
-        Message * msg = messagesArray[indexPath.row];
+        Message * msg = dele.messagesArray[indexPath.row];
         cell.textLabel.text = [NSString stringWithFormat:@"%@\n", msg.content];
         cell.textLabel.numberOfLines = 0;
         cell.textLabel.font = bodyFont;
@@ -253,7 +256,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     ChatTableViewCell * cell  = [dic objectForKey:indexPath];
     CGSize labelSize = [cell.textLabel sizeThatFits:CGSizeMake(cell.textLabel.frame.size.width, CGFLOAT_MAX)];
     
-    if(indexPath.row > messagesArray.count)
+    if(indexPath.row > dele.messagesArray.count)
         return 0;
     else
      return (TOP_MARGIN + labelSize.height + BOTTOM_MARGIN + cell.whoLabel.frame.size.height);

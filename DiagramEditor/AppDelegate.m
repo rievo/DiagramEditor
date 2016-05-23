@@ -22,7 +22,7 @@
 
 @implementation AppDelegate
 
-@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR, evc, blue0, blue1, blue2, elementsDictionary, manager, ecoreContent, loadingADiagram, fingeredComponent, serverId, currentMasterId, myPeerInfo, myUUIDString, chat;
+@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR, evc, blue0, blue1, blue2, elementsDictionary, manager, ecoreContent, loadingADiagram, fingeredComponent, serverId, currentMasterId, myPeerInfo, myUUIDString, chat, notesArray;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -78,7 +78,11 @@
     serverId = nil;
     
     chat = nil;
-    
+    /*
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(somebodyChangedState:)
+                                                name:kChangedState
+                                              object:nil];
+    */
     
     //Create Palettes folder if doesn't exists
     NSError *error;
@@ -496,4 +500,24 @@
     
     return result;
 }
+
+/*
+-(void)somebodyChangedState:(NSNotification *)not{
+    
+    NSDictionary * dic = not.userInfo;
+    
+    MCPeerID * peer = [dic objectForKey:@"peeerID"];
+    MCSessionState state = [[dic objectForKey:@"state"]integerValue];
+    
+    if([peer.displayName isEqualToString:myPeerInfo.peerID.displayName] && state == MCSessionStateNotConnected){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
+                                                        message:@"Ha sido desconectado"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    
+
+}*/
 @end

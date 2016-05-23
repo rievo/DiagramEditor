@@ -27,6 +27,8 @@
 #import "ThinkingView.h"
 #import "DiagramFile.h"
 
+#import "Alert.h"
+
 
 #define defaultwidth 50
 #define defaultheight 50
@@ -1390,6 +1392,27 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     //TODO: it may have palette content embedded
     
+    //Load notes
+    NSDictionary * notesDic = [diagramDic objectForKey:@"notes"];
+    NSArray * notes = [notesDic objectForKey:@"note"];
+    if([notes isKindOfClass:[NSDictionary class]]){
+        notes = [[NSArray alloc]initWithObjects:notes, nil];
+    }
+    
+    dele.notesArray = [[NSMutableArray alloc] init];
+    
+    for(NSDictionary * note in notes){
+        Alert * alert = [[Alert alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];
+        alert.who = [[MCPeerID alloc]initWithDisplayName:[note objectForKey:@"_who"]];
+        alert.date = [note objectForKey:@"_date"];
+        alert.text = [note objectForKey:@"_content"];
+        
+        float x = [[note objectForKey:@"_x"]floatValue];
+        float y = [[note objectForKey:@"_y"]floatValue];
+        [alert setCenter:CGPointMake(x, y)];
+        [dele.notesArray addObject:alert];
+    }
+
 
     NSDictionary * paletteNameDic = [diagramDic objectForKey:@"palette_name"];
     NSString * paletteName = [paletteNameDic objectForKey:@"_name"];

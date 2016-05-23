@@ -14,5 +14,6 @@
 
 @property MCPeerID * who;
 @property NSString * text;
+@property NSDate * date;
 
 @end

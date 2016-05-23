@@ -100,6 +100,8 @@
 		F18A55EB1C8487B700B134F0 /* HiddenInstancesListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F18A55EA1C8487B700B134F0 /* HiddenInstancesListView.xib */; };
 		F18A55EE1C8487C200B134F0 /* HiddenInstancesListView.m in Sources */ = {isa = PBXBuildFile; fileRef = F18A55ED1C8487C200B134F0 /* HiddenInstancesListView.m */; };
 		F18A8E201C7C5A5900D87C00 /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = F18A8E1F1C7C5A5900D87C00 /* circle.png */; };
+		F19607F31CF32E2A000DC248 /* NoteView.m in Sources */ = {isa = PBXBuildFile; fileRef = F19607F21CF32E2A000DC248 /* NoteView.m */; };
+		F19607F51CF32E34000DC248 /* NoteView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F19607F41CF32E34000DC248 /* NoteView.xib */; };
 		F19C258E1C43AB580002E490 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = F19C258D1C43AB580002E490 /* back.png */; };
 		F19C25901C43AB8B0002E490 /* palette.png in Resources */ = {isa = PBXBuildFile; fileRef = F19C258F1C43AB8B0002E490 /* palette.png */; };
 		F1A20A7E1C1981290037C05D /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A20A7D1C1981290037C05D /* XMLDictionary.m */; };
@@ -266,6 +268,9 @@
 		F18A55EC1C8487C200B134F0 /* HiddenInstancesListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HiddenInstancesListView.h; sourceTree = "<group>"; };
 		F18A55ED1C8487C200B134F0 /* HiddenInstancesListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HiddenInstancesListView.m; sourceTree = "<group>"; };
 		F18A8E1F1C7C5A5900D87C00 /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
+		F19607F11CF32E2A000DC248 /* NoteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteView.h; sourceTree = "<group>"; };
+		F19607F21CF32E2A000DC248 /* NoteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteView.m; sourceTree = "<group>"; };
+		F19607F41CF32E34000DC248 /* NoteView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoteView.xib; sourceTree = "<group>"; };
 		F19C258D1C43AB580002E490 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		F19C258F1C43AB8B0002E490 /* palette.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = palette.png; sourceTree = "<group>"; };
 		F1A20A7C1C1981290037C05D /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDictionary.h; sourceTree = "<group>"; };
@@ -627,6 +632,9 @@
 				F1FEE7311CE36E2000FD4E9B /* Message.h */,
 				F1FEE7321CE36E2000FD4E9B /* Message.m */,
 				F1FEE7341CE470F000FD4E9B /* send.png */,
+				F19607F41CF32E34000DC248 /* NoteView.xib */,
+				F19607F11CF32E2A000DC248 /* NoteView.h */,
+				F19607F21CF32E2A000DC248 /* NoteView.m */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -717,6 +725,7 @@
 				F19C258E1C43AB580002E490 /* back.png in Resources */,
 				F1B7899B1C610292001B6DB4 /* Minus-100.png in Resources */,
 				F10AB8081C50E7E200DE6DCE /* PasteView.xib in Resources */,
+				F19607F51CF32E34000DC248 /* NoteView.xib in Resources */,
 				F15BEA011CABC62400EDABA5 /* showPaletteEditorOld.png in Resources */,
 				F1786DED1C56222B00963663 /* GenericAttributeTableViewCell.xib in Resources */,
 				F16733F21CBBD6C500E76C3A /* upArrowBlack.png in Resources */,
@@ -780,6 +789,7 @@
 				F1685EA81C1829F00094097E /* Canvas.m in Sources */,
 				F16C7DCB1C578D4B00CA9B25 /* ConnectionDetailsView.m in Sources */,
 				F16C35C31C9824F0006F4255 /* Constants.m in Sources */,
+				F19607F31CF32E2A000DC248 /* NoteView.m in Sources */,
 				F185107B1C1824C8004EC4C8 /* AppDelegate.m in Sources */,
 				F1685EAE1C1831840094097E /* ComponentDetailsView.m in Sources */,
 				F15865141C85A2CA007D2E75 /* CloudDiagramsExplorer.m in Sources */,

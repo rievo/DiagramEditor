@@ -13,7 +13,7 @@
     __weak IBOutlet UITextView *tv;
     __weak IBOutlet UITableView *table;
     
-    NSMutableArray * messagesArray;
+    
     
     NSMutableDictionary * dic;
     AppDelegate * dele;
