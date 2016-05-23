@@ -1743,12 +1743,12 @@
 
 - (IBAction)showChat:(id)sender {
     /*if(dele.chat == nil){
-        dele.chat = [[[NSBundle mainBundle] loadNibNamed:@"ChatView"
-                                                   owner:self
-                                                 options:nil] objectAtIndex:0];
-        
-        [dele.chat prepare];
-    }*/
+     dele.chat = [[[NSBundle mainBundle] loadNibNamed:@"ChatView"
+     owner:self
+     options:nil] objectAtIndex:0];
+     
+     [dele.chat prepare];
+     }*/
     
     //Show
     [dele.chat setFrame:self.view.frame];
@@ -1895,7 +1895,7 @@
                                                                       
                                                                       [self sendAlert:view onPoint:pointInSV];
                                                                   }];
-
+            
             
             [alert addAction:defaultAction];
             
@@ -1942,7 +1942,15 @@
     alert.frame = alerts.frame;
     alert.center  = point;
     alert.text = tempNoteContent;
-    alert.image = noteAlert.image;
+    //alert.image = noteAlert.image;
+    
+    if(view == exclamationAlert){
+        alert.image = exclamationAlert.image;
+    }else if(view == interrogationAlert){
+        alert.image = interrogationAlert.image;
+    }else if(view == noteAlert){
+        alert.image = noteAlert.image;
+    }
     
     UITapGestureRecognizer * showNotecontent = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                        action:@selector(showNoteContent:)];
@@ -1950,6 +1958,23 @@
     [alert setUserInteractionEnabled:YES];
     
     [canvas addSubview:alert];
+    //Add self destruct
+    NSMutableDictionary * whatView = [[NSMutableDictionary alloc] init];
+    [whatView setObject:alert forKey:@"view"];
+    
+    NSTimer * removeTimer;
+    
+    if(view != noteAlert){
+        
+        removeTimer = [NSTimer scheduledTimerWithTimeInterval:stayAlertTime
+                                                       target:self
+                       
+                                                     selector:@selector(removeAlert:)
+                                                     userInfo:whatView
+                                                      repeats:NO];
+        
+        [[NSRunLoop mainRunLoop]addTimer:removeTimer forMode:NSRunLoopCommonModes];
+    }
     tempNoteContent = nil;
     
     NSError * error = nil;
@@ -1991,14 +2016,14 @@
     //imageView.center = where;
     
     if([type isEqualToString:kNoteType]){
-
+        
         alert.image = noteAlert.image;
         [alert setUserInteractionEnabled:YES];
         UITapGestureRecognizer * showNotecontent = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                            action:@selector(showNoteContent:)];
         [alert addGestureRecognizer:showNotecontent];
         alert.text = [dic objectForKey:@"noteText"];
-
+        
         
     }else if([type isEqualToString:kInterrogation]){
         //imageView.image = interrogationAlert.image;
@@ -2018,20 +2043,22 @@
     
     NSTimer * removeTimer;
     
-    removeTimer = [NSTimer scheduledTimerWithTimeInterval:stayAlertTime
-                                                   target:self
-                   
-                                                 selector:@selector(removeAlert:)
-                                                 userInfo:whatView
-                                                  repeats:NO];
+    if(![type isEqualToString:kNoteType]){
+        removeTimer = [NSTimer scheduledTimerWithTimeInterval:stayAlertTime
+                                                       target:self
+                       
+                                                     selector:@selector(removeAlert:)
+                                                     userInfo:whatView
+                                                      repeats:NO];
+        
+        [[NSRunLoop mainRunLoop]addTimer:removeTimer forMode:NSRunLoopCommonModes];
+    }
     
-    [[NSRunLoop mainRunLoop]addTimer:removeTimer forMode:NSRunLoopCommonModes];
     
-
 }
 
 -(void)showNoteContent:(UITapGestureRecognizer *)recog{
-
+    
     Alert * sender = (Alert *)recog.view;
     
     UIAlertController * alert=   [UIAlertController
@@ -2044,14 +2071,14 @@
                                                             style:UIAlertActionStyleDestructive
                                                           handler:^(UIAlertAction * _Nonnull action) {
                                                               [recog.view removeFromSuperview];
-                                                               [alert dismissViewControllerAnimated:YES completion:nil];
+                                                              [alert dismissViewControllerAnimated:YES completion:nil];
                                                           }];
     
     UIAlertAction * okAction = [UIAlertAction actionWithTitle:@"Ok"
-                                                            style:UIAlertActionStyleDefault
-                                                          handler:^(UIAlertAction * _Nonnull action) {
-                                                              [alert dismissViewControllerAnimated:YES completion:nil];
-                                                          }];
+                                                        style:UIAlertActionStyleDefault
+                                                      handler:^(UIAlertAction * _Nonnull action) {
+                                                          [alert dismissViewControllerAnimated:YES completion:nil];
+                                                      }];
     
     [alert addAction:deleteAction];
     [alert addAction:okAction];

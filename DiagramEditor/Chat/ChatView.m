@@ -147,7 +147,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         [views setObject:cell.fromMeTriangle forKey:@"fromMe"];
         [views setObject:cell.fromThemTriangle forKey:@"fromThemTriangle"];
         
-        cell.container.layer.cornerRadius = 5;
+        cell.container.layer.cornerRadius = 4;
         cell.container.layer.masksToBounds = YES;
         
         if([msg.who.displayName isEqualToString:dele.myPeerInfo.peerID.displayName]){ //I send it -> Right
@@ -211,10 +211,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 #pragma mark UITextView
 
 -(void)textViewDidBeginEditing:(UITextView *)textView{
-    CGRect textFieldRect =
-    [self convertRect:textView.bounds fromView:textView];
-    CGRect viewRect =
-    [self convertRect:self.bounds fromView:self];
+    /*CGRect textFieldRect =[self convertRect:textView.bounds fromView:textView];
+    CGRect viewRect =[self convertRect:self.bounds fromView:self];
     CGFloat midline = textFieldRect.origin.y + 0.5 * textFieldRect.size.height;
     CGFloat numerator =
     midline - viewRect.origin.y
@@ -254,7 +252,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     
     [self setFrame:viewFrame];
     
-    [UIView commitAnimations];
+    [UIView commitAnimations];*/
 }
 
 

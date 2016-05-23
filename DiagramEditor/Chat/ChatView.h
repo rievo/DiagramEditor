@@ -22,6 +22,7 @@
     UIFont * bodyFont;
     
     NSDateFormatter *dateFormatter ;
+    __weak IBOutlet UIView *bottomBar;
 }
 
 - (IBAction)sendMessage:(id)sender;
