@@ -18,7 +18,7 @@
 
 @implementation ChatView
 
-@synthesize background;
+@synthesize background, parent;
 
 static const CGFloat KEYBOARD_ANIMATION_DURATION = 0.3;
 static const CGFloat MINIMUM_SCROLL_FRACTION = 0.2;
@@ -33,6 +33,10 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     // Drawing code
 }
 */
+
+-(void)awakeFromNib{
+    
+}
 
 - (IBAction)sendMessage:(id)sender {
     [self sendMessageAndClear];
@@ -58,6 +62,9 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     [dateFormatter setDateFormat:@"HH:mm"];
     
     
+    oldFrame = bottomBar.frame;
+    
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleNewMessage:)
                                                  name:kNewChatMessage
@@ -67,6 +74,61 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [background addGestureRecognizer:tapgr];
     [tapgr setDelegate:self];
+    
+    NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(keyboardOnScreen:)
+                   name:UIKeyboardWillShowNotification
+                 object:nil];
+    
+    
+
+    [center addObserver:self
+               selector:@selector(keyboardOutOfScreen:)
+                   name:UIKeyboardWillHideNotification
+                 object:nil];
+}
+
+-(void)keyboardOutOfScreen:(NSNotification *)not{
+    
+    [UIView animateWithDuration:0.2
+                          delay:0.0
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                             [bottomBar setFrame:oldFrame];
+                     }
+                     completion:^(BOOL finished) {
+                         
+                     }];
+
+}
+
+
+-(void)keyboardOnScreen:(NSNotification *)not{
+    
+    oldFrame = bottomBar.frame;
+    
+    NSDictionary * dicNot = not.userInfo;
+    
+    NSValue *val = dicNot[UIKeyboardFrameEndUserInfoKey];
+    
+    CGRect rawFrame = [val CGRectValue];
+    
+    CGRect keyboardFrame = [self.parent.view convertRect:rawFrame fromView:nil];
+    
+    [UIView animateWithDuration:0.2
+                          delay:0.0
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         [bottomBar setFrame:CGRectMake(bottomBar.frame.origin.x,
+                                                        keyboardFrame.origin.y - bottomBar.frame.size.height*2,
+                                                        bottomBar.frame.size.width,
+                                                        bottomBar.frame.size.height)];
+                     }
+                     completion:^(BOOL finished) {
+                         
+                     }];
+    
 }
 
 

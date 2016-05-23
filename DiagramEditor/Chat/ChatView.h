@@ -23,6 +23,8 @@
     
     NSDateFormatter *dateFormatter ;
     __weak IBOutlet UIView *bottomBar;
+    
+    CGRect oldFrame;
 }
 
 - (IBAction)sendMessage:(id)sender;
@@ -30,5 +32,5 @@
 -(void)prepare;
 
 @property (weak, nonatomic) IBOutlet UIView *background;
-
+@property UIViewController * parent;
 @end

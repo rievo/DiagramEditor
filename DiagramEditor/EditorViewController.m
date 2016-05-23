@@ -1609,6 +1609,7 @@
                                                  options:nil] objectAtIndex:0];
         
         [dele.chat prepare];
+        dele.chat.parent = self;
     }
     
     /*NSData * appDeleData = [dele packImportantInfo];
