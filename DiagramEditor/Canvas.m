@@ -11,7 +11,7 @@
 #import "ClassAttribute.h"
 #import "Constants.h"
 #import <CoreGraphics/CoreGraphics.h>
-
+#import "Alert.h"
 
 
 #define pi 3.14159265359
@@ -524,6 +524,19 @@
         [str drawAtPoint:CGPointMake( strpoint.x - halfw, strpoint.y-5)];
     }
     
+    
+    
+    
+    //Draw connections between notes and components
+    for(Alert * al in dele.notesArray){
+        if(al.associatedComponent != nil){
+            UIBezierPath * link = [[UIBezierPath alloc] init];
+            [dele.blue4 setStroke];
+            [link moveToPoint:al.center];
+            [link addLineToPoint:al.associatedComponent.center];
+            [link stroke];
+        }
+    }
     
     if(xArrowStart> 0 && yArrowStart> 0){
         

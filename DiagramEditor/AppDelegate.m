@@ -524,4 +524,18 @@
     
 
 }*/
+
+#pragma mark Encode / decode base64
++(NSString *)getBase64StringFromImage:(UIImage *)image{
+    NSData * data = UIImagePNGRepresentation(image);
+    NSString * encoded = [data base64EncodedStringWithOptions:0];
+    return  encoded;
+}
+
++(UIImage *)getImageFromBase64String:(NSString *)string{
+    NSData * data = [[NSData alloc] initWithBase64EncodedString:string options:0];
+    UIImage * img = [UIImage imageWithData:data];
+    return img;
+}
+
 @end

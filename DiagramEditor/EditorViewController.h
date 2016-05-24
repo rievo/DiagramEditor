@@ -127,6 +127,9 @@ CreateNoteViewDelegate
     NSString * tempNoteContent;
     NSString * noteToShow;
     MCPeerID * whoSendTheNote;
+    
+    
+    BOOL useImageAsIcon;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 

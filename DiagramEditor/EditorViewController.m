@@ -39,7 +39,7 @@
 
 - (void)viewDidLoad {
     
-    
+    useImageAsIcon = true;
     
     [askForMasterButton setHidden:YES];
     [chatButton setHidden:YES];
@@ -136,13 +136,26 @@
             [comp updateNameLabel];
         }
         
+        
+
         //Load notes
         for(Alert * al in dele.notesArray){
-            al.image = noteAlert.image;
+            if(useImageAsIcon == YES){
+                if(al.attach != nil)
+                    al.image = al.attach;
+                else{
+                    al.image = noteAlert.image;
+                }
+            }else{
+                al.image = noteAlert.image;
+            }
             [canvas addSubview:al];
             [al setUserInteractionEnabled:YES];
             UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showNoteContent:)];
             [al addGestureRecognizer:tapgr];
+            
+            UIPanGestureRecognizer * pang = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleNotePan:)];
+            [al addGestureRecognizer:pang];
         }
         
         //repaint canvas
@@ -1158,17 +1171,16 @@
         [writer writeStartElement:@"notes"];
         
         for(Alert * al in dele.notesArray){
-            /*[writer writeStartElement:@"msg"];
-            [writer writeAttribute:@"who" value:msg.who.displayName];
-            [writer writeAttribute:@"date" value:[msg.date description]];
-            [writer writeAttribute:@"content" value:msg.content];
-            [writer writeEndElement];*/
+
             [writer writeStartElement:@"note"];
             [writer writeAttribute:@"who" value:al.who.displayName];
             [writer writeAttribute:@"date" value:[al.date description]];
             [writer writeAttribute:@"content" value:al.text];
             [writer writeAttribute:@"x" value:[[NSNumber numberWithInt:(int)al.center.x]description]];
             [writer writeAttribute:@"y" value:[[NSNumber numberWithInt:(int)al.center.y]description]];
+            [writer writeAttribute:@"associated_node_id" value:[[NSNumber numberWithInt:(int)al.associatedComponent]description]];
+            if(al.attach != nil)
+                [writer writeAttribute:@"attach" value:[AppDelegate getBase64StringFromImage:al.attach]];
             [writer writeEndElement];
         }
         //Close chat
@@ -1807,7 +1819,7 @@
     [self.view addSubview:dele.chat];
 }
 
-
+#pragma mark Alerts and notes
 -(void)showAlerts{
     //Do animations
     
@@ -1932,30 +1944,8 @@
             [cnv setFrame: self.view.frame];
             cnv.parentVC = self;
             cnv.delegate = self;
-            cnv.noteCenter = point;
+            cnv.noteCenter = pointInSV;
             [self.view addSubview:cnv];
-            /*UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Enter text:"
-                                                                           message:nil
-                                                                    preferredStyle:UIAlertControllerStyleAlert];
-            
-            UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK"
-                                                                    style:UIAlertActionStyleDefault
-                                                                  handler:^(UIAlertAction * action) {
-                                                                      
-                                                                      
-                                                                      tempNoteContent= ((UITextField *)[alert.textFields objectAtIndex:0]).text;
-                                                                      
-                                                                      [self sendAlert:view onPoint:pointInSV];
-                                                                  }];
-            
-            
-            [alert addAction:defaultAction];
-            
-            [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-                //textField.placeholder = @"Input data...";
-            }];
-            
-            [self presentViewController:alert animated:YES completion:nil];*/
             
         }else{
             [self sendAlert:view onPoint:pointInSV];
@@ -1985,7 +1975,27 @@
     [alert addGestureRecognizer:showNotecontent];
     [alert setUserInteractionEnabled:YES];
     
-    alert.image = noteAlert.image;
+    
+    UIPanGestureRecognizer * notePanGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self
+                                                                                      action:@selector(handleNotePan:)];
+    [alert addGestureRecognizer:notePanGesture];
+    
+    if(useImageAsIcon == YES){
+        if(alert.attach != nil)
+            alert.image = alert.attach;
+        else{
+            alert.image = noteAlert.image;
+        }
+    }else{
+        alert.image = noteAlert.image;
+    }
+    
+    CGRect  new = alerts.frame;
+    new.size.width = new.size.width * 1.5;
+    new.size.height = new.size.height * 1.5;
+    [alert setBounds:new];
+    
+    //Add note to myself
     [canvas addSubview:alert];
     [dele.notesArray addObject:alert];
     
@@ -2002,6 +2012,25 @@
         NSLog(@"ERROR SENDING ALERT");
     }
 }
+
+-(void)handleNotePan:(UIPanGestureRecognizer *)recog{
+    
+    UIView * sender = recog.view;
+    
+    CGPoint point = [recog locationInView:self.view];
+    CGPoint pointInSV = [self.view convertPoint:point toView:canvas];
+    
+    if(recog.state == UIGestureRecognizerStateBegan){
+        
+    }else if(recog.state == UIGestureRecognizerStateChanged){
+        [sender setCenter:pointInSV];
+    }else if(recog.state == UIGestureRecognizerStateEnded){
+        
+    }
+    
+    [canvas setNeedsDisplay];
+}
+
 
 -(void)sendAlert:(UIImageView *)view
          onPoint:(CGPoint)point{
@@ -2116,7 +2145,17 @@
     
     if([type isEqualToString:kNoteType]){
         
-        alert.image = noteAlert.image;
+        
+        if(useImageAsIcon == YES){
+            if(alert.attach != nil)
+                alert.image = alert.attach;
+            else{
+                alert.image = noteAlert.image;
+            }
+        }else{
+            alert.image = noteAlert.image;
+        }
+        
         [alert setUserInteractionEnabled:YES];
         UITapGestureRecognizer * showNotecontent = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                            action:@selector(showNoteContent:)];
@@ -2171,6 +2210,7 @@
     nv.contentTextView.text = sender.text;
     nv.whoLabel.text = sender.who.displayName;
     nv.preview.image = sender.attach;
+    nv.associatedNote = sender;
     
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"HH:mm:ss"];
@@ -2253,12 +2293,25 @@
                              onPoint:(CGPoint)point{
     
     Alert * alert = [[Alert alloc] init];
-    alert.bounds = alerts.frame;
-    alert.center  = point;
+    //alert.frame = alerts.frame;
+    //alert.center  = point;
+    [alert setFrame:CGRectMake(point.x -alert.bounds.size.width/2,
+                               point.y -alert.bounds.size.height/2,
+                               alert.bounds.size.width,
+                               alert.bounds.size.height)];
     alert.text = text;
     alert.date = [NSDate date];
     alert.who = dele.myPeerInfo.peerID;
     alert.attach = image;
+    
+    //Check if there is a component on this position
+    for(Component * comp in dele.components){
+        if(CGRectContainsPoint(comp.frame, point)){
+            //Make that connection
+            alert.associatedComponent = comp;
+        }
+    }
+    
     
     [self sendNote:alert onPoint:point];
 }

@@ -8,10 +8,12 @@
 
 #import "NoteView.h"
 #import "AppDelegate.h"
+#import "Alert.h"
+
 
 @implementation NoteView
 
-@synthesize background, preview;
+@synthesize background, preview, associatedNote;
 
 -(void)awakeFromNib{
     dele = [[UIApplication sharedApplication]delegate];
@@ -25,6 +27,13 @@
 }
 
 - (IBAction)deleteThisNote:(id)sender {
+    [dele.notesArray removeObject:associatedNote];
+    [associatedNote removeFromSuperview];
+    
+    [self removeFromSuperview];
+    
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
+    
 }
 
 - (IBAction)closeThisView:(id)sender {

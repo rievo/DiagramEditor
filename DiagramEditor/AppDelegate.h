@@ -94,5 +94,11 @@
 
 -(BOOL)amITheMaster;
 -(BOOL)amITheServer;
+
+
++(NSString *)getBase64StringFromImage:(UIImage *)image;
++(UIImage *)getImageFromBase64String:(NSString *)string;
+
+
 @end
 

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
+#import "Component.h"
 
 @interface Alert : UIImageView<NSCoding>
 
@@ -16,5 +17,8 @@
 @property NSString * text;
 @property NSDate * date;
 @property UIImage * attach;
+@property Component * associatedComponent;
+
+@property NSString * aCId;
 
 @end

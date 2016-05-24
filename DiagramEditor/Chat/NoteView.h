@@ -10,6 +10,7 @@
 
 
 @class AppDelegate;
+@class Alert;
 
 @interface NoteView : UIView<UIGestureRecognizerDelegate>{
     
@@ -23,6 +24,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *whoLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UITextView *contentTextView;
+
+@property Alert * associatedNote;
 
 - (IBAction)deleteThisNote:(id)sender;
 - (IBAction)closeThisView:(id)sender;

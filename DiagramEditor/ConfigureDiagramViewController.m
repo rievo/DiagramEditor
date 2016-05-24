@@ -1407,6 +1407,16 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
         alert.date = [note objectForKey:@"_date"];
         alert.text = [note objectForKey:@"_content"];
         
+        //TODO: Load attach from xml
+        NSString * base64str = [note objectForKey:@"_attach"];
+        if(base64str != nil){
+            UIImage * att = [AppDelegate getImageFromBase64String:base64str];
+            alert.attach = att;
+        }
+        
+        NSString * nodeId = [note objectForKey:@"_associated_node_id"];
+        alert.aCId = nodeId;
+        
         float x = [[note objectForKey:@"_x"]floatValue];
         float y = [[note objectForKey:@"_y"]floatValue];
         [alert setCenter:CGPointMake(x, y)];
@@ -1481,6 +1491,17 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
             dele.connections = loadedConnections;
             
             
+            
+            //Match notes with components
+            for(Alert * al in dele.notesArray){
+                if(al.associatedComponent == nil){
+                    Component * asso = [self getComponentByStringId:al.aCId];
+                    al.associatedComponent = asso;
+                    
+                }
+            }
+            
+            
             if(result == YES){ //Tenemos el json y todo lo demás
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -1505,6 +1526,15 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     
     //TODO: Creo que no es buena idea hacer aquí el segue
+}
+
+-(Component *)getComponentByStringId:(NSString *)str{
+    for(Component * com in dele.components){
+        if([com.componentId isEqualToString:str]){
+            return com;
+        }
+    }
+    return nil;
 }
 
 #pragma mark Search palette (server-local)
