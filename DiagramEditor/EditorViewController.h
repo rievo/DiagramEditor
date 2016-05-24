@@ -16,6 +16,7 @@
 #import "SureView.h"
 #import "EdgeListView.h"
 #import "SessionUsersView.h"
+#import "CreateNoteView.h"
 
 @class Palette;
 @class PaletteItem;
@@ -31,7 +32,10 @@ ComponentDetailsViewDelegate,
 SaveNameDelegate,
 ConnectionDetailsViewDelegate,
 SureViewDelegate,
-EdgeListDelegate, MCBrowserViewControllerDelegate>{
+EdgeListDelegate,
+MCBrowserViewControllerDelegate,
+CreateNoteViewDelegate
+>{
     AppDelegate * dele;
     __weak IBOutlet Palette *palette;
     

@@ -18,6 +18,7 @@
     
     UIColor * color;
 }
+@property (weak, nonatomic) IBOutlet UIImageView *preview;
 @property (weak, nonatomic) IBOutlet UIView *background;
 @property (weak, nonatomic) IBOutlet UILabel *whoLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;

@@ -11,7 +11,7 @@
 
 @implementation NoteView
 
-@synthesize background;
+@synthesize background, preview;
 
 -(void)awakeFromNib{
     dele = [[UIApplication sharedApplication]delegate];

@@ -102,6 +102,9 @@
 		F18A8E201C7C5A5900D87C00 /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = F18A8E1F1C7C5A5900D87C00 /* circle.png */; };
 		F19607F31CF32E2A000DC248 /* NoteView.m in Sources */ = {isa = PBXBuildFile; fileRef = F19607F21CF32E2A000DC248 /* NoteView.m */; };
 		F19607F51CF32E34000DC248 /* NoteView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F19607F41CF32E34000DC248 /* NoteView.xib */; };
+		F19607F81CF34710000DC248 /* CreateNoteView.m in Sources */ = {isa = PBXBuildFile; fileRef = F19607F71CF34710000DC248 /* CreateNoteView.m */; };
+		F19607FA1CF3471B000DC248 /* CreateNoteView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F19607F91CF3471B000DC248 /* CreateNoteView.xib */; };
+		F19607FC1CF347E1000DC248 /* addImage.png in Resources */ = {isa = PBXBuildFile; fileRef = F19607FB1CF347E1000DC248 /* addImage.png */; };
 		F19C258E1C43AB580002E490 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = F19C258D1C43AB580002E490 /* back.png */; };
 		F19C25901C43AB8B0002E490 /* palette.png in Resources */ = {isa = PBXBuildFile; fileRef = F19C258F1C43AB8B0002E490 /* palette.png */; };
 		F1A20A7E1C1981290037C05D /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A20A7D1C1981290037C05D /* XMLDictionary.m */; };
@@ -271,6 +274,10 @@
 		F19607F11CF32E2A000DC248 /* NoteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteView.h; sourceTree = "<group>"; };
 		F19607F21CF32E2A000DC248 /* NoteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteView.m; sourceTree = "<group>"; };
 		F19607F41CF32E34000DC248 /* NoteView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoteView.xib; sourceTree = "<group>"; };
+		F19607F61CF34710000DC248 /* CreateNoteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateNoteView.h; sourceTree = "<group>"; };
+		F19607F71CF34710000DC248 /* CreateNoteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateNoteView.m; sourceTree = "<group>"; };
+		F19607F91CF3471B000DC248 /* CreateNoteView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateNoteView.xib; sourceTree = "<group>"; };
+		F19607FB1CF347E1000DC248 /* addImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addImage.png; sourceTree = "<group>"; };
 		F19C258D1C43AB580002E490 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		F19C258F1C43AB8B0002E490 /* palette.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = palette.png; sourceTree = "<group>"; };
 		F1A20A7C1C1981290037C05D /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLDictionary.h; sourceTree = "<group>"; };
@@ -496,6 +503,7 @@
 		F17B75AE1C22D9D500AB1B57 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				F19607FB1CF347E1000DC248 /* addImage.png */,
 				F1FEE7631CEB479000FD4E9B /* riTriangle.png */,
 				F1FEE7651CEB479A00FD4E9B /* leTriangle.png */,
 				F1FEE7001CDCA51C00FD4E9B /* actions */,
@@ -635,6 +643,9 @@
 				F19607F41CF32E34000DC248 /* NoteView.xib */,
 				F19607F11CF32E2A000DC248 /* NoteView.h */,
 				F19607F21CF32E2A000DC248 /* NoteView.m */,
+				F19607F61CF34710000DC248 /* CreateNoteView.h */,
+				F19607F71CF34710000DC248 /* CreateNoteView.m */,
+				F19607F91CF3471B000DC248 /* CreateNoteView.xib */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -726,6 +737,7 @@
 				F1B7899B1C610292001B6DB4 /* Minus-100.png in Resources */,
 				F10AB8081C50E7E200DE6DCE /* PasteView.xib in Resources */,
 				F19607F51CF32E34000DC248 /* NoteView.xib in Resources */,
+				F19607FA1CF3471B000DC248 /* CreateNoteView.xib in Resources */,
 				F15BEA011CABC62400EDABA5 /* showPaletteEditorOld.png in Resources */,
 				F1786DED1C56222B00963663 /* GenericAttributeTableViewCell.xib in Resources */,
 				F16733F21CBBD6C500E76C3A /* upArrowBlack.png in Resources */,
@@ -762,6 +774,7 @@
 				F14181CB1C68DE4300E838F9 /* minusDark.png in Resources */,
 				F18A8E201C7C5A5900D87C00 /* circle.png in Resources */,
 				F153797E1C91B9EA001D8FFB /* RowSwitchTableViewCell.xib in Resources */,
+				F19607FC1CF347E1000DC248 /* addImage.png in Resources */,
 				F1786DE51C561ADA00963663 /* BooleanAttributeTableViewCell.xib in Resources */,
 				F10CC8EC1CC0E0CF007F2B11 /* showPaletteEditor.png in Resources */,
 				F18510811C1824C8004EC4C8 /* Main.storyboard in Resources */,
@@ -809,6 +822,7 @@
 				F18A55E91C845CF500B134F0 /* NoDraggableClassesView.m in Sources */,
 				F16C35C01C98247A006F4255 /* MCManager.m in Sources */,
 				F1587B041C19BC4600E963BE /* Palette.m in Sources */,
+				F19607F81CF34710000DC248 /* CreateNoteView.m in Sources */,
 				F17B75B31C22DBFE00AB1B57 /* ComponentsListViewController.m in Sources */,
 				F1B4861E1C46604700752157 /* PaletteFile.m in Sources */,
 				F15379721C919B42001D8FFB /* ClassesFilterView.m in Sources */,

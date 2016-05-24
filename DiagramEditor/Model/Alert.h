@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 
-@interface Alert : UIImageView
+@interface Alert : UIImageView<NSCoding>
 
 
 @property MCPeerID * who;
 @property NSString * text;
 @property NSDate * date;
+@property UIImage * attach;
 
 @end

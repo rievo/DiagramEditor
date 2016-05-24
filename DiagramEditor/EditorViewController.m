@@ -24,7 +24,7 @@
 #import "Alert.h"
 #import "Message.h"
 #import "NoteView.h"
-
+#import "CreateNoteView.h"
 #define fileExtension @"demiso"
 
 @import Foundation;
@@ -1907,14 +1907,6 @@
 
 -(void)handleAlertPan:(UIPanGestureRecognizer *)recog{
     UIImageView * view = (UIImageView* )recog.view;
-    /*
-     if(view == exclamationAlert){
-     NSLog(@" !! ");
-     }else if(view == interrogationAlert){
-     NSLog(@" ?? ");
-     }else if(view == arrowAlert){
-     NSLog(@" arrow ");
-     }*/
     
     CGPoint point = [recog locationInView:self.view];
     
@@ -1934,7 +1926,15 @@
         temporalAlertIcon = nil;
         
         if(recog.view == noteAlert){
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Enter text:"
+            CreateNoteView * cnv =  [[[NSBundle mainBundle] loadNibNamed:@"CreateNoteView"
+                                                                                      owner:self
+                                                                                    options:nil] objectAtIndex:0];
+            [cnv setFrame: self.view.frame];
+            cnv.parentVC = self;
+            cnv.delegate = self;
+            cnv.noteCenter = point;
+            [self.view addSubview:cnv];
+            /*UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Enter text:"
                                                                            message:nil
                                                                     preferredStyle:UIAlertControllerStyleAlert];
             
@@ -1955,7 +1955,7 @@
                 //textField.placeholder = @"Input data...";
             }];
             
-            [self presentViewController:alert animated:YES completion:nil];
+            [self presentViewController:alert animated:YES completion:nil];*/
             
         }else{
             [self sendAlert:view onPoint:pointInSV];
@@ -1965,6 +1965,44 @@
     
 }
 
+-(void)sendNote:(Alert *)alert
+        onPoint:(CGPoint)point{
+    
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:kNewAlert forKey:@"msg"];
+    
+    [dic setObject:dele.myPeerInfo.peerID forKey:@"who"];
+    NSValue * val = [NSValue valueWithCGPoint:point];
+    [dic setObject:val forKey:@"where"];
+    
+    
+    [dic setObject:alert forKey:@"note"];
+    [dic setObject:kNoteType forKey:@"alertType"];
+    
+    
+    UITapGestureRecognizer * showNotecontent = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                       action:@selector(showNoteContent:)];
+    [alert addGestureRecognizer:showNotecontent];
+    [alert setUserInteractionEnabled:YES];
+    
+    alert.image = noteAlert.image;
+    [canvas addSubview:alert];
+    [dele.notesArray addObject:alert];
+    
+    
+    NSError * error = nil;
+    
+    NSData * allData = [NSKeyedArchiver archivedDataWithRootObject:dic];
+    [dele.manager.session sendData:allData
+                           toPeers:dele.manager.session.connectedPeers
+                          withMode:MCSessionSendDataReliable
+                             error:&error];
+    
+    if(error != nil){
+        NSLog(@"ERROR SENDING ALERT");
+    }
+}
+
 -(void)sendAlert:(UIImageView *)view
          onPoint:(CGPoint)point{
     
@@ -1972,6 +2010,7 @@
     [dic setObject:kNewAlert forKey:@"msg"];
     
     [dic setObject:dele.myPeerInfo.peerID forKey:@"who"];
+    [dic setObject:kNoteType forKey:@"alertType"];
     
     
     
@@ -1988,7 +2027,7 @@
     NSValue * val = [NSValue valueWithCGPoint:point];
     [dic setObject:val forKey:@"where"];
     
-    //TODO: Add this note to myself
+
     
     Alert * alert = [[Alert alloc] init];
     alert.frame = alerts.frame;
@@ -2058,18 +2097,22 @@
     
     NSString * type = [dic objectForKey:@"alertType"];
     
+    Alert * alert = nil;
     
-    //UIImageView * imageView = [[UIImageView alloc] initWithFrame:alerts.frame];
+    alert = [dic objectForKey:@"note"];
     
-    Alert * alert = [[Alert alloc] init];
     CGRect  new = alerts.frame;
     new.size.width = new.size.width * 1.5;
     new.size.height = new.size.height * 1.5;
+
     
+    if(alert == nil){
+        alert = [[Alert alloc] init];
+        
+    }
     [alert setFrame:new];
     [alert setCenter:where];
-    
-    //imageView.center = where;
+
     
     if([type isEqualToString:kNoteType]){
         
@@ -2078,7 +2121,7 @@
         UITapGestureRecognizer * showNotecontent = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                            action:@selector(showNoteContent:)];
         [alert addGestureRecognizer:showNotecontent];
-        alert.text = [dic objectForKey:@"noteText"];
+        //alert.text = [dic objectForKey:@"noteText"];
         
         
     }else if([type isEqualToString:kInterrogation]){
@@ -2116,33 +2159,6 @@
 }
 
 -(void)showNoteContent:(UITapGestureRecognizer *)recog{
-    /*
-    Alert * sender = (Alert *)recog.view;
-    
-    UIAlertController * alert=   [UIAlertController
-                                  alertControllerWithTitle: @"Note"
-                                  message:sender.text
-                                  preferredStyle:UIAlertControllerStyleAlert];
-    
-    
-    UIAlertAction * deleteAction = [UIAlertAction actionWithTitle:@"Delete"
-                                                            style:UIAlertActionStyleDestructive
-                                                          handler:^(UIAlertAction * _Nonnull action) {
-                                                              [recog.view removeFromSuperview];
-                                                              [alert dismissViewControllerAnimated:YES completion:nil];
-                                                          }];
-    
-    UIAlertAction * okAction = [UIAlertAction actionWithTitle:@"Ok"
-                                                        style:UIAlertActionStyleDefault
-                                                      handler:^(UIAlertAction * _Nonnull action) {
-                                                          [alert dismissViewControllerAnimated:YES completion:nil];
-                                                      }];
-    
-    [alert addAction:deleteAction];
-    [alert addAction:okAction];
-    
-    [alert setModalPresentationStyle:UIModalPresentationFormSheet];
-    [self presentViewController:alert animated:YES completion:nil];*/
     
     
     Alert * sender = (Alert *)recog.view;
@@ -2154,6 +2170,7 @@
     
     nv.contentTextView.text = sender.text;
     nv.whoLabel.text = sender.who.displayName;
+    nv.preview.image = sender.attach;
     
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"HH:mm:ss"];
@@ -2226,5 +2243,23 @@
     [palette setFrame:CGRectMake(px, py, pw, ph)];
 }
 
+#pragma mark CreateNoteView delegate methods
+-(void)createNoteViewDidCancel{
+    
+}
 
+-(void)createNoteViewConfirmWithText:(NSString *)text
+                            andImage:(UIImage *)image
+                             onPoint:(CGPoint)point{
+    
+    Alert * alert = [[Alert alloc] init];
+    alert.bounds = alerts.frame;
+    alert.center  = point;
+    alert.text = text;
+    alert.date = [NSDate date];
+    alert.who = dele.myPeerInfo.peerID;
+    alert.attach = image;
+    
+    [self sendNote:alert onPoint:point];
+}
 @end

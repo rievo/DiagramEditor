@@ -15,6 +15,7 @@
 #import "ClassAttribute.h"
 #import "ChatView.h"
 #import "Message.h"
+#import "Alert.h"
 
 @interface AppDelegate ()
 
@@ -260,7 +261,8 @@
         NSString * type = [dataDic objectForKey:@"alertType"];
         MCPeerID * who = [dataDic objectForKey:@"who"];
         
-        NSString * noteText = [dataDic objectForKey:@"noteText"];
+        //NSString * noteText = [dataDic objectForKey:@"noteText"];
+        Alert * alert = [dataDic objectForKey:@"note"];
         
         //NSLog(@"%@ manda una alerta de tipo %@ en la pos (%f,%f)", who.displayName, type, where.x, where.y);
        
@@ -270,8 +272,10 @@
         [relinfo setObject:who forKey:@"who"];
         [relinfo setObject:type forKey:@"alertType"];
         
-        if(noteText != nil)
-            [relinfo setObject:noteText forKey:@"noteText"];
+        if(alert != nil){
+            [relinfo setObject:alert forKey:@"note"];
+        }
+    
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kNewAlert object:nil userInfo:relinfo];
     }else if([msg isEqualToString:kDisconnectYourself]){
