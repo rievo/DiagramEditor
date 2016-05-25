@@ -131,6 +131,8 @@
         self.serverId = [dic objectForKey:@"serverId"];
         self.currentMasterId = [dic objectForKey:@"currentMasterId"];
         
+        self.notesArray = [dic objectForKey:@"notesArray"];
+        
         loadingADiagram = YES;
         
         if(chat == nil){
@@ -399,6 +401,10 @@
     //Master info
     if(currentMasterId != nil)
         [dic setObject:currentMasterId forKey:@"currentMasterId"];
+    
+    //Notes
+    if(notesArray != nil)
+        [dic setObject:notesArray forKey:@"notesArray"];
     
     
     NSData * data = [NSKeyedArchiver archivedDataWithRootObject:dic];

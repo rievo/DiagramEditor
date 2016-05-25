@@ -766,6 +766,7 @@
                              
                          }];
         
+        
         [palette preparePalette];
         [confirmButton setHidden:NO];
         
@@ -778,6 +779,7 @@
         
         
     }else if(tableView == filesTable){
+        [folder setHidden:YES];
         //[palette resetPalette];
         PaletteFile * file = [filesArray objectAtIndex:indexPath.row];
         tempPaletteFile = file.name;
@@ -2006,7 +2008,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
 - (IBAction)cancelSubpaletteSelection:(id)sender {
     
     
-
+    [folder setHidden:NO];
     
     [palette resetPalette];
     

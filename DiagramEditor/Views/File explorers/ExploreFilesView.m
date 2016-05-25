@@ -76,10 +76,73 @@
     [self setHidden:YES];
     [self removeFromSuperview];
     
-    //Do something with that path
+      //Do something with that path
     [delegate reactToFile:pathToFile];
 }
 
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Remove seperator inset
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    // Prevent the cell from inheriting the Table View's margin settings
+    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
+        [cell setPreservesSuperviewLayoutMargins:NO];
+    }
+    
+    // Explictly set your cell's layout margins
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return YES if you want the specified item to be editable.
+    return YES;
+}
+
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        NSFileManager  *manager = [NSFileManager defaultManager];
+        NSString * path = [documentsDirectory stringByAppendingString:@"/diagrams"];
+        path = [path stringByAppendingString:[NSString stringWithFormat:@"/%@", [files objectAtIndex:indexPath.row]]];
+        
+        NSError * error = nil;
+
+        
+
+        BOOL success = [manager removeItemAtPath:path error:&error];
+        if (success) {
+            
+            [files removeObjectAtIndex:indexPath.row];
+            UIAlertView *removedSuccessFullyAlert = [[UIAlertView alloc] initWithTitle:@"Info"
+                                                                               message:@"Model was successfully removed"
+                                                                              delegate:self
+                                                                     cancelButtonTitle:@"Ok"
+                                                                     otherButtonTitles:nil];
+            [removedSuccessFullyAlert show];
+        }
+        else
+        {
+            UIAlertView *removedSuccessFullyAlert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                               message:@"Model couldn't be removed"
+                                                                              delegate:self
+                                                                     cancelButtonTitle:@"Ok"
+                                                                     otherButtonTitles:nil];
+            [removedSuccessFullyAlert show];
+        }
+        [tableView reloadData];
+    }
+}
 
 #pragma mark UITapGestureRecognizers
 -(void)handleTap: (UITapGestureRecognizer *)tapgr{

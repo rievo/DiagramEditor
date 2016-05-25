@@ -1049,7 +1049,7 @@
     
     error = nil;
     NSString *filePath = [folderPath stringByAppendingPathComponent:name];
-    filePath = [filePath stringByAppendingString:@".xml"];
+    filePath = [filePath stringByAppendingString:@".demiso"];
     [textToSave writeToFile:filePath atomically:NO encoding:NSUTF8StringEncoding error:&error];
     
     if(error){
