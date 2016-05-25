@@ -13,6 +13,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import "Alert.h"
 
+#import "DrawnAlert.h"
 
 #define pi 3.14159265359
 
@@ -536,6 +537,14 @@
             [link addLineToPoint:al.associatedComponent.center];
             [link stroke];
         }
+    }
+    
+    
+    //Draw hand-made draws
+    for(DrawnAlert * da in dele.drawnsArray){
+        [dele.blue3 setStroke];
+        [da.path stroke];
+        
     }
     
     if(xArrowStart> 0 && yArrowStart> 0){

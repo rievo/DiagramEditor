@@ -630,6 +630,9 @@
         if(result == YES){
             dele.currentPaletteFileName = tempPaletteFile;
             
+            [searchSessionsOutlet setOn:NO];
+            [dele.manager stopAdvertising];
+            
             [self performSegueWithIdentifier:@"showEditor" sender:self];
         }else{
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
@@ -650,6 +653,10 @@
         [alert show];
         
     }
+    
+    //This is done for that we will not be able to receive invitations if we are on editor
+    [searchSessionsOutlet setOn:NO];
+    [dele.manager stopAdvertising];
 }
 
 
@@ -1402,6 +1409,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     
     dele.notesArray = [[NSMutableArray alloc] init];
+    dele.drawnsArray = [[NSMutableArray alloc] init];
     
     for(NSDictionary * note in notes){
         Alert * alert = [[Alert alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];

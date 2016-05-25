@@ -22,6 +22,8 @@
 @class PaletteItem;
 @class ComponentDetailsView;
 
+#import "DrawingView.h"
+
 #import <MessageUI/MFMailComposeViewController.h>
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 
@@ -34,7 +36,8 @@ ConnectionDetailsViewDelegate,
 SureViewDelegate,
 EdgeListDelegate,
 MCBrowserViewControllerDelegate,
-CreateNoteViewDelegate
+CreateNoteViewDelegate,
+DrawingViewDelegate
 >{
     AppDelegate * dele;
     __weak IBOutlet Palette *palette;

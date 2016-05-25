@@ -79,6 +79,9 @@
 		F1786DF21C56411300963663 /* SaveNameView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1786DF11C56411300963663 /* SaveNameView.m */; };
 		F1786DF41C56649B00963663 /* ExploreFilesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1786DF31C56649B00963663 /* ExploreFilesView.xib */; };
 		F1786DF71C5664AB00963663 /* ExploreFilesView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1786DF61C5664AB00963663 /* ExploreFilesView.m */; };
+		F17A93E91CF5E419008AE1EE /* DrawingView.m in Sources */ = {isa = PBXBuildFile; fileRef = F17A93E81CF5E419008AE1EE /* DrawingView.m */; };
+		F17A93EB1CF5E422008AE1EE /* DrawingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F17A93EA1CF5E422008AE1EE /* DrawingView.xib */; };
+		F17A93EE1CF5EC44008AE1EE /* DrawnAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = F17A93ED1CF5EC44008AE1EE /* DrawnAlert.m */; };
 		F17B75A91C22D6E100AB1B57 /* newDocument.png in Resources */ = {isa = PBXBuildFile; fileRef = F17B75A81C22D6E100AB1B57 /* newDocument.png */; };
 		F17B75AB1C22D79F00AB1B57 /* save.png in Resources */ = {isa = PBXBuildFile; fileRef = F17B75AA1C22D79F00AB1B57 /* save.png */; };
 		F17B75AD1C22D9CC00AB1B57 /* list.png in Resources */ = {isa = PBXBuildFile; fileRef = F17B75AC1C22D9CC00AB1B57 /* list.png */; };
@@ -243,6 +246,11 @@
 		F1786DF31C56649B00963663 /* ExploreFilesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExploreFilesView.xib; sourceTree = "<group>"; };
 		F1786DF51C5664AB00963663 /* ExploreFilesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExploreFilesView.h; sourceTree = "<group>"; };
 		F1786DF61C5664AB00963663 /* ExploreFilesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExploreFilesView.m; sourceTree = "<group>"; };
+		F17A93E71CF5E419008AE1EE /* DrawingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingView.h; sourceTree = "<group>"; };
+		F17A93E81CF5E419008AE1EE /* DrawingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingView.m; sourceTree = "<group>"; };
+		F17A93EA1CF5E422008AE1EE /* DrawingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DrawingView.xib; sourceTree = "<group>"; };
+		F17A93EC1CF5EC44008AE1EE /* DrawnAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawnAlert.h; sourceTree = "<group>"; };
+		F17A93ED1CF5EC44008AE1EE /* DrawnAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawnAlert.m; sourceTree = "<group>"; };
 		F17B75A81C22D6E100AB1B57 /* newDocument.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newDocument.png; sourceTree = "<group>"; };
 		F17B75AA1C22D79F00AB1B57 /* save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = save.png; sourceTree = "<group>"; };
 		F17B75AC1C22D9CC00AB1B57 /* list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = list.png; sourceTree = "<group>"; };
@@ -360,6 +368,8 @@
 				F10CC8E51CBF8CED007F2B11 /* PeerInfo.m */,
 				F16C7DBF1C577E9100CA9B25 /* Reference.h */,
 				F16C7DC01C577E9100CA9B25 /* Reference.m */,
+				F17A93EC1CF5EC44008AE1EE /* DrawnAlert.h */,
+				F17A93ED1CF5EC44008AE1EE /* DrawnAlert.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -646,6 +656,9 @@
 				F19607F61CF34710000DC248 /* CreateNoteView.h */,
 				F19607F71CF34710000DC248 /* CreateNoteView.m */,
 				F19607F91CF3471B000DC248 /* CreateNoteView.xib */,
+				F17A93E71CF5E419008AE1EE /* DrawingView.h */,
+				F17A93EA1CF5E422008AE1EE /* DrawingView.xib */,
+				F17A93E81CF5E419008AE1EE /* DrawingView.m */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -722,6 +735,7 @@
 				F1FEE7641CEB479000FD4E9B /* riTriangle.png in Resources */,
 				F1FEE70E1CDCA63400FD4E9B /* alerts.png in Resources */,
 				F163C5391C9D6501007824D2 /* hand.png in Resources */,
+				F17A93EB1CF5E422008AE1EE /* DrawingView.xib in Resources */,
 				F1FEE7151CE09A0D00FD4E9B /* drawForm.png in Resources */,
 				F1FEE7351CE470F000FD4E9B /* send.png in Resources */,
 				F1431E8E1C5249F7006A45BC /* ComponentDetailsView.xib in Resources */,
@@ -819,6 +833,7 @@
 				F1685EA51C18294A0094097E /* Component.m in Sources */,
 				F1A20A851C198A540037C05D /* PaletteItem.m in Sources */,
 				F1FEE72B1CE3693200FD4E9B /* ChatTableViewCell.m in Sources */,
+				F17A93EE1CF5EC44008AE1EE /* DrawnAlert.m in Sources */,
 				F18A55E91C845CF500B134F0 /* NoDraggableClassesView.m in Sources */,
 				F16C35C01C98247A006F4255 /* MCManager.m in Sources */,
 				F1587B041C19BC4600E963BE /* Palette.m in Sources */,
@@ -831,6 +846,7 @@
 				F18A55EE1C8487C200B134F0 /* HiddenInstancesListView.m in Sources */,
 				F1391F1C1CBB9765004BAD71 /* SessionUsersView.m in Sources */,
 				F10AB80F1C50E9FB00DE6DCE /* PasteView.m in Sources */,
+				F17A93E91CF5E419008AE1EE /* DrawingView.m in Sources */,
 				F1685EA21C18289E0094097E /* EditorViewController.m in Sources */,
 				F1A20A7E1C1981290037C05D /* XMLDictionary.m in Sources */,
 				F1853A031C5253740015A9E0 /* StringAttributeTableViewCell.m in Sources */,

@@ -25,6 +25,10 @@
 #import "Message.h"
 #import "NoteView.h"
 #import "CreateNoteView.h"
+
+#import "DrawnAlert.h"
+
+
 #define fileExtension @"demiso"
 
 @import Foundation;
@@ -56,6 +60,9 @@
     
     if(dele.notesArray == nil)
         dele.notesArray = [[NSMutableArray alloc] init];
+    
+    if(dele.drawnsArray == nil)
+        dele.drawnsArray = [[NSMutableArray alloc] init];
     
     
     //Show-hide palette
@@ -265,10 +272,29 @@
     [noteAlert addGestureRecognizer:panalertNote];
     [exclamationAlert addGestureRecognizer:panalertEx];
     
+    
+    UITapGestureRecognizer * tapDrawGR = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                 action:@selector(handleDrawTouch:)];
+    [drawAlert addGestureRecognizer:tapDrawGR];
 }
 
 
 #pragma mark Notificationhandlers
+
+-(void)handleDrawTouch:(UITapGestureRecognizer *)recog{
+    DrawingView * dv = [[[NSBundle mainBundle] loadNibNamed:@"DrawingView"
+                                   owner:self
+                                 options:nil] objectAtIndex:0];
+    
+    dv.owner = self;
+    [dv setFrame:self.view.frame];
+    [dv prepare];
+    
+    dv.delegate = self;
+    
+    [self.view addSubview:dv];
+}
+
 -(void) handleUpdateMasterButton:(NSNotification *)not{
     
     
@@ -2316,5 +2342,21 @@
     
     
     [self sendNote:alert onPoint:point];
+}
+
+#pragma mark DrawingViewDelegate methods
+-(void)drawingViewDidCancel{
+    
+}
+-(void)drawingViewDidCloseWithPath:(UIBezierPath *)path{
+
+    DrawnAlert * da = [[DrawnAlert alloc] init];
+    da.who = dele.myPeerInfo.peerID;
+    da.date = [NSDate date];
+    da.path = path;
+    
+    [dele.drawnsArray addObject:da];
+    
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
 }
 @end

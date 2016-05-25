@@ -73,6 +73,7 @@
 
 @property NSMutableArray * messagesArray;
 @property NSMutableArray * notesArray;
+@property NSMutableArray * drawnsArray;
 
 
 -(int)getOutConnectionsForComponent: (Component *)comp
