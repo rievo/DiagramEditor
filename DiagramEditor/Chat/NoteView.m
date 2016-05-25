@@ -26,6 +26,74 @@
     color = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
 }
 
+
+-(void)prepare{
+    //Form ScrollView
+    
+    float margin = 10;
+    
+    [scrollView setPagingEnabled:YES];
+    
+    UIView * viewToIncrust ;
+    
+    
+    if(preview == nil){ //Only text
+        
+        viewToIncrust = [[UIView alloc] initWithFrame:scrollView.bounds];
+        
+        
+        //Add text
+        UITextView * tv = [[UITextView alloc] initWithFrame:CGRectMake(margin,
+                                                                       margin,
+                                                                       scrollView.bounds.size.width - 2*margin,
+                                                                       scrollView.bounds.size.height- 2*margin)];
+        tv.backgroundColor = dele.blue4;
+        [viewToIncrust addSubview:tv];
+        
+        
+        [scrollView addSubview:viewToIncrust];
+        scrollView.contentSize = CGSizeMake(scrollView.frame.size.width , scrollView.frame.size.height);
+    }else{ //Image and text
+        CGRect fr = CGRectMake(0, 0, scrollView.bounds.size.width * 2, scrollView.bounds.size.height);
+        viewToIncrust = [[UIView alloc] initWithFrame:fr];
+        
+        
+        
+        //Add view
+        UIImageView * iv = [[UIImageView alloc] initWithImage:preview];
+        [iv setFrame:CGRectMake(scrollView.frame.size.width/2 - preview.size.width/2,
+                                scrollView.frame.size.height/2 - preview.size.height/2,
+                                preview.size.width,
+                                preview.size.height)];
+
+        [viewToIncrust addSubview:iv];
+        
+        float start = 0;
+        start = scrollView.bounds.size.width;
+        //Add text
+        UITextView * tv = [[UITextView alloc] initWithFrame:CGRectMake(start +margin,
+                                                                       margin,
+                                                                       scrollView.bounds.size.width - 2*margin,
+                                                                       scrollView.bounds.size.height- 2*margin)];
+        tv.backgroundColor = dele.blue1;
+        tv.textColor = dele.blue4;
+        [viewToIncrust addSubview:tv];
+        
+        
+        [scrollView addSubview:viewToIncrust];
+        
+        [scrollView addSubview:viewToIncrust];
+        scrollView.contentSize = CGSizeMake(scrollView.frame.size.width * 2, scrollView.frame.size.height);
+    }
+    
+    
+    viewToIncrust.backgroundColor = dele.blue3;
+    
+    scrollView.delegate = self;
+    //self.pageControl.currentPage = 0
+}
+
+
 - (IBAction)deleteThisNote:(id)sender {
     [dele.notesArray removeObject:associatedNote];
     [associatedNote removeFromSuperview];

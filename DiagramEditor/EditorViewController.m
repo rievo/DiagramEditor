@@ -2207,9 +2207,9 @@
                                                  options:nil] objectAtIndex:0];
     [nv setFrame:self.view.frame];
     
-    nv.contentTextView.text = sender.text;
+    nv.content = sender.text;
     nv.whoLabel.text = sender.who.displayName;
-    nv.preview.image = sender.attach;
+    nv.preview = sender.attach;
     nv.associatedNote = sender;
     
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
@@ -2219,6 +2219,8 @@
     NSDate * dateToParse = sender.date;
 
     nv.dateLabel.text = [dateFormat stringFromDate:dateToParse];
+    
+    [nv prepare];
 
     [self.view addSubview:nv];
     [dele.notesArray addObject:sender];
