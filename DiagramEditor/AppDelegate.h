@@ -19,6 +19,8 @@
 @class ClassAttribute;
 @class EditorViewController;
 @class ChatView;
+@class DrawnAlert;
+@class YesOrNoView;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -74,6 +76,9 @@
 @property NSMutableArray * messagesArray;
 @property NSMutableArray * notesArray;
 @property NSMutableArray * drawnsArray;
+
+@property DrawnAlert * selectedDrawn;
+@property YesOrNoView * yonv;
 
 
 @property BOOL showingAnnotations;

@@ -82,6 +82,9 @@
 		F17A93E91CF5E419008AE1EE /* DrawingView.m in Sources */ = {isa = PBXBuildFile; fileRef = F17A93E81CF5E419008AE1EE /* DrawingView.m */; };
 		F17A93EB1CF5E422008AE1EE /* DrawingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F17A93EA1CF5E422008AE1EE /* DrawingView.xib */; };
 		F17A93EE1CF5EC44008AE1EE /* DrawnAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = F17A93ED1CF5EC44008AE1EE /* DrawnAlert.m */; };
+		F17A93F11CF706E8008AE1EE /* YesOrNoView.m in Sources */ = {isa = PBXBuildFile; fileRef = F17A93F01CF706E8008AE1EE /* YesOrNoView.m */; };
+		F17A93F31CF706F8008AE1EE /* YesOrNoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F17A93F21CF706F8008AE1EE /* YesOrNoView.xib */; };
+		F17A93F51CF70768008AE1EE /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = F17A93F41CF70768008AE1EE /* delete.png */; };
 		F17B75A91C22D6E100AB1B57 /* newDocument.png in Resources */ = {isa = PBXBuildFile; fileRef = F17B75A81C22D6E100AB1B57 /* newDocument.png */; };
 		F17B75AB1C22D79F00AB1B57 /* save.png in Resources */ = {isa = PBXBuildFile; fileRef = F17B75AA1C22D79F00AB1B57 /* save.png */; };
 		F17B75AD1C22D9CC00AB1B57 /* list.png in Resources */ = {isa = PBXBuildFile; fileRef = F17B75AC1C22D9CC00AB1B57 /* list.png */; };
@@ -251,6 +254,10 @@
 		F17A93EA1CF5E422008AE1EE /* DrawingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DrawingView.xib; sourceTree = "<group>"; };
 		F17A93EC1CF5EC44008AE1EE /* DrawnAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawnAlert.h; sourceTree = "<group>"; };
 		F17A93ED1CF5EC44008AE1EE /* DrawnAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawnAlert.m; sourceTree = "<group>"; };
+		F17A93EF1CF706E8008AE1EE /* YesOrNoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YesOrNoView.h; sourceTree = "<group>"; };
+		F17A93F01CF706E8008AE1EE /* YesOrNoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YesOrNoView.m; sourceTree = "<group>"; };
+		F17A93F21CF706F8008AE1EE /* YesOrNoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YesOrNoView.xib; sourceTree = "<group>"; };
+		F17A93F41CF70768008AE1EE /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
 		F17B75A81C22D6E100AB1B57 /* newDocument.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newDocument.png; sourceTree = "<group>"; };
 		F17B75AA1C22D79F00AB1B57 /* save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = save.png; sourceTree = "<group>"; };
 		F17B75AC1C22D9CC00AB1B57 /* list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = list.png; sourceTree = "<group>"; };
@@ -398,6 +405,9 @@
 				F107E4621C72221A007DD29E /* ThinkingView.h */,
 				F107E4631C72221A007DD29E /* ThinkingView.m */,
 				F107E4651C722229007DD29E /* ThinkingView.xib */,
+				F17A93EF1CF706E8008AE1EE /* YesOrNoView.h */,
+				F17A93F01CF706E8008AE1EE /* YesOrNoView.m */,
+				F17A93F21CF706F8008AE1EE /* YesOrNoView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -513,11 +523,8 @@
 		F17B75AE1C22D9D500AB1B57 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
-				F19607FB1CF347E1000DC248 /* addImage.png */,
-				F1FEE7631CEB479000FD4E9B /* riTriangle.png */,
-				F1FEE7651CEB479A00FD4E9B /* leTriangle.png */,
 				F1FEE7001CDCA51C00FD4E9B /* actions */,
-				F1B7899A1C610292001B6DB4 /* Minus-100.png */,
+				F19607FB1CF347E1000DC248 /* addImage.png */,
 				F17B75AF1C22DA7200AB1B57 /* arrow.png */,
 				F19C258D1C43AB580002E490 /* back.png */,
 				F1C6347A1C2842C30072912D /* camera.png */,
@@ -525,16 +532,19 @@
 				F1FEE72F1CE36C1500FD4E9B /* chat.png */,
 				F18A8E1F1C7C5A5900D87C00 /* circle.png */,
 				F1801F3A1C774137005BA437 /* cloudFilled.png */,
+				F17A93F41CF70768008AE1EE /* delete.png */,
 				F16733EF1CBBD6C000E76C3A /* downArrowBlack.png */,
 				F171FA741C885F0C005C37D4 /* go.png */,
 				F163C5381C9D6501007824D2 /* hand.png */,
 				F10CC8ED1CC0E133007F2B11 /* hidePaletteEditor.png */,
 				F15BE9FE1CABC60E00EDABA5 /* hidePaletteEditorOld.png */,
+				F1FEE7651CEB479A00FD4E9B /* leTriangle.png */,
 				F17B75AC1C22D9CC00AB1B57 /* list.png */,
 				F1801F3C1C77413E005BA437 /* localFilled.png */,
 				F10CC8E91CBFA332007F2B11 /* master.png */,
 				F10CC8EF1CC518D1007F2B11 /* masterBox.png */,
 				F181349B1CBCF169000AE209 /* menu.png */,
+				F1B7899A1C610292001B6DB4 /* Minus-100.png */,
 				F14181CA1C68DE4300E838F9 /* minusDark.png */,
 				F17B75A81C22D6E100AB1B57 /* newDocument.png */,
 				F10AB80A1C50E85100DE6DCE /* ok.png */,
@@ -542,6 +552,7 @@
 				F19C258F1C43AB8B0002E490 /* palette.png */,
 				F17D1C071C7F1EDC0080EA29 /* reload.png */,
 				F1AB3B151C22B19800EDBB1D /* resize.png */,
+				F1FEE7631CEB479000FD4E9B /* riTriangle.png */,
 				F17B75AA1C22D79F00AB1B57 /* save.png */,
 				F15379781C91A25C001D8FFB /* search.png */,
 				F14181C81C68DCB600E838F9 /* settings.png */,
@@ -730,6 +741,7 @@
 				F16C35C51C98277F006F4255 /* users.png in Resources */,
 				F1AB3B161C22B19800EDBB1D /* resize.png in Resources */,
 				F1C417BA1CB66F2D0075234C /* CustomTableHeader.xib in Resources */,
+				F17A93F51CF70768008AE1EE /* delete.png in Resources */,
 				F16C7DC81C578D3900CA9B25 /* ConnectionDetailsView.xib in Resources */,
 				F1FEE70C1CDCA63400FD4E9B /* question.png in Resources */,
 				F1FEE7641CEB479000FD4E9B /* riTriangle.png in Resources */,
@@ -771,6 +783,7 @@
 				F1801F3B1C774137005BA437 /* cloudFilled.png in Resources */,
 				F10AB80B1C50E85100DE6DCE /* cancel.png in Resources */,
 				F1FEE72E1CE3693200FD4E9B /* ChatView.xib in Resources */,
+				F17A93F31CF706F8008AE1EE /* YesOrNoView.xib in Resources */,
 				F163AFE61C7B1A1B00BAE67C /* tapDark.png in Resources */,
 				F18510831C1824C8004EC4C8 /* Assets.xcassets in Resources */,
 				F17D1C081C7F1EDC0080EA29 /* reload.png in Resources */,
@@ -821,6 +834,7 @@
 				F1685EAE1C1831840094097E /* ComponentDetailsView.m in Sources */,
 				F15865141C85A2CA007D2E75 /* CloudDiagramsExplorer.m in Sources */,
 				F153797D1C91B9EA001D8FFB /* RowSwitchTableViewCell.m in Sources */,
+				F17A93F11CF706E8008AE1EE /* YesOrNoView.m in Sources */,
 				F1786DE81C561AF200963663 /* BooleanAttributeTableViewCell.m in Sources */,
 				F15A96091C27F69100ACA6FA /* XMLWriter.m in Sources */,
 				F163AFF11C7B1B6800BAE67C /* NoDraggableComponentView.m in Sources */,

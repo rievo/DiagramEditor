@@ -92,8 +92,38 @@
     for(int i = 0; i< dele.connections.count; i++){
         conn = [dele.connections objectAtIndex:i];
         
-        if([self isPoint:p withinDistance:10.0 ofPath:conn.arrowPath.CGPath]){
+        if([self isPoint:p withinDistance:20.0 ofPath:conn.arrowPath.CGPath]){
             [[NSNotificationCenter defaultCenter]postNotificationName:@"showConnNot" object: conn];
+        }
+    }
+    
+    
+    
+    dele.selectedDrawn = nil;
+    [dele.yonv removeFromSuperview];
+    dele.yonv = nil;
+    
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object: nil];
+    //Check if touch is in some path
+    for(DrawnAlert * da in dele.drawnsArray){
+        if([self isPoint:p withinDistance:30.0 ofPath:da.path.CGPath] == YES){
+            NSLog(@"TOUCHING");
+            dele.selectedDrawn = da;
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object: nil];
+            
+            //TODO: Show delete button
+            dele.yonv = [[[NSBundle mainBundle] loadNibNamed:@"YesOrNoView"
+                                                               owner:self
+                                                             options:nil] objectAtIndex:0];
+            dele.yonv.delegate = self;
+            dele.yonv.al = da;
+            //[dele.yonv setCenter:p];
+            [dele.yonv setFrame:CGRectMake(p.x -dele.yonv.frame.size.width/2,
+                                           p.y -dele.yonv.frame.size.height/2,
+                                           dele.yonv.frame.size.width,
+                                           dele.yonv.frame.size.height)];
+            [self addSubview:dele.yonv];
+            return;
         }
     }
 }
@@ -548,7 +578,13 @@
         
         //Draw hand-made draws
         for(DrawnAlert * da in dele.drawnsArray){
-            [dele.blue3 setStroke];
+            
+            if(da == dele.selectedDrawn){
+                [[UIColor purpleColor]setStroke];
+            }else{
+                [dele.blue3 setStroke];
+            }
+            
             [da.path stroke];
             
         }
@@ -747,5 +783,12 @@ float QuadBezier(float t, float start, float c1, float end)
     return path;
 }
 
+
+#pragma mark YesOrNoDelegate
+-(void)confirmDeleteDrawnAlert:(DrawnAlert *)alert{
+    
+    [dele.drawnsArray removeObject:alert];
+    [self setNeedsDisplay];
+}
 
 @end

@@ -129,7 +129,7 @@
     [zoomTapGr setNumberOfTapsRequired:2];
     [scrollView setUserInteractionEnabled:YES];
     [scrollView setCanCancelContentTouches:YES];
-    [scrollView addGestureRecognizer:zoomTapGr];
+    //[scrollView addGestureRecognizer:zoomTapGr];
     zoomTapGr.delegate = self;
     zoomLevel = 0; //No zoom
     

@@ -1065,8 +1065,9 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UIPopoverPresentationController * popover = ac.popoverPresentationController;
     if(popover){
+        
         popover.sourceView = folder;
-        popover.permittedArrowDirections = UIPopoverArrowDirectionUp;
+        popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
     }
     
     [self presentViewController:ac animated:YES completion:nil];

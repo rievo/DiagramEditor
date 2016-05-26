@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 @class AppDelegate;
+#import "YesOrNoView.h";
 #import "Component.h"
 
-@interface Canvas : UIView{
+@interface Canvas : UIView<YesOrNoDelegate>{
     AppDelegate * dele;
     
     UITapGestureRecognizer * tapGR;

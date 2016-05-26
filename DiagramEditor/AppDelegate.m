@@ -16,6 +16,7 @@
 #import "ChatView.h"
 #import "Message.h"
 #import "Alert.h"
+#import "YesOrNoView.h"
 
 @interface AppDelegate ()
 
@@ -39,6 +40,8 @@
     blue4 = [[UIColor alloc]initWithRed:34/256.0 green:54/256.0 blue:96/256.0 alpha:1.0];
     
     _showingAnnotations = NO;
+    _selectedDrawn = nil;
+    
     
     currentPaletteFileName = nil;
     subPalette = nil;
