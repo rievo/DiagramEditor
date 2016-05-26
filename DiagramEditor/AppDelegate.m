@@ -23,7 +23,7 @@
 
 @implementation AppDelegate
 
-@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR, evc, blue0, blue1, blue2, elementsDictionary, manager, ecoreContent, loadingADiagram, fingeredComponent, serverId, currentMasterId, myPeerInfo, myUUIDString, chat, notesArray;
+@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR, evc, blue0, blue1, blue2, elementsDictionary, manager, ecoreContent, loadingADiagram, fingeredComponent, serverId, currentMasterId, myPeerInfo, myUUIDString, chat, notesArray, drawnsArray;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -170,6 +170,7 @@
             self.components = [dic objectForKey:@"components"];
             self.connections = [dic objectForKey:@"connections"];
             self.elementsDictionary = [dic objectForKey:@"elementsDictionary"];
+            self.drawnsArray = [dic objectForKey:@"drawnsArray"];
             //self.notesArray = [dic objectForKey:@"notesArray"];
             
             for(int i = 0; i< components.count; i++){
@@ -416,6 +417,10 @@
     if(notesArray != nil)
         [dic setObject:notesArray forKey:@"notesArray"];
     
+    //Drawns
+    if(drawnsArray != nil)
+        [dic setObject:drawnsArray forKey:@"drawnsArray"];
+    
     
     NSData * data = [NSKeyedArchiver archivedDataWithRootObject:dic];
     return data;
@@ -443,6 +448,9 @@
     if(notesArray != nil)
         [dic setObject:notesArray forKey:@"notesArray"];
     
+    //Drawns
+    if(drawnsArray != nil)
+        [dic setObject:drawnsArray forKey:@"drawnsArray"];
     
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dic];
     

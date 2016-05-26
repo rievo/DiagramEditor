@@ -9,12 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 
-@interface DrawnAlert : NSObject
+@interface DrawnAlert : NSObject<NSCoding>
 
 
 @property MCPeerID * who;
 @property NSDate * date;
-@property NSValue * offset;
 @property UIBezierPath * path;
 
 @end
