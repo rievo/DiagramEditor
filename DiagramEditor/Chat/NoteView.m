@@ -24,6 +24,20 @@
     [self bringSubviewToFront:container];
     
     color = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+    
+    
+    NSNotificationCenter * center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(keyboardOnScreen:)
+                   name:UIKeyboardWillShowNotification
+                 object:nil];
+    
+    
+    
+    [center addObserver:self
+               selector:@selector(keyboardOutOfScreen:)
+                   name:UIKeyboardWillHideNotification
+                 object:nil];
 }
 
 
@@ -43,11 +57,13 @@
         
         
         //Add text
-        UITextView * tv = [[UITextView alloc] initWithFrame:CGRectMake(margin,
+        tv = [[UITextView alloc] initWithFrame:CGRectMake(margin,
                                                                        margin,
                                                                        scrollView.bounds.size.width - 2*margin,
                                                                        scrollView.bounds.size.height- 2*margin)];
-        tv.backgroundColor = dele.blue4;
+        tv.backgroundColor = dele.blue1;
+        tv.textColor = dele.blue4;
+        tv.text = associatedNote.text;
         [viewToIncrust addSubview:tv];
         
         
@@ -71,12 +87,13 @@
         float start = 0;
         start = scrollView.bounds.size.width;
         //Add text
-        UITextView * tv = [[UITextView alloc] initWithFrame:CGRectMake(start +margin,
+        tv = [[UITextView alloc] initWithFrame:CGRectMake(start +margin,
                                                                        margin,
                                                                        scrollView.bounds.size.width - 2*margin,
                                                                        scrollView.bounds.size.height- 2*margin)];
         tv.backgroundColor = dele.blue1;
         tv.textColor = dele.blue4;
+        tv.text = associatedNote.text;
         [viewToIncrust addSubview:tv];
         
         
@@ -90,6 +107,7 @@
     viewToIncrust.backgroundColor = dele.blue3;
     
     scrollView.delegate = self;
+    tv.delegate = self;
     //self.pageControl.currentPage = 0
 }
 
@@ -105,6 +123,8 @@
 }
 
 - (IBAction)closeThisView:(id)sender {
+    associatedNote.text = tv.text;
+    
     [self removeFromSuperview];
 }
 
@@ -158,5 +178,47 @@
     [corner fill];
     [corner stroke];
     
+}
+
+#pragma mark Keyboard issues
+-(void)keyboardOutOfScreen:(NSNotification *)not{
+    
+    [UIView animateWithDuration:0.2
+                          delay:0.0
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         [container setFrame:oldFrame];
+                         [self setNeedsDisplay];
+                     }
+                     completion:^(BOOL finished) {
+                         [self setNeedsDisplay];
+                     }];
+    
+}
+
+
+-(void)keyboardOnScreen:(NSNotification *)not{
+    
+    oldFrame = container.frame;
+    
+    NSDictionary * dicNot = not.userInfo;
+    
+    NSValue *val = dicNot[UIKeyboardFrameEndUserInfoKey];
+    CGRect rawFrame = [val CGRectValue];
+    CGRect keyboardFrame = [self convertRect:rawFrame fromView:nil];
+    
+    [UIView animateWithDuration:0.2
+                          delay:0.0
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         [container setFrame:CGRectMake(container.frame.origin.x,
+                                                        keyboardFrame.origin.y - container.frame.size.height,
+                                                        container.frame.size.width,
+                                                        container.frame.size.height)];
+                         [self setNeedsDisplay];
+                     }
+                     completion:^(BOOL finished) {
+                         [self setNeedsDisplay];
+                     }];
 }
 @end

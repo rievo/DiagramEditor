@@ -76,6 +76,8 @@
 @property NSMutableArray * drawnsArray;
 
 
+@property BOOL showingAnnotations;
+
 -(int)getOutConnectionsForComponent: (Component *)comp
                              ofType: (NSString * )type;
 -(int)getInConnectionsForComponent: (Component *)comp

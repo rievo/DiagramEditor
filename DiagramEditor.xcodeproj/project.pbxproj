@@ -346,9 +346,9 @@
 		F10BE4341C29663E0053A7F9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				F1431E891C524127006A45BC /* ClassAttribute.h */,
 				F1FEE7601CEB278A00FD4E9B /* Alert.h */,
 				F1FEE7611CEB278A00FD4E9B /* Alert.m */,
+				F1431E891C524127006A45BC /* ClassAttribute.h */,
 				F1431E8A1C524127006A45BC /* ClassAttribute.m */,
 				F10F0FA11C1AF67000165561 /* ColorPalette.h */,
 				F10F0FA21C1AF67000165561 /* ColorPalette.m */,
@@ -358,6 +358,8 @@
 				F1685EAA1C182B7D0094097E /* Connection.m */,
 				F158651A1C85AA59007D2E75 /* DiagramFile.h */,
 				F158651B1C85AA59007D2E75 /* DiagramFile.m */,
+				F17A93EC1CF5EC44008AE1EE /* DrawnAlert.h */,
+				F17A93ED1CF5EC44008AE1EE /* DrawnAlert.m */,
 				F14DBF821C849F4600963AA6 /* MyTextField.h */,
 				F14DBF831C849F4600963AA6 /* MyTextField.m */,
 				F1B4861C1C46604700752157 /* PaletteFile.h */,
@@ -368,8 +370,6 @@
 				F10CC8E51CBF8CED007F2B11 /* PeerInfo.m */,
 				F16C7DBF1C577E9100CA9B25 /* Reference.h */,
 				F16C7DC01C577E9100CA9B25 /* Reference.m */,
-				F17A93EC1CF5EC44008AE1EE /* DrawnAlert.h */,
-				F17A93ED1CF5EC44008AE1EE /* DrawnAlert.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";

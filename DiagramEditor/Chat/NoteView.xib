@@ -33,7 +33,7 @@
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ZlJ-Pv-IMd">
-                                    <rect key="frame" x="8" y="8" width="148" height="29"/>
+                                    <rect key="frame" x="25" y="8" width="131" height="29"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="29" id="jEm-QH-rit"/>
                                     </constraints>
@@ -85,7 +85,7 @@
                                 <constraint firstItem="N8q-U0-bEg" firstAttribute="leading" secondItem="baV-lZ-yNe" secondAttribute="leading" constant="8" id="fbk-SN-dIR"/>
                                 <constraint firstAttribute="trailing" secondItem="Xor-WE-faL" secondAttribute="trailing" constant="8" id="gmA-vM-1z9"/>
                                 <constraint firstAttribute="trailing" secondItem="VS9-vT-c12" secondAttribute="trailing" constant="8" id="kM4-zq-q47"/>
-                                <constraint firstItem="ZlJ-Pv-IMd" firstAttribute="leading" secondItem="baV-lZ-yNe" secondAttribute="leading" constant="8" id="n1z-hf-dHy"/>
+                                <constraint firstItem="ZlJ-Pv-IMd" firstAttribute="leading" secondItem="baV-lZ-yNe" secondAttribute="leading" constant="25" id="n1z-hf-dHy"/>
                                 <constraint firstAttribute="width" constant="240" id="qlO-td-vC6"/>
                                 <constraint firstItem="VS9-vT-c12" firstAttribute="top" secondItem="ZlJ-Pv-IMd" secondAttribute="bottom" constant="8" id="rSg-Vn-xSZ"/>
                             </constraints>

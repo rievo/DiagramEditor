@@ -12,13 +12,17 @@
 @class AppDelegate;
 @class Alert;
 
-@interface NoteView : UIView<UIGestureRecognizerDelegate, UIScrollViewDelegate>{
+@interface NoteView : UIView<UIGestureRecognizerDelegate, UIScrollViewDelegate, UITextViewDelegate>{
     
     __weak IBOutlet UIView *container;
     AppDelegate * dele;
     
     UIColor * color;
     __weak IBOutlet UIScrollView *scrollView;
+    
+    UITextView * tv;
+    
+    CGRect oldFrame;
 }
 //property (weak, nonatomic) IBOutlet UIImageView *preview;
 @property (weak, nonatomic) IBOutlet UIView *background;

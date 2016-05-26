@@ -1886,6 +1886,8 @@
                                                                                         
                                                                                     } completion:^(BOOL finished) {
                                                                                         showingPossibleAlerts = YES;
+                                                                                        
+                                                                                        [self showAnotations];
                                                                                     }];
                                                                }];
                                           }];
@@ -1935,6 +1937,8 @@
                                                                                     } completion:^(BOOL finished) {
                                                                                         [exclamationAlert setHidden: YES];
                                                                                         showingPossibleAlerts = NO;
+                                                                                        
+                                                                                        [self hideAnotations];
                                                                                     }];
                                                                }];
                                           }];
@@ -2357,6 +2361,24 @@
     
     [dele.drawnsArray addObject:da];
     
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
+}
+
+#pragma mark Show or hide annotations and drawings
+-(void)hideAnotations{
+    
+    for(Alert * al in dele.notesArray){
+        [al setHidden:YES];
+    }
+    dele.showingAnnotations = NO;
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
+}
+
+-(void)showAnotations{
+    dele.showingAnnotations = YES;
+    for(Alert * al in dele.notesArray){
+        [al setHidden:NO];
+    }
     [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
 }
 @end

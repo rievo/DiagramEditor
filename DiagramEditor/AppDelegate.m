@@ -38,6 +38,8 @@
     blue3 = [[UIColor alloc]initWithRed:58/256.0 green:78/256.0 blue:120/256.0 alpha:1.0];
     blue4 = [[UIColor alloc]initWithRed:34/256.0 green:54/256.0 blue:96/256.0 alpha:1.0];
     
+    _showingAnnotations = NO;
+    
     currentPaletteFileName = nil;
     subPalette = nil;
     graphicR = nil;
@@ -168,11 +170,19 @@
             self.components = [dic objectForKey:@"components"];
             self.connections = [dic objectForKey:@"connections"];
             self.elementsDictionary = [dic objectForKey:@"elementsDictionary"];
+            //self.notesArray = [dic objectForKey:@"notesArray"];
             
             for(int i = 0; i< components.count; i++){
                 [self.can addSubview: [components objectAtIndex:i]];
                 [[components objectAtIndex:i]prepare];
             }
+            
+            /*for(int i = 0; i<notesArray.count; i++){
+                [self.can addSubview:[notesArray objectAtIndex:i]];
+                
+            }*/
+            
+            
         }
         
         
@@ -428,6 +438,10 @@
     //Master info
     if(currentMasterId != nil)
         [dic setObject:currentMasterId forKey:@"currentMasterId"];
+    
+    //Notes
+    if(notesArray != nil)
+        [dic setObject:notesArray forKey:@"notesArray"];
     
     
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dic];

@@ -528,24 +528,32 @@
     
     
     
-    //Draw connections between notes and components
-    for(Alert * al in dele.notesArray){
-        if(al.associatedComponent != nil){
-            UIBezierPath * link = [[UIBezierPath alloc] init];
-            [dele.blue4 setStroke];
-            [link moveToPoint:al.center];
-            [link addLineToPoint:al.associatedComponent.center];
-            [link stroke];
+    
+    
+    
+    
+    
+    if(dele.showingAnnotations == YES){
+        
+        //Draw connections between notes and components
+        for(Alert * al in dele.notesArray){
+            if(al.associatedComponent != nil){
+                UIBezierPath * link = [[UIBezierPath alloc] init];
+                [dele.blue4 setStroke];
+                [link moveToPoint:al.center];
+                [link addLineToPoint:al.associatedComponent.center];
+                [link stroke];
+            }
+        }
+        
+        //Draw hand-made draws
+        for(DrawnAlert * da in dele.drawnsArray){
+            [dele.blue3 setStroke];
+            [da.path stroke];
+            
         }
     }
     
-    
-    //Draw hand-made draws
-    for(DrawnAlert * da in dele.drawnsArray){
-        [dele.blue3 setStroke];
-        [da.path stroke];
-        
-    }
     
     if(xArrowStart> 0 && yArrowStart> 0){
         

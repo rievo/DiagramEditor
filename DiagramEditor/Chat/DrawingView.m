@@ -52,6 +52,7 @@
                                                              &translation);
     UIBezierPath * mo = [UIBezierPath bezierPathWithCGPath:movedPath];
     
+    [mo setLineWidth:2.0];
     [mo applyTransform:CGAffineTransformMakeScale(1/owner.scrollView.zoomScale, 1/owner.scrollView.zoomScale)];
     
     
