@@ -170,11 +170,12 @@
 #pragma mark - ImagePickerController Delegate
 -(void)imagePickerController:(UIImagePickerController *)pick didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    if(UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPhone) {
-        [pick dismissViewControllerAnimated:YES completion:nil];
-    } else {
+    
+    [pick dismissViewControllerAnimated:YES completion:nil];
+    
+    if(popover != nil)
         [popover dismissPopoverAnimated:YES];
-    }
+    
 
     UIImage * image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
 

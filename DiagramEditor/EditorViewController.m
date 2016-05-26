@@ -805,6 +805,8 @@
 -(void)resetAll{
     dele.components = [[NSMutableArray alloc] init];
     dele.connections = [[NSMutableArray alloc] init];
+    dele.notesArray = [[NSMutableArray alloc] init];
+    dele.drawnsArray = [[NSMutableArray alloc] init];
     [canvas prepareCanvas];
 }
 
