@@ -127,7 +127,10 @@
     else
     {
         popover =[[UIPopoverController alloc]initWithContentViewController:picker];
-        [popover presentPopoverFromRect:cameraButton.frame inView:self permittedArrowDirections:UIPopoverArrowDirectionUnknown animated:YES];
+        [popover presentPopoverFromRect:cameraButton.frame
+                                 inView:self
+               permittedArrowDirections:UIPopoverArrowDirectionUnknown
+                               animated:YES];
     }
 }
 

@@ -40,4 +40,7 @@
 +(UIColor *)darkYellow;
 +(UIColor *)darkGreen;
 
++(NSMutableArray *)colorArray;
++ (void)shuffle:(NSMutableArray *)array;
+
 @end

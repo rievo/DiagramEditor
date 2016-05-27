@@ -8,9 +8,81 @@
 
 #import "ColorPalette.h"
 
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+
 
 @implementation ColorPalette
 
+/*
+
+                    0xFFB300, # Vivid Yellow
+                    0x803E75, # Strong Purple
+                    0xFF6800, # Vivid Orange
+                    0xA6BDD7, # Very Light Blue
+                    0xC10020, # Vivid Red
+                    0xCEA262, # Grayish Yellow
+                    0x817066, # Medium Gray
+                    
+# The following don't work well for people with defective color vision
+                    0x007D34, # Vivid Green
+                    0xF6768E, # Strong Purplish Pink
+                    0x00538A, # Strong Blue
+                    0xFF7A5C, # Strong Yellowish Pink
+                    0x53377A, # Strong Violet
+                    0xFF8E00, # Vivid Orange Yellow
+ 
+                    0xB32851, # Strong Purplish Red
+                    0xF4C800, # Vivid Greenish Yellow
+                    0x7F180D, # Strong Reddish Brown
+                    0x93AA00, # Vivid Yellowish Green
+                    0x593315, # Deep Yellowish Brown
+                    0xF13A13, # Vivid Reddish Orange
+                    0x232C16, # Dark Olive Green
+                    ]
+*/
+
++(NSMutableArray *)colorArray{
+    
+    NSMutableArray * colsArray = [[NSMutableArray alloc] init];
+    
+    [colsArray addObject:UIColorFromRGB(0xFFB300)];
+    [colsArray addObject:UIColorFromRGB(0x803E75)];
+    [colsArray addObject:UIColorFromRGB(0xFF6800)];
+    [colsArray addObject:UIColorFromRGB(0xA6BDD7)];
+    [colsArray addObject:UIColorFromRGB(0x817066)];
+    [colsArray addObject:UIColorFromRGB(0xFFB300)];
+    
+    [colsArray addObject:UIColorFromRGB(0x007D34)];
+    [colsArray addObject:UIColorFromRGB(0xF6768E)];
+    [colsArray addObject:UIColorFromRGB(0x00538A)];
+    [colsArray addObject:UIColorFromRGB(0xFF7A5C)];
+    [colsArray addObject:UIColorFromRGB(0x53377A)];
+    [colsArray addObject:UIColorFromRGB(0xFF8E00)];
+    
+    [colsArray addObject:UIColorFromRGB(0xB32851)];
+    [colsArray addObject:UIColorFromRGB(0xF4C800)];
+    [colsArray addObject:UIColorFromRGB(0x7F180D)];
+    [colsArray addObject:UIColorFromRGB(0x93AA00)];
+    [colsArray addObject:UIColorFromRGB(0x593315)];
+    [colsArray addObject:UIColorFromRGB(0xF13A13)];
+    [colsArray addObject:UIColorFromRGB(0x232C16)];
+    
+    
+    [ColorPalette shuffle:colsArray];
+    
+    return colsArray;
+}
+
++ (void)shuffle:(NSMutableArray *)array
+{
+    NSUInteger count = [array count];
+    if (count < 1) return;
+    for (NSUInteger i = 0; i < count - 1; ++i) {
+        NSInteger remainingCount = count - i;
+        NSInteger exchangeIndex = i + arc4random_uniform((u_int32_t )remainingCount);
+        [array exchangeObjectAtIndex:i withObjectAtIndex:exchangeIndex];
+    }
+}
 
 +(UIColor *)colorForString:(NSString *)str{
     UIColor * temp = nil;

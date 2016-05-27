@@ -15,5 +15,7 @@
 @property MCPeerID * who;
 @property NSDate * date;
 @property UIBezierPath * path;
+@property UIColor * color;
+@property int identifier;
 
 @end

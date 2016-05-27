@@ -56,6 +56,12 @@ NSString * const kNewChatMessage = @"kNewChatMessage";
 
 NSString * const kGoOut = @"kGoOut";
 
+NSString * const kNewColor = @"kNewColor";
+
+
+NSString * const kNewDrawn = @"kNewDrawn";
+NSString * const kDeleteDrawn = @"kDeleteDrawn";
+
 
 @implementation Constants
 

@@ -107,23 +107,30 @@
     //Check if touch is in some path
     for(DrawnAlert * da in dele.drawnsArray){
         if([self isPoint:p withinDistance:30.0 ofPath:da.path.CGPath] == YES){
-            NSLog(@"TOUCHING");
-            dele.selectedDrawn = da;
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object: nil];
             
-            //TODO: Show delete button
-            dele.yonv = [[[NSBundle mainBundle] loadNibNamed:@"YesOrNoView"
-                                                               owner:self
-                                                             options:nil] objectAtIndex:0];
-            dele.yonv.delegate = self;
-            dele.yonv.al = da;
-            //[dele.yonv setCenter:p];
-            [dele.yonv setFrame:CGRectMake(p.x -dele.yonv.frame.size.width/2,
-                                           p.y -dele.yonv.frame.size.height/2,
-                                           dele.yonv.frame.size.width,
-                                           dele.yonv.frame.size.height)];
-            [self addSubview:dele.yonv];
-            return;
+            //If I created this alert
+            if([da.who.displayName isEqualToString:dele.myPeerInfo.peerID.displayName]){
+                NSLog(@"TOUCHING");
+                dele.selectedDrawn = da;
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object: nil];
+                
+                //TODO: Show delete button
+                dele.yonv = [[[NSBundle mainBundle] loadNibNamed:@"YesOrNoView"
+                                                           owner:self
+                                                         options:nil] objectAtIndex:0];
+                dele.yonv.delegate = self;
+                dele.yonv.al = da;
+                //[dele.yonv setCenter:p];
+                [dele.yonv setFrame:CGRectMake(p.x -dele.yonv.frame.size.width/2,
+                                               p.y -dele.yonv.frame.size.height/2,
+                                               dele.yonv.frame.size.width,
+                                               dele.yonv.frame.size.height)];
+                [self addSubview:dele.yonv];
+                
+            
+                return;
+            }
+
         }
     }
 }
@@ -582,7 +589,8 @@
             if(da == dele.selectedDrawn){
                 [[UIColor purpleColor]setStroke];
             }else{
-                [dele.blue3 setStroke];
+                //[dele.blue3 setStroke];
+                [da.color setStroke];
             }
             
             [da.path stroke];
@@ -789,6 +797,21 @@ float QuadBezier(float t, float start, float c1, float end)
     
     [dele.drawnsArray removeObject:alert];
     [self setNeedsDisplay];
+    
+    //Send delete alert to peers
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+    
+    [dic setObject:alert forKey:@"drawn"];
+    [dic setObject:kDeleteDrawn forKey:@"msg"];
+    [dic setObject:dele.myPeerInfo.peerID forKey:@"who"];
+    
+    NSError * error = nil;
+    
+    NSData * allData = [NSKeyedArchiver archivedDataWithRootObject:dic];
+    [dele.manager.session sendData:allData
+                           toPeers:dele.manager.session.connectedPeers
+                          withMode:MCSessionSendDataReliable
+                             error:&error];
 }
 
 @end

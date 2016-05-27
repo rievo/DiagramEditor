@@ -79,7 +79,7 @@
 
 @property DrawnAlert * selectedDrawn;
 @property YesOrNoView * yonv;
-
+@property UIColor * myColor;
 
 @property BOOL showingAnnotations;
 

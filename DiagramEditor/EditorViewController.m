@@ -25,6 +25,7 @@
 #import "Message.h"
 #import "NoteView.h"
 #import "CreateNoteView.h"
+#import "ColorPalette.h"
 
 #import "DrawnAlert.h"
 
@@ -1709,7 +1710,30 @@
     
     
     
+    //Assign colors. Remove this to all black
+    [self assignColors];
+}
+
+-(void)assignColors{
+    NSMutableArray * array = [ColorPalette colorArray];
+    dele.myColor = array[0];
     
+    for(int i = 0; i< dele.manager.session.connectedPeers.count; i++){
+        UIColor * colorToSend = array[i+1];
+        NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+        [dic setObject:kNewColor forKey:@"msg"];
+        [dic setObject:colorToSend forKey:@"color"];
+        [dic setObject:dele.manager.session.connectedPeers[0] forKey:@"who"];
+        
+        
+        NSError * error = nil;
+        
+        NSData * allData = [NSKeyedArchiver archivedDataWithRootObject:dic];
+        [dele.manager.session sendData:allData
+                               toPeers:dele.manager.session.connectedPeers
+                              withMode:MCSessionSendDataReliable
+                                 error:&error];
+    }
 }
 
 -(void)sendMasterInfo{
@@ -2360,10 +2384,31 @@
     da.who = dele.myPeerInfo.peerID;
     da.date = [NSDate date];
     da.path = path;
+    da.color = dele.myColor;
+    da.identifier = (int)da;
     
     [dele.drawnsArray addObject:da];
     
     [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
+    
+    
+    //Send drawn to users
+    
+   
+    
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+    
+    [dic setObject:da forKey:@"drawn"];
+    [dic setObject:kNewDrawn forKey:@"msg"];
+    [dic setObject:dele.myPeerInfo.peerID forKey:@"who"];
+    
+    NSError * error = nil;
+    
+    NSData * allData = [NSKeyedArchiver archivedDataWithRootObject:dic];
+    [dele.manager.session sendData:allData
+                           toPeers:dele.manager.session.connectedPeers
+                          withMode:MCSessionSendDataReliable
+                             error:&error];
 }
 
 #pragma mark Show or hide annotations and drawings

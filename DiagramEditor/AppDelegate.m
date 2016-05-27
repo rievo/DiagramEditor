@@ -39,6 +39,8 @@
     blue3 = [[UIColor alloc]initWithRed:58/256.0 green:78/256.0 blue:120/256.0 alpha:1.0];
     blue4 = [[UIColor alloc]initWithRed:34/256.0 green:54/256.0 blue:96/256.0 alpha:1.0];
     
+    _myColor = [UIColor blackColor];
+    
     _showingAnnotations = NO;
     _selectedDrawn = nil;
     
@@ -137,6 +139,7 @@
         self.currentMasterId = [dic objectForKey:@"currentMasterId"];
         
         self.notesArray = [dic objectForKey:@"notesArray"];
+        self.drawnsArray = [dic objectForKey:@"drawnsArray"];
         
         loadingADiagram = YES;
         
@@ -166,14 +169,16 @@
         }else{
             NSArray * subViews = [self.can subviews];
             for(UIView * sub in subViews){
-                if(![sub isKindOfClass:[UIImageView class]])
-                    [sub removeFromSuperview];
+                if(![sub isKindOfClass:[UIImageView class]]){
+                    if(sub != _yonv)
+                        [sub removeFromSuperview];
+                }
             }
             
             self.components = [dic objectForKey:@"components"];
             self.connections = [dic objectForKey:@"connections"];
             self.elementsDictionary = [dic objectForKey:@"elementsDictionary"];
-            self.drawnsArray = [dic objectForKey:@"drawnsArray"];
+            //self.drawnsArray = [dic objectForKey:@"drawnsArray"];
             //self.notesArray = [dic objectForKey:@"notesArray"];
             
             for(int i = 0; i< components.count; i++){
@@ -318,6 +323,40 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:kNewChatMessage
                                                             object:nil
                                                           userInfo:relinfo];
+    }else if([msg isEqualToString:kNewColor]){
+        
+        
+        MCPeerID * who = [dataDic objectForKey:@"who"];
+        
+        if([who.displayName isEqualToString: myPeerInfo.peerID.displayName]){
+           //Change my color
+            UIColor * newColor = [dataDic objectForKey:@"color"];
+            _myColor = newColor;
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
+        }else{ //Somebody is the new master
+            NSLog(@"I'm not the receiver, just ignore this");
+        }
+    }else if([msg isEqualToString:kNewDrawn]){
+        
+        DrawnAlert * da = [dataDic objectForKey:@"drawn"];
+        [drawnsArray addObject:da];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
+    }else if([msg isEqualToString:kDeleteDrawn]){
+        
+        DrawnAlert * da = [dataDic objectForKey:@"drawn"];
+        int daId = da.identifier;
+        DrawnAlert * sel = nil;
+        for(DrawnAlert * da in drawnsArray){
+            if(da.identifier == daId){
+                sel = da;
+            }
+        }
+        
+        if(sel != nil){ //This drawn exists
+            [drawnsArray removeObject:sel];
+        }
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
     }
 }
 
