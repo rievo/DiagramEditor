@@ -85,6 +85,7 @@ FOUNDATION_EXPORT NSString *const kNewColor;
 
 FOUNDATION_EXPORT NSString *const kNewDrawn;
 FOUNDATION_EXPORT NSString *const kDeleteDrawn;
+FOUNDATION_EXPORT NSString *const kDeleteNote;
 
 #define stayAlertTime 3
 #define alertsAnimationDuration 0.075

@@ -61,7 +61,7 @@ NSString * const kNewColor = @"kNewColor";
 
 NSString * const kNewDrawn = @"kNewDrawn";
 NSString * const kDeleteDrawn = @"kDeleteDrawn";
-
+NSString * const kDeleteNote = @"kDeleteNote";
 
 @implementation Constants
 

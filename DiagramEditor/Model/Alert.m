@@ -10,7 +10,7 @@
 
 @implementation Alert
 
-@synthesize attach, text, who, date, aCId, associatedComponent;
+@synthesize attach, text, who, date, aCId, associatedComponent, identifier;
 
 - (void)encodeWithCoder:(NSCoder *)coder {
     
@@ -19,7 +19,7 @@
     [coder encodeObject:self.who  forKey:@"who"];
     [coder encodeObject:self.date  forKey:@"date"];
     [coder encodeObject:self.associatedComponent forKey:@"associatedComponent"];
-
+    [coder encodeInt:self.identifier forKey:@"identifier"];
 }
 
 
@@ -31,6 +31,7 @@
         self.who = [coder decodeObjectForKey:@"who"];
         self.date = [coder decodeObjectForKey:@"date"];
         self.associatedComponent = [coder decodeObjectForKey:@"associatedComponent"];
+        self.identifier = [coder decodeIntForKey:@"identifier"];
     }
     return self;
 }

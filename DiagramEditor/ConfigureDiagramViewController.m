@@ -1417,7 +1417,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
         alert.who = [[MCPeerID alloc]initWithDisplayName:[note objectForKey:@"_who"]];
         alert.date = [note objectForKey:@"_date"];
         alert.text = [note objectForKey:@"_content"];
-        
+        alert.identifier = (int)alert;
         //TODO: Load attach from xml
         NSString * base64str = [note objectForKey:@"_attach"];
         if(base64str != nil){

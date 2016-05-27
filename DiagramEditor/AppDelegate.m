@@ -358,6 +358,26 @@
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
     }
+    else if([msg isEqualToString:kDeleteNote]){
+        
+        Alert * alert = [dataDic objectForKey:@"note"];
+        int nid = alert.identifier;
+        
+        Alert * sel = nil;
+        
+        for(Alert * al in notesArray){
+            if(al.identifier == nid){
+                sel = al;
+            }
+        }
+        
+        if(sel != nil){ //This note exists
+            [notesArray removeObject:sel];
+            [sel removeFromSuperview];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
+        }
+      
+    }
 }
 
 

@@ -118,7 +118,26 @@
     
     [self removeFromSuperview];
     
+
+    
     [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
+    
+    //Send delete to peers
+    
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+    
+    
+    [dic setObject:associatedNote forKey:@"note"];
+    [dic setObject:kDeleteNote forKey:@"msg"];
+    [dic setObject:dele.myPeerInfo.peerID forKey:@"who"];
+    
+    NSError * error = nil;
+    
+    NSData * allData = [NSKeyedArchiver archivedDataWithRootObject:dic];
+    [dele.manager.session sendData:allData
+                           toPeers:dele.manager.session.connectedPeers
+                          withMode:MCSessionSendDataReliable
+                             error:&error];
     
 }
 

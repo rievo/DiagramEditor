@@ -20,5 +20,6 @@
 @property Component * associatedComponent;
 
 @property NSString * aCId;
+@property int identifier;
 
 @end

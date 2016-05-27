@@ -2120,6 +2120,7 @@
     alert.text = tempNoteContent;
     alert.date = [NSDate date];
     alert.who = dele.myPeerInfo.peerID;
+    alert.identifier = (int)alert;
     //alert.image = noteAlert.image;
     
     if(view == exclamationAlert){
@@ -2361,6 +2362,7 @@
     alert.date = [NSDate date];
     alert.who = dele.myPeerInfo.peerID;
     alert.attach = image;
+    alert.identifier = (int)alert;
     
     //Check if there is a component on this position
     for(Component * comp in dele.components){
