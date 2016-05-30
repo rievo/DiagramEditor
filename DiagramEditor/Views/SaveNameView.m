@@ -103,10 +103,6 @@
                           delay:0.0
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
-                         /*[bottomBar setFrame:CGRectMake(bottomBar.frame.origin.x,
-                                                        keyboardFrame.origin.y - bottomBar.frame.size.height*2,
-                                                        bottomBar.frame.size.width,
-                                                        bottomBar.frame.size.height)];*/
                          [container setFrame:CGRectMake(container.frame.origin.x
                           ,keyboardFrame.origin.y - container.frame.size.height
                           ,container.frame.size.width

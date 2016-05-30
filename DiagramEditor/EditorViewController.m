@@ -50,6 +50,14 @@
     [askForMasterButton setHidden:YES];
     [chatButton setHidden:YES];
     
+    //Make chatButton float
+    UIPanGestureRecognizer * chatGR = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleChatButtonPan:)];
+    [chatButton addGestureRecognizer:chatGR];
+    [chatButton setFrame:CGRectMake(scrollView.frame.size.width,
+                                   scrollView.frame.origin.y,
+                                   chatButton.frame.size.width,
+                                    chatButton.frame.size.height + 30)];
+    
     [super viewDidLoad];
     
     canvasW = 1500;
@@ -280,6 +288,69 @@
     [drawAlert addGestureRecognizer:tapDrawGR];
 }
 
+
+-(void)handleChatButtonPan:(UIPanGestureRecognizer *)recog{
+    CGPoint p = [recog locationInView:self.view];
+    
+    if(recog.state == UIGestureRecognizerStateBegan){
+        [chatButton setCenter:p];
+        [chatButton setEnabled:NO];
+    }else if(recog.state == UIGestureRecognizerStateEnded){
+        float xorigin = 0.0;
+        float yorigin = 0.0;
+        
+        if(p.x > self.view.frame.size.width / 2){ // Go to right
+            xorigin = self.view.frame.size.width - chatButton.frame.size.width;
+        }else{ //Go to left
+            xorigin = 0.0;
+        }
+        
+       
+        yorigin = p.y;
+        if(yorigin > self.view.frame.size.height - chatButton.frame.size.height)
+            yorigin = self.view.frame.size.height - chatButton.frame.size.height;
+        
+        if(yorigin < scrollView.frame.origin.y)
+            yorigin = scrollView.frame.origin.y;
+        
+        [chatButton setEnabled:NO];
+        
+        [UIView animateWithDuration:0.3
+                         animations:^{
+                             
+                         } completion:^(BOOL finished) {
+                             [chatButton setFrame:CGRectMake(xorigin,
+                                                             yorigin - chatButton.frame.size.height/2,
+                                                             chatButton.frame.size.width,
+                                                             chatButton.frame.size.height)];
+                             [chatButton setEnabled:YES];
+                         }];
+        
+
+        
+        
+    }else if(recog.state == UIGestureRecognizerStateChanged){
+        float x;
+        float y;
+        if(p.x > self.view.frame.size.width / 2){ // Go to right
+           x = self.view.frame.size.width - chatButton.frame.size.width/2;
+        }else{ //Go to left
+            x = 0.0 + chatButton.frame.size.width/2;
+        }
+        
+        if(p.y > scrollView.frame.size.height + scrollView.frame.origin.y - chatButton.frame.size.height)
+            y = self.view.frame.size.height - chatButton.frame.size.height/2;
+        
+        else if(p.y < scrollView.frame.origin.y + chatButton.frame.size.height/2)
+            y = scrollView.frame.origin.y + chatButton.frame.size.height/2;
+        else
+            y = p.y;
+        
+        CGPoint point = CGPointMake(x, y);
+        [chatButton setCenter:point];
+        
+    }
+}
 
 #pragma mark Notificationhandlers
 
