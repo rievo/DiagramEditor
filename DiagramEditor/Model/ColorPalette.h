@@ -42,5 +42,6 @@
 
 +(NSMutableArray *)colorArray;
 + (void)shuffle:(NSMutableArray *)array;
-
++ (NSString *)hexStringForColor:(UIColor *)color;
++ (UIColor *)colorFromHexString:(NSString *)hexString;
 @end

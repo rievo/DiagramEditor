@@ -27,7 +27,9 @@
 #import "ThinkingView.h"
 #import "DiagramFile.h"
 
+
 #import "Alert.h"
+#import "PathPiece.h"
 
 
 #define defaultwidth 50
@@ -1417,7 +1419,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
         alert.who = [[MCPeerID alloc]initWithDisplayName:[note objectForKey:@"_who"]];
         alert.date = [note objectForKey:@"_date"];
         alert.text = [note objectForKey:@"_content"];
-        alert.identifier = (int)alert;
+        alert.identifier = [[note objectForKey:@"_identifier"]intValue];
         //TODO: Load attach from xml
         NSString * base64str = [note objectForKey:@"_attach"];
         if(base64str != nil){
@@ -1433,7 +1435,64 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
         [alert setCenter:CGPointMake(x, y)];
         [dele.notesArray addObject:alert];
     }
+    
+    //Load drawns
+    NSDictionary * drDic = [diagramDic objectForKey:@"drawns"];
+    NSArray * drawns = [drDic objectForKey:@"drawn"];
+    if([drawns isKindOfClass:[NSDictionary class]]){
+        drawns = [[NSArray alloc]initWithObjects:drawns, nil];
+    }
+    for(NSDictionary * dr in drawns){
+        DrawnAlert * da = [[DrawnAlert alloc] init];
+        da.who = [[MCPeerID alloc]initWithDisplayName:[dr objectForKey:@"_who"]];
+        da.date = [dr objectForKey:@"_date"];
+        da.identifier = [[dr objectForKey:@"_identifier"]intValue];
+        NSString * tempC =  [dr objectForKey:@"_color"];
+        tempC = [NSString stringWithFormat:@"#%@",tempC];
+        da.color = [ColorPalette colorFromHexString:tempC];
+        
+       
+        UIBezierPath * path = [[UIBezierPath alloc] init];
+        NSMutableArray * partsHolder = [[NSMutableArray alloc] init];
+        
+        NSDictionary * pointsDic = [dr objectForKey:@"path"];
+        NSArray * pointsArray = [pointsDic objectForKey:@"p"];
+        
+        for (NSDictionary * pdic in pointsArray){
+            NSString * xstr = [pdic objectForKey:@"_x"];
+            NSString * ystr = [pdic objectForKey:@"_y"];
+            NSString * type = [pdic objectForKey:@"_type"];
+            float x = [xstr floatValue];
+            float y = [ystr floatValue];
+            CGPoint p  = CGPointMake(x, y);
+            PathPiece * pp = [[PathPiece alloc] init];
+            pp.point = p;
+            pp.type = type;
+            [partsHolder addObject:pp];
+        }
+        
 
+        for(PathPiece * pp in partsHolder){
+            
+            if([pp.type isEqualToString:CGPathElementMoveToPoint]){
+                [path moveToPoint:pp.point];
+            }else if([pp.type isEqualToString:CGPathElementAddLineToPoint]){
+                [path addLineToPoint:pp.point];
+            }else if([pp.type isEqualToString:CGPathElementCloseSubpath]){
+                [path closePath];
+            }else{
+                
+            }
+            
+        }
+        
+        da.path = path;
+        [dele.drawnsArray addObject:da];
+        
+        
+        int r = 2;
+        
+    }
 
     NSDictionary * paletteNameDic = [diagramDic objectForKey:@"palette_name"];
     NSString * paletteName = [paletteNameDic objectForKey:@"_name"];

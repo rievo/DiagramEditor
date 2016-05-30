@@ -28,7 +28,7 @@
 #import "ColorPalette.h"
 
 #import "DrawnAlert.h"
-
+#import "PathPiece.h"
 
 #define fileExtension @"demiso"
 
@@ -1213,6 +1213,39 @@
             [writer writeEndElement];
         }
         //Close chat
+        [writer writeEndElement];
+    }
+    
+    //Save drawns
+    if(dele.drawnsArray != nil && dele.drawnsArray.count > 0){
+        [writer writeStartElement:@"drawns"];
+        for(DrawnAlert * da in dele.drawnsArray){
+            
+            [writer writeStartElement:@"drawn"];
+            [writer writeAttribute:@"who" value:da.who.displayName];
+            [writer writeAttribute:@"date" value:[da.date description]];
+            [writer writeAttribute:@"color" value:[ColorPalette hexStringForColor:da.color]];
+            [writer writeAttribute:@"id" value:[NSString stringWithFormat:@"%d", da.identifier]];
+            
+            [writer writeStartElement:@"path"];
+            NSArray * parts = [self getPointsArrayFromUIBezierPath:da.path];
+            
+            for(int k = 0; k< parts.count; k++){
+                PathPiece * pp = parts[k];
+                //NSValue * val = points[k];
+                NSString * type = pp.type;
+                CGPoint p = pp.point;
+                
+                [writer writeStartElement:@"p"];
+                [writer writeAttribute:@"x" value:[NSString stringWithFormat:@"%.3f", p.x]];
+                 [writer writeAttribute:@"y" value:[NSString stringWithFormat:@"%.4f", p.y]];
+                [writer writeAttribute:@"type" value:type];
+                [writer writeEndElement];
+            }
+            [writer writeEndElement];//Close path points
+            
+            [writer writeEndElement];
+        }
         [writer writeEndElement];
     }
 
@@ -2404,6 +2437,7 @@
     [dic setObject:kNewDrawn forKey:@"msg"];
     [dic setObject:dele.myPeerInfo.peerID forKey:@"who"];
     
+    
     NSError * error = nil;
     
     NSData * allData = [NSKeyedArchiver archivedDataWithRootObject:dic];
@@ -2430,4 +2464,45 @@
     }
     [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
 }
+
+#pragma mark Get point array from UIBezierPath
+-(NSMutableArray *)getPointsArrayFromUIBezierPath:(UIBezierPath *)path{
+    NSMutableArray * pieces = [[NSMutableArray alloc] init];
+
+    CGPathRef thecg = path.CGPath;
+    CGPathApply(thecg, (__bridge void * _Nullable)(pieces), MyCGPathApplierFunc);
+    
+    return pieces;
+}
+
+void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
+    
+    
+    
+    NSMutableArray *pieces = (__bridge NSMutableArray *)info;
+    
+    CGPoint *points = element->points;
+    PathPiece * pp = [[PathPiece alloc] init];
+    pp.point = points[0];
+    
+    switch (element->type) {
+        case kCGPathElementMoveToPoint:
+            pp.type = CGPathElementMoveToPoint;
+            break;
+        case kCGPathElementAddLineToPoint:
+            pp.type = CGPathElementAddLineToPoint;
+            break;
+            
+        case kCGPathElementCloseSubpath:
+            pp.type = CGPathElementCloseSubpath;
+            break;
+            
+        default:
+            break;
+    }
+    [pieces addObject:pp];
+    //[pieces addObject:[NSValue valueWithCGPoint:points[0]]];
+    
+}
+
 @end

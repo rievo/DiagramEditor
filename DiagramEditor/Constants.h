@@ -93,6 +93,10 @@ FOUNDATION_EXPORT NSString *const kDeleteNote;
 #pragma mark Resend timer
 #define resendTime 0.3
 
+#pragma mark Working with BezierPaths
+FOUNDATION_EXPORT NSString *const CGPathElementMoveToPoint;
+FOUNDATION_EXPORT NSString *const CGPathElementAddLineToPoint;
+FOUNDATION_EXPORT NSString *const CGPathElementCloseSubpath;
 
 @interface Constants : NSObject
 
