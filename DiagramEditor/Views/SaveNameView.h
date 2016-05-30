@@ -15,7 +15,10 @@
 
 @interface SaveNameView : UIView<UIGestureRecognizerDelegate>{
     id delegate;
+    __weak IBOutlet UIView *container;
     __weak IBOutlet UIView *background;
+    
+    CGRect oldFrame;
 }
 
 @property (nonatomic, retain) id delegate;
