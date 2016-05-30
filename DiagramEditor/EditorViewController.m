@@ -31,6 +31,7 @@
 #import "PathPiece.h"
 
 #define fileExtension @"demiso"
+#import <Social/Social.h>
 
 @import Foundation;
 
@@ -1426,6 +1427,11 @@
                                                           handler:^(UIAlertAction * _Nonnull action) {
                                                               [self saveImageOnCameraRoll:finalImage];
                                                           }];
+    UIAlertAction * postTwitter = [UIAlertAction actionWithTitle:@"Post on Twitter"
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * _Nonnull action) {
+                                                              [self postTweet:finalImage];
+                                                          }];
     
     UIAlertAction * cancel = [UIAlertAction actionWithTitle:@"Cancel"
                                                       style:UIAlertActionStyleCancel
@@ -1435,6 +1441,7 @@
     
     [ac addAction:sendemail];
     [ac addAction:saveondevice];
+    [ac addAction:postTwitter];
     [ac addAction:cancel];
     
     
@@ -1445,6 +1452,42 @@
     }
     
     [self presentViewController:ac animated:YES completion:nil];
+}
+
+-(void)postTweet:(UIImage *)image{
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
+    {
+        SLComposeViewController *tweet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+        [tweet setInitialText:@"I just edited a new model"];
+        [tweet addImage:image];
+        [tweet setCompletionHandler:^(SLComposeViewControllerResult result)
+         {
+             if (result == SLComposeViewControllerResultCancelled)
+             {
+                 NSLog(@"The user cancelled.");
+             }
+             else if (result == SLComposeViewControllerResultDone)
+             {
+                 NSLog(@"The user sent the tweet");
+                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Twitter"
+                                                                 message:@"Tweet sent"
+                                                                delegate:self
+                                                       cancelButtonTitle:@"OK"
+                                                       otherButtonTitles:nil];
+                 [alert show];
+             }
+         }];
+        [self presentViewController:tweet animated:YES completion:nil];
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Twitter"
+                                                        message:@"Twitter integration is not available.  A Twitter account must be set up on your device."
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
 }
 
 -(void)saveImageOnCameraRoll: (UIImage *) image{

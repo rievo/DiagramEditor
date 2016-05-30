@@ -87,6 +87,7 @@
 		F17A93F51CF70768008AE1EE /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = F17A93F41CF70768008AE1EE /* delete.png */; };
 		F17A941E1CFC2F10008AE1EE /* launch.png in Resources */ = {isa = PBXBuildFile; fileRef = F17A941D1CFC2F10008AE1EE /* launch.png */; };
 		F17A94211CFC4589008AE1EE /* PathPiece.m in Sources */ = {isa = PBXBuildFile; fileRef = F17A94201CFC4589008AE1EE /* PathPiece.m */; };
+		F17A94231CFC5069008AE1EE /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F17A94221CFC5069008AE1EE /* Social.framework */; };
 		F17B75A91C22D6E100AB1B57 /* newDocument.png in Resources */ = {isa = PBXBuildFile; fileRef = F17B75A81C22D6E100AB1B57 /* newDocument.png */; };
 		F17B75AB1C22D79F00AB1B57 /* save.png in Resources */ = {isa = PBXBuildFile; fileRef = F17B75AA1C22D79F00AB1B57 /* save.png */; };
 		F17B75AD1C22D9CC00AB1B57 /* list.png in Resources */ = {isa = PBXBuildFile; fileRef = F17B75AC1C22D9CC00AB1B57 /* list.png */; };
@@ -263,6 +264,7 @@
 		F17A941D1CFC2F10008AE1EE /* launch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launch.png; sourceTree = "<group>"; };
 		F17A941F1CFC4589008AE1EE /* PathPiece.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathPiece.h; sourceTree = "<group>"; };
 		F17A94201CFC4589008AE1EE /* PathPiece.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathPiece.m; sourceTree = "<group>"; };
+		F17A94221CFC5069008AE1EE /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		F17B75A81C22D6E100AB1B57 /* newDocument.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newDocument.png; sourceTree = "<group>"; };
 		F17B75AA1C22D79F00AB1B57 /* save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = save.png; sourceTree = "<group>"; };
 		F17B75AC1C22D9CC00AB1B57 /* list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = list.png; sourceTree = "<group>"; };
@@ -346,6 +348,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F17A94231CFC5069008AE1EE /* Social.framework in Frameworks */,
 				F1F29C691C64C8F70035F0B6 /* AudioToolbox.framework in Frameworks */,
 				F1B789991C60F064001B6DB4 /* CoreGraphics.framework in Frameworks */,
 				F1B789931C60F045001B6DB4 /* UIKit.framework in Frameworks */,
@@ -577,6 +580,7 @@
 		F185106A1C1824C8004EC4C8 = {
 			isa = PBXGroup;
 			children = (
+				F17A94221CFC5069008AE1EE /* Social.framework */,
 				F18510751C1824C8004EC4C8 /* DiagramEditor */,
 				F18510741C1824C8004EC4C8 /* Products */,
 				F1F29C681C64C8F70035F0B6 /* AudioToolbox.framework */,
