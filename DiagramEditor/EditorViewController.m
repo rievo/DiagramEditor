@@ -1289,6 +1289,13 @@
     dele.currentPaletteFileName = nil;
     [dele.components removeAllObjects];
     [dele.connections removeAllObjects];
+    
+    for(Alert * al in dele.notesArray){
+        [al removeFromSuperview];
+    }
+    [dele.notesArray removeAllObjects];
+    [dele.drawnsArray removeAllObjects];
+    
     [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
     
     [dele.manager.session disconnect];
