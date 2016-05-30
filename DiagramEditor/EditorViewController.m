@@ -1227,6 +1227,7 @@
             [writer writeAttribute:@"date" value:[da.date description]];
             [writer writeAttribute:@"color" value:[ColorPalette hexStringForColor:da.color]];
             [writer writeAttribute:@"id" value:[NSString stringWithFormat:@"%d", da.identifier]];
+        
             
             [writer writeStartElement:@"path"];
             NSArray * parts = [self getPointsArrayFromUIBezierPath:da.path];
