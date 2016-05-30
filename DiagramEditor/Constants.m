@@ -63,9 +63,9 @@ NSString * const kNewDrawn = @"kNewDrawn";
 NSString * const kDeleteDrawn = @"kDeleteDrawn";
 NSString * const kDeleteNote = @"kDeleteNote";
 
-NSString * const CGPathElementMoveToPoint = @"kCGPathElementMoveToPoint";
-NSString * const CGPathElementAddLineToPoint = @"kCGPathElementAddLineToPoint";
-NSString * const CGPathElementCloseSubpath = @"kCGPathElementCloseSubpath";
+NSString * const CGPathElementMoveToPoint = @"MoveToP";
+NSString * const CGPathElementAddLineToPoint = @"AddLineToP";
+NSString * const CGPathElementCloseSubpath = @"CloseSubpath";
 
 
 @implementation Constants
