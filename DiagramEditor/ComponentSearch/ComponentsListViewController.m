@@ -135,6 +135,37 @@
 
 
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(isFiltered){ //Get from filtered array*/
+        if([[filteredArray objectAtIndex:indexPath.row] isKindOfClass:[Component class]]){
+            Component * temp = [filteredArray objectAtIndex:indexPath.row];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"showCompNot"
+                                                                object:temp
+                                                              userInfo:nil];
+            
+        }else if([[filteredArray objectAtIndex:indexPath.row] isKindOfClass:[Connection class]]){
+            Connection * conn = [filteredArray objectAtIndex:indexPath.row];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"showConnNot" object: conn];
+            
+        }
+    }else{ //Get from all components*/
+        if([[allElementsArray objectAtIndex:indexPath.row] isKindOfClass:[Component class]]){
+            Component * temp = [allElementsArray objectAtIndex:indexPath.row];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"showCompNot"
+                                                                object:temp
+                                                              userInfo:nil];
+        }else if([[allElementsArray objectAtIndex:indexPath.row] isKindOfClass:[Connection class]]){
+            Connection * conn = [allElementsArray objectAtIndex:indexPath.row];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"showConnNot" object: conn];
+            
+        }
+    }
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

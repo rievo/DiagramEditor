@@ -1363,21 +1363,50 @@
 
 - (IBAction)willChangePalette:(id)sender {
     
-    dele.currentPaletteFileName = nil;
-    [dele.components removeAllObjects];
-    [dele.connections removeAllObjects];
+    UIAlertController * alert=   [UIAlertController
+                                  alertControllerWithTitle:@"Attention"
+                                  message:@"You are about to change te palette. \nUnsaved changes will be lost. \nAre you sure?"
+                                  preferredStyle:UIAlertControllerStyleAlert];
     
-    for(Alert * al in dele.notesArray){
-        [al removeFromSuperview];
-    }
-    [dele.notesArray removeAllObjects];
-    [dele.drawnsArray removeAllObjects];
+    UIAlertAction* yesButton = [UIAlertAction
+                                actionWithTitle:@"Yes"
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction * action)
+                                {
+                                    dele.currentPaletteFileName = nil;
+                                    [dele.components removeAllObjects];
+                                    [dele.connections removeAllObjects];
+                                    
+                                    for(Alert * al in dele.notesArray){
+                                        [al removeFromSuperview];
+                                    }
+                                    [dele.notesArray removeAllObjects];
+                                    [dele.drawnsArray removeAllObjects];
+                                    
+                                    [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+                                    
+                                    [dele.manager.session disconnect];
+                                    
+                                    [self dismissViewControllerAnimated:YES completion:nil];
+                                    
+                                    [[NSNotificationCenter defaultCenter]postNotificationName:@"closeSubPalette" object:nil];
+                                    
+                                    
+                                }];
+    UIAlertAction* noButton = [UIAlertAction
+                               actionWithTitle:@"No"
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action)
+                               {
+                                   [alert dismissViewControllerAnimated:YES completion:nil];
+                                   
+                               }];
+    [alert addAction:noButton];
+    [alert addAction:yesButton];
     
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
     
-    [dele.manager.session disconnect];
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self presentViewController:alert animated:YES completion:nil];
+
 }
 
 

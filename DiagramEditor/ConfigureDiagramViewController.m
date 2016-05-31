@@ -118,6 +118,14 @@
                                              selector:@selector(didReceiveAppDeleLetsgoToEditor)
                                                  name:@"receivingAppDeleGoEditor"
                                                 object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(closeSubPalette)
+                                                 name:@"closeSubPalette"
+                                               object:nil];
+}
+-(void)closeSubPalette{
+    [self cancelSubpaletteSelection:self];
 }
 
 -(void)didReceiveAppDeleLetsgoToEditor{

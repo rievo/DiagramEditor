@@ -138,7 +138,7 @@
         
         rstvc.dictionary = dic;
         
-        
+        rstvc.backgroundColor = [UIColor clearColor];
     }
     return rstvc;
     

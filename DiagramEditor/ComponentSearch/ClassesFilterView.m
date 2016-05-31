@@ -103,7 +103,7 @@
         [rstvc.nameLabel setText:className];
         
         rstvc.dictionary = dic;
-    
+        rstvc.backgroundColor = [UIColor clearColor];
         
     }
     return rstvc;
