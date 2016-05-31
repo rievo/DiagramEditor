@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -23,7 +23,7 @@
                                         <constraint firstAttribute="width" constant="30" id="4qb-0p-L2f"/>
                                         <constraint firstAttribute="height" constant="30" id="Itp-EV-Axh"/>
                                     </constraints>
-                                    <state key="normal" image="minusDark.png"/>
+                                    <state key="normal" image="delete.png"/>
                                     <connections>
                                         <action selector="removeThisConnection:" destination="iN0-l3-epB" eventType="touchUpInside" id="iLi-pF-no6"/>
                                     </connections>
@@ -62,7 +62,7 @@
                                                 <constraint firstAttribute="width" constant="54" id="fe8-k7-ubX"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="textColor" red="0.7137255072593689" green="0.74901962280273438" blue="0.81960785388946533" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Target" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MVg-g9-0JU">
@@ -72,7 +72,7 @@
                                                 <constraint firstAttribute="width" constant="42" id="htp-gV-znh"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="textColor" red="0.7137255072593689" green="0.74901962280273438" blue="0.81960785388946533" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2S1-bM-D6N">
@@ -100,7 +100,7 @@
                                     </constraints>
                                 </view>
                             </subviews>
-                            <color key="backgroundColor" red="0.50980395078659058" green="0.56470590829849243" blue="0.67843139171600342" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" red="0.35686275362968445" green="0.42745098471641541" blue="0.57254904508590698" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstItem="0gc-Ow-wyz" firstAttribute="top" secondItem="dj3-Rm-B84" secondAttribute="top" constant="8" id="4Y0-19-CbC"/>
                                 <constraint firstItem="0gc-Ow-wyz" firstAttribute="centerX" secondItem="dj3-Rm-B84" secondAttribute="centerX" constant="0.5" id="69F-hC-rP0"/>
@@ -146,6 +146,6 @@
         </view>
     </objects>
     <resources>
-        <image name="minusDark.png" width="100" height="100"/>
+        <image name="delete.png" width="100" height="100"/>
     </resources>
 </document>

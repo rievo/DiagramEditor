@@ -591,6 +591,7 @@
 #pragma mark Show/Hide detailsView
 -(void)showDetailsView{
     [compDetView prepare];
+    [self.view bringSubviewToFront:compDetView];
     [compDetView setHidden:NO];
 }
 -(void)hideDetailsView{
