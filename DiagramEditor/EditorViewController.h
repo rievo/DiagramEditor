@@ -131,7 +131,7 @@ DrawingViewDelegate
     NSString * noteToShow;
     MCPeerID * whoSendTheNote;
     
-    
+    NSTimer * pingTimer;
     BOOL useImageAsIcon;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;

@@ -43,6 +43,13 @@
 
 @synthesize scrollView, loadedContent;
 
+
+-(void)viewDidLayoutSubviews{
+    [chatButton setFrame:CGRectMake(scrollView.frame.size.width+ (scrollView.frame.origin.x * 2) - chatButton.frame.size.width,
+                                    scrollView.frame.origin.y + askForMasterButton.frame.size.height + askForMasterButton.frame.origin.y,
+                                    chatButton.frame.size.width,
+                                    chatButton.frame.size.height)];
+}
 - (void)viewDidLoad {
     
     useImageAsIcon = true;
@@ -53,10 +60,7 @@
     //Make chatButton float
     UIPanGestureRecognizer * chatGR = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleChatButtonPan:)];
     [chatButton addGestureRecognizer:chatGR];
-    [chatButton setFrame:CGRectMake(scrollView.frame.size.width,
-                                   scrollView.frame.origin.y,
-                                   chatButton.frame.size.width,
-                                    chatButton.frame.size.height + 30)];
+
     
     [super viewDidLoad];
     
@@ -311,7 +315,7 @@
             yorigin = self.view.frame.size.height - chatButton.frame.size.height;
         
         if(yorigin < scrollView.frame.origin.y)
-            yorigin = scrollView.frame.origin.y;
+            yorigin = scrollView.frame.origin.y + chatButton.frame.size.height/2;
         
         [chatButton setEnabled:NO];
         
@@ -1783,6 +1787,11 @@
 }
 
 -(void)browserViewControllerDidFinish:(MCBrowserViewController *)browserViewController{
+    
+    [chatButton setFrame:CGRectMake(scrollView.frame.size.width+scrollView.frame.origin.x - chatButton.frame.size.width,
+                                    scrollView.frame.origin.y,
+                                    chatButton.frame.size.width,
+                                    chatButton.frame.size.height)];
     [askForMasterButton setHidden:YES]; //I will be the first master
     [chatButton setHidden:NO];
     
@@ -1814,6 +1823,14 @@
                                                  userInfo:nil
                                                   repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:resendTimer forMode:NSRunLoopCommonModes];
+    
+    
+    pingTimer = [NSTimer scheduledTimerWithTimeInterval:pingTime
+                                                 target:self
+                                               selector:@selector(sendPing)
+                                               userInfo:nil
+                                                repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:pingTimer forMode:NSRunLoopCommonModes];
     
     
     //Set that I'm the server
@@ -1869,6 +1886,18 @@
     [self assignColors];
 }
 
+-(void)sendPing{
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:kPing forKey:@"msg"];
+    NSError * error = nil;
+    
+    NSData * allData = [NSKeyedArchiver archivedDataWithRootObject:dic];
+    [dele.manager.session sendData:allData
+                           toPeers:dele.manager.session.connectedPeers
+                          withMode:MCSessionSendDataReliable
+                             error:&error];
+}
+
 -(void)assignColors{
     NSMutableArray * array = [ColorPalette colorArray];
     dele.myColor = array[0];
@@ -1878,7 +1907,7 @@
         NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
         [dic setObject:kNewColor forKey:@"msg"];
         [dic setObject:colorToSend forKey:@"color"];
-        [dic setObject:dele.manager.session.connectedPeers[0] forKey:@"who"];
+        [dic setObject:dele.manager.session.connectedPeers[i] forKey:@"who"];
         
         
         NSError * error = nil;

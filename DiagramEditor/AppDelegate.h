@@ -83,6 +83,10 @@
 
 @property BOOL showingAnnotations;
 
+
+@property int missedServerAttemps;
+@property NSTimer * connectedToServerTimer;
+
 -(int)getOutConnectionsForComponent: (Component *)comp
                              ofType: (NSString * )type;
 -(int)getInConnectionsForComponent: (Component *)comp

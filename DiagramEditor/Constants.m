@@ -68,6 +68,9 @@ NSString * const CGPathElementAddLineToPoint = @"AddLineToP";
 NSString * const CGPathElementCloseSubpath = @"CloseSubpath";
 
 
+
+NSString * const kPing = @"kPing";
+
 @implementation Constants
 
 @end

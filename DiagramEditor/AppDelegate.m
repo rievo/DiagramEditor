@@ -25,7 +25,7 @@
 
 @implementation AppDelegate
 
-@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR, evc, blue0, blue1, blue2, elementsDictionary, manager, ecoreContent, loadingADiagram, fingeredComponent, serverId, currentMasterId, myPeerInfo, myUUIDString, chat, notesArray, drawnsArray;
+@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR, evc, blue0, blue1, blue2, elementsDictionary, manager, ecoreContent, loadingADiagram, fingeredComponent, serverId, currentMasterId, myPeerInfo, myUUIDString, chat, notesArray, drawnsArray, missedServerAttemps;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -46,6 +46,7 @@
     _showingAnnotations = NO;
     _selectedDrawn = nil;
     
+    missedServerAttemps = 0;
     
     currentPaletteFileName = nil;
     subPalette = nil;
@@ -145,6 +146,8 @@
         
         loadingADiagram = YES;
         
+        
+        
         if(chat == nil){
             chat = [[[NSBundle mainBundle] loadNibNamed:@"ChatView"
                                                        owner:self
@@ -153,6 +156,14 @@
             [chat prepare];
         }
         
+        
+        _connectedToServerTimer = [NSTimer scheduledTimerWithTimeInterval:1.2
+                                                                   target:self
+                                                                 selector:@selector(handleConnectedtimer)
+                                                                 userInfo:nil
+                                                                  repeats:YES];
+        [[NSRunLoop mainRunLoop] addTimer:_connectedToServerTimer
+                                  forMode:NSRunLoopCommonModes];
         ConfigureDiagramViewController * cc = (ConfigureDiagramViewController *)  self.window.rootViewController;
         [cc performSegueWithIdentifier:@"showEditor" sender:self];
     }else if([msg isEqualToString:kUpdateData]){
@@ -379,6 +390,10 @@
             [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
         }
       
+    }else if([msg isEqualToString:kPing]){
+        //Server alive
+        missedServerAttemps = 0;
+        //NSLog(@"Still connected to server");
     }
 }
 
@@ -616,6 +631,21 @@
     
 
 }*/
+
+-(void)handleConnectedtimer{
+    missedServerAttemps = missedServerAttemps +1;
+    
+    if(missedServerAttemps >= maxAttemps){ //More or less 3 seconds
+        //Me he desconectado, me salgo
+        
+        missedServerAttemps = 0;
+        [_connectedToServerTimer invalidate];
+        _connectedToServerTimer = nil;
+        [[NSNotificationCenter defaultCenter] postNotificationName:kGoOut
+                                                            object:nil
+                                                          userInfo:nil];
+    }
+}
 
 #pragma mark Encode / decode base64
 +(NSString *)getBase64StringFromImage:(UIImage *)image{

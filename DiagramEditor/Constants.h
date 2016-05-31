@@ -93,6 +93,12 @@ FOUNDATION_EXPORT NSString *const kDeleteNote;
 #pragma mark Resend timer
 #define resendTime 0.3
 
+//Server alive?
+#define pingTime 1.0
+#define maxAttemps 4
+FOUNDATION_EXPORT NSString *const kPing;
+
+
 #pragma mark Working with BezierPaths
 FOUNDATION_EXPORT NSString *const CGPathElementMoveToPoint;
 FOUNDATION_EXPORT NSString *const CGPathElementAddLineToPoint;
