@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @class AppDelegate;
-#import "YesOrNoView.h";
+#import "YesOrNoView.h"
 #import "Component.h"
 
 @interface Canvas : UIView<YesOrNoDelegate>{

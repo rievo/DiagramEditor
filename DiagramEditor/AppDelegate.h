@@ -11,6 +11,7 @@
 #import "MCManager.h"
 #import "Constants.h"
 #import "PeerInfo.h"
+#import "TutorialSheet.h"
 
 
 @class Canvas;
@@ -84,8 +85,15 @@
 @property BOOL showingAnnotations;
 
 
+@property NSString * configureTutorialStatus;
+@property NSString * editorTutorialStatus;
+@property BOOL shouldShowConfigureTutorial;
+@property BOOL shouldShowEditorTutorial;
+
 @property int missedServerAttemps;
 @property NSTimer * connectedToServerTimer;
+
+@property TutorialSheet * tutSheet;
 
 -(int)getOutConnectionsForComponent: (Component *)comp
                              ofType: (NSString * )type;

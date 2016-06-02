@@ -25,7 +25,6 @@
     __weak IBOutlet Palette *palette;
     
     
-    
     __weak IBOutlet UITableView *filesTable;
     NSMutableArray * filesArray; //Server and local palettes
     
@@ -56,6 +55,9 @@
     CGPoint outCenterForFileGroup;
     
     __weak IBOutlet UISwitch *searchSessionsOutlet;
+    
+    BOOL doingTutorial;
+    UIVisualEffectView *blurEffectView;
 }
 
 @property NSString * tempPaletteFile;

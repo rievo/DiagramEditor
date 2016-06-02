@@ -143,7 +143,7 @@
             [connections addObject:tc];
     }
     
-    //[outConnectionsTable reloadData];
+    [outConnectionsTable reloadData];
 }
 
 

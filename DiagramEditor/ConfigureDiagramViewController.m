@@ -51,6 +51,19 @@
 
 @implementation ConfigureDiagramViewController
 @synthesize tempPaletteFile, contentToParse;
+
+-(void)viewDidLayoutSubviews{
+    
+}
+-(void)viewDidAppear:(BOOL)animated{
+    if(dele.shouldShowConfigureTutorial == YES){
+        doingTutorial = YES;
+        [self startConfigureCVTutorial];
+    }else{
+        doingTutorial = NO;
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -123,7 +136,12 @@
                                              selector:@selector(closeSubPalette)
                                                  name:@"closeSubPalette"
                                                object:nil];
+    
+    
 }
+
+
+
 -(void)closeSubPalette{
     [self cancelSubpaletteSelection:self];
 }
@@ -644,6 +662,16 @@
             [dele.manager stopAdvertising];
             
             [self performSegueWithIdentifier:@"showEditor" sender:self];
+            
+            
+            //Finish ConfigureView tutorial
+            doingTutorial = NO;
+            
+            [blurEffectView removeFromSuperview];
+            [dele.tutSheet removeFromSuperview];
+            
+            [[NSUserDefaults standardUserDefaults] setObject:@"done" forKey:@"configureTutorialStatus"];
+            dele.shouldShowConfigureTutorial = NO;
         }else{
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                             message:@"Json is not accesible"
@@ -787,11 +815,20 @@
         [palette preparePalette];
         [confirmButton setHidden:NO];
         
-        //[palette setNeedsDisplay];
-        
-        
-        //[self addRecognizers];*/
-        
+
+        if(doingTutorial == YES){
+            [dele.tutSheet.textView setText:@"Now you can preview the subpalette at the bottom of the screen.\nTap the \"Go\" button when you are ready"];
+            
+            CGFloat fixedWidth = dele.tutSheet.textView.frame.size.width;
+            CGSize newSize = [dele.tutSheet.textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+            [dele.tutSheet setFrame:CGRectMake(dele.tutSheet.frame.origin.x,
+                                               0,
+                                               dele.tutSheet.frame.size.width,
+                                               newSize.height)];
+            
+            [self.view bringSubviewToFront:palette];
+            [self.view bringSubviewToFront:confirmButton];
+        }
         
         
         
@@ -838,6 +875,25 @@
                                                   [self extractPalettesForContentsOfFile:file.content];
                                                   
                                                   
+                                                  if(doingTutorial == YES){
+                                                      [dele.tutSheet setFrame:CGRectMake(dele.tutSheet.frame.origin.x,
+                                                                                         0,
+                                                                                         dele.tutSheet.frame.size.width,
+                                                                                         70)];
+                                                      [dele.tutSheet.textView setText:@"Select a subpalette..."];
+                                                      
+                                                      CGFloat fixedWidth = dele.tutSheet.textView.frame.size.width;
+                                                      CGSize newSize = [dele.tutSheet.textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+                                                      
+                                                      [dele.tutSheet setFrame:CGRectMake(dele.tutSheet.frame.origin.x,
+                                                                                         dele.tutSheet.frame.origin.y,
+                                                                                         dele.tutSheet.frame.size.width,
+                                                                                         newSize.height)];
+                                                      [self.view addSubview:dele.tutSheet];
+                                                      [self.view sendSubviewToBack:paletteFileGroup];
+                                                      [self.view bringSubviewToFront:subPaletteGroup];
+                                                      
+                                                  }
                                                   
                                               }];
                          }];
@@ -2105,6 +2161,23 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     [palette setNeedsDisplay];
     
     
+    
+    if(doingTutorial == YES){
+        [self.view sendSubviewToBack:confirmButton];
+        [self.view sendSubviewToBack:subPaletteGroup];
+        [self.view bringSubviewToFront:paletteFileGroup];
+        
+        [dele.tutSheet.textView setText:@"Okay. You didn't like that.\nChoose another palette"];
+        CGFloat fixedWidth = dele.tutSheet.textView.frame.size.width;
+        CGSize newSize = [dele.tutSheet.textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+        
+        [dele.tutSheet setFrame:CGRectMake(dele.tutSheet.frame.origin.x,
+                                           dele.tutSheet.frame.origin.y,
+                                           dele.tutSheet.frame.size.width,
+                                           newSize.height)];
+
+    }
+    
     //Quitar el subpalette y mostrar el palettefilegroup
     
     [paletteFileGroup setCenter:outCenterForFileGroup];
@@ -2240,4 +2313,117 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
+#pragma mark Tutorial
+
+-(void)startConfigureCVTutorial{
+    //self.view.backgroundColor = [UIColor clearColor];
+    
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    blurEffectView.frame = self.view.bounds;
+    blurEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
+    [self.view addSubview:blurEffectView];
+    
+    
+    
+    UIAlertController * alert=   [UIAlertController
+                                  alertControllerWithTitle:@"Welcome"
+                                  message:@"This is the first time you use this tool.\nLet me show you some tips."
+                                  preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* yesButton = [UIAlertAction
+                                actionWithTitle:@"Ok"
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction * action)
+                                {
+                                    [self dismissViewControllerAnimated:YES completion:nil];
+                                    [self showAndDisablePaletteFileGroup];
+                                    
+                                }];
+    /*UIAlertAction* noButton = [UIAlertAction
+                               actionWithTitle:@"No, thanks"
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action)
+                               {
+                                   
+                                   
+                               }];*/
+    
+    [alert addAction:yesButton];
+    //[alert addAction:noButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+-(void)showAndDisablePaletteFileGroup{
+    [self.view bringSubviewToFront:paletteFileGroup];
+    [paletteFileGroup setUserInteractionEnabled:NO];
+    dele.tutSheet = [[[NSBundle mainBundle]loadNibNamed:@"TutorialSheet"
+                                                                owner:self
+                                                              options:nil]objectAtIndex:0];
+    
+    [dele.tutSheet.textView setText:@"This is the files table. From here you can select the desired palette or you can download one of them (making a swipe).\nTap here to continue..."];
+    CGFloat fixedWidth = dele.tutSheet.textView.frame.size.width;
+    CGSize newSize = [dele.tutSheet.textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+    
+    [dele.tutSheet setFrame:CGRectMake(self.view.center.x - dele.tutSheet.frame.size.width/2,
+                             self.view.frame.size.height-dele.tutSheet.frame.size.height,
+                             dele.tutSheet.frame.size.width,
+                             newSize.height +10)];
+    
+    
+    [self.view addSubview:dele.tutSheet];
+    
+    UITapGestureRecognizer * showFolderInfoGR = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                        action:@selector(hidePaletteFileGroupAndShowFolderInfo:)];
+    [dele.tutSheet addGestureRecognizer:showFolderInfoGR];
+    [dele.tutSheet setUserInteractionEnabled:YES];
+}
+-(void)hidePaletteFileGroupAndShowFolderInfo:(UITapGestureRecognizer *)recog{
+    [dele.tutSheet removeFromSuperview];
+    [dele.tutSheet removeGestureRecognizer:recog];
+    
+    [self.view sendSubviewToBack:paletteFileGroup];
+    [paletteFileGroup setUserInteractionEnabled:YES];
+    
+    //Bring here folder group
+    [self.view bringSubviewToFront:folder];
+    [folder setUserInteractionEnabled:NO];
+    
+    [dele.tutSheet.textView setText:@"From this button you can open an old diagram, either from server or the device.\nTap here to continue..."];
+    
+    CGFloat fixedWidth = dele.tutSheet.textView.frame.size.width;
+    CGSize newSize = [dele.tutSheet.textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+    
+    [dele.tutSheet setFrame:CGRectMake(folder.frame.origin.x ,
+                                       folder.frame.origin.y + folder.frame.size.height +10,
+                                       dele.tutSheet.frame.size.width - 100,
+                                       newSize.height +10)];
+    
+    [self.view addSubview:dele.tutSheet];
+    UITapGestureRecognizer * showSubPalGR = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                        action:@selector(showSubPaletteInfo:)];
+    [dele.tutSheet addGestureRecognizer:showSubPalGR];
+}
+-(void)showSubPaletteInfo:(UITapGestureRecognizer *)recog{
+    [dele.tutSheet removeGestureRecognizer:recog];
+    [dele.tutSheet removeFromSuperview];
+    
+    [self.view sendSubviewToBack:folder];
+    [folder setUserInteractionEnabled:YES];
+    
+    //Show table again in order to create a new diagram
+    [self.view bringSubviewToFront:paletteFileGroup];
+    [dele.tutSheet.textView setText:@"Now let's try to create a diagram. First of all select a palette from the list.\n If the list is empty, try to pull down the table to download palettes from server (you need an internet connection in order to doing that)..."];
+    
+    
+    CGFloat fixedWidth = dele.tutSheet.textView.frame.size.width;
+    CGSize newSize = [dele.tutSheet.textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+    
+    [dele.tutSheet setFrame:CGRectMake(self.view.center.x - dele.tutSheet.frame.size.width/2,
+                                       self.view.frame.size.height - newSize.height -10,
+                                       dele.tutSheet.frame.size.width,
+                                      newSize.height +10)];
+    [self.view addSubview:dele.tutSheet];
+}
 @end

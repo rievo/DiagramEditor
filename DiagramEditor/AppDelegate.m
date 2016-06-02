@@ -25,7 +25,7 @@
 
 @implementation AppDelegate
 
-@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR, evc, blue0, blue1, blue2, elementsDictionary, manager, ecoreContent, loadingADiagram, fingeredComponent, serverId, currentMasterId, myPeerInfo, myUUIDString, chat, notesArray, drawnsArray, missedServerAttemps;
+@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR, evc, blue0, blue1, blue2, elementsDictionary, manager, ecoreContent, loadingADiagram, fingeredComponent, serverId, currentMasterId, myPeerInfo, myUUIDString, chat, notesArray, drawnsArray, missedServerAttemps, editorTutorialStatus, configureTutorialStatus, shouldShowConfigureTutorial, shouldShowEditorTutorial;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -108,6 +108,23 @@
     NSString * jsonPath = [documentsDirectory stringByAppendingPathComponent:@"/Jsons"];
     if (![[NSFileManager defaultManager] fileExistsAtPath:jsonPath])
         [[NSFileManager defaultManager] createDirectoryAtPath:jsonPath withIntermediateDirectories:NO attributes:nil error:&error]; //Create folder
+    
+    
+    //Show tutorials?
+    NSString * editor= [[NSUserDefaults standardUserDefaults]objectForKey:@"editorTutorialStatus"];
+    NSString * configure= [[NSUserDefaults standardUserDefaults]objectForKey:@"configureTutorialStatus"];
+    
+    if(editor == nil){
+        shouldShowEditorTutorial = YES;
+    }else{
+        
+    }
+    
+    if(configure == nil){
+        shouldShowConfigureTutorial = YES;
+    }else{
+        
+    }
     
     return YES;
 }

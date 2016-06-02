@@ -44,6 +44,28 @@
 @synthesize scrollView, loadedContent;
 
 
+-(void)viewDidAppear:(BOOL)animated{
+    if(dele.shouldShowEditorTutorial == YES){
+        doingTutorial = YES;
+        [self startEditorTutorial];
+    }else{
+        doingTutorial = NO;
+    }
+}
+
+
+- (BOOL)isIpadPro
+{
+    UIScreen *mainScreen = [UIScreen mainScreen];
+    CGFloat width = mainScreen.nativeBounds.size.width / mainScreen.nativeScale;
+    CGFloat height = mainScreen.nativeBounds.size.height / mainScreen.nativeScale;
+    BOOL isIpad = [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad;
+    BOOL hasIPadProWidth = fabs(width - 1024.f) < DBL_EPSILON;
+    BOOL hasIPadProHeight = fabs(height - 1366.f) < DBL_EPSILON;
+    return isIpad && hasIPadProHeight && hasIPadProWidth;
+}
+
+
 -(void)viewDidLayoutSubviews{
     [chatButton setFrame:CGRectMake(scrollView.frame.size.width+ (scrollView.frame.origin.x * 2) - chatButton.frame.size.width,
                                     scrollView.frame.origin.y + askForMasterButton.frame.size.height + askForMasterButton.frame.origin.y,
@@ -64,7 +86,13 @@
     
     [super viewDidLoad];
     
-    canvasW = 1500;
+    
+    if([self isIpadPro]){
+        canvasW = 2500;
+    }else{
+        canvasW = 1500;
+    }
+    
     
     sharingDiagram = NO;
     
@@ -1281,7 +1309,10 @@
             [writer writeStartElement:@"note"];
             [writer writeAttribute:@"who" value:al.who.displayName];
             [writer writeAttribute:@"date" value:[al.date description]];
-            [writer writeAttribute:@"content" value:al.text];
+            
+            if(al.text != nil)
+                [writer writeAttribute:@"content" value:al.text];
+            
             [writer writeAttribute:@"x" value:[[NSNumber numberWithInt:(int)al.center.x]description]];
             [writer writeAttribute:@"y" value:[[NSNumber numberWithInt:(int)al.center.y]description]];
             [writer writeAttribute:@"associated_node_id" value:[[NSNumber numberWithInt:(int)al.associatedComponent]description]];
@@ -2685,5 +2716,162 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
     //[pieces addObject:[NSValue valueWithCGPoint:points[0]]];
     
 }
+
+
+#pragma mark Editor tutorial methods
+-(void)startEditorTutorial{
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    blurEffectView.frame = self.view.bounds;
+    blurEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
+    [self.view addSubview:blurEffectView];
+    
+    
+    
+    UIAlertController * alert=   [UIAlertController
+                                  alertControllerWithTitle:@"Great!"
+                                  message:@"Now you are on the editor view. Let's take and eye here."
+                                  preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* yesButton = [UIAlertAction
+                                actionWithTitle:@"Let's go"
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction * action)
+                                {
+                                    [alert dismissViewControllerAnimated:YES completion:nil];
+                                    //[self showAndDisablePaletteFileGroup];
+                                    [self focusCanvas];
+                                }];
+    
+    [alert addAction:yesButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+-(void)focusCanvas{
+    [self.view bringSubviewToFront:scrollView];
+    dele.tutSheet = [[[NSBundle mainBundle]loadNibNamed:@"TutorialSheet"
+                                                  owner:self
+                                                options:nil]objectAtIndex:0];
+    
+    originalSheetWidth = dele.tutSheet.frame.size.width;
+    originalSheetHeight = dele.tutSheet.frame.size.height;
+    [dele.tutSheet.textView setText:@"This is the main canvas. Instances will be created here but now it's empty (Try this by doing scroll)\nTap here to continue..."];
+    CGFloat fixedWidth = dele.tutSheet.textView.frame.size.width -40;
+    CGSize newSize = [dele.tutSheet.textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+    
+    [dele.tutSheet setFrame:CGRectMake(self.view.center.x - dele.tutSheet.frame.size.width/2,
+                                       0,
+                                       dele.tutSheet.frame.size.width,
+                                       newSize.height +10)];
+    [self.view addSubview:dele.tutSheet];
+    
+    
+    UITapGestureRecognizer * focusCollapseButton = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                    action:@selector(bringCollapseButtonToFront:)];
+    [dele.tutSheet addGestureRecognizer:focusCollapseButton];
+}
+
+-(void)bringCollapseButtonToFront:(UITapGestureRecognizer *)recog{
+    [dele.tutSheet removeGestureRecognizer:recog];
+    
+    [self.view bringSubviewToFront:showHidePaletteOutlet];
+    [self.view bringSubviewToFront:palette];
+    
+    
+    
+    [dele.tutSheet.textView setText:@"The \"+\" button at the down left corner will show or hide the selected palette.\nGive it a try and tap here to continue..."];
+    CGFloat fixedWidth = dele.tutSheet.textView.frame.size.width ;
+    CGSize newSize = [dele.tutSheet.textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+    
+    [dele.tutSheet setFrame:CGRectMake(self.view.center.x - dele.tutSheet.frame.size.width/2,
+                                       0,
+                                       dele.tutSheet.frame.size.width,
+                                       newSize.height +10)];
+    
+    UITapGestureRecognizer * showItemsInfoGR = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                           action:@selector(showPaletteItemsInfo:)];
+    [dele.tutSheet addGestureRecognizer:showItemsInfoGR];
+}
+
+-(void)showPaletteItemsInfo:(UITapGestureRecognizer *)recog{
+    NSString * text = @"Each palette can contains two main types of objects, Nodes and Edges.\n"
+    "At the same time, a node can be draggable \u270B and no draggable \u261D\n"
+    "A draggable node will be instanciated by drag & drop from the palette.\n"
+    "A No draggable node has to be instanciated by tapping his icon.\n"
+    "Give it a try and tap here to continue...";
+    [dele.tutSheet.textView setText:text];
+    CGFloat fixedWidth = dele.tutSheet.textView.frame.size.width;
+    CGSize newSize = [dele.tutSheet.textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+    
+    [dele.tutSheet setFrame:CGRectMake(self.view.center.x - dele.tutSheet.frame.size.width/2,
+                                       0,
+                                       dele.tutSheet.frame.size.width,
+                                       newSize.height +10)];
+    
+    UITapGestureRecognizer * showAlertsGR = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                       action:@selector(focusAlerts:)];
+    [dele.tutSheet addGestureRecognizer:showAlertsGR];
+}
+
+
+-(void) focusAlerts:(UITapGestureRecognizer *)recog{
+    [dele.tutSheet removeGestureRecognizer:recog];
+    
+    for(UIGestureRecognizer * gr in dele.tutSheet.gestureRecognizers){
+        [dele.tutSheet removeGestureRecognizer:gr];
+    }
+    
+    
+    [self.view bringSubviewToFront:alerts];
+    [self.view bringSubviewToFront:interrogationAlert];
+    [self.view bringSubviewToFront:exclamationAlert];
+    [self.view bringSubviewToFront:noteAlert];
+    [self.view bringSubviewToFront:drawAlert];
+    
+    [self showAlerts];
+    
+    NSString * text = @"This has just appeared is the alert tool.\n"
+    "\"?\" and \"!\" can be dragged from this tool to canvas. This will create an alert at this point that will dissapear after 5 seconds.\n"
+    "Third icon is a note. Try to drag one from the tool to the canvas. Notes can hold text and images.\n"
+    "By tapping the last icon (the pencil) will show you the drawing tool. Use this to make handmade forms.\n"
+    "Tap here to continue...";
+    [dele.tutSheet.textView setText:text];
+    CGFloat fixedWidth = dele.tutSheet.textView.frame.size.width;
+    CGSize newSize = [dele.tutSheet.textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+    
+    [dele.tutSheet setFrame:CGRectMake(alerts.frame.size.width + alerts.frame.origin.x + 10,
+                                       alerts.frame.origin.y,
+                                       dele.tutSheet.frame.size.width - 120,
+                                       newSize.height +60)];
+    
+    UITapGestureRecognizer * showMakeConnectionGR = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                    action:@selector(showHowToMakeConnectionsBetweenNodes:)];
+    [dele.tutSheet addGestureRecognizer:showMakeConnectionGR];
+}
+
+-(void)showHowToMakeConnectionsBetweenNodes:(UITapGestureRecognizer *)recog{
+    
+    [self hideAlerts];
+    
+    [self.view sendSubviewToBack:alerts];
+    [self.view sendSubviewToBack:interrogationAlert];
+    [self.view sendSubviewToBack:exclamationAlert];
+    [self.view sendSubviewToBack:noteAlert];
+    [self.view sendSubviewToBack:drawAlert];
+    
+    NSString * text = @"";
+    
+    [dele.tutSheet.textView setText:text];
+    CGFloat fixedWidth = dele.tutSheet.textView.frame.size.width;
+    CGSize newSize = [dele.tutSheet.textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+    
+    [dele.tutSheet setFrame:CGRectMake(alerts.frame.size.width + alerts.frame.origin.x + 10,
+                                       alerts.frame.origin.y,
+                                       dele.tutSheet.frame.size.width - 120,
+                                       newSize.height +60)];
+}
+
 
 @end

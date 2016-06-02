@@ -19,10 +19,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Fe-7V-wER">
-                                <rect key="frame" x="38" y="30" width="25" height="25"/>
+                                <rect key="frame" x="38" y="30" width="30" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="25" id="F9W-JO-tGW"/>
-                                    <constraint firstAttribute="height" constant="25" id="iYx-V6-S8S"/>
+                                    <constraint firstAttribute="width" constant="30" id="F9W-JO-tGW"/>
+                                    <constraint firstAttribute="height" constant="30" id="iYx-V6-S8S"/>
                                 </constraints>
                                 <state key="normal" image="open.png">
                                     <color key="titleColor" red="0.71764705882352942" green="0.76862745098039209" blue="0.89803921568627454" alpha="1" colorSpace="calibratedRGB"/>
@@ -150,7 +150,7 @@
                             <constraint firstItem="qXz-ja-TaN" firstAttribute="centerX" secondItem="iEf-WE-QBC" secondAttribute="centerX" id="9aZ-5R-WAl"/>
                             <constraint firstItem="aHo-aq-TeB" firstAttribute="top" secondItem="pzm-22-k2O" secondAttribute="bottom" constant="8" id="BTt-cI-WTu"/>
                             <constraint firstItem="81O-6c-hrW" firstAttribute="top" secondItem="Oza-78-sY5" secondAttribute="bottom" constant="82" id="H2E-o4-iqC"/>
-                            <constraint firstItem="qXz-ja-TaN" firstAttribute="top" secondItem="0Fe-7V-wER" secondAttribute="bottom" constant="20" id="IZM-XU-vxm"/>
+                            <constraint firstItem="qXz-ja-TaN" firstAttribute="top" secondItem="0Fe-7V-wER" secondAttribute="bottom" constant="15" id="IZM-XU-vxm"/>
                             <constraint firstItem="NFu-5F-w0i" firstAttribute="centerY" secondItem="iEf-WE-QBC" secondAttribute="centerY" id="IbJ-Ss-Ra6"/>
                             <constraint firstAttribute="trailingMargin" secondItem="pzm-22-k2O" secondAttribute="trailing" constant="-10" id="JIM-11-BO6"/>
                             <constraint firstItem="pzm-22-k2O" firstAttribute="leading" secondItem="iEf-WE-QBC" secondAttribute="leadingMargin" constant="-11" id="L5R-9b-y6b"/>

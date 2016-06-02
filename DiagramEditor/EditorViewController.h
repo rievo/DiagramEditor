@@ -133,6 +133,13 @@ DrawingViewDelegate
     
     NSTimer * pingTimer;
     BOOL useImageAsIcon;
+    
+    
+    BOOL doingTutorial;
+    UIVisualEffectView * blurEffectView;
+    
+    float originalSheetWidth;
+    float originalSheetHeight;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 

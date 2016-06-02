@@ -88,6 +88,8 @@
 		F17A941E1CFC2F10008AE1EE /* launch.png in Resources */ = {isa = PBXBuildFile; fileRef = F17A941D1CFC2F10008AE1EE /* launch.png */; };
 		F17A94211CFC4589008AE1EE /* PathPiece.m in Sources */ = {isa = PBXBuildFile; fileRef = F17A94201CFC4589008AE1EE /* PathPiece.m */; };
 		F17A94231CFC5069008AE1EE /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F17A94221CFC5069008AE1EE /* Social.framework */; };
+		F17A94291D003DC0008AE1EE /* TutorialSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = F17A94281D003DC0008AE1EE /* TutorialSheet.m */; };
+		F17A942B1D003DCF008AE1EE /* TutorialSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = F17A942A1D003DCF008AE1EE /* TutorialSheet.xib */; };
 		F17B75A91C22D6E100AB1B57 /* newDocument.png in Resources */ = {isa = PBXBuildFile; fileRef = F17B75A81C22D6E100AB1B57 /* newDocument.png */; };
 		F17B75AB1C22D79F00AB1B57 /* save.png in Resources */ = {isa = PBXBuildFile; fileRef = F17B75AA1C22D79F00AB1B57 /* save.png */; };
 		F17B75AD1C22D9CC00AB1B57 /* list.png in Resources */ = {isa = PBXBuildFile; fileRef = F17B75AC1C22D9CC00AB1B57 /* list.png */; };
@@ -265,6 +267,9 @@
 		F17A941F1CFC4589008AE1EE /* PathPiece.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathPiece.h; sourceTree = "<group>"; };
 		F17A94201CFC4589008AE1EE /* PathPiece.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathPiece.m; sourceTree = "<group>"; };
 		F17A94221CFC5069008AE1EE /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		F17A94271D003DC0008AE1EE /* TutorialSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialSheet.h; sourceTree = "<group>"; };
+		F17A94281D003DC0008AE1EE /* TutorialSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialSheet.m; sourceTree = "<group>"; };
+		F17A942A1D003DCF008AE1EE /* TutorialSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TutorialSheet.xib; sourceTree = "<group>"; };
 		F17B75A81C22D6E100AB1B57 /* newDocument.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newDocument.png; sourceTree = "<group>"; };
 		F17B75AA1C22D79F00AB1B57 /* save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = save.png; sourceTree = "<group>"; };
 		F17B75AC1C22D9CC00AB1B57 /* list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = list.png; sourceTree = "<group>"; };
@@ -418,6 +423,9 @@
 				F17A93EF1CF706E8008AE1EE /* YesOrNoView.h */,
 				F17A93F01CF706E8008AE1EE /* YesOrNoView.m */,
 				F17A93F21CF706F8008AE1EE /* YesOrNoView.xib */,
+				F17A94271D003DC0008AE1EE /* TutorialSheet.h */,
+				F17A942A1D003DCF008AE1EE /* TutorialSheet.xib */,
+				F17A94281D003DC0008AE1EE /* TutorialSheet.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -794,6 +802,7 @@
 				F15BE9FF1CABC60E00EDABA5 /* hidePaletteEditorOld.png in Resources */,
 				F1801F3D1C77413E005BA437 /* localFilled.png in Resources */,
 				F1801F3B1C774137005BA437 /* cloudFilled.png in Resources */,
+				F17A942B1D003DCF008AE1EE /* TutorialSheet.xib in Resources */,
 				F10AB80B1C50E85100DE6DCE /* cancel.png in Resources */,
 				F1FEE72E1CE3693200FD4E9B /* ChatView.xib in Resources */,
 				F17A93F31CF706F8008AE1EE /* YesOrNoView.xib in Resources */,
@@ -849,6 +858,7 @@
 				F153797D1C91B9EA001D8FFB /* RowSwitchTableViewCell.m in Sources */,
 				F17A93F11CF706E8008AE1EE /* YesOrNoView.m in Sources */,
 				F1786DE81C561AF200963663 /* BooleanAttributeTableViewCell.m in Sources */,
+				F17A94291D003DC0008AE1EE /* TutorialSheet.m in Sources */,
 				F17A94211CFC4589008AE1EE /* PathPiece.m in Sources */,
 				F15A96091C27F69100ACA6FA /* XMLWriter.m in Sources */,
 				F163AFF11C7B1B6800BAE67C /* NoDraggableComponentView.m in Sources */,

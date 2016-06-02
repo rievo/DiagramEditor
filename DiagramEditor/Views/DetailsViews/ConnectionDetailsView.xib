@@ -28,7 +28,7 @@
                                         <action selector="removeThisConnection:" destination="iN0-l3-epB" eventType="touchUpInside" id="iLi-pF-no6"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q4g-Vd-eXG">
+                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q4g-Vd-eXG">
                                     <rect key="frame" x="369" y="68" width="22" height="22"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="22" id="dnh-iG-BKZ"/>
