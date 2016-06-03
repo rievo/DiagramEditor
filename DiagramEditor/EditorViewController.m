@@ -2853,6 +2853,12 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
 
 -(void)showHowToMakeConnectionsBetweenNodes:(UITapGestureRecognizer *)recog{
     
+    
+    //Remove gestures
+    for(UIGestureRecognizer * gr in dele.tutSheet.gestureRecognizers){
+        [dele.tutSheet removeGestureRecognizer:gr];
+    }
+    
     [self hideAlerts];
     
     [self.view sendSubviewToBack:alerts];
@@ -2861,17 +2867,327 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
     [self.view sendSubviewToBack:noteAlert];
     [self.view sendSubviewToBack:drawAlert];
     
-    NSString * text = @"";
+    NSString * text = @"In order to establish a connection between two elements just make a long press from the source one to the target one\n"
+    "The app will choose the correct class to make the connection or it will display an error if there are no possible connection between those elements\n"
+    "Try it and tap here to continue...";
     
     [dele.tutSheet.textView setText:text];
     CGFloat fixedWidth = dele.tutSheet.textView.frame.size.width;
     CGSize newSize = [dele.tutSheet.textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
     
-    [dele.tutSheet setFrame:CGRectMake(alerts.frame.size.width + alerts.frame.origin.x + 10,
-                                       alerts.frame.origin.y,
-                                       dele.tutSheet.frame.size.width - 120,
-                                       newSize.height +60)];
+    [dele.tutSheet setFrame:CGRectMake(self.view.center.x - newSize.width/2,
+                                       scrollView.frame.origin.y,
+                                       dele.tutSheet.frame.size.width ,
+                                       newSize.height )];
+    
+    
+    UITapGestureRecognizer * showCompInfoGR = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                      action:@selector(showComInfoTutorial:)];
+    [dele.tutSheet addGestureRecognizer:showCompInfoGR];
+}
+
+-(void)showComInfoTutorial:(UITapGestureRecognizer *)recog{
+    //Remove gestures
+    for(UIGestureRecognizer * gr in dele.tutSheet.gestureRecognizers){
+        [dele.tutSheet removeGestureRecognizer:gr];
+    }
+    
+    //Send canvas back
+    
+    
+    
+    NSString * text = @"Node and connection info can be shown by tapping the element.\n"
+    "Tap here to continue...";
+    [dele.tutSheet.textView setText:text];
+    CGFloat fixedWidth = dele.tutSheet.textView.frame.size.width;
+    CGSize newSize = [dele.tutSheet.textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+    
+    [dele.tutSheet setFrame:CGRectMake(self.view.center.x - newSize.width/2,
+                                       scrollView.frame.origin.y,
+                                       dele.tutSheet.frame.size.width ,
+                                       newSize.height )];
+    
+    
+    UITapGestureRecognizer * startToolbarGR = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                     action:@selector(showResetCanvasInfo:)];
+    [dele.tutSheet addGestureRecognizer:startToolbarGR];
+}
+
+-(void)showResetCanvasInfo:(UITapGestureRecognizer *)recog{
+    
+    //Remove gestures
+    for(UIGestureRecognizer * gr in dele.tutSheet.gestureRecognizers){
+        [dele.tutSheet removeGestureRecognizer:gr];
+    }
+    
+    [self.view sendSubviewToBack:palette];
+    [self.view sendSubviewToBack:showHidePaletteOutlet];
+    [self.view sendSubviewToBack:scrollView];
+    
+    [self.view bringSubviewToFront:newDiagram];
+    
+    [newDiagram setEnabled:NO];
+    
+    
+    NSString * text = @"From this button you will be able to clean the canvas. \nBe sure to save your changes before doing this.\n"
+    "Tap here to continue...";
+    [dele.tutSheet.textView setText:text];
+    CGFloat fixedWidth = dele.tutSheet.textView.frame.size.width;
+    CGSize newSize = [dele.tutSheet.textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+    
+    [dele.tutSheet setFrame:CGRectMake(newDiagram.frame.origin.x,
+                                       newDiagram.frame.size.height + newDiagram.frame.origin.y + 5,
+                                       dele.tutSheet.frame.size.width ,
+                                       newSize.height )];
+    
+    UITapGestureRecognizer * showSaveDiagGR = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                      action:@selector(showSaveDiagramTuto:)];
+    [dele.tutSheet addGestureRecognizer:showSaveDiagGR];
+}
+
+-(void)showSaveDiagramTuto:(UITapGestureRecognizer *)recog{
+    
+    //Remove gestures
+    for(UIGestureRecognizer * gr in dele.tutSheet.gestureRecognizers){
+        [dele.tutSheet removeGestureRecognizer:gr];
+    }
+    
+    [newDiagram setEnabled:YES];
+    [self.view sendSubviewToBack:newDiagram];
+    
+    [saveDiagram setEnabled:NO];
+    [self.view bringSubviewToFront:saveDiagram];
+    
+    NSString * text = @"This button will save the diagram. You have three options:\n"
+    "Save it on the device\n"
+    "Save the diagram on the server where everybody can download it\n"
+    "Send the diagram by email\n"
+    "Tap here to continue...";
+    
+    [dele.tutSheet.textView setText:text];
+    CGFloat fixedWidth = dele.tutSheet.textView.frame.size.width;
+    CGSize newSize = [dele.tutSheet.textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+    
+    [dele.tutSheet setFrame:CGRectMake(saveDiagram.frame.origin.x,
+                                       saveDiagram.frame.size.height + saveDiagram.frame.origin.y + 5,
+                                       dele.tutSheet.frame.size.width ,
+                                       newSize.height )];
+
+    UITapGestureRecognizer * showfindtutGr = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                      action:@selector(showFindTutorial:)];
+    [dele.tutSheet addGestureRecognizer:showfindtutGr];
+}
+
+-(void)showFindTutorial:(UITapGestureRecognizer *)recog{
+    
+    //Remove gestures
+    for(UIGestureRecognizer * gr in dele.tutSheet.gestureRecognizers){
+        [dele.tutSheet removeGestureRecognizer:gr];
+    }
+    
+    [saveDiagram setEnabled:YES];
+    [self.view sendSubviewToBack:saveDiagram];
+    
+    [self.view bringSubviewToFront:findOutlet];
+    [findOutlet setEnabled: NO];
+    
+    NSString * text = @"This is the search tool. From here you can explore your diagram and find elements using filters.\n"
+    "You can filter by class type and only show the filtered instances or you can filter by attribute value."
+    "Tap here to continue...";
+    
+    [dele.tutSheet.textView setText:text];
+    CGFloat fixedWidth = dele.tutSheet.textView.frame.size.width;
+    CGSize newSize = [dele.tutSheet.textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+    
+    [dele.tutSheet setFrame:CGRectMake(saveDiagram.frame.origin.x,
+                                       saveDiagram.frame.size.height + saveDiagram.frame.origin.y + 5,
+                                       dele.tutSheet.frame.size.width ,
+                                       newSize.height )];
+    
+    UITapGestureRecognizer * showColTutoGR = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                     action:@selector(showCollaborationButtonTuto:)];
+    [dele.tutSheet addGestureRecognizer:showColTutoGR];
+    
+}
+
+-(void)showCollaborationButtonTuto:(UITapGestureRecognizer *)recog{
+    //Remove gestures
+    for(UIGestureRecognizer * gr in dele.tutSheet.gestureRecognizers){
+        [dele.tutSheet removeGestureRecognizer:gr];
+    }
+    [findOutlet setEnabled:YES];
+    [self.view sendSubviewToBack:findOutlet];
+    
+    [collaborationButton setEnabled:NO];
+    [self.view bringSubviewToFront:collaborationButton];
+    
+    NSString * text = @"This is the collaboration button. From here you will be able to invite nearby users to join to this session.\n"
+    "You will be able to work together on the same diagram.\n"
+    "Tap here to continue...";
+    
+    [dele.tutSheet.textView setText:text];
+    CGFloat fixedWidth = dele.tutSheet.textView.frame.size.width;
+    CGSize newSize = [dele.tutSheet.textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+    
+    [dele.tutSheet setFrame:CGRectMake(saveDiagram.frame.origin.x,
+                                       saveDiagram.frame.size.height + saveDiagram.frame.origin.y + 5,
+                                       dele.tutSheet.frame.size.width ,
+                                       newSize.height )];
+    
+    UITapGestureRecognizer * showChangePalGR = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                     action:@selector(showChangePaletteInfo:)];
+    [dele.tutSheet addGestureRecognizer:showChangePalGR];
 }
 
 
+-(void)showChangePaletteInfo:(UITapGestureRecognizer *)recog{
+    //Remove gestures
+    for(UIGestureRecognizer * gr in dele.tutSheet.gestureRecognizers){
+        [dele.tutSheet removeGestureRecognizer:gr];
+    }
+    
+    [collaborationButton setEnabled:YES];
+    [self.view sendSubviewToBack:collaborationButton];
+    
+    [changePaletteOutlet setEnabled:NO];
+    [self.view bringSubviewToFront:changePaletteOutlet];
+    
+    NSString * text = @"If you want to choose another palette or open an old diagram this option will be used.\n"
+    "By tapping here you will go to the palette selection view. Be sure to save all changes before doing this.\n"
+    "Tap here to continue...";
+    
+    
+    
+    [dele.tutSheet.textView setText:text];
+    CGFloat fixedWidth = dele.tutSheet.textView.frame.size.width;
+    CGSize newSize = [dele.tutSheet.textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+    
+    [dele.tutSheet setFrame:CGRectMake(saveDiagram.frame.origin.x,
+                                       saveDiagram.frame.size.height + saveDiagram.frame.origin.y + 5,
+                                       dele.tutSheet.frame.size.width ,
+                                       newSize.height )];
+    
+    UITapGestureRecognizer * showShDiaGR = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                       action:@selector(shareDiagramTuto:)];
+    [dele.tutSheet addGestureRecognizer:showShDiaGR];
+    
+    
+}
+
+-(void)shareDiagramTuto:(UITapGestureRecognizer *)recog{
+    //Remove gestures
+    for(UIGestureRecognizer * gr in dele.tutSheet.gestureRecognizers){
+        [dele.tutSheet removeGestureRecognizer:gr];
+    }
+    
+    [changePaletteOutlet setEnabled:YES];
+    [self.view sendSubviewToBack:changePaletteOutlet];
+    
+    [shareButtonOutlet setEnabled:NO];
+    [self.view bringSubviewToFront:shareButtonOutlet];
+    
+    NSString * text = @"This is the share button. From here you can export and share the diagram file via Airdrop or upload to some services like Google Drive.\n"
+    "Tap here to continue...";
+    
+    [dele.tutSheet.textView setText:text];
+    CGFloat fixedWidth = dele.tutSheet.textView.frame.size.width;
+    CGSize newSize = [dele.tutSheet.textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+    
+    [dele.tutSheet setFrame:CGRectMake(saveDiagram.frame.origin.x,
+                                       saveDiagram.frame.size.height + saveDiagram.frame.origin.y + 5,
+                                       dele.tutSheet.frame.size.width ,
+                                       newSize.height )];
+    
+    UITapGestureRecognizer * showCameraGR = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                   action:@selector(showCameraTuto:)];
+    [dele.tutSheet addGestureRecognizer:showCameraGR];
+
+}
+
+-(void)showCameraTuto:(UITapGestureRecognizer *)recog{
+    //Remove gestures
+    for(UIGestureRecognizer * gr in dele.tutSheet.gestureRecognizers){
+        [dele.tutSheet removeGestureRecognizer:gr];
+    }
+    
+    [shareButtonOutlet setEnabled:YES];
+    [self.view sendSubviewToBack:shareButtonOutlet];
+    
+    [cameraOutlet setEnabled:NO];
+    [self.view bringSubviewToFront:cameraOutlet];
+    
+    NSString * text = @"This is the last button. From here you can take a snapshot of the diagram and send it by email, store it on the camera roll or posting it to Twitter.\n"
+    "Tap here to finish the tutorial...";
+    
+    [dele.tutSheet.textView setText:text];
+    CGFloat fixedWidth = dele.tutSheet.textView.frame.size.width;
+    CGSize newSize = [dele.tutSheet.textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
+    
+    [dele.tutSheet setFrame:CGRectMake(saveDiagram.frame.origin.x,
+                                       saveDiagram.frame.size.height + saveDiagram.frame.origin.y + 5,
+                                       dele.tutSheet.frame.size.width ,
+                                       newSize.height )];
+    
+    UITapGestureRecognizer * endTutoGR = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                    action:@selector(endEditorTutorial:)];
+    [dele.tutSheet addGestureRecognizer:endTutoGR];
+
+}
+
+-(void)endEditorTutorial:(UITapGestureRecognizer *)recog{
+    
+    [dele.tutSheet removeFromSuperview];
+    dele.tutSheet = nil;
+    
+    
+    UIAlertController * alert=   [UIAlertController
+                                  alertControllerWithTitle:@"Congratulations"
+                                  message:@"You have finished the tutorial. \nCheck our webpage for more info.\nI will send you to the palette selection view so you start using this tool.\nEnjoy it\n"
+                                  preferredStyle:UIAlertControllerStyleAlert];
+    
+    
+    
+    UIAlertAction* ok = [UIAlertAction
+                         actionWithTitle:@"Ok"
+                         style:UIAlertActionStyleDefault
+                         handler:^(UIAlertAction * action)
+                         {
+                             
+                             //Finish ConfigureView tutorial
+                             doingTutorial = NO;
+                             
+                             [blurEffectView removeFromSuperview];
+                             [dele.tutSheet removeFromSuperview];
+                             
+                             [[NSUserDefaults standardUserDefaults] setObject:@"done" forKey:@"editorTutorialStatus"];
+                             dele.shouldShowEditorTutorial = NO;
+                             
+                             [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                             
+                             dele.currentPaletteFileName = nil;
+                             [dele.components removeAllObjects];
+                             [dele.connections removeAllObjects];
+                             
+                             for(Alert * al in dele.notesArray){
+                                 [al removeFromSuperview];
+                             }
+                             [dele.notesArray removeAllObjects];
+                             [dele.drawnsArray removeAllObjects];
+                             
+                             [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+                             
+                             [dele.manager.session disconnect];
+                             
+                             [self dismissViewControllerAnimated:YES completion:nil];
+                             
+                             [[NSNotificationCenter defaultCenter]postNotificationName:@"closeSubPalette" object:nil];
+                             
+                         }];
+    
+    
+    [alert addAction:ok];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
 @end
