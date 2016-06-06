@@ -170,9 +170,32 @@
 }
 
 
--(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
-   
+
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+
+    
+    if(indexPath.section == 1){ //References
+        
+        Component * com = [associatedComponentsArray objectAtIndex:indexPath.row];
+        //PaletteItem * sender = (PaletteItem *)recog.view;
+        
+        NoDraggableComponentView * nod = [[[NSBundle mainBundle] loadNibNamed:@"NoDraggableComponentView"
+                                                                        owner:self
+                                                                      options:nil] objectAtIndex:0];
+        
+        nod.elementName = com.className;
+        //nod.paletteItem = sender;
+        
+        [nod updateNameLabel];
+        [nod setFrame:self.frame];
+        [self addSubview:nod];
+        
+        [nod showItemInfoGroupForItem:com];
+        
+    }
 }
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     
@@ -272,7 +295,7 @@
     }else{
         return 30;
     }*/
-    return 30;
+    return 40;
 
 }
 
@@ -320,5 +343,16 @@
     }
     
     return head;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    // This will create a "invisible" footer
+    return 0.01f;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    // To "clear" the footer view
+    return [UIView new] ;
 }
 @end

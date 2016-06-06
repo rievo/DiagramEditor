@@ -26,8 +26,18 @@
     UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     tapgr.delegate = self;
     [background addGestureRecognizer:tapgr];
+    
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(iShouldClose:)
+                                                 name:@"closeHiddenClassList"
+                                               object:nil];
 }
 
+-(void)iShouldClose:(NSNotification *)not{
+    [self removeFromSuperview];
+}
 
 #pragma mark UITapGestureRecognizer delegate methods
 
@@ -61,6 +71,11 @@
 
     return itemsArray.count;
 }
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 40;
+}
+
 
 
 

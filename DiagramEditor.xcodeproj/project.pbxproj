@@ -22,6 +22,7 @@
 		F10F0FA31C1AF67000165561 /* ColorPalette.m in Sources */ = {isa = PBXBuildFile; fileRef = F10F0FA21C1AF67000165561 /* ColorPalette.m */; };
 		F1391F1C1CBB9765004BAD71 /* SessionUsersView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1391F1B1CBB9765004BAD71 /* SessionUsersView.m */; };
 		F1391F1E1CBB9770004BAD71 /* SessionUsersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1391F1D1CBB9770004BAD71 /* SessionUsersView.xib */; };
+		F13D284F1D0578EA001D953B /* trash0.png in Resources */ = {isa = PBXBuildFile; fileRef = F13D284E1D0578EA001D953B /* trash0.png */; };
 		F14181C91C68DCB600E838F9 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = F14181C81C68DCB600E838F9 /* settings.png */; };
 		F14181CB1C68DE4300E838F9 /* minusDark.png in Resources */ = {isa = PBXBuildFile; fileRef = F14181CA1C68DE4300E838F9 /* minusDark.png */; };
 		F1431E8B1C524127006A45BC /* ClassAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = F1431E8A1C524127006A45BC /* ClassAttribute.m */; };
@@ -169,6 +170,7 @@
 		F1391F1A1CBB9765004BAD71 /* SessionUsersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionUsersView.h; sourceTree = "<group>"; };
 		F1391F1B1CBB9765004BAD71 /* SessionUsersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionUsersView.m; sourceTree = "<group>"; };
 		F1391F1D1CBB9770004BAD71 /* SessionUsersView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SessionUsersView.xib; sourceTree = "<group>"; };
+		F13D284E1D0578EA001D953B /* trash0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trash0.png; sourceTree = "<group>"; };
 		F14181C81C68DCB600E838F9 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		F14181CA1C68DE4300E838F9 /* minusDark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = minusDark.png; sourceTree = "<group>"; };
 		F1431E891C524127006A45BC /* ClassAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassAttribute.h; sourceTree = "<group>"; };
@@ -573,6 +575,7 @@
 				F1FEE7631CEB479000FD4E9B /* riTriangle.png */,
 				F17B75AA1C22D79F00AB1B57 /* save.png */,
 				F15379781C91A25C001D8FFB /* search.png */,
+				F13D284E1D0578EA001D953B /* trash0.png */,
 				F14181C81C68DCB600E838F9 /* settings.png */,
 				F15ADC1D1C92BEF40068142E /* share.png */,
 				F10CC8EB1CC0E0CF007F2B11 /* showPaletteEditor.png */,
@@ -759,6 +762,7 @@
 				F10CC8EE1CC0E133007F2B11 /* hidePaletteEditor.png in Resources */,
 				F14181C91C68DCB600E838F9 /* settings.png in Resources */,
 				F16C35C51C98277F006F4255 /* users.png in Resources */,
+				F13D284F1D0578EA001D953B /* trash0.png in Resources */,
 				F1AB3B161C22B19800EDBB1D /* resize.png in Resources */,
 				F1C417BA1CB66F2D0075234C /* CustomTableHeader.xib in Resources */,
 				F17A93F51CF70768008AE1EE /* delete.png in Resources */,

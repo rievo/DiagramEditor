@@ -39,7 +39,7 @@
 - (IBAction)cancelItemInfo:(id)sender;
 - (IBAction)confirmSaveNode:(id)sender;
 
-
+-(void)showItemInfoGroupForItem: (Component *)component;
 
 
 @property NSString * elementName;

@@ -2744,8 +2744,28 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
                                     [self focusCanvas];
                                 }];
     
-    [alert addAction:yesButton];
+    UIAlertAction* noButton = [UIAlertAction
+                               actionWithTitle:@"No, thanks"
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action)
+                               {
+                                   //Finish ConfigureView tutorial
+                                   doingTutorial = NO;
+                                   
+                                   [blurEffectView removeFromSuperview];
+                                   [dele.tutSheet removeFromSuperview];
+                                   
+                                   [[NSUserDefaults standardUserDefaults] setObject:@"done" forKey:@"editorTutorialStatus"];
+                                   dele.shouldShowEditorTutorial = NO;
+                                   
+                                   [alert dismissViewControllerAnimated:YES completion:nil];
+                                   
+                                   
+                               }];
     
+    
+    [alert addAction:noButton];
+    [alert addAction:yesButton];
     [self presentViewController:alert animated:YES completion:nil];
 }
 
@@ -2779,9 +2799,10 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
     [self.view bringSubviewToFront:showHidePaletteOutlet];
     [self.view bringSubviewToFront:palette];
     
+    [palette setUserInteractionEnabled:NO];
     
     
-    [dele.tutSheet.textView setText:@"The \"+\" button at the down left corner will show or hide the selected palette.\nGive it a try and tap here to continue..."];
+    [dele.tutSheet.textView setText:@"The \"+\" button at the down left corner will show or hide the selected palette.\nTry to open and close the palette and tap here to continue..."];
     CGFloat fixedWidth = dele.tutSheet.textView.frame.size.width ;
     CGSize newSize = [dele.tutSheet.textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
     
@@ -2796,10 +2817,13 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
 }
 
 -(void)showPaletteItemsInfo:(UITapGestureRecognizer *)recog{
+    [palette setUserInteractionEnabled:YES];
+    
     NSString * text = @"Each palette can contains two main types of objects, Nodes and Edges.\n"
-    "At the same time, a node can be draggable \u270B and no draggable \u261D\n"
+    "At the same time, a node can be draggable \u270B \nand no draggable \u261D\n"
     "A draggable node will be instanciated by drag & drop from the palette.\n"
     "A No draggable node has to be instanciated by tapping his icon.\n"
+    "Try to scroll the palette to show all the elements.\n"
     "Give it a try and tap here to continue...";
     [dele.tutSheet.textView setText:text];
     CGFloat fixedWidth = dele.tutSheet.textView.frame.size.width;
@@ -2807,7 +2831,7 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
     
     [dele.tutSheet setFrame:CGRectMake(self.view.center.x - dele.tutSheet.frame.size.width/2,
                                        0,
-                                       dele.tutSheet.frame.size.width,
+                                       dele.tutSheet.frame.size.width ,
                                        newSize.height +10)];
     
     UITapGestureRecognizer * showAlertsGR = [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -2832,9 +2856,9 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
     
     [self showAlerts];
     
-    NSString * text = @"This has just appeared is the alert tool.\n"
-    "\"?\" and \"!\" can be dragged from this tool to canvas. This will create an alert at this point that will dissapear after 5 seconds.\n"
-    "Third icon is a note. Try to drag one from the tool to the canvas. Notes can hold text and images.\n"
+    NSString * text = @"This that has just appeared is the alert tool. (\"...\" button)\n"
+    "\"?\" and \"!\" can be dragged from this tool to the canvas. This will create an alert at this point that will dissapear after 5 seconds.\n"
+    "Fourth icon is a note. Try to drag one from the tool to the canvas. Notes can hold text and images.\n"
     "By tapping the last icon (the pencil) will show you the drawing tool. Use this to make handmade forms.\n"
     "Tap here to continue...";
     [dele.tutSheet.textView setText:text];
@@ -3093,7 +3117,7 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
     CGFloat fixedWidth = dele.tutSheet.textView.frame.size.width;
     CGSize newSize = [dele.tutSheet.textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
     
-    [dele.tutSheet setFrame:CGRectMake(saveDiagram.frame.origin.x,
+    [dele.tutSheet setFrame:CGRectMake(shareButtonOutlet.frame.origin.x + shareButtonOutlet.frame.size.width - dele.tutSheet.frame.size.width,
                                        saveDiagram.frame.size.height + saveDiagram.frame.origin.y + 5,
                                        dele.tutSheet.frame.size.width ,
                                        newSize.height )];
@@ -3123,7 +3147,7 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
     CGFloat fixedWidth = dele.tutSheet.textView.frame.size.width;
     CGSize newSize = [dele.tutSheet.textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
     
-    [dele.tutSheet setFrame:CGRectMake(saveDiagram.frame.origin.x,
+    [dele.tutSheet setFrame:CGRectMake(cameraOutlet.frame.origin.x + cameraOutlet.frame.size.width - dele.tutSheet.frame.size.width,
                                        saveDiagram.frame.size.height + saveDiagram.frame.origin.y + 5,
                                        dele.tutSheet.frame.size.width ,
                                        newSize.height )];

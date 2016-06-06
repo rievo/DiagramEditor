@@ -58,6 +58,7 @@
     
     BOOL doingTutorial;
     UIVisualEffectView *blurEffectView;
+    __weak IBOutlet UIView * myInfo;
 }
 
 @property NSString * tempPaletteFile;

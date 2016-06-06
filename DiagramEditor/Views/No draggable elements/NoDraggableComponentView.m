@@ -116,10 +116,12 @@
 }
 
 - (IBAction)confirmSaveNode:(id)sender {
+    [thisArray removeObject:temporalComponent];
     [thisArray addObject:temporalComponent];
     [table reloadData];
     temporalComponent = nil;
-    
+    [table reloadData];
+    [attributesTable reloadData];
     [self hideAndResetItemInfoGroup];
      [self updateInstancesCount];
 }
@@ -273,11 +275,10 @@
             return 0;
         }
     }else{
-        return 30;
+        return 35;
     }
     
-    
-    
+    return 35;
 }
 
 

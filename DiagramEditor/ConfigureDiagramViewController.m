@@ -96,6 +96,10 @@
     [palettesTable setDelegate:self];
     
     
+    UILongPressGestureRecognizer * longp = [[UILongPressGestureRecognizer alloc] initWithTarget:self
+                                                                                         action:@selector(showInfo)];
+    longp.minimumPressDuration = 3.0;
+    [myInfo addGestureRecognizer:longp];
     
     filesArray = [[NSMutableArray alloc] init];
     [filesTable setDataSource:self];
@@ -698,6 +702,18 @@
 }
 
 
+-(void)showInfo{
+    NSString * str = @"D_i^e_^g_^o V_a^q^e_r_o M^e_l_c__h^^o_r";
+    str = [str stringByReplacingOccurrencesOfString:@"_" withString:@""];
+    str = [str stringByReplacingOccurrencesOfString:@"^" withString:@""];
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
+                                                    message:str
+                                                   delegate:self
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
 
 #pragma mark UItableView delegate methods
 
@@ -2341,17 +2357,26 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
                                     [self showAndDisablePaletteFileGroup];
                                     
                                 }];
-    /*UIAlertAction* noButton = [UIAlertAction
+    UIAlertAction* noButton = [UIAlertAction
                                actionWithTitle:@"No, thanks"
                                style:UIAlertActionStyleDefault
                                handler:^(UIAlertAction * action)
                                {
+                                   [self dismissViewControllerAnimated:YES completion:nil];
+                                   //Finish ConfigureView tutorial
+                                   doingTutorial = NO;
                                    
+                                   [blurEffectView removeFromSuperview];
+                                   [dele.tutSheet removeFromSuperview];
                                    
-                               }];*/
+                                   [[NSUserDefaults standardUserDefaults] setObject:@"done" forKey:@"configureTutorialStatus"];
+                                   dele.shouldShowConfigureTutorial = NO;
+
+                               }];
     
+    
+    [alert addAction:noButton];
     [alert addAction:yesButton];
-    //[alert addAction:noButton];
     
     [self presentViewController:alert animated:YES completion:nil];
 }

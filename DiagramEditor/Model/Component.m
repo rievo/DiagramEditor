@@ -1056,6 +1056,10 @@ withSelectedComponent:(Component *)comp
 
     
     [view removeFromSuperview];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"closeHiddenClassList"
+                                                        object:self
+                                                      userInfo:nil];
 }
 
 

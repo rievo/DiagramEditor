@@ -542,24 +542,28 @@
     for(int c = 0; c < dele.connections.count;c++){
         conn = [dele.connections objectAtIndex:c];
         
-        NSAttributedString * str = [[NSAttributedString alloc] initWithString: [conn getName]
-                                                                   attributes:dic];
+        if(conn.source != conn.target){
+            NSAttributedString * str = [[NSAttributedString alloc] initWithString: [conn getName]
+                                                                       attributes:dic];
+            
+            
+            CGSize strSize = [str size];
+            
+            
+            float halfw = strSize.width / 2;
+            
+            
+            CGPoint sourceAnchor = [self getAnchorPointFromComponent:conn.source toComponent:conn.target andRadius:defradius + conn.source.frame.size.width / 2];
+            CGPoint targetAnchor = [self getAnchorPointFromComponent:conn.target toComponent:conn.source andRadius:defradius + conn.target.frame.size.width / 2];
+            
+            
+            CGPoint strpoint = CGPointMake(QuadBezier(0.5,sourceAnchor.x, conn.controlPoint.x, targetAnchor.x), QuadBezier(0.5, sourceAnchor.y, conn.controlPoint.y, targetAnchor.y));
+            
+            
+            [str drawAtPoint:CGPointMake( strpoint.x - halfw, strpoint.y-5)];
+        }
         
         
-        CGSize strSize = [str size];
-        
-
-        float halfw = strSize.width / 2;
-        
-        
-        CGPoint sourceAnchor = [self getAnchorPointFromComponent:conn.source toComponent:conn.target andRadius:defradius + conn.source.frame.size.width / 2];
-        CGPoint targetAnchor = [self getAnchorPointFromComponent:conn.target toComponent:conn.source andRadius:defradius + conn.target.frame.size.width / 2];
-        
-        
-        CGPoint strpoint = CGPointMake(QuadBezier(0.5,sourceAnchor.x, conn.controlPoint.x, targetAnchor.x), QuadBezier(0.5, sourceAnchor.y, conn.controlPoint.y, targetAnchor.y));
-        
-        
-        [str drawAtPoint:CGPointMake( strpoint.x - halfw, strpoint.y-5)];
     }
     
     
