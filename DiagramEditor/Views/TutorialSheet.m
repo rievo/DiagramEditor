@@ -8,14 +8,25 @@
 
 #import "TutorialSheet.h"
 
+#import "AppDelegate.h"
+
 @implementation TutorialSheet
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
+
 - (void)drawRect:(CGRect)rect {
-    // Drawing code
+    UIBezierPath * back = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:5.0];
+    [dele.blue3 setStroke];
+    [dele.blue2 setFill];
+    
+    [back setLineWidth:4.0];
+    [back fill];
+    [back stroke];
 }
-*/
+
+
+-(void)prepare{
+    dele = [[UIApplication sharedApplication]delegate];
+}
+
 
 @end

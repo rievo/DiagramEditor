@@ -28,7 +28,6 @@
     [detailsPreview updateNameLabel];
     
     
-    
     [textField setDelegate:self];
 }
 
@@ -51,9 +50,17 @@
                 atr.currentValue = tf.text;
             }
         }
+        
+        for(ClassAttribute * atr in detailsPreview.attributes){
+            if([atr.name isEqualToString:attributeNameLabel.text]){
+                atr.currentValue = tf.text;
+            }
+        }
+        
         [comp updateNameLabel];
-        [detailsPreview setNeedsDisplay];
+        
         [detailsPreview updateNameLabel];
+        [detailsPreview setNeedsDisplay];
     }
 }
 

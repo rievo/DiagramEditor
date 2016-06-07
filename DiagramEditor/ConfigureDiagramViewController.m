@@ -833,12 +833,16 @@
         
 
         if(doingTutorial == YES){
-            [dele.tutSheet.textView setText:@"Now you can preview the subpalette at the bottom of the screen.\nTap the \"Go\" button when you are ready"];
+            [self.view bringSubviewToFront:dele.tutSheet];
+            [dele.tutSheet.textView setText:@"Now you can preview the subpalette at the bottom of the screen.\n"
+             "You can go back to palette selection by tapping the left arrow"
+             "Tap the \"Go\" button when you are ready"];
             
-            CGFloat fixedWidth = dele.tutSheet.textView.frame.size.width;
+            //CGFloat fixedWidth = dele.tutSheet.textView.frame.size.width + 40;
+            CGFloat fixedWidth = 150;
             CGSize newSize = [dele.tutSheet.textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
-            [dele.tutSheet setFrame:CGRectMake(dele.tutSheet.frame.origin.x,
-                                               0,
+            [dele.tutSheet setFrame:CGRectMake(self.view.frame.size.width - 2*newSize.width,
+                                               self.view.frame.size.height /2 - newSize.height/2,
                                                dele.tutSheet.frame.size.width,
                                                newSize.height)];
             
@@ -1627,8 +1631,19 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
             NSMutableArray * loadedComponents = [[NSMutableArray alloc] init];
             for(NSDictionary * dic in nodes){
                 Component * comp = [self componentFromDictionary:dic];
-                
-                [loadedComponents addObject:comp];
+                //aa
+                if(comp.isDragable == NO){
+                    //Add this node to the dictionary
+                    NSMutableArray * array = [dele.elementsDictionary objectForKey:comp.className];
+                    if(array == nil){
+                        array = [[NSMutableArray alloc] init];
+                        [dele.elementsDictionary setObject:array forKey:comp.className];
+                    }
+                    
+                    [array addObject: comp];
+                    
+                }else
+                    [loadedComponents addObject:comp];
             }
             
             NSMutableArray * loadedConnections = [[NSMutableArray alloc] init];
@@ -1881,8 +1896,15 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     float width = [[dic objectForKey:@"_width"]floatValue];
     float height = [[dic objectForKey:@"_height"]floatValue];
     
+    
+    NSString * dragstr = [dic objectForKey:@"_isDraggable"];
+
+    
     Component * temp = [[Component alloc] initWithFrame:CGRectMake(x, y, width, height)];
     [temp prepare];
+    
+    
+
     
     NSString * colorString = [dic objectForKey:@"_color"];
     NSString * type = [dic objectForKey:@"_type"];
@@ -1902,6 +1924,12 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     temp.attributes = [[NSMutableArray alloc] init];
     temp.className = className;
     
+    
+    if(dragstr == NULL){
+        temp.isDragable = YES;
+    }else{
+        temp.isDragable = NO;
+    }
     //Fill attributes
     NSArray * attrDic = [dic objectForKey:@"attribute"];
     //NSArray * attrArray = nil;
@@ -2386,6 +2414,10 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     dele.tutSheet = [[[NSBundle mainBundle]loadNibNamed:@"TutorialSheet"
                                                                 owner:self
                                                               options:nil]objectAtIndex:0];
+    
+    [dele.tutSheet prepare];
+    [dele.tutSheet.textView setSelectable:NO];
+    [dele.tutSheet.textView setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:15.0]];
     
     [dele.tutSheet.textView setText:@"This is the files table. From here you can select the desired palette or you can download one of them (making a swipe).\nTap here to continue..."];
     CGFloat fixedWidth = dele.tutSheet.textView.frame.size.width;

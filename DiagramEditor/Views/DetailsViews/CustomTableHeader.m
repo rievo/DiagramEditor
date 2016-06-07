@@ -33,7 +33,7 @@
             owner.attributesCollapsed = YES;
             //Collapse
             [containerTable reloadSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            openCloseOutlet.image = [UIImage imageNamed:@"downArrowBlack"];
+            openCloseOutlet.image = [UIImage imageNamed:@"rightArrow"];
             
         }
         
@@ -49,7 +49,7 @@
             owner.instancesCollapsed = YES;
             //Collapse
             [containerTable reloadSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            openCloseOutlet.image = [UIImage imageNamed:@"downArrowBlack"];
+            openCloseOutlet.image = [UIImage imageNamed:@"rightArrow"];
             
         }
     }

@@ -7,8 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+@class AppDelegate;
 
-@interface TutorialSheet : UIView
+@interface TutorialSheet : UIView{
+    AppDelegate * dele;
+}
 
 @property (weak, nonatomic) IBOutlet UITextView *textView;
+
+
+-(void)prepare;
 @end

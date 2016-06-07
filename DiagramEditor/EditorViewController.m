@@ -649,8 +649,13 @@
                 
                 
                 //Creo un array para esta clave en dele
-                NSMutableArray * compArray = [[NSMutableArray alloc] init];
-                [dele.elementsDictionary setObject:compArray forKey:item.className];
+                NSMutableArray * array = [dele.elementsDictionary objectForKey:item.className];
+                if(array == nil){
+                    array = [[NSMutableArray alloc] init];
+                    [dele.elementsDictionary setObject:array forKey:item.className];
+                }
+                //NSMutableArray * compArray = [[NSMutableArray alloc] init];
+                //[dele.elementsDictionary setObject:compArray forKey:item.className];
             }
         }
         
@@ -1266,6 +1271,40 @@
         [writer writeEndElement];
         
     }
+    
+    //Hidden instances
+    NSArray * keys = [dele.elementsDictionary allKeys];
+    
+    for(NSString * key in keys){
+        NSArray * instancesForThisKey = [dele.elementsDictionary objectForKey:key];
+        for(Component * temp in instancesForThisKey){
+            [writer writeStartElement:@"node"];
+            
+            //[writer writeAttribute:@"shape_type" value:temp.shapeType];
+            //[writer writeAttribute:@"x" value: [[NSNumber numberWithFloat:temp.center.x]description]];
+            //[writer writeAttribute:@"y" value: [[NSNumber numberWithFloat:temp.center.y]description]];
+            [writer writeAttribute:@"id" value: [[NSNumber numberWithInt:(int)temp ]description]];
+            //[writer writeAttribute:@"color" value:temp.colorString];
+            [writer writeAttribute:@"type" value:temp.type];
+            //[writer writeAttribute:@"width" value: [[NSNumber numberWithFloat:temp.frame.size.width]description]];
+            //[writer writeAttribute:@"height" value: [[NSNumber numberWithFloat:temp.frame.size.height]description]];
+            [writer writeAttribute:@"className" value:temp.className];
+            [writer writeAttribute:@"isDraggable" value:@"false"];
+            //For each component, fill his attributes
+            for(ClassAttribute * ca in temp.attributes){
+                [writer writeStartElement:@"attribute"];
+                [writer writeAttribute:@"name" value:ca.name];
+                if(ca.currentValue != nil)
+                    [writer writeAttribute:@"current_value" value:ca.currentValue];
+                else
+                    [writer writeAttribute:@"current_value" value:@""];
+                
+                [writer writeEndElement];
+            }
+            [writer writeEndElement];
+        }
+    }
+    
     [writer writeEndElement];//Close nodes
     
     
@@ -2774,6 +2813,8 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
     dele.tutSheet = [[[NSBundle mainBundle]loadNibNamed:@"TutorialSheet"
                                                   owner:self
                                                 options:nil]objectAtIndex:0];
+    [dele.tutSheet prepare];
+    [dele.tutSheet.textView setSelectable:NO];
     
     originalSheetWidth = dele.tutSheet.frame.size.width;
     originalSheetHeight = dele.tutSheet.frame.size.height;
@@ -2868,7 +2909,7 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
     [dele.tutSheet setFrame:CGRectMake(alerts.frame.size.width + alerts.frame.origin.x + 10,
                                        alerts.frame.origin.y,
                                        dele.tutSheet.frame.size.width - 120,
-                                       newSize.height +60)];
+                                       newSize.height +80)];
     
     UITapGestureRecognizer * showMakeConnectionGR = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                                     action:@selector(showHowToMakeConnectionsBetweenNodes:)];

@@ -62,7 +62,9 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                       reuseIdentifier:MyIdentifier] ;
-        cell.textLabel.text = [files objectAtIndex:indexPath.row];
+        NSString * text = [files objectAtIndex:indexPath.row];
+        NSArray * comps = [text componentsSeparatedByString:@"."];
+        cell.textLabel.text = comps[0];
         cell.textLabel.textColor = dele.blue4;
         cell.backgroundColor = [UIColor clearColor];
     }

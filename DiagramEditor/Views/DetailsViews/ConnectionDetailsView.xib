@@ -28,17 +28,6 @@
                                         <action selector="removeThisConnection:" destination="iN0-l3-epB" eventType="touchUpInside" id="iLi-pF-no6"/>
                                     </connections>
                                 </button>
-                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q4g-Vd-eXG">
-                                    <rect key="frame" x="369" y="68" width="22" height="22"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="22" id="dnh-iG-BKZ"/>
-                                        <constraint firstAttribute="width" constant="22" id="hMN-Xn-a6k"/>
-                                    </constraints>
-                                    <color key="tintColor" red="0.7137255072593689" green="0.74901962280273438" blue="0.81960785388946533" alpha="1" colorSpace="calibratedRGB"/>
-                                    <connections>
-                                        <action selector="associateNewInstance:" destination="iN0-l3-epB" eventType="touchUpInside" id="5Wl-Tn-VHH"/>
-                                    </connections>
-                                </button>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="32O-Cs-ACI">
                                     <rect key="frame" x="8" y="107" width="387" height="337"/>
                                     <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -99,6 +88,18 @@
                                         <constraint firstItem="wRU-XO-ZXo" firstAttribute="leading" secondItem="0gc-Ow-wyz" secondAttribute="leading" constant="13" id="xuC-ZT-BQB"/>
                                     </constraints>
                                 </view>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3sS-e0-euN">
+                                    <rect key="frame" x="298" y="82" width="97" height="30"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="30" id="SlH-tY-8qb"/>
+                                    </constraints>
+                                    <state key="normal" title="Add reference">
+                                        <color key="titleColor" red="0.7137255072593689" green="0.74901962280273438" blue="0.81960785388946533" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="associateNewInstance:" destination="iN0-l3-epB" eventType="touchUpInside" id="RVg-56-Ne9"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" red="0.35686275362968445" green="0.42745098471641541" blue="0.57254904508590698" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
@@ -107,12 +108,12 @@
                                 <constraint firstItem="32O-Cs-ACI" firstAttribute="leading" secondItem="dj3-Rm-B84" secondAttribute="leading" constant="8" id="9ob-RE-JLc"/>
                                 <constraint firstAttribute="bottom" secondItem="32O-Cs-ACI" secondAttribute="bottom" constant="8" id="A1T-MG-vZn"/>
                                 <constraint firstAttribute="trailing" secondItem="32O-Cs-ACI" secondAttribute="trailing" constant="8" id="NkX-r4-8Ni"/>
-                                <constraint firstItem="q4g-Vd-eXG" firstAttribute="top" secondItem="g6v-Qp-JEp" secondAttribute="bottom" constant="30" id="Xa0-Qb-k5I"/>
+                                <constraint firstAttribute="trailing" secondItem="3sS-e0-euN" secondAttribute="trailing" constant="8" id="X2w-T6-GEJ"/>
                                 <constraint firstItem="32O-Cs-ACI" firstAttribute="top" secondItem="0gc-Ow-wyz" secondAttribute="bottom" constant="17" id="aIH-Cp-oCP"/>
                                 <constraint firstItem="g6v-Qp-JEp" firstAttribute="top" secondItem="dj3-Rm-B84" secondAttribute="top" constant="8" id="fDF-9Z-5QX"/>
+                                <constraint firstItem="32O-Cs-ACI" firstAttribute="top" secondItem="3sS-e0-euN" secondAttribute="bottom" constant="-5" id="hLs-XF-s8d"/>
                                 <constraint firstItem="32O-Cs-ACI" firstAttribute="top" secondItem="dj3-Rm-B84" secondAttribute="top" constant="107" id="jFP-Nq-aZ2"/>
                                 <constraint firstAttribute="trailing" secondItem="g6v-Qp-JEp" secondAttribute="trailing" constant="8" id="q1q-p9-80y"/>
-                                <constraint firstAttribute="trailing" secondItem="q4g-Vd-eXG" secondAttribute="trailing" constant="12" id="vCx-lh-VRX"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -137,6 +138,7 @@
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="addReferenceButton" destination="3sS-e0-euN" id="VAs-Ra-hEs"/>
                 <outlet property="background" destination="bPL-1j-T8f" id="XHl-FV-upp"/>
                 <outlet property="informationTable" destination="32O-Cs-ACI" id="ifc-Qs-lUg"/>
                 <outlet property="sourceComponentViewContainer" destination="wRU-XO-ZXo" id="Iwp-AP-WUk"/>

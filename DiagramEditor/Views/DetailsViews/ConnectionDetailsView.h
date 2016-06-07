@@ -32,6 +32,7 @@
     Component * sourceComp;
     Component * targetComp;
     
+    __weak IBOutlet UIButton *addReferenceButton;
 
 }
 

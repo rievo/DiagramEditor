@@ -35,7 +35,7 @@
                                         <constraint firstAttribute="width" constant="134" id="vUE-Mv-a1H"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                    <state key="normal" title="Not now, thanks">
+                                    <state key="normal" title="I'm done here">
                                         <color key="titleColor" red="0.13333334028720856" green="0.21176470816135406" blue="0.37647059559822083" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
                                     <connections>

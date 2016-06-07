@@ -87,4 +87,10 @@
 -(void)updateNameLabel;
 -(void)fitNameLabel;
 -(void)prepare;
+
+-(NSString *)getName;
+
+-(NSMutableArray *)getDraggablePaletteItems;
+
+-(void)showAddReferencePopupForConnection: (Connection *)conn;
 @end

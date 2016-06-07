@@ -39,8 +39,9 @@
     instancesCollapsed = YES;
     attributesCollapsed = YES;
     //[nameTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-}
+    
 
+}
 
 -(void)handleTap: (UITapGestureRecognizer *)recog{
     [self closeConnectionDetailsView];
@@ -59,31 +60,15 @@
 }
 
 - (IBAction)associateNewInstance:(id)sender {
-    /*
-    PaletteItem * pi = nil;
     
-    AppDelegate * dele = [[UIApplication sharedApplication]delegate];
     
-    for(pi in dele.paletteItems){
-        if([pi.className isEqualToString:connection.className]){
-            
-            NoDraggableComponentView * nod = [[[NSBundle mainBundle] loadNibNamed:@"NoDraggableComponentView"
-                                                                            owner:self
-                                                                          options:nil] objectAtIndex:0];
-            
-            nod.elementName = pi.className;
-            nod.paletteItem = pi;
-            
-            [nod updateNameLabel];
-            [nod setFrame:self.frame];
-            [self addSubview:nod];
-        }
-    }*/
-   
+    [connection.source showAddReferencePopupForConnection:connection];
+    
+    [informationTable reloadData];
 }
 
 -(void)prepare{
-
+    
     
     
     associatedComponentsArray = [[NSMutableArray alloc] init];
@@ -150,7 +135,12 @@
     
     [targetComp updateNameLabel];
     [sourceComp updateNameLabel];
-
+    
+    NSMutableArray * nodragarray = [connection.source getDraggablePaletteItems];
+    
+    if(nodragarray.count == 0){
+        [addReferenceButton setHidden:YES];
+    }
     
 }
 
@@ -173,7 +163,7 @@
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-
+    
     
     if(indexPath.section == 1){ //References
         
@@ -213,10 +203,10 @@
         return 0;
     }
     /*if (tableView == instancesTable) {
-        return associatedComponentsArray.count;
-    }else{
-        return 0;
-    }*/
+     return associatedComponentsArray.count;
+     }else{
+     return 0;
+     }*/
     //return 0;
 }
 
@@ -230,7 +220,7 @@
     UITableViewCell *cell = nil;
     
     if(indexPath.section == 0){ //Attributes
-    
+        
         return nil;
         
     }else if(indexPath.section == 1){ //Instances
@@ -252,24 +242,24 @@
         return nil;
     }
     
-   /* if(tableView == instancesTable){
-        Component * c = [associatedComponentsArray objectAtIndex:indexPath.row];
-        
-        
-        cell= [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
-        
-        if (cell == nil)
-        {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                          reuseIdentifier:MyIdentifier] ;
-        }
-        cell.backgroundColor = [UIColor clearColor];
-        cell.textLabel.adjustsFontSizeToFitWidth = YES;
-        cell.textLabel.minimumScaleFactor = 0.5;
-        cell.textLabel.text = [NSString stringWithFormat:@"--: %@", c.name];
-    }*/
+    /* if(tableView == instancesTable){
+     Component * c = [associatedComponentsArray objectAtIndex:indexPath.row];
+     
+     
+     cell= [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+     
+     if (cell == nil)
+     {
+     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+     reuseIdentifier:MyIdentifier] ;
+     }
+     cell.backgroundColor = [UIColor clearColor];
+     cell.textLabel.adjustsFontSizeToFitWidth = YES;
+     cell.textLabel.minimumScaleFactor = 0.5;
+     cell.textLabel.text = [NSString stringWithFormat:@"--: %@", c.name];
+     }*/
     
-
+    
     return cell;
     
 }
@@ -281,22 +271,22 @@
     //    return 0;
     //}else if(indexPath.section == 1){ //Instances
     /*    NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"ReferenceTableViewCell"
-                                                      owner:self
-                                                    options:nil];
-        ReferenceTableViewCell * temp = [nib objectAtIndex:0];
-        return temp.frame.size.height;*/
+     owner:self
+     options:nil];
+     ReferenceTableViewCell * temp = [nib objectAtIndex:0];
+     return temp.frame.size.height;*/
     //}
     /*if(tableView == instancesTable){
-        NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"ReferenceTableViewCell"
-                                                      owner:self
-                                                    options:nil];
-        ReferenceTableViewCell * temp = [nib objectAtIndex:0];
-        return temp.frame.size.height;
-    }else{
-        return 30;
-    }*/
+     NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"ReferenceTableViewCell"
+     owner:self
+     options:nil];
+     ReferenceTableViewCell * temp = [nib objectAtIndex:0];
+     return temp.frame.size.height;
+     }else{
+     return 30;
+     }*/
     return 40;
-
+    
 }
 
 
@@ -323,17 +313,17 @@
         head.countLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)attributesArray.count];
         
         if(attributesCollapsed == true){
-            head.openCloseOutlet.image  = [UIImage imageNamed:@"downArrowBlack"];
-
+            head.openCloseOutlet.image  = [UIImage imageNamed:@"rightArrow"];
+            
         }else{
-             head.openCloseOutlet.image  = [UIImage imageNamed:@"upArrowBlack"];
+            head.openCloseOutlet.image  = [UIImage imageNamed:@"upArrowBlack"];
         }
         
     }else if(section == 1){ //Instances
         head.sectionNameLabel.text = @"References";
         head.countLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)associatedComponentsArray.count];
         if(instancesCollapsed == true){
-            head.openCloseOutlet.image  = [UIImage imageNamed:@"downArrowBlack"];
+            head.openCloseOutlet.image  = [UIImage imageNamed:@"rightArrow"];
             
         }else{
             head.openCloseOutlet.image  = [UIImage imageNamed:@"upArrowBlack"];

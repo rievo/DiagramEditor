@@ -606,6 +606,17 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     return temp;
 }
 
+-(NSString *)getName{
+    NSString * text = @"";
+    
+    for(ClassAttribute * attr in self.attributes){
+        if(attr.isLabel == YES){
+            text = [text stringByAppendingString:attr.currentValue];
+            text = [text stringByAppendingString:@" "];
+        }
+    }
+    return  text;
+}
 
 -(void)updateNameLabel{
     NSString * text = @"";
@@ -616,6 +627,8 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
             text = [text stringByAppendingString:@" "];
         }
     }
+    
+    name = text;
     
     //textLayer.string = name;
     textLayer.string = text;

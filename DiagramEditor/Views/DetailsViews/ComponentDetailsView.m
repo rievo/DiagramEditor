@@ -33,6 +33,8 @@
     [background addGestureRecognizer:tapgr];
     [previewComponent setNeedsDisplay];
     [previewComponent updateNameLabel];
+    
+    previewComponent.layer.masksToBounds = NO;
 }
 - (void)prepare {
     
@@ -274,6 +276,8 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
                     atvc.comp = comp;
                     atvc.associatedAttribute = attr;
                     atvc.detailsPreview = previewComponent;
+                    
+                    
                     
                     for(ClassAttribute * atr in comp.attributes){
                         if([atr.name isEqualToString:atvc.attributeNameLabel.text]){
