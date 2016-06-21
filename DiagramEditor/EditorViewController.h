@@ -12,7 +12,7 @@
 #import "Canvas.h"
 #import "ComponentDetailsView.h"
 #import "ConnectionDetailsView.h"
-#import "SaveNameView.h"
+
 #import "SureView.h"
 #import "EdgeListView.h"
 #import "SessionUsersView.h"
@@ -31,7 +31,6 @@
 UIGestureRecognizerDelegate,
 UIScrollViewDelegate,
 ComponentDetailsViewDelegate,
-SaveNameDelegate,
 ConnectionDetailsViewDelegate,
 SureViewDelegate,
 EdgeListDelegate,
@@ -65,7 +64,7 @@ DrawingViewDelegate
     UIView * containerView;
     
     UIView * saveBackgroundBlackView;
-    SaveNameView * snv;
+
     
     NSString * textToSave;
     NSString * oldFileName;

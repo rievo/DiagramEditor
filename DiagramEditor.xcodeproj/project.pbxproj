@@ -80,8 +80,6 @@
 		F1786DE81C561AF200963663 /* BooleanAttributeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1786DE71C561AF200963663 /* BooleanAttributeTableViewCell.m */; };
 		F1786DEC1C56222B00963663 /* GenericAttributeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1786DEA1C56222B00963663 /* GenericAttributeTableViewCell.m */; };
 		F1786DED1C56222B00963663 /* GenericAttributeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1786DEB1C56222B00963663 /* GenericAttributeTableViewCell.xib */; };
-		F1786DEF1C56410200963663 /* SaveNameView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1786DEE1C56410200963663 /* SaveNameView.xib */; };
-		F1786DF21C56411300963663 /* SaveNameView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1786DF11C56411300963663 /* SaveNameView.m */; };
 		F1786DF41C56649B00963663 /* ExploreFilesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1786DF31C56649B00963663 /* ExploreFilesView.xib */; };
 		F1786DF71C5664AB00963663 /* ExploreFilesView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1786DF61C5664AB00963663 /* ExploreFilesView.m */; };
 		F17A93E91CF5E419008AE1EE /* DrawingView.m in Sources */ = {isa = PBXBuildFile; fileRef = F17A93E81CF5E419008AE1EE /* DrawingView.m */; };
@@ -259,9 +257,6 @@
 		F1786DE91C56222B00963663 /* GenericAttributeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericAttributeTableViewCell.h; sourceTree = "<group>"; };
 		F1786DEA1C56222B00963663 /* GenericAttributeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericAttributeTableViewCell.m; sourceTree = "<group>"; };
 		F1786DEB1C56222B00963663 /* GenericAttributeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GenericAttributeTableViewCell.xib; sourceTree = "<group>"; };
-		F1786DEE1C56410200963663 /* SaveNameView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SaveNameView.xib; sourceTree = "<group>"; };
-		F1786DF01C56411300963663 /* SaveNameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveNameView.h; sourceTree = "<group>"; };
-		F1786DF11C56411300963663 /* SaveNameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveNameView.m; sourceTree = "<group>"; };
 		F1786DF31C56649B00963663 /* ExploreFilesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExploreFilesView.xib; sourceTree = "<group>"; };
 		F1786DF51C5664AB00963663 /* ExploreFilesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExploreFilesView.h; sourceTree = "<group>"; };
 		F1786DF61C5664AB00963663 /* ExploreFilesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExploreFilesView.m; sourceTree = "<group>"; };
@@ -434,9 +429,6 @@
 				F10AB80D1C50E9FB00DE6DCE /* PasteView.h */,
 				F10AB80E1C50E9FB00DE6DCE /* PasteView.m */,
 				F10AB8071C50E7E200DE6DCE /* PasteView.xib */,
-				F1786DF01C56411300963663 /* SaveNameView.h */,
-				F1786DF11C56411300963663 /* SaveNameView.m */,
-				F1786DEE1C56410200963663 /* SaveNameView.xib */,
 				F16C7DCE1C57AD4400CA9B25 /* SureView.h */,
 				F16C7DCF1C57AD4400CA9B25 /* SureView.m */,
 				F16C7DCC1C57AD2900CA9B25 /* SureView.xib */,
@@ -823,7 +815,6 @@
 				F17B75A91C22D6E100AB1B57 /* newDocument.png in Resources */,
 				F16733F01CBBD6C000E76C3A /* downArrowBlack.png in Resources */,
 				F153796F1C919B2F001D8FFB /* ClassesFilterView.xib in Resources */,
-				F1786DEF1C56410200963663 /* SaveNameView.xib in Resources */,
 				F19C25901C43AB8B0002E490 /* palette.png in Resources */,
 				F15BE9FF1CABC60E00EDABA5 /* hidePaletteEditorOld.png in Resources */,
 				F1801F3D1C77413E005BA437 /* localFilled.png in Resources */,
@@ -871,7 +862,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F1786DF21C56411300963663 /* SaveNameView.m in Sources */,
 				F16C7DC11C577E9100CA9B25 /* Reference.m in Sources */,
 				F107E4641C72221A007DD29E /* ThinkingView.m in Sources */,
 				F1685EA81C1829F00094097E /* Canvas.m in Sources */,
