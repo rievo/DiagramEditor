@@ -135,8 +135,6 @@
     comp.borderColor = borderColor;
     
     comp.labelPosition = _labelPosition;
-    
-    NSData * dicBuf = [NSKeyedArchiver archivedDataWithRootObject:_linkPaletteDic];
 
     comp.isExpandable = _isExpandable;
     NSData * copyExpandableItems = [NSKeyedArchiver archivedDataWithRootObject:_expandableItems];

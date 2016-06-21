@@ -1487,7 +1487,6 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
         }
     }
     
-    int r = 2;
    /* NSDictionary * dic = nil;
     NSString * name;
     
@@ -1780,9 +1779,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
         
         da.path = path;
         [dele.drawnsArray addObject:da];
-        
-        
-        int r = 2;
+
         
     }
 

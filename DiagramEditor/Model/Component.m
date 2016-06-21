@@ -844,7 +844,6 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         }
     }
     
-    int r = 2;
     
     int possibles = 0;
     possibles =  possibles + (int)linkPaletteArray.count + (int)edgesArray.count;
