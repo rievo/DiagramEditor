@@ -326,25 +326,31 @@
                 [line setLineWidth:conn.lineWidth.floatValue];
                 
                 
-                [conn.lineColor setStroke];
+                if(conn.lineColor == nil){
+                    [[UIColor redColor]setStroke];
+                }else
+                    [conn.lineColor setStroke];
                 
                 
                 
-                if([conn.lineStyle isEqualToString:@"solid"]){
+                if([conn.lineStyle isEqualToString:SOLID]){
                     
-                }else if([conn.lineStyle isEqualToString:@"dash"]){
+                }else if([conn.lineStyle isEqualToString:DASH]){
                     CGFloat dashes[] = {10 , 10};
                     [line setLineDash:dashes count:2 phase:0];
-                }else if([conn.lineStyle isEqualToString:@"dot"]){
+                }else if([conn.lineStyle isEqualToString:DOT]){
                     CGFloat dashes[] = {2,5};
                     [line setLineDash:dashes count:2 phase:0];
                     
-                }else if([conn.lineStyle isEqualToString:@"dash_dot"]){
+                }else if([conn.lineStyle isEqualToString:DASH_DOT]){
                     CGFloat dashes[] = {2,10,10,10};
                     [line setLineDash:dashes count:4 phase:0];
+                }else{
+                    conn.lineStyle = SOLID;
                 }
                 
                 [line stroke];
+                [line fill];
                 conn.arrowPath = line;
                 conn.controlPoint = controlPoint;
                 
@@ -414,9 +420,9 @@
                 
                 
                 [pathTarget stroke];
-                if([conn.targetDecorator isEqualToString:@"fillDiamond"] ||
-                   [conn.targetDecorator isEqualToString:@"inputFillClosedArrow"] ||
-                   [conn.targetDecorator isEqualToString:@"outputFillClosedArrow"]){
+                if([conn.targetDecorator isEqualToString:FILL_DIAMOND] ||
+                   [conn.targetDecorator isEqualToString:INPUT_FILL_CLOSED_ARROW] ||
+                   [conn.targetDecorator isEqualToString:OUTPUT_FILL_CLOSED_ARROW]){
                     [pathTarget fill];
                 }
                 
@@ -465,9 +471,9 @@
                 
                 
                 [pathSource stroke];
-                if([conn.sourceDecorator isEqualToString:@"fillDiamond"] ||
-                   [conn.sourceDecorator isEqualToString:@"inputFillClosedArrow"] ||
-                   [conn.sourceDecorator isEqualToString:@"outputFillClosedArrow"]){
+                if([conn.sourceDecorator isEqualToString:FILL_DIAMOND] ||
+                   [conn.sourceDecorator isEqualToString:INPUT_FILL_CLOSED_ARROW] ||
+                   [conn.sourceDecorator isEqualToString:OUTPUT_FILL_CLOSED_ARROW]){
                     [pathSource fill];
                 }
                 
@@ -733,6 +739,8 @@ float QuadBezier(float t, float start, float c1, float end)
     
     return path;
 }
+
+
 
 +(UIBezierPath *)getInputClosedArrowPath{
     UIBezierPath * path = [[UIBezierPath alloc]init];

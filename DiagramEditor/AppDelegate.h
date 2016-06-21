@@ -95,6 +95,9 @@
 
 @property TutorialSheet * tutSheet;
 
+
+@property NSMutableArray * noVisibleItems;
+
 -(int)getOutConnectionsForComponent: (Component *)comp
                              ofType: (NSString * )type;
 -(int)getInConnectionsForComponent: (Component *)comp

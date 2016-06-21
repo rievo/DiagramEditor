@@ -572,8 +572,14 @@
 
 -(PaletteItem *) getPaletteItemForClassName:(NSString *)name{
     for(PaletteItem * pi in paletteItems){
-        if([pi.className isEqualToString:@"name"]){
+        if([pi.className isEqualToString:name]){
             return  pi;
+        }
+    }
+    
+    for(PaletteItem * pi in _noVisibleItems){
+        if([pi.className isEqualToString:name]){
+            return pi;
         }
     }
     

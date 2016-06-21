@@ -8,7 +8,7 @@
 
 #import "EditorViewController.h"
 #import "ComponentDetailsView.h"
-
+#import "LinkPalette.h"
 #import "Connection.h"
 #import "Palette.h"
 #import "PaletteItem.h"
@@ -709,59 +709,72 @@
             
             CGPoint pointInSV = [self.view convertPoint:p toView:canvas];
             
+        
+            
+            //Is it on the canvas?
             if(CGRectContainsPoint(scrollView.frame, p)){
-                //Añadimos un Component al lienzo
-                if([sender.type isEqualToString:@"graphicR:Node"]){
-                    //It is a node
-                    NSLog(@"Creating a node");
+                
+                //Is the point on the palette?
+                
+                if( CGRectContainsPoint(palette.frame, p)){
                     
-                    
-                    
-                    Component * comp = [sender getComponentForThisPaletteItem];
-                    comp.canvas = self.view;
-                    [comp setFrame:CGRectMake(0, 0, sender.width.floatValue * scaleFactor, sender.height.floatValue * scaleFactor)];
-                    [comp setCenter:pointInSV];
-                    [comp fitNameLabel];
-                    
-                    
-                    [dele.components addObject:comp];
-                    [comp updateNameLabel];
-                    [canvas addSubview:comp];
-                    
-                }else if([sender.type isEqualToString:@"graphicR:Edge"]){
-                    //It is an edge
-                    
-                    //Comprobamos si hay alguna relación cerca
-                    //En caso de que la haya, esa relación pasará a ser del tipo arrastrado
-                    
-                    //sender.attributes tiene los atributos
-                    //
-                    
-                    Connection * con;
-                    for(int  i = 0; i< dele.connections.count; i++){
-                        con = [dele.connections objectAtIndex:i];
-                        BOOL res = [canvas isPoint:pointInSV
-                                    withinDistance:10.0
-                                            ofPath:con.arrowPath.CGPath];
+                }else{
+                    //Add Component to canvas
+                    if([sender.type isEqualToString:@"graphicR:Node"]){
+                        //It is a node
+                        NSLog(@"Creating a node");
                         
-                        if(res == true){
-                            //Set that connection to sender
-                            //con.reference = sender;
-                            NSLog(@"Change reference type");
-                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
-                                                                            message:@"Changing connection type"
-                                                                           delegate:self
-                                                                  cancelButtonTitle:@"OK"
-                                                                  otherButtonTitles:nil];
-                            [alert show];
+                        
+                        
+                        Component * comp = [sender getComponentForThisPaletteItem];
+                        comp.canvas = self.view;
+                        [comp setFrame:CGRectMake(0, 0, sender.width.floatValue * scaleFactor, sender.height.floatValue * scaleFactor)];
+                        [comp setCenter:pointInSV];
+                        [comp fitNameLabel];
+                        
+                        
+                        [dele.components addObject:comp];
+                        [comp updateNameLabel];
+                        [canvas addSubview:comp];
+                        
+                    }else if([sender.type isEqualToString:@"graphicR:Edge"]){
+                        //It is an edge
+                        
+                        //Comprobamos si hay alguna relación cerca
+                        //En caso de que la haya, esa relación pasará a ser del tipo arrastrado
+                        
+                        //sender.attributes tiene los atributos
+                        //
+                        
+                        Connection * con;
+                        for(int  i = 0; i< dele.connections.count; i++){
+                            con = [dele.connections objectAtIndex:i];
+                            BOOL res = [canvas isPoint:pointInSV
+                                        withinDistance:10.0
+                                                ofPath:con.arrowPath.CGPath];
                             
-                            con.attributes = sender.attributes;
-                            
-                        }else{
-                            //Nothing to do
+                            if(res == true){
+                                //Set that connection to sender
+                                //con.reference = sender;
+                                NSLog(@"Change reference type");
+                                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
+                                                                                message:@"Changing connection type"
+                                                                               delegate:self
+                                                                      cancelButtonTitle:@"OK"
+                                                                      otherButtonTitles:nil];
+                                [alert show];
+                                
+                                con.attributes = sender.attributes;
+                                
+                            }else{
+                                //Nothing to do
+                            }
                         }
                     }
                 }
+                
+                
+                
             }else{
                 NSLog(@"There is no canvas on this point.");
             }
@@ -1152,6 +1165,76 @@
 -(void) saveDiagramOnDevice{
     textToSave = [self generateXML];
     
+    UIAlertController *alertController = [UIAlertController
+                                          alertControllerWithTitle:@"Save name on device"
+                                          message:@"Enter name here"
+                                          preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField)
+     {
+         textField.placeholder = @"name";
+     }];
+    
+    
+    UIAlertAction * confirmName = [UIAlertAction
+                                   actionWithTitle:@"Ok"
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                       UITextField * nameTF = alertController.textFields.firstObject;
+                                       
+                                       [nameTF endEditing:YES];
+                                       [alertController setEditing:NO];
+                                       
+                                       if (nameTF.text.length != 0) {
+                                           //[self saveDiagramOnServerWithName:nameTF.text];
+                                           NSString * newName = [nameTF.text lowercaseString];
+                                           //---------
+                                           BOOL result = [self writeFile:newName];
+                                           [self.view endEditing:YES];
+                                           
+                                           
+                                           if(result == NO){ //Error
+  
+                                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                                               message:@"A file already exists with that name"
+                                                                                              delegate:self
+                                                                                     cancelButtonTitle:@"OK"
+                                                                                     otherButtonTitles:nil];
+                                               [alert show];
+                                           }else{
+                                               //oldFileName = name;
+                                               
+                                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
+                                                                                               message:@"Diagram was saved properly"
+                                                                                              delegate:self
+                                                                                     cancelButtonTitle:@"OK"
+                                                                                     otherButtonTitles:nil];
+                                               [alert show];
+                                           }
+
+                                           //---------
+                                       }else{
+                                           
+                                       }
+                                       
+                                   }];
+    
+    UIAlertAction * cancelName = [UIAlertAction actionWithTitle:@"Cancel"
+                                                          style:UIAlertActionStyleDestructive
+                                                        handler:^(UIAlertAction * _Nonnull action) {
+                                                            
+                                                        }];
+    [alertController addAction:confirmName];
+    [alertController addAction:cancelName];
+    
+    [self presentViewController:alertController animated:YES completion:^{
+        
+    }];
+
+    
+    /*
+    
     [snv removeFromSuperview];
     
     [saveBackgroundBlackView removeFromSuperview];
@@ -1169,7 +1252,7 @@
     [snv setFrame:self.view.frame];
     snv.delegate = self;
     
-    [self.view addSubview:snv];
+    [self.view addSubview:snv];*/
 }
 
 -(BOOL)writeFile: (NSString *)name{
@@ -1177,6 +1260,7 @@
     NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
     NSString *folderPath = [documentsDirectory stringByAppendingPathComponent:@"/diagrams"];
     NSFileManager *fileManager  = [NSFileManager defaultManager];
+
     
     NSError *error = nil;
     if (![fileManager fileExistsAtPath:folderPath])
@@ -1189,14 +1273,22 @@
     error = nil;
     NSString *filePath = [folderPath stringByAppendingPathComponent:name];
     filePath = [filePath stringByAppendingString:@".demiso"];
-    [textToSave writeToFile:filePath atomically:NO encoding:NSUTF8StringEncoding error:&error];
     
-    if(error){
-        NSLog(@"%@",[error description]);
+    BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:filePath];
+    
+    if(fileExists == YES){
         return NO;
     }else{
-        return YES;
+        [textToSave writeToFile:filePath atomically:NO encoding:NSUTF8StringEncoding error:&error];
+        
+        if(error){
+            NSLog(@"%@",[error description]);
+            return NO;
+        }else{
+            return YES;
+        }
     }
+    
     
     //Quitar la vista de
 }
@@ -1227,7 +1319,7 @@
     
     /*  DIAGRAM   */
     [writer writeStartElement:@"diagram"];
-    
+    [writer writeAttribute:@"version" value: @"2.0"];
     [writer writeStartElement:@"palette_name"];
     [writer writeAttribute:@"name" value: dele.currentPaletteFileName];
     [writer writeEndElement];
@@ -1268,6 +1360,42 @@
             //[writer writeAttribute:@"type" value:ca.type];
             [writer writeEndElement];
         }
+        
+        //LinkPalettes for this node
+        if (temp.isExpandable) {
+            //NSArray * keys = [temp.linkPaletteDic allKeys];
+            
+            for(LinkPalette * lp in temp.expandableItems){
+                //LinkPalette * lp = [temp.linkPaletteDic objectForKey:key];
+                
+                if(lp.instances.count > 0){
+                    NSLog(@"Nodo instances:%lu ", (unsigned long)lp.instances.count);
+                    for(Component * comp in lp.instances){
+                        [writer writeStartElement:@"link_palette_instance"];
+                        [writer writeAttribute:@"id" value: [[NSNumber numberWithInt:(int)comp ]description]];
+                        [writer writeAttribute:@"className" value:temp.className];
+                        //For each instance, fill its attributes
+                        for(ClassAttribute * ca in comp.attributes){
+                            [writer writeStartElement:@"attribute"];
+                            [writer writeAttribute:@"name" value:ca.name];
+                            
+                            if(ca.currentValue != nil)
+                                [writer writeAttribute:@"current_value" value:ca.currentValue];
+                            else
+                                [writer writeAttribute:@"current_value" value:@""];
+                            
+                            
+                            [writer writeEndElement];
+                        }
+                        [writer writeEndElement];
+                    }
+                    
+                    
+                }
+            }
+        }
+       
+        
         [writer writeEndElement];
         
     }
@@ -1280,14 +1408,11 @@
         for(Component * temp in instancesForThisKey){
             [writer writeStartElement:@"node"];
             
-            //[writer writeAttribute:@"shape_type" value:temp.shapeType];
-            //[writer writeAttribute:@"x" value: [[NSNumber numberWithFloat:temp.center.x]description]];
-            //[writer writeAttribute:@"y" value: [[NSNumber numberWithFloat:temp.center.y]description]];
+
             [writer writeAttribute:@"id" value: [[NSNumber numberWithInt:(int)temp ]description]];
-            //[writer writeAttribute:@"color" value:temp.colorString];
+           
             [writer writeAttribute:@"type" value:temp.type];
-            //[writer writeAttribute:@"width" value: [[NSNumber numberWithFloat:temp.frame.size.width]description]];
-            //[writer writeAttribute:@"height" value: [[NSNumber numberWithFloat:temp.frame.size.height]description]];
+
             [writer writeAttribute:@"className" value:temp.className];
             [writer writeAttribute:@"isDraggable" value:@"false"];
             //For each component, fill his attributes
@@ -1795,6 +1920,7 @@
 }
 
 
+/*
 #pragma mark SaveNameDelegate
 -(void)saveName: (NSString *)name{
     BOOL result = [self writeFile:name];
@@ -1829,7 +1955,7 @@
 -(void)cancelSaving{
     [saveBackgroundBlackView setHidden:YES];
 }
-
+*/
 
 
 #pragma mark SureViewDelegate methods

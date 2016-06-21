@@ -31,6 +31,8 @@
 #import "Alert.h"
 #import "PathPiece.h"
 
+#import "LinkPalette.h"
+
 
 #define defaultwidth 50
 #define defaultheight 50
@@ -349,244 +351,345 @@
         allGraphicRepresentations = [[NSArray alloc] initWithObjects:[configuration objectForKey:@"allGraphicRepresentation"], nil];
     }
     
+    
+    
+    
     for(int gr = 0; gr < allGraphicRepresentations.count; gr++){
         
         
-        //Create a temp palette
-        Palette * tempPalete = [[Palette alloc] init];
-        [tempPalete preparePalette];
+        NSDictionary * listRepresentations =[[allGraphicRepresentations objectAtIndex:gr]objectForKey:@"listRepresentations"];
+
+        NSArray * lRArray;
         
-        NSDictionary * allGraphicRepresentation = [allGraphicRepresentations objectAtIndex:gr];
-        
-        NSString * paletteName = [allGraphicRepresentation objectForKey:@"_extension"];
-        tempPalete.name = paletteName;
-        
-        NSDictionary * layers = [allGraphicRepresentation objectForKey:@"layers"];
-        NSArray * elements = [layers objectForKey:@"elements"];
-        
-        
-        for(int i  = 0; i< elements.count; i++){
-            
-            PaletteItem * item = [[PaletteItem alloc] init];
-            
-            NSDictionary * dic = [elements objectAtIndex:i];
-            NSString * type = [dic objectForKey:@"_xsi:type"];
-            
-            item.type = type;
-            
-            NSDictionary * className = [dic objectForKey:@"anEClass"];
-            NSString * classStr = [className objectForKey:@"_href"];
-            NSArray * arraystr = [classStr componentsSeparatedByString:@"/"];
-            NSString * parsedClass = [arraystr objectAtIndex: arraystr.count -1];
-            item.className = parsedClass;
-            
-            NSDictionary * diagPalette = [dic objectForKey:@"diag_palette"];
-            NSString * paleteName = [diagPalette objectForKey:@"_palette_name"];
-            NSLog(@"\n\ntype: %@     	\n name: %@", type, paleteName);
-            
-            //In order to get node label
-            NSDictionary * nodeElementsDic = [dic objectForKey:@"node_elements"];
-            NSArray * labelAnEAttributeArray = [nodeElementsDic objectForKey:@"LabelanEAttribute"];
-            
-            if([labelAnEAttributeArray isKindOfClass:[NSDictionary class]]){
-                labelAnEAttributeArray = [[NSArray alloc]initWithObjects:labelAnEAttributeArray, nil];
-            }
-            
-            //labelAnEAttributeArray tendrá un array con el o los atributos que serán label
-            
-            item.labelsAttributesArray = [[NSMutableArray alloc] init];
-            
-            for(int i = 0; i<labelAnEAttributeArray.count; i++){
-                NSDictionary * labelanEattributeDic = labelAnEAttributeArray[i];
-                NSDictionary * anEattributeDic = [labelanEattributeDic objectForKey:@"anEAttribute"];
-                
-                NSString * labelReference = [anEattributeDic objectForKey:@"_href"];
-                
-                NSArray * parts = [labelReference componentsSeparatedByString:@"/"];
-                NSString * attrName = [parts objectAtIndex:parts.count-1];
-                [item.labelsAttributesArray addObject:attrName];
-            }
-            
-            
-            NSString * draggablestr = [diagPalette objectForKey:@"_isDraggable"];
-            if(draggablestr == nil){ //Default = true
-                item.isDragable = true;
-            }else if([draggablestr isEqualToString:@"true"]){
-                item.isDragable = true;
-            }else if([draggablestr isEqualToString:@"false"]){
-                item.isDragable = false;
-            }
-            
-            NSDictionary * containerDic = [dic objectForKey:@"containerReference"];
-            NSString * containerReference = [containerDic objectForKey:@"_href"];
-            item.containerReference = containerReference;
-            
-            
-            item.dialog = parsedClass;
-            
-            NSDictionary * nodeShapeDic = [dic objectForKey:@"node_shape"];
-            NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
-            f.numberStyle = NSNumberFormatterDecimalStyle;
-            
-            if(nodeShapeDic != nil){
-                NSString * wstr = [nodeShapeDic objectForKey:@"_horizontalDiameter"];
-                NSString * hstr = [nodeShapeDic objectForKey:@"_verticalDiameter"];
-                NSString * shapeType = [nodeShapeDic objectForKey:@"_xsi:type"];
-                                          
-                NSDictionary * colorDic = [nodeShapeDic objectForKey:@"color"];
-                NSString * color = [colorDic objectForKey:@"_name"];
-                
-                NSString * sizeStr = [nodeShapeDic objectForKey:@"_size"];
-                
-                
-                NSDictionary * borderColorDic = [nodeShapeDic objectForKey:@"borderColor"];
-                NSString * borderColorString = [borderColorDic objectForKey:@"_name"];
-                NSString * borderStyleString = [nodeShapeDic objectForKey:@"_borderStyle"];
-                NSString * borderWidthString = [nodeShapeDic objectForKey:@"_borderWidth"];
-                
-                item.borderColorString = borderColorString;
-                item.borderColor = [ColorPalette colorForString:borderColorString];
-                item.borderWidth = [f numberFromString:borderWidthString];
-                item.borderStyleString = borderStyleString;
-                
-                NSNumber * w = [f numberFromString:wstr];
-                NSNumber * h = [f numberFromString:hstr];
-                
-                
-                if(sizeStr != nil){
-                    //There is size value, but with and height
-                    NSNumber * s = [f numberFromString:sizeStr];
-                    float scaledS = s.floatValue * scale;
-                    item.width = [NSNumber numberWithFloat:scaledS];
-                    item.height = [NSNumber numberWithFloat:scaledS];
-                }else{
-                    float scaledW = w.floatValue * scale;
-                    float scaledH = h.floatValue * scale;
-                    item.width = [NSNumber numberWithFloat:scaledW];
-                    item.height = [NSNumber numberWithFloat:scaledH];
-                    
-                }
-                
-                
-                
-                item.shapeType = shapeType;
-                
-                if(color == nil){
-                    item.fillColor = [ColorPalette white];
-                    item.colorString = @"white";
-                }else{
-                    item.fillColor = [ColorPalette colorForString:color];
-                    item.colorString = color;
-                }
-                
-                if(w.floatValue <= 0.0){
-                    item.width = [NSNumber numberWithFloat:defaultwidth];
-                }
-                
-                if(h.floatValue <= 0.0){
-                    item.height = [NSNumber numberWithFloat:defaultheight];
-                }
-                
-                if([shapeType isEqualToString:@"graphicR:IconElement"]){
-                    item.isImage = YES;
-                    
-                    
-                    NSString * base64String = [nodeShapeDic objectForKey:@"_embeddedImage"];
-                    NSData * imageData = [[NSData alloc] initWithBase64EncodedString:base64String options:0];
-                    
-                    UIImage * image = [UIImage imageWithData:imageData];
-                    
-                    item.image = image;
-                }
-            }
-            
-            
-            //Set frame
-            if(item.width != nil && item.height != nil){
-                item.frame = CGRectMake(0, 0, item.width.floatValue , item.height.floatValue);
-            }else{
-                //Default values
-                item.frame = CGRectMake(0, 0, defaultwidth, defaultheight);
-            }
-            
-            
-            if([item.type isEqualToString:@"graphicR:Edge"]){
-                //Extract directions
-                
-                NSDictionary * edgeStyleDic = [dic objectForKey:@"edge_style"];
-                NSString * edgeStyle = [edgeStyleDic objectForKey:@"_color"];
-                NSDictionary * directions = [dic objectForKey:@"directions"];
-                
-                NSString * lineStyle = [edgeStyleDic objectForKey:@"_LineStyle"];
-                NSString * lineWidth = [edgeStyleDic objectForKey:@"_LineWidth"];
-                NSDictionary * colorDic = [edgeStyleDic objectForKey:@"color"];
-                NSString * lineColorName = [colorDic objectForKey:@"_name"];
-                
-                if(lineWidth == nil){
-                    item.lineWidth = [NSNumber numberWithFloat:2.0];
-                }else{
-                    item.lineWidth = [f numberFromString:lineWidth];
-                }
-                
-                if(lineStyle == nil){
-                    item.lineStyle = SOLID;
-                }else{
-                    item.lineStyle = lineStyle;
-                }
-                
-                if(lineColorName == nil){
-                    item.lineColorNameString = @"black";
-                }else{
-                    item.lineColorNameString = lineColorName;
-                }
-                
-                
-                if(lineColorName == nil)
-                    item.lineColor = [ColorPalette colorForString:@"black"];
-                else
-                    item.lineColor = [ColorPalette colorForString:lineColorName];
-                
-                NSDictionary * sourceDic = [directions objectForKey:@"sourceLink"];
-                NSDictionary * targetDic = [directions objectForKey:@"targetLink"];
-                
-                NSString * sourceDecoName = [[sourceDic objectForKey:@"_decoratorName"] lowercaseString];
-                NSString * targetDecoName = [[targetDic objectForKey:@"_decoratorName"] lowercaseString];
-                
-                NSDictionary * sourRefeDic = [sourceDic objectForKey:@"anEReference"];
-                NSDictionary * targRefeDic = [targetDic objectForKey:@"anEReference"];
-                
-                NSString * sourceReference = [sourRefeDic objectForKey:@"_href"];
-                NSString * targetReference = [targRefeDic objectForKey:@"_href"];
-                //Split by / ang
-                NSArray * sourceRefArray = [sourceReference componentsSeparatedByString:@"/"];
-                NSString * sClass = [sourceRefArray objectAtIndex:sourceRefArray.count-2];
-                NSString *sPart = [sourceRefArray objectAtIndex:sourceRefArray.count-1];
-                
-                NSArray * targetRefArray = [targetReference componentsSeparatedByString:@"/"];
-                NSString * tClass = [targetRefArray objectAtIndex:targetRefArray.count-2];
-                NSString * tPart = [targetRefArray objectAtIndex:targetRefArray.count-1];
-                
-                
-                item.edgeStyle = edgeStyle;
-                item.sourceDecoratorName = sourceDecoName;
-                item.targetDecoratorName = targetDecoName;
-                item.sourceName = sClass;
-                item.targetName = tClass;
-                item.sourcePart = sPart;
-                item.targetPart = tPart;
-                
-                
-            }
-            
-            
-            
-            //[dele.paletteItems addObject:item];
-            [tempPalete.paletteItems addObject:item];
-            
-            
+        if([listRepresentations isKindOfClass:[NSDictionary class]]){
+            lRArray = [[NSArray alloc] initWithObjects:listRepresentations, nil];
+        }else{
+            lRArray = [[NSArray alloc] init];
         }
         
-        [palettes addObject:tempPalete];
+        
+        for(int i = 0; i< lRArray.count; i++){   //Create a temp palette
+            Palette * tempPalete = [[Palette alloc] init];
+            [tempPalete preparePalette];
+            
+            NSDictionary * allGraphicRepresentation = [lRArray objectAtIndex:i];
+            
+            NSString * paletteName = [allGraphicRepresentation objectForKey:@"_extension"];
+            tempPalete.name = paletteName;
+            tempPalete.name = [[allGraphicRepresentations objectAtIndex:gr]objectForKey:@"_extension"];
+            
+            NSDictionary * layers = [allGraphicRepresentation objectForKey:@"layers"];
+            NSArray * elements = [layers objectForKey:@"elements"];
+            
+            
+            for(int i  = 0; i< elements.count; i++){
+                
+                PaletteItem * item = [[PaletteItem alloc] init];
+                
+                NSDictionary * dic = [elements objectAtIndex:i];
+                NSString * type = [dic objectForKey:@"_xsi:type"];
+                
+                item.type = type;
+                
+                NSDictionary * className = [dic objectForKey:@"anEClass"];
+                NSString * classStr = [className objectForKey:@"_href"];
+                NSArray * arraystr = [classStr componentsSeparatedByString:@"/"];
+                NSString * parsedClass = [arraystr objectAtIndex: arraystr.count -1];
+                item.className = parsedClass;
+                
+                NSDictionary * diagPalette = [dic objectForKey:@"diag_palette"];
+                NSString * paleteName = [diagPalette objectForKey:@"_palette_name"];
+                NSLog(@"\n\ntype: %@     	\n name: %@", type, paleteName);
+                
+                
+                //Is expandable?
+                NSString * expandableStr = [dic objectForKey:@"_expandable"];
+                BOOL isExpandable = [expandableStr boolValue];
+                item.isExpandable = isExpandable;
+                
+                //In order to get node label
+                NSDictionary * nodeElementsDic = [dic objectForKey:@"node_elements"];
+                NSArray * labelAnEAttributeArray = [nodeElementsDic objectForKey:@"LabelanEAttribute"];
+                
+                if([labelAnEAttributeArray isKindOfClass:[NSDictionary class]]){
+                    labelAnEAttributeArray = [[NSArray alloc]initWithObjects:labelAnEAttributeArray, nil];
+                }
+                
+                //labelAnEAttributeArray tendrá un array con el o los atributos que serán label
+                
+                item.labelsAttributesArray = [[NSMutableArray alloc] init];
+                
+                for(int i = 0; i<labelAnEAttributeArray.count; i++){
+                    NSDictionary * labelanEattributeDic = labelAnEAttributeArray[i];
+                    NSDictionary * anEattributeDic = [labelanEattributeDic objectForKey:@"anEAttribute"];
+                    
+                    NSString * labelReference = [anEattributeDic objectForKey:@"_href"];
+                    
+                    NSString * labelPosition = [labelanEattributeDic objectForKey:@"_labelPosition"];
+                    
+                    if(labelPosition == nil){
+                        labelPosition = @"border";
+                    }
+                    item.labelPosition = labelPosition;
+                    
+                    NSArray * parts = [labelReference componentsSeparatedByString:@"/"];
+                    NSString * attrName = [parts objectAtIndex:parts.count-1];
+                    [item.labelsAttributesArray addObject:attrName];
+                }
+                
+                //Get linkPalette
+                NSArray * linkPaletteArray = [nodeElementsDic objectForKey:@"linkPalette"];
+                if([linkPaletteArray isKindOfClass:[NSDictionary class]]){
+                    linkPaletteArray = [NSArray arrayWithObjects:linkPaletteArray, nil];
+                } //linkPaletteArray will hold my connected things
+                
+                item.linkPaletteDic = [[NSMutableDictionary alloc] init];
+                
+                for(NSDictionary * lpDic in linkPaletteArray){
+                    LinkPalette * lp = [[LinkPalette alloc] init];
+                    lp.anDiagramElement = [lpDic objectForKey:@"_anDiagramElement"];
+                    lp.paletteName = [lpDic objectForKey:@"_palette_name"];
+                    lp.targetDecoratorName = [lpDic objectForKey:@"_decoratorName"];
+                    lp.targetDecoratorName = [lp.targetDecoratorName lowercaseString];
+                    NSString * sourceDecName = [lpDic objectForKey:@"_sourceDecoratorName"];
+                    if(sourceDecName == nil){
+                        sourceDecName = NO_DECORATION;
+                    }
+                    lp.sourceDecoratorName = [sourceDecName lowercaseString];
+                    
+                    NSDictionary * refDic =[lpDic objectForKey:@"anEReference"];
+                    lp.anEReference = [refDic objectForKey:@"_href"];
+                    lp.colorDic = [lpDic objectForKey:@"color"];
+                    lp.lineStyle = [lpDic objectForKey:@"_LineStyle"];
+                    
+                    NSArray * classParts = [lp.anEReference componentsSeparatedByString:@"/"];
+                    lp.className = [classParts objectAtIndex:classParts.count -2];
+                    lp.referenceInClass = [classParts objectAtIndex:classParts.count-1];
+                    
+                    [item.linkPaletteDic setObject:lp forKey:lp.referenceInClass];
+                }
+                
+                NSArray * expandableItems = [nodeElementsDic objectForKey:@"expandableItems"];
+                if([expandableItems isKindOfClass:[NSDictionary class]]){
+                    expandableItems = [NSArray arrayWithObjects:expandableItems, nil];
+                }
+                
+                item.expandableItems = [[NSMutableArray alloc] init];
+                
+                for(NSDictionary * expItem in expandableItems){
+
+                    NSDictionary * refDic = [expItem objectForKey:@"anEReference"];
+                    NSString * reference = [refDic objectForKey:@"_href"];  //Con esta referencia marco el palete link como expandable
+                    
+                    NSArray * parts = [reference componentsSeparatedByString:@"/"];
+                    NSString * clasSName = [parts objectAtIndex:parts.count-2];
+                    NSString * refName = parts[parts.count-1];
+                    
+                    NSString * indexStr = [expItem objectForKey:@"_index"];
+                    if(indexStr == nil){
+                        indexStr = @"0";
+                    }
+                    int index = [indexStr intValue];
+                    
+                    NSArray * keys = [item.linkPaletteDic allKeys];
+                    for(NSString * key in keys){
+                        LinkPalette * lp  = [item.linkPaletteDic objectForKey:key];
+                        
+                        if([lp.className isEqualToString:clasSName] && [lp.referenceInClass isEqualToString:refName]){
+                            lp.isExpandableItem = YES;
+                            lp.expandableIndex = index;
+                            [item.expandableItems addObject:lp];
+                        }
+                    }
+                }
+                
+                
+
+                
+                
+                NSString * draggablestr = [diagPalette objectForKey:@"_isDraggable"];
+                if(draggablestr == nil){ //Default = true
+                    item.isDragable = true;
+                }else if([draggablestr isEqualToString:@"true"]){
+                    item.isDragable = true;
+                }else if([draggablestr isEqualToString:@"false"]){
+                    item.isDragable = false;
+                }
+                
+                NSDictionary * containerDic = [dic objectForKey:@"containerReference"];
+                NSString * containerReference = [containerDic objectForKey:@"_href"];
+                item.containerReference = containerReference;
+                
+                
+                item.dialog = parsedClass;
+                
+                NSDictionary * nodeShapeDic = [dic objectForKey:@"node_shape"];
+                NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
+                f.numberStyle = NSNumberFormatterDecimalStyle;
+                
+                if(nodeShapeDic != nil){
+                    NSString * wstr = [nodeShapeDic objectForKey:@"_horizontalDiameter"];
+                    NSString * hstr = [nodeShapeDic objectForKey:@"_verticalDiameter"];
+                    NSString * shapeType = [nodeShapeDic objectForKey:@"_xsi:type"];
+                    
+                    NSDictionary * colorDic = [nodeShapeDic objectForKey:@"color"];
+                    NSString * color = [colorDic objectForKey:@"_name"];
+                    
+                    NSString * sizeStr = [nodeShapeDic objectForKey:@"_size"];
+                    
+                    
+                    NSDictionary * borderColorDic = [nodeShapeDic objectForKey:@"borderColor"];
+                    NSString * borderColorString = [borderColorDic objectForKey:@"_name"];
+                    NSString * borderStyleString = [nodeShapeDic objectForKey:@"_borderStyle"];
+                    NSString * borderWidthString = [nodeShapeDic objectForKey:@"_borderWidth"];
+                    
+                    item.borderColorString = borderColorString;
+                    item.borderColor = [ColorPalette colorForString:borderColorString];
+                    item.borderWidth = [f numberFromString:borderWidthString];
+                    item.borderStyleString = borderStyleString;
+                    
+                    NSNumber * w = [f numberFromString:wstr];
+                    NSNumber * h = [f numberFromString:hstr];
+                    
+                    
+                    if(sizeStr != nil){
+                        //There is size value, but with and height
+                        NSNumber * s = [f numberFromString:sizeStr];
+                        float scaledS = s.floatValue * scale;
+                        item.width = [NSNumber numberWithFloat:scaledS];
+                        item.height = [NSNumber numberWithFloat:scaledS];
+                    }else{
+                        float scaledW = w.floatValue * scale;
+                        float scaledH = h.floatValue * scale;
+                        item.width = [NSNumber numberWithFloat:scaledW];
+                        item.height = [NSNumber numberWithFloat:scaledH];
+                        
+                    }
+                    
+                    
+                    
+                    item.shapeType = shapeType;
+                    
+                    if(color == nil){
+                        item.fillColor = [ColorPalette white];
+                        item.colorString = @"white";
+                    }else{
+                        item.fillColor = [ColorPalette colorForString:color];
+                        item.colorString = color;
+                    }
+                    
+                    if(w.floatValue <= 0.0){
+                        item.width = [NSNumber numberWithFloat:defaultwidth];
+                    }
+                    
+                    if(h.floatValue <= 0.0){
+                        item.height = [NSNumber numberWithFloat:defaultheight];
+                    }
+                    
+                    if([shapeType isEqualToString:@"graphicR:IconElement"]){
+                        item.isImage = YES;
+                        
+                        
+                        NSString * base64String = [nodeShapeDic objectForKey:@"_embeddedImage"];
+                        NSData * imageData = [[NSData alloc] initWithBase64EncodedString:base64String options:0];
+                        
+                        UIImage * image = [UIImage imageWithData:imageData];
+                        
+                        item.image = image;
+                    }
+                }
+                
+                
+                //Set frame
+                if(item.width != nil && item.height != nil){
+                    item.frame = CGRectMake(0, 0, item.width.floatValue , item.height.floatValue);
+                }else{
+                    //Default values
+                    item.frame = CGRectMake(0, 0, defaultwidth, defaultheight);
+                }
+                
+                
+                if([item.type isEqualToString:@"graphicR:Edge"]){
+                    //Extract directions
+                    
+                    NSDictionary * edgeStyleDic = [dic objectForKey:@"edge_style"];
+                    NSString * edgeStyle = [edgeStyleDic objectForKey:@"_color"];
+                    NSDictionary * directions = [dic objectForKey:@"directions"];
+                    
+                    NSString * lineStyle = [edgeStyleDic objectForKey:@"_LineStyle"];
+                    NSString * lineWidth = [edgeStyleDic objectForKey:@"_LineWidth"];
+                    NSDictionary * colorDic = [edgeStyleDic objectForKey:@"color"];
+                    NSString * lineColorName = [colorDic objectForKey:@"_name"];
+                    
+                    if(lineWidth == nil){
+                        item.lineWidth = [NSNumber numberWithFloat:2.0];
+                    }else{
+                        item.lineWidth = [f numberFromString:lineWidth];
+                    }
+                    
+                    if(lineStyle == nil){
+                        item.lineStyle = SOLID;
+                    }else{
+                        item.lineStyle = lineStyle;
+                    }
+                    
+                    if(lineColorName == nil){
+                        item.lineColorNameString = @"black";
+                    }else{
+                        item.lineColorNameString = lineColorName;
+                    }
+                    
+                    
+                    if(lineColorName == nil)
+                        item.lineColor = [ColorPalette colorForString:@"black"];
+                    else
+                        item.lineColor = [ColorPalette colorForString:lineColorName];
+                    
+                    NSDictionary * sourceDic = [directions objectForKey:@"sourceLink"];
+                    NSDictionary * targetDic = [directions objectForKey:@"targetLink"];
+                    
+                    NSString * sourceDecoName = [[sourceDic objectForKey:@"_decoratorName"] lowercaseString];
+                    NSString * targetDecoName = [[targetDic objectForKey:@"_decoratorName"] lowercaseString];
+                    
+                    NSDictionary * sourRefeDic = [sourceDic objectForKey:@"anEReference"];
+                    NSDictionary * targRefeDic = [targetDic objectForKey:@"anEReference"];
+                    
+                    NSString * sourceReference = [sourRefeDic objectForKey:@"_href"];
+                    NSString * targetReference = [targRefeDic objectForKey:@"_href"];
+                    //Split by / ang
+                    NSArray * sourceRefArray = [sourceReference componentsSeparatedByString:@"/"];
+                    NSString * sClass = [sourceRefArray objectAtIndex:sourceRefArray.count-2];
+                    NSString *sPart = [sourceRefArray objectAtIndex:sourceRefArray.count-1];
+                    
+                    NSArray * targetRefArray = [targetReference componentsSeparatedByString:@"/"];
+                    NSString * tClass = [targetRefArray objectAtIndex:targetRefArray.count-2];
+                    NSString * tPart = [targetRefArray objectAtIndex:targetRefArray.count-1];
+                    
+                    
+                    item.edgeStyle = edgeStyle;
+                    item.sourceDecoratorName = sourceDecoName;
+                    item.targetDecoratorName = targetDecoName;
+                    item.sourceName = sClass;
+                    item.targetName = tClass;
+                    item.sourcePart = sPart;
+                    item.targetPart = tPart;
+                    
+                    
+                }
+                
+                
+                
+                //[dele.paletteItems addObject:item];
+                [tempPalete.paletteItems addObject:item];
+                
+                
+            }
+            
+            [palettes addObject:tempPalete];
+        }
+        
+       
+        
     }
     
     
@@ -1260,6 +1363,65 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
         }
         
         
+        dele.noVisibleItems = [[NSMutableArray alloc] init];
+        //Load no visible elements
+        for(NSDictionary * classDic in classes){
+
+            NSString * name = [classDic objectForKey:@"name"];
+            
+            //Check if I don't have a palette item with this name
+            BOOL exists = false;
+            for(PaletteItem * pi in dele.paletteItems){
+                NSString * piClass = pi.className;
+                if([piClass isEqualToString:name]){
+                    exists = true;
+                    break;
+                }
+            }
+            
+            if(exists == false){ //There is no palette item with this class name, add it
+                BOOL isAbstract = [[classDic objectForKey:@"abstract"]boolValue];
+                
+                PaletteItem * pi = [[PaletteItem alloc] init];
+                
+                pi.className = name;
+                
+                
+                pi.attributes = [[NSMutableArray alloc] init];
+                pi.references = [[NSMutableArray alloc] init];
+                pi.parentsClassArray = [[NSMutableArray alloc] init];
+                
+                
+                [self getAttributesForClass:pi.className
+                               onClassArray:classes
+                     storeOnAttributesArray:pi.attributes
+                         andReferencesArray:pi.references];
+                
+                
+                //Tengo los atributos y las referencias para cada clase.
+                
+                //Extraemos las clases padre
+                [self getParentsForClass:pi.className
+                            onClassArray:classes
+                 storeOnParentClassArray:pi.parentsClassArray];
+                
+                
+                
+                //Marcamos los atributos si procede como label
+                for(int i = 0; i< pi.attributes.count; i++){
+                    ClassAttribute * temp = pi.attributes[i];
+                    if([pi.labelsAttributesArray containsObject:temp.name]){ //EL nombre de este atributo está entre los marcados como label
+                        temp.isLabel = YES;
+                    }
+                }
+                
+                [dele.noVisibleItems addObject:pi];
+            }
+            
+            
+        }
+        
+        
         //so we have the JSON, let's get associated ecore
         
         NSString * ecoreContent = [self getEcoreNamed:tempPaletteFile];
@@ -1282,6 +1444,51 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
   storeOnParentClassArray: (NSMutableArray *) parents{
     
     NSDictionary * dic = nil;
+    NSString * name ;
+    
+    for(int i = 0; i< classArray.count; i++){
+        name = nil;
+        dic = [classArray objectAtIndex:i];
+        name = [dic objectForKey:@"name"];
+        
+        NSMutableArray * superClassToProcess = [[NSMutableArray alloc] init];
+        
+        if([name isEqualToString:key]){ //Fill me
+            
+            NSDictionary * hasParentDic = dic;
+            NSArray * itsParents = [hasParentDic objectForKey:@"parents"];
+            for(int p = 0; p< itsParents.count; p++){
+                [superClassToProcess addObject: itsParents[p]];
+            }
+            while(superClassToProcess.count != 0) {
+                
+                NSString * nextToControl = [superClassToProcess objectAtIndex:0];
+                [superClassToProcess removeObjectAtIndex:0];
+                
+                [parents addObject:nextToControl];
+                
+                for(int c = 0; c<classArray.count; c++){
+                    NSDictionary * thisDic = [classArray objectAtIndex:c];
+                    NSString * thisName = [thisDic objectForKey:@"name"];
+                    if([thisName isEqualToString:nextToControl]){
+                        NSArray * ps = [thisDic objectForKey:@"parents"];
+                        for(NSString * otherP in ps){
+                            [superClassToProcess addObject:otherP];
+                        }
+                    }
+                }
+                //add itsParents
+                /*for(int p = 0; p< itsParents.count; p++){
+                    if(![superClassToProcess containsObject:itsParents[p]])
+                        [superClassToProcess addObject:itsParents[p]];
+                }*/
+                
+            }
+        }
+    }
+    
+    int r = 2;
+   /* NSDictionary * dic = nil;
     NSString * name;
     
     NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
@@ -1291,6 +1498,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
         name = nil;
         dic = [classArray objectAtIndex:i];
         name = [dic objectForKey:@"name"];
+        NSArray * thisParents = [dic objectForKey:@"parents"];
         
         if([name isEqualToString:key]){
             NSArray * pars = [dic objectForKey:@"parents"];
@@ -1302,7 +1510,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
                 }
             }
         }
-    }
+    }*/
     //TODO: Recursive
 }
 

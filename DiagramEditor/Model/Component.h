@@ -76,7 +76,14 @@
 
 @property NSMutableArray * parentClassArray;
 
+
+@property NSMutableDictionary * linkPaletteDic;
+
 @property UIView * canvas;
+
+@property NSString * labelPosition;
+
+@property BOOL isExpandable;
 
 
 -(CGPoint)getTopAnchorPoint;
@@ -92,5 +99,8 @@
 
 -(NSMutableArray *)getDraggablePaletteItems;
 
+@property NSMutableArray * expandableItems;
+
 -(void)showAddReferencePopupForConnection: (Connection *)conn;
+-(BOOL)isComponentOfClass:(NSString *)className;
 @end

@@ -115,6 +115,11 @@
     NSData * buffer = [NSKeyedArchiver archivedDataWithRootObject:self.attributes];
     comp.attributes = [NSKeyedUnarchiver unarchiveObjectWithData:buffer];
     
+    
+    //Copy linkPalettes
+    NSData * lidata = [NSKeyedArchiver archivedDataWithRootObject:self.linkPaletteDic];
+    comp.linkPaletteDic = [NSKeyedUnarchiver unarchiveObjectWithData:lidata];
+    
     comp.references = references;
     comp.colorString = [colorString copy];
     
@@ -128,6 +133,14 @@
     comp.borderStyleString = borderStyleString;
     comp.borderColorString = borderColorString;
     comp.borderColor = borderColor;
+    
+    comp.labelPosition = _labelPosition;
+    
+    NSData * dicBuf = [NSKeyedArchiver archivedDataWithRootObject:_linkPaletteDic];
+
+    comp.isExpandable = _isExpandable;
+    NSData * copyExpandableItems = [NSKeyedArchiver archivedDataWithRootObject:_expandableItems];
+    comp.expandableItems = [NSKeyedUnarchiver unarchiveObjectWithData:copyExpandableItems];
 
     
     if(isImage){
@@ -305,31 +318,31 @@
         //Draw decorators
         
         //Source (left)
-        UIBezierPath * pathSource= nil;
+        UIBezierPath * pathSource = nil;
         
-        if([self.targetDecoratorName isEqualToString:NO_DECORATION]){
+        if([self.sourceDecoratorName isEqualToString:NO_DECORATION]){
             pathSource = [Canvas getNoDecoratorPath];
-        }else if([self.targetDecoratorName isEqualToString:INPUT_ARROW]){
+        }else if([self.sourceDecoratorName isEqualToString:INPUT_ARROW]){
             
             pathSource = [Canvas getInputArrowPath];
             
-        }else if([self.targetDecoratorName isEqualToString:DIAMOND]){
+        }else if([self.sourceDecoratorName isEqualToString:DIAMOND]){
             pathSource = [Canvas getDiamondPath];
-        }else if([self.targetDecoratorName isEqualToString:FILL_DIAMOND]){
+        }else if([self.sourceDecoratorName isEqualToString:FILL_DIAMOND]){
             pathSource = [Canvas getDiamondPath];
             
-        }else if([self.targetDecoratorName isEqualToString:INPUT_CLOSED_ARROW]){
+        }else if([self.sourceDecoratorName isEqualToString:INPUT_CLOSED_ARROW]){
             pathSource = [Canvas getInputClosedArrowPath];
             
-        }else if([self.targetDecoratorName isEqualToString:INPUT_FILL_CLOSED_ARROW]){
+        }else if([self.sourceDecoratorName isEqualToString:INPUT_FILL_CLOSED_ARROW]){
             pathSource = [Canvas getInputFillClosedArrowPath];
             
-        }else if([self.targetDecoratorName isEqualToString:OUTPUT_ARROW]){
+        }else if([self.sourceDecoratorName isEqualToString:OUTPUT_ARROW]){
             pathSource = [Canvas getOutputArrowPath];
             
-        }else if([self.targetDecoratorName isEqualToString:OUTPUT_CLOSED_ARROW]){
+        }else if([self.sourceDecoratorName isEqualToString:OUTPUT_CLOSED_ARROW]){
             pathSource = [Canvas getOutputClosedArrowPath];
-        }else if([self.targetDecoratorName isEqualToString:OUTPUT_FILL_CLOSED_ARROW]){
+        }else if([self.sourceDecoratorName isEqualToString:OUTPUT_FILL_CLOSED_ARROW]){
             pathSource = [Canvas getOutputClosedArrowPath];
         }else{ //No decorator
             pathSource = [Canvas getNoDecoratorPath];
@@ -340,9 +353,9 @@
                                                   CGAffineTransformMakeTranslation(fixed.origin.x,fixed.size.height/2 + fixed.origin.y -decoratorSize/2));
         [pathSource applyTransform:transformSource];
         [pathSource stroke];
-        if([self.sourceDecoratorName isEqualToString:@"fillDiamond"] ||
-           [self.sourceDecoratorName isEqualToString:@"inputFillClosedArrow"] ||
-           [self.sourceDecoratorName isEqualToString:@"outputFillClosedArrow"]){
+        if([self.sourceDecoratorName isEqualToString:FILL_DIAMOND] ||
+           [self.sourceDecoratorName isEqualToString:INPUT_FILL_CLOSED_ARROW] ||
+           [self.sourceDecoratorName isEqualToString:OUTPUT_FILL_CLOSED_ARROW]){
             [pathSource fill];
         }
         
@@ -350,29 +363,29 @@
         //Target
         UIBezierPath * pathTarget= nil;
         
-        if([self.sourceDecoratorName isEqualToString:NO_DECORATION]){
+        if([self.targetDecoratorName isEqualToString:NO_DECORATION]){
             pathTarget = [Canvas getNoDecoratorPath];
-        }else if([self.sourceDecoratorName isEqualToString:INPUT_ARROW]){
+        }else if([self.targetDecoratorName isEqualToString:INPUT_ARROW]){
             
             pathTarget = [Canvas getInputArrowPath];
             
-        }else if([self.sourceDecoratorName isEqualToString:DIAMOND]){
+        }else if([self.targetDecoratorName isEqualToString:DIAMOND]){
             pathTarget = [Canvas getDiamondPath];
-        }else if([self.sourceDecoratorName isEqualToString:FILL_DIAMOND]){
+        }else if([self.targetDecoratorName isEqualToString:FILL_DIAMOND]){
             pathTarget = [Canvas getDiamondPath];
             
-        }else if([self.sourceDecoratorName isEqualToString:INPUT_CLOSED_ARROW]){
+        }else if([self.targetDecoratorName isEqualToString:INPUT_CLOSED_ARROW]){
             pathTarget = [Canvas getInputClosedArrowPath];
             
-        }else if([self.sourceDecoratorName isEqualToString:INPUT_FILL_CLOSED_ARROW]){
+        }else if([self.targetDecoratorName isEqualToString:INPUT_FILL_CLOSED_ARROW]){
             pathTarget = [Canvas getInputFillClosedArrowPath];
             
-        }else if([self.sourceDecoratorName isEqualToString:OUTPUT_ARROW]){
+        }else if([self.targetDecoratorName isEqualToString:OUTPUT_ARROW]){
             pathTarget = [Canvas getOutputArrowPath];
             
-        }else if([self.sourceDecoratorName isEqualToString:OUTPUT_CLOSED_ARROW]){
+        }else if([self.targetDecoratorName isEqualToString:OUTPUT_CLOSED_ARROW]){
             pathTarget = [Canvas getOutputClosedArrowPath];
-        }else if([self.sourceDecoratorName isEqualToString:OUTPUT_FILL_CLOSED_ARROW]){
+        }else if([self.targetDecoratorName isEqualToString:OUTPUT_FILL_CLOSED_ARROW]){
             pathTarget = [Canvas getOutputClosedArrowPath];
         }else{ //No decorator
             pathTarget = [Canvas getNoDecoratorPath];
@@ -385,9 +398,9 @@
         [pathTarget applyTransform:transformTarget];
         [pathTarget stroke];
         
-        if([self.sourceDecoratorName isEqualToString:@"fillDiamond"] ||
-           [self.sourceDecoratorName isEqualToString:@"inputFillClosedArrow"] ||
-           [self.sourceDecoratorName isEqualToString:@"outputFillClosedArrow"]){
+        if([self.targetDecoratorName isEqualToString:FILL_DIAMOND] ||
+           [self.targetDecoratorName isEqualToString:INPUT_FILL_CLOSED_ARROW] ||
+           [self.targetDecoratorName isEqualToString:OUTPUT_FILL_CLOSED_ARROW]){
             [pathTarget fill];
         }
 
@@ -439,7 +452,7 @@
     PaletteItem * temp = nil;
     
     for(temp in dele.paletteItems){
-        if([temp.className isEqualToString:sourceName]){
+        if([temp.className isEqualToString:sourceName] || [temp.parentsClassArray containsObject:sourceName]){
             //For each reference
             for(Reference * ref in temp.references){
                 if([ref.name isEqualToString:sourcePart]){
@@ -461,7 +474,7 @@
     PaletteItem * temp = nil;
     
     for(temp in dele.paletteItems){
-        if([temp.className isEqualToString:targetName]){
+        if([temp.className isEqualToString:targetName] || [temp.parentsClassArray containsObject:targetName]){
             //For each reference
             for(Reference * ref in temp.references){
                 if([ref.name isEqualToString:targetPart]){
@@ -473,6 +486,44 @@
     
     
     return result;
+}
+
+
+-(Reference *)getReferenceForName:(NSString *)name{
+    Reference * temp = nil;
+    
+    for(Reference * ref in references){
+        if([ref.name isEqualToString:name])
+            return ref;
+    }
+    
+    return  temp;
+}
+
+-(BOOL)sourceMatchesWithClass:(NSString *)cname{
+
+    if([sourceName isEqualToString:cname] || [parentsClassArray containsObject:sourceName]){
+        return  YES;
+    }else{
+        return NO;
+    }
+}
+
+-(BOOL)targetMatchesWithClass:(NSString *)cname{
+    if([targetName isEqualToString:cname] || [parentsClassArray containsObject:targetName]){
+        return  YES;
+    }else{
+        return NO;
+    }
+}
+
+
+-(BOOL)isPaletteItemOfClass:(NSString *)cname{
+    if([className isEqualToString:cname] || [parentsClassArray containsObject:cname]){
+        return  YES;
+    }else{
+        return NO;
+    }
 }
 
 @end

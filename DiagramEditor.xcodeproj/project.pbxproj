@@ -20,6 +20,8 @@
 		F10CC8EE1CC0E133007F2B11 /* hidePaletteEditor.png in Resources */ = {isa = PBXBuildFile; fileRef = F10CC8ED1CC0E133007F2B11 /* hidePaletteEditor.png */; };
 		F10CC8F01CC518D1007F2B11 /* masterBox.png in Resources */ = {isa = PBXBuildFile; fileRef = F10CC8EF1CC518D1007F2B11 /* masterBox.png */; };
 		F10F0FA31C1AF67000165561 /* ColorPalette.m in Sources */ = {isa = PBXBuildFile; fileRef = F10F0FA21C1AF67000165561 /* ColorPalette.m */; };
+		F130A47E1D12DBDA00BDD212 /* ExpandableItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = F130A47D1D12DBDA00BDD212 /* ExpandableItemView.m */; };
+		F130A4801D12DBE400BDD212 /* ExpandableItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F130A47F1D12DBE400BDD212 /* ExpandableItemView.xib */; };
 		F1391F1C1CBB9765004BAD71 /* SessionUsersView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1391F1B1CBB9765004BAD71 /* SessionUsersView.m */; };
 		F1391F1E1CBB9770004BAD71 /* SessionUsersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1391F1D1CBB9770004BAD71 /* SessionUsersView.xib */; };
 		F13D284F1D0578EA001D953B /* trash0.png in Resources */ = {isa = PBXBuildFile; fileRef = F13D284E1D0578EA001D953B /* trash0.png */; };
@@ -30,6 +32,7 @@
 		F1431E8E1C5249F7006A45BC /* ComponentDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1431E8D1C5249F7006A45BC /* ComponentDetailsView.xib */; };
 		F147B43E1C63507100A8F5E7 /* EdgeListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F147B43D1C63507100A8F5E7 /* EdgeListView.xib */; };
 		F147B4471C63509600A8F5E7 /* EdgeListView.m in Sources */ = {isa = PBXBuildFile; fileRef = F147B4461C63509600A8F5E7 /* EdgeListView.m */; };
+		F14CE3581D103AA3001A37D8 /* LinkPalette.m in Sources */ = {isa = PBXBuildFile; fileRef = F14CE3571D103AA3001A37D8 /* LinkPalette.m */; };
 		F14DBF841C849F4600963AA6 /* MyTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = F14DBF831C849F4600963AA6 /* MyTextField.m */; };
 		F153796F1C919B2F001D8FFB /* ClassesFilterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F153796E1C919B2F001D8FFB /* ClassesFilterView.xib */; };
 		F15379721C919B42001D8FFB /* ClassesFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = F15379711C919B42001D8FFB /* ClassesFilterView.m */; };
@@ -167,6 +170,9 @@
 		F10CC8EF1CC518D1007F2B11 /* masterBox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = masterBox.png; sourceTree = "<group>"; };
 		F10F0FA11C1AF67000165561 /* ColorPalette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPalette.h; sourceTree = "<group>"; };
 		F10F0FA21C1AF67000165561 /* ColorPalette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorPalette.m; sourceTree = "<group>"; };
+		F130A47C1D12DBDA00BDD212 /* ExpandableItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpandableItemView.h; sourceTree = "<group>"; };
+		F130A47D1D12DBDA00BDD212 /* ExpandableItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpandableItemView.m; sourceTree = "<group>"; };
+		F130A47F1D12DBE400BDD212 /* ExpandableItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExpandableItemView.xib; sourceTree = "<group>"; };
 		F1391F1A1CBB9765004BAD71 /* SessionUsersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionUsersView.h; sourceTree = "<group>"; };
 		F1391F1B1CBB9765004BAD71 /* SessionUsersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionUsersView.m; sourceTree = "<group>"; };
 		F1391F1D1CBB9770004BAD71 /* SessionUsersView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SessionUsersView.xib; sourceTree = "<group>"; };
@@ -180,6 +186,8 @@
 		F147B43D1C63507100A8F5E7 /* EdgeListView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EdgeListView.xib; sourceTree = "<group>"; };
 		F147B4451C63509600A8F5E7 /* EdgeListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EdgeListView.h; sourceTree = "<group>"; };
 		F147B4461C63509600A8F5E7 /* EdgeListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EdgeListView.m; sourceTree = "<group>"; };
+		F14CE3561D103AA3001A37D8 /* LinkPalette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkPalette.h; sourceTree = "<group>"; };
+		F14CE3571D103AA3001A37D8 /* LinkPalette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkPalette.m; sourceTree = "<group>"; };
 		F14DBF821C849F4600963AA6 /* MyTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTextField.h; sourceTree = "<group>"; };
 		F14DBF831C849F4600963AA6 /* MyTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTextField.m; sourceTree = "<group>"; };
 		F153796E1C919B2F001D8FFB /* ClassesFilterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClassesFilterView.xib; sourceTree = "<group>"; };
@@ -394,13 +402,26 @@
 				F16C7DC01C577E9100CA9B25 /* Reference.m */,
 				F17A941F1CFC4589008AE1EE /* PathPiece.h */,
 				F17A94201CFC4589008AE1EE /* PathPiece.m */,
+				F14CE3561D103AA3001A37D8 /* LinkPalette.h */,
+				F14CE3571D103AA3001A37D8 /* LinkPalette.m */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		F130A47B1D12DBA200BDD212 /* ExpandableItem */ = {
+			isa = PBXGroup;
+			children = (
+				F130A47C1D12DBDA00BDD212 /* ExpandableItemView.h */,
+				F130A47D1D12DBDA00BDD212 /* ExpandableItemView.m */,
+				F130A47F1D12DBE400BDD212 /* ExpandableItemView.xib */,
+			);
+			name = ExpandableItem;
 			sourceTree = "<group>";
 		};
 		F1431E8C1C5249D4006A45BC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F130A47B1D12DBA200BDD212 /* ExpandableItem */,
 				F1786DE31C561AB100963663 /* AttributeCells */,
 				F15865151C85A4FB007D2E75 /* DetailsViews */,
 				F15865171C85A536007D2E75 /* File explorers */,
@@ -761,6 +782,7 @@
 				F1853A001C52533E0015A9E0 /* StringAttributeTableViewCell.xib in Resources */,
 				F10CC8EE1CC0E133007F2B11 /* hidePaletteEditor.png in Resources */,
 				F14181C91C68DCB600E838F9 /* settings.png in Resources */,
+				F130A4801D12DBE400BDD212 /* ExpandableItemView.xib in Resources */,
 				F16C35C51C98277F006F4255 /* users.png in Resources */,
 				F13D284F1D0578EA001D953B /* trash0.png in Resources */,
 				F1AB3B161C22B19800EDBB1D /* resize.png in Resources */,
@@ -862,6 +884,7 @@
 				F153797D1C91B9EA001D8FFB /* RowSwitchTableViewCell.m in Sources */,
 				F17A93F11CF706E8008AE1EE /* YesOrNoView.m in Sources */,
 				F1786DE81C561AF200963663 /* BooleanAttributeTableViewCell.m in Sources */,
+				F14CE3581D103AA3001A37D8 /* LinkPalette.m in Sources */,
 				F17A94291D003DC0008AE1EE /* TutorialSheet.m in Sources */,
 				F17A94211CFC4589008AE1EE /* PathPiece.m in Sources */,
 				F15A96091C27F69100ACA6FA /* XMLWriter.m in Sources */,
@@ -875,6 +898,7 @@
 				F1685EA51C18294A0094097E /* Component.m in Sources */,
 				F1A20A851C198A540037C05D /* PaletteItem.m in Sources */,
 				F1FEE72B1CE3693200FD4E9B /* ChatTableViewCell.m in Sources */,
+				F130A47E1D12DBDA00BDD212 /* ExpandableItemView.m in Sources */,
 				F17A93EE1CF5EC44008AE1EE /* DrawnAlert.m in Sources */,
 				F18A55E91C845CF500B134F0 /* NoDraggableClassesView.m in Sources */,
 				F16C35C01C98247A006F4255 /* MCManager.m in Sources */,

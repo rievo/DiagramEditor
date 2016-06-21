@@ -93,7 +93,9 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                       reuseIdentifier:MyIdentifier] ;
-        cell.textLabel.text = temp.className;
+        //cell.textLabel.text = temp.className;
+        cell.textLabel.text = temp.dialog;
+        cell.textLabel.minimumScaleFactor = 0.5;
         cell.textLabel.textColor = dele.blue4;
         cell.backgroundColor = [UIColor clearColor];
     }

@@ -21,9 +21,9 @@
     AppDelegate * dele;
     __weak IBOutlet UILabel *classLabel;
     
-    //Component * temp;
-    __weak IBOutlet UITableView *outConnectionsTable;
-    __weak IBOutlet UITableView *attributesTable;
+
+    __weak IBOutlet UITableView *table;
+
     
     NSMutableArray * connections;
     
