@@ -161,6 +161,8 @@
         self.notesArray = [dic objectForKey:@"notesArray"];
         self.drawnsArray = [dic objectForKey:@"drawnsArray"];
         
+        self.noVisibleItems = [dic objectForKey:@"noVisibleItems"];
+        
         loadingADiagram = YES;
         
         
@@ -516,6 +518,10 @@
     //Drawns
     if(drawnsArray != nil)
         [dic setObject:drawnsArray forKey:@"drawnsArray"];
+    
+    //No visible classes
+    if(_noVisibleItems != nil)
+        [dic setObject:_noVisibleItems forKey:@"noVisibleItems"];
     
     
     NSData * data = [NSKeyedArchiver archivedDataWithRootObject:dic];

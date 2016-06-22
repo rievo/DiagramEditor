@@ -265,11 +265,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         if(selected == nil){
             //No hay ningún componente en ese punto, no hacemos nada
         }else{
-            //Hay un componente, los unimos
-            //Los componentes serán self = selected
-            //Self = source   selected = target
             
-            //TODO:
             NSString * canIMakeConnection = [self checkIntegrityForSource:self
                                                                 andTarget:selected];
             
@@ -1237,6 +1233,11 @@ withSelectedComponent:(Component *)comp
     [coder encodeObject:parentClassArray forKey:@"parentClassArray"];
     
     
+    //LinkPalettes
+    [coder encodeObject:_linkPaletteDic forKey:@"linkPaletteDic"];
+    [coder encodeObject:_expandableItems forKey:@"expandableItems"];
+    [coder encodeBool:self.isExpandable forKey:@"isExpandable"];
+    
     
     
 }
@@ -1274,6 +1275,12 @@ withSelectedComponent:(Component *)comp
         
         self.containerReference  = [coder decodeObjectForKey:@"containerReference"];
         self.parentClassArray  = [coder decodeObjectForKey:@"parentClassArray"];
+        
+        
+        self.linkPaletteDic = [coder decodeObjectForKey:@"linkPaletteDic"];
+        self.expandableItems = [coder decodeObjectForKey:@"expandableItems"];
+        
+        self.isExpandable = [coder decodeBoolForKey:@"isExpandable"];
         
         self.backgroundColor = [UIColor clearColor];
         
