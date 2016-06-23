@@ -68,7 +68,9 @@
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="it0-cv-k4l">
                                             <rect key="frame" x="197" y="398" width="34" height="30"/>
-                                            <state key="normal" title="Save"/>
+                                            <state key="normal" title="Save">
+                                                <color key="titleColor" red="0.13333334028720856" green="0.21176470816135406" blue="0.37647059559822083" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
                                             <connections>
                                                 <action selector="confirmInstanceCreation:" destination="iN0-l3-epB" eventType="touchUpInside" id="dmA-aD-5q9"/>
                                             </connections>
@@ -79,7 +81,9 @@
                                                 <constraint firstAttribute="width" constant="48" id="h9H-gd-CXd"/>
                                                 <constraint firstAttribute="height" constant="30" id="zfd-FS-InW"/>
                                             </constraints>
-                                            <state key="normal" title="Cancel"/>
+                                            <state key="normal" title="Cancel">
+                                                <color key="titleColor" red="0.13333334028720856" green="0.21176470816135406" blue="0.37647059559822083" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
                                             <connections>
                                                 <action selector="cancelInstanceCreation:" destination="iN0-l3-epB" eventType="touchUpInside" id="Edn-Jx-NWh"/>
                                             </connections>
@@ -87,15 +91,15 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z0O-Jx-lft">
                                             <rect key="frame" x="8" y="8" width="229" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="textColor" red="0.13333334028720856" green="0.21176470816135406" blue="0.37647059559822083" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="4Yg-9t-C0w">
                                             <rect key="frame" x="0.0" y="37" width="245" height="353"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </tableView>
                                     </subviews>
-                                    <color key="backgroundColor" red="0.1442368891818373" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" red="0.50980395078659058" green="0.56470590829849243" blue="0.67843139171600342" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstItem="Z0O-Jx-lft" firstAttribute="top" secondItem="3fE-bC-KA4" secondAttribute="top" constant="8" id="ENV-qd-N7E"/>
                                         <constraint firstAttribute="width" constant="245" id="GL4-Ej-hBz"/>

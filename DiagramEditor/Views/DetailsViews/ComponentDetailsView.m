@@ -428,6 +428,7 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
         cell.backgroundColor = [UIColor clearColor];
         cell.textLabel.adjustsFontSizeToFitWidth = YES;
         cell.textLabel.minimumScaleFactor = 0.5;
+        cell.textLabel.textColor = dele.blue4;
         cell.textLabel.text = [NSString stringWithFormat:@"%@",lp.paletteName];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;

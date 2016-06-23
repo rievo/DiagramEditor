@@ -760,6 +760,18 @@
         dele.paletteItems = [[NSMutableArray alloc] initWithArray:palette.paletteItems];
         [refreshTimer invalidate];
         
+        
+        UIView * spinnerView = [[UIView alloc] initWithFrame:self.view.frame];
+        spinnerView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+        UIActivityIndicatorView * spinner = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0,
+                                                                                                      0,
+                                                                                                      30, 30)];
+        [spinner setCenter:spinnerView.center];
+        [spinnerView addSubview:spinner];
+        [spinner startAnimating];
+        
+        [self.view addSubview:spinnerView];
+        
         BOOL result = [self completePaletteForJSONAttributes];
         
         if(result == YES){
@@ -767,6 +779,9 @@
             
             [searchSessionsOutlet setOn:NO];
             [dele.manager stopAdvertising];
+            
+            
+            [spinnerView removeFromSuperview];
             
             [self performSegueWithIdentifier:@"showEditor" sender:self];
             
@@ -780,6 +795,8 @@
             [[NSUserDefaults standardUserDefaults] setObject:@"done" forKey:@"configureTutorialStatus"];
             dele.shouldShowConfigureTutorial = NO;
         }else{
+
+            [spinnerView removeFromSuperview];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                             message:@"Json is not accesible"
                                                            delegate:self

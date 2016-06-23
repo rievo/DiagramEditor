@@ -298,13 +298,15 @@
             float modulet = sqrtf(pow(tx, 2) + pow(ty, 2));
             float div = modulet / (count-1);
             
+            float margin = 10;
+            
             
             for(int c = 0; c < connectionsBetweenOutAndIns.count; c++){
                 conn = [connectionsBetweenOutAndIns objectAtIndex:c];
                 
                 
-                CGPoint sourceAnchor = [self getAnchorPointFromComponent:conn.source toComponent:conn.target andRadius:defradius + conn.source.frame.size.width / 2];
-                CGPoint targetAnchor = [self getAnchorPointFromComponent:conn.target toComponent:conn.source andRadius:defradius + conn.target.frame.size.width / 2];
+                CGPoint sourceAnchor = [self getAnchorPointFromComponent:conn.source toComponent:conn.target andRadius:margin + defradius + conn.source.frame.size.width / 2];
+                CGPoint targetAnchor = [self getAnchorPointFromComponent:conn.target toComponent:conn.source andRadius:margin + defradius + conn.target.frame.size.width / 2];
                 
                 
                 
@@ -321,15 +323,22 @@
                 UIBezierPath * line  = [[UIBezierPath alloc] init];
                 [line moveToPoint:sourceAnchor];
                 [line addQuadCurveToPoint:targetAnchor controlPoint:controlPoint];
-                //[line setLineWidth:1.0];
                 
-                [line setLineWidth:conn.lineWidth.floatValue];
+                
+                if(conn.lineWidth == nil){
+                    [line setLineWidth:2.0];
+                }else{
+                    [line setLineWidth:conn.lineWidth.floatValue];
+                }
+                
+                
                 
                 
                 if(conn.lineColor == nil){
                     [[UIColor redColor]setStroke];
-                }else
+                }else{
                     [conn.lineColor setStroke];
+                }
                 
                 
                 
@@ -350,7 +359,7 @@
                 }
                 
                 [line stroke];
-                [line fill];
+                //[line fill];
                 conn.arrowPath = line;
                 conn.controlPoint = controlPoint;
                 
