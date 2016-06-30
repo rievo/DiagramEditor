@@ -58,9 +58,9 @@
     for(PaletteItem * pi in dele.paletteItems){
         if([pi.className isEqualToString:className]){ //Match, retrieve attributes
             
-            NSData * buffer = [ NSKeyedArchiver archivedDataWithRootObject:pi.references];
+            NSData * buffer = [ NSKeyedArchiver archivedDataWithRootObject:pi.attributes];
             NSMutableArray * refs = [NSKeyedUnarchiver unarchiveObjectWithData:buffer];
-            references = refs;
+            attributes = refs;
             break;
         }
     }

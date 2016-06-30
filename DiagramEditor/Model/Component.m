@@ -34,6 +34,9 @@
 #define kMaxScale 2.0
 #define kMinScale 1.0
 
+#define leftMargin 15
+
+#define fontSize 14
 @implementation Component
 
 
@@ -71,11 +74,11 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         textLayer = [[CATextLayer alloc] init];
         
         textLayer.foregroundColor = [UIColor clearColor].CGColor;
-        CGRect rect = CGRectMake(0 - self.bounds.size.width /2, 0-20, self.frame.size.width * 2,20);
+        CGRect rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize/2, self.frame.size.width - 2 * leftMargin,fontSize);
         textLayer.frame = rect;
         textLayer.contentsScale = [UIScreen mainScreen].scale;
         [textLayer setFont:@"Helvetica-Light"];
-        [textLayer setFontSize:14];
+        [textLayer setFontSize:fontSize];
         textLayer.alignmentMode = kCAAlignmentCenter;
         textLayer.truncationMode = kCATruncationStart;
         textLayer.backgroundColor = [UIColor clearColor].CGColor;
@@ -118,7 +121,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
             textLayer = [[CATextLayer alloc] init];
             
             textLayer.foregroundColor = [UIColor blackColor].CGColor;
-            CGRect rect = CGRectMake(0 - self.bounds.size.width /2, 0-20, self.frame.size.width * 2,20);
+            CGRect rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize/2, self.frame.size.width - (2*leftMargin),fontSize);
             textLayer.frame = rect;
             textLayer.contentsScale = [UIScreen mainScreen].scale;
             [textLayer setFont:@"Helvetica-Light"];
@@ -153,7 +156,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     
     textLayer.foregroundColor = [UIColor blackColor].CGColor;
     
-    CGRect rect = CGRectMake(0 - self.bounds.size.width /2, 0-20, self.frame.size.width * 2,20);
+    CGRect rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize/2, self.frame.size.width - (2*leftMargin),fontSize);
     textLayer.frame = rect;
     textLayer.contentsScale = [UIScreen mainScreen].scale;
     [textLayer setFont:@"Helvetica-Light"];
@@ -300,6 +303,9 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
                 conn.sourceDecorator = NO_DECORATION;
                 
                 conn.className = kDefaultConnection;
+                
+                [conn retrieveAttributesForThisClassName];
+                [conn retrieveConnectionGraphicInfo];
                 
                 [dele.connections addObject:conn];
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
@@ -1117,6 +1123,9 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         conn.sourceDecorator = pi.sourceDecoratorName;
         conn.targetDecorator = pi.targetDecoratorName;
         
+        [conn retrieveAttributesForThisClassName];
+        [conn retrieveConnectionGraphicInfo];
+        
         [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
         
         
@@ -1296,7 +1305,7 @@ withSelectedComponent:(Component *)comp
         textLayer = [[CATextLayer alloc] init];
         
         textLayer.foregroundColor = [UIColor clearColor].CGColor;
-        CGRect rect = CGRectMake(0 - self.bounds.size.width /2, 0-20, self.frame.size.width * 2,20);
+        CGRect rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize/2, self.frame.size.width - (2*leftMargin),fontSize);
         textLayer.frame = rect;
         textLayer.contentsScale = [UIScreen mainScreen].scale;
         [textLayer setFont:@"Helvetica-Light"];

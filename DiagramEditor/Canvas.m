@@ -426,8 +426,8 @@
                     
                     CGAffineTransform transformTarget = CGAffineTransformIdentity;
                     transformTarget = CGAffineTransformConcat(transformTarget, CGAffineTransformMakeRotation(angle));
-                    transformTarget = CGAffineTransformConcat(transformTarget, CGAffineTransformMakeTranslation(targetAnchor.x -(cos(angle)*halfDec - sin(angle)*0 ),
-                                                                                                                targetAnchor.y -(sin(angle)*halfDec + cos(angle)*0 )));
+                    transformTarget = CGAffineTransformConcat(transformTarget, CGAffineTransformMakeTranslation(lineEnd.x +(cos(angle)*halfDec - sin(angle)*0 ),
+                                                                                                                lineEnd.y +(sin(angle)*halfDec + cos(angle)*0 )));
                     [pathTarget applyTransform:transformTarget];
                     
                     [conn.lineColor setStroke];

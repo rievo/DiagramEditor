@@ -37,7 +37,7 @@
 #define defaultwidth 50
 #define defaultheight 50
 
-#define scale 25
+#define scale 7
 
 #define xmargin 20
 
@@ -528,14 +528,14 @@
                 f.numberStyle = NSNumberFormatterDecimalStyle;
                 
                 if(nodeShapeDic != nil){
-                    NSString * wstr = [nodeShapeDic objectForKey:@"_horizontalDiameter"];
-                    NSString * hstr = [nodeShapeDic objectForKey:@"_verticalDiameter"];
+                    NSString * wstr = [nodeShapeDic objectForKey:@"_width"];
+                    NSString * hstr = [nodeShapeDic objectForKey:@"_height"];
                     NSString * shapeType = [nodeShapeDic objectForKey:@"_xsi:type"];
                     
                     NSDictionary * colorDic = [nodeShapeDic objectForKey:@"color"];
                     NSString * color = [colorDic objectForKey:@"_name"];
                     
-                    NSString * sizeStr = [nodeShapeDic objectForKey:@"_size"];
+                    //NSString * sizeStr = [nodeShapeDic objectForKey:@"_size"];
                     
                     
                     NSDictionary * borderColorDic = [nodeShapeDic objectForKey:@"borderColor"];
@@ -551,8 +551,12 @@
                     NSNumber * w = [f numberFromString:wstr];
                     NSNumber * h = [f numberFromString:hstr];
                     
+                    float scaledW = w.floatValue * scale;
+                    float scaledH = h.floatValue * scale;
+                    item.width = [NSNumber numberWithFloat:scaledW];
+                    item.height = [NSNumber numberWithFloat:scaledH];
                     
-                    if(sizeStr != nil){
+                    /*if(sizeStr != nil){
                         //There is size value, but with and height
                         NSNumber * s = [f numberFromString:sizeStr];
                         float scaledS = s.floatValue * scale;
@@ -564,7 +568,7 @@
                         item.width = [NSNumber numberWithFloat:scaledW];
                         item.height = [NSNumber numberWithFloat:scaledH];
                         
-                    }
+                    }*/
                     
                     
                     
