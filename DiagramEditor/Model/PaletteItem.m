@@ -498,21 +498,60 @@
     return  temp;
 }
 
--(BOOL)sourceMatchesWithClass:(NSString *)cname{
+-(BOOL)sourceMatchesWithComponent:(Component *)source{ //cname -> Clase del nodo source
+    
+    NSString * sourceRefName = sourcePart;
+    Reference * ref = [self getReferenceForName:sourceRefName];
+    
+    if(ref == nil){
+        return NO;
+    }else{
+        NSString * trgClass = ref.target;
+        
+        NSString * class = source.className;
+        
+        if([class isEqualToString:trgClass] || [source.parentClassArray containsObject:trgClass]){
+            return YES;
+        }else{
+            return NO;
+        }
+    }
 
-    if([sourceName isEqualToString:cname] || [parentsClassArray containsObject:sourceName]){
+    /*if([sourceName isEqualToString:cname] || [parentsClassArray containsObject:sourceName]){
         return  YES;
     }else{
         return NO;
-    }
+    }*/
+    return NO;
 }
 
--(BOOL)targetMatchesWithClass:(NSString *)cname{
-    if([targetName isEqualToString:cname] || [parentsClassArray containsObject:targetName]){
+-(BOOL)targetMatchesWithComponent:(Component *)targetNode{
+    /*if([targetName isEqualToString:cname] || [parentsClassArray containsObject:targetName]){
         return  YES;
     }else{
         return NO;
+    }*/
+    
+    NSString * targetRefName = targetPart;
+    Reference * ref = [self getReferenceForName:targetRefName];
+    
+    if(ref == nil){
+        return NO;
+    }else{
+        NSString * trgClass = ref.target;
+        
+        NSString * class = targetNode.className;
+        
+        if([class isEqualToString:trgClass] || [targetNode.parentClassArray containsObject:trgClass]){
+            return YES;
+        }else{
+            return NO;
+        }
     }
+    
+    
+    
+    return NO;
 }
 
 

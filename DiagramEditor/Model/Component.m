@@ -808,9 +808,13 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     for(PaletteItem * pi in dele.paletteItems){
         if([pi.type isEqualToString:@"graphicR:Edge"]){
 
-            if([pi sourceMatchesWithClass:source.className] && [pi targetMatchesWithClass:target.className]){
+            /*if([pi sourceMatchesWithClass:source] && [pi targetMatchesWithClass:target]){
+                [edgesArray addObject:pi];
+            }*/
+            if([pi sourceMatchesWithComponent:source] && [pi targetMatchesWithComponent:target]){
                 [edgesArray addObject:pi];
             }
+            
         }
     }
     

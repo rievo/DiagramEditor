@@ -25,7 +25,7 @@
 
 @implementation AppDelegate
 
-@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR, evc, blue0, blue1, blue2, elementsDictionary, manager, ecoreContent, loadingADiagram, fingeredComponent, serverId, currentMasterId, myPeerInfo, myUUIDString, chat, notesArray, drawnsArray, missedServerAttemps, editorTutorialStatus, configureTutorialStatus, shouldShowConfigureTutorial, shouldShowEditorTutorial;
+@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR, evc, blue0, blue1, blue2, elementsDictionary, manager, ecoreContent, loadingADiagram, fingeredComponent, serverId, currentMasterId, myPeerInfo, myUUIDString, chat, notesArray, drawnsArray, missedServerAttemps, editorTutorialStatus, configureTutorialStatus, shouldShowConfigureTutorial, shouldShowEditorTutorial, colorDic;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -40,8 +40,14 @@
     blue3 = [[UIColor alloc]initWithRed:58/256.0 green:78/256.0 blue:120/256.0 alpha:1.0];
     blue4 = [[UIColor alloc]initWithRed:34/256.0 green:54/256.0 blue:96/256.0 alpha:1.0];
     
+    
+    colorDic = [[NSMutableDictionary alloc] init];
+    
     //_myColor = [UIColor blackColor];
     _myColor = [[ColorPalette colorArray]objectAtIndex:0];
+    
+    if(myPeerInfo.peerID.displayName != nil)
+        [colorDic setObject:_myColor forKey:myPeerInfo.peerID.displayName];
     
     _showingAnnotations = NO;
     _selectedDrawn = nil;
@@ -367,6 +373,11 @@
             [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
         }else{ //Somebody is the new master
             NSLog(@"I'm not the receiver, just ignore this");
+        }
+        
+        if([self amITheServer]){
+            UIColor * newColor = [dataDic objectForKey:@"color"];
+            [colorDic setObject:newColor forKey:who.displayName];
         }
     }else if([msg isEqualToString:kNewDrawn]){
         

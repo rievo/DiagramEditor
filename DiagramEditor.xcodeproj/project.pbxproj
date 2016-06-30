@@ -127,6 +127,8 @@
 		F1B789931C60F045001B6DB4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1B789921C60F045001B6DB4 /* UIKit.framework */; };
 		F1B789991C60F064001B6DB4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1B789981C60F064001B6DB4 /* CoreGraphics.framework */; };
 		F1B7899B1C610292001B6DB4 /* Minus-100.png in Resources */ = {isa = PBXBuildFile; fileRef = F1B7899A1C610292001B6DB4 /* Minus-100.png */; };
+		F1BC049C1D1C1025000F059C /* SessionUserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1BC049B1D1C1025000F059C /* SessionUserCell.xib */; };
+		F1BC049F1D1C103D000F059C /* SessionUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BC049E1D1C103D000F059C /* SessionUserCell.m */; };
 		F1C417B81CB66F120075234C /* CustomTableHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = F1C417B71CB66F120075234C /* CustomTableHeader.m */; };
 		F1C417BA1CB66F2D0075234C /* CustomTableHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1C417B91CB66F2D0075234C /* CustomTableHeader.xib */; };
 		F1C6347B1C2842C30072912D /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C6347A1C2842C30072912D /* camera.png */; };
@@ -324,6 +326,9 @@
 		F1B789961C60F05D001B6DB4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F1B789981C60F064001B6DB4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		F1B7899A1C610292001B6DB4 /* Minus-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Minus-100.png"; sourceTree = "<group>"; };
+		F1BC049B1D1C1025000F059C /* SessionUserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SessionUserCell.xib; sourceTree = "<group>"; };
+		F1BC049D1D1C103D000F059C /* SessionUserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionUserCell.h; sourceTree = "<group>"; };
+		F1BC049E1D1C103D000F059C /* SessionUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionUserCell.m; sourceTree = "<group>"; };
 		F1C417B61CB66F120075234C /* CustomTableHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableHeader.h; sourceTree = "<group>"; };
 		F1C417B71CB66F120075234C /* CustomTableHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableHeader.m; sourceTree = "<group>"; };
 		F1C417B91CB66F2D0075234C /* CustomTableHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomTableHeader.xib; sourceTree = "<group>"; };
@@ -530,6 +535,9 @@
 				F1391F1A1CBB9765004BAD71 /* SessionUsersView.h */,
 				F1391F1B1CBB9765004BAD71 /* SessionUsersView.m */,
 				F1391F1D1CBB9770004BAD71 /* SessionUsersView.xib */,
+				F1BC049B1D1C1025000F059C /* SessionUserCell.xib */,
+				F1BC049D1D1C103D000F059C /* SessionUserCell.h */,
+				F1BC049E1D1C103D000F059C /* SessionUserCell.m */,
 			);
 			path = MultipeerConnectivity;
 			sourceTree = "<group>";
@@ -816,6 +824,7 @@
 				F16733F01CBBD6C000E76C3A /* downArrowBlack.png in Resources */,
 				F153796F1C919B2F001D8FFB /* ClassesFilterView.xib in Resources */,
 				F19C25901C43AB8B0002E490 /* palette.png in Resources */,
+				F1BC049C1D1C1025000F059C /* SessionUserCell.xib in Resources */,
 				F15BE9FF1CABC60E00EDABA5 /* hidePaletteEditorOld.png in Resources */,
 				F1801F3D1C77413E005BA437 /* localFilled.png in Resources */,
 				F1801F3B1C774137005BA437 /* cloudFilled.png in Resources */,
@@ -880,6 +889,7 @@
 				F15A96091C27F69100ACA6FA /* XMLWriter.m in Sources */,
 				F163AFF11C7B1B6800BAE67C /* NoDraggableComponentView.m in Sources */,
 				F147B4471C63509600A8F5E7 /* EdgeListView.m in Sources */,
+				F1BC049F1D1C103D000F059C /* SessionUserCell.m in Sources */,
 				F1431E8B1C524127006A45BC /* ClassAttribute.m in Sources */,
 				F1685E9F1C1827FB0094097E /* ConfigureDiagramViewController.m in Sources */,
 				F1786DEC1C56222B00963663 /* GenericAttributeTableViewCell.m in Sources */,

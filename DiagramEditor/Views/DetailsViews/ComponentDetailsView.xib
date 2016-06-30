@@ -121,6 +121,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="background" destination="oA1-q2-efZ" id="VFs-Oe-dZm"/>
+                <outlet property="blurView" destination="oA1-q2-efZ" id="twD-ey-T09"/>
                 <outlet property="classLabel" destination="0yh-dn-1P4" id="9nO-B3-PZE"/>
                 <outlet property="containerView" destination="XdL-iG-QHV" id="Urq-Ir-7gR"/>
                 <outlet property="previewComponentView" destination="F5G-Xd-gpG" id="73f-vf-lMC"/>

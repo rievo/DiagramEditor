@@ -521,7 +521,7 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 {
     
     [self endEditing:YES];
-    if (touch.view != background) { // accept only touchs on superview, not accept touchs on subviews
+    if (touch.view != background || touch.view != blurView) { // accept only touchs on superview, not accept touchs on subviews
         return NO;
     }
     

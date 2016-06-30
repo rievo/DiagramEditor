@@ -98,6 +98,8 @@
 
 @property NSMutableArray * noVisibleItems;
 
+@property NSMutableDictionary * colorDic;
+
 -(int)getOutConnectionsForComponent: (Component *)comp
                              ofType: (NSString * )type;
 -(int)getInConnectionsForComponent: (Component *)comp

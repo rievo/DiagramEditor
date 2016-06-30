@@ -27,6 +27,7 @@
     
     NSMutableArray * connections;
     
+    __weak IBOutlet UIView *blurView;
     UITapGestureRecognizer * tapgr;
     id delegate;
     __weak IBOutlet UIView *containerView;

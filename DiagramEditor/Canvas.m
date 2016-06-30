@@ -292,7 +292,7 @@
             
             
             //Vector unitario, t va de w a z
-            float tx = zx -wx;
+             float tx = zx -wx;
             float ty = zy - wy;
             
             float modulet = sqrtf(pow(tx, 2) + pow(ty, 2));
@@ -305,10 +305,15 @@
                 conn = [connectionsBetweenOutAndIns objectAtIndex:c];
                 
                 
-                CGPoint sourceAnchor = [self getAnchorPointFromComponent:conn.source toComponent:conn.target andRadius:margin + defradius + conn.source.frame.size.width / 2];
-                CGPoint targetAnchor = [self getAnchorPointFromComponent:conn.target toComponent:conn.source andRadius:margin + defradius + conn.target.frame.size.width / 2];
+                
+                //Línea
+                CGPoint lineStart = [self getAnchorPointFromComponent:conn.source toComponent:conn.target andRadius:margin + defradius + conn.source.frame.size.width / 2 + decoratorSize];
+                CGPoint lineEnd = [self getAnchorPointFromComponent:conn.target toComponent:conn.source andRadius:margin + defradius + conn.target.frame.size.width / 2 + decoratorSize];
                 
                 
+                //Decorators
+                CGPoint sourceAnchor = [self getAnchorPointFromComponent:conn.source toComponent:conn.target andRadius:margin + defradius + conn.source.frame.size.width / 2 ];
+                CGPoint targetAnchor = [self getAnchorPointFromComponent:conn.target toComponent:conn.source andRadius:margin + defradius + conn.target.frame.size.width / 2 ];
                 
                 float px = wx + (tx*div*c/modulet);
                 float py = wy + (ty*div*c/modulet);
@@ -321,8 +326,8 @@
                 //El bezier path va a pasar por px, py
                 CGPoint controlPoint = CGPointMake(px, py);
                 UIBezierPath * line  = [[UIBezierPath alloc] init];
-                [line moveToPoint:sourceAnchor];
-                [line addQuadCurveToPoint:targetAnchor controlPoint:controlPoint];
+                [line moveToPoint:lineStart];
+                [line addQuadCurveToPoint:lineEnd controlPoint:controlPoint];
                 
                 
                 if(conn.lineWidth == nil){
@@ -387,7 +392,8 @@
                 //Target
                 
                 if([conn.targetDecorator isEqualToString:NO_DECORATION]){
-                    pathTarget = [Canvas getNoDecoratorPath];
+                    //pathTarget = [Canvas getNoDecoratorPath];
+                    pathTarget = nil;
                 }else if([conn.targetDecorator isEqualToString:INPUT_ARROW]){
                     
                     pathTarget = [Canvas getInputArrowPath];
@@ -411,36 +417,40 @@
                 }else if([conn.targetDecorator isEqualToString:OUTPUT_FILL_CLOSED_ARROW]){
                     pathTarget = [Canvas getOutputClosedArrowPath];
                 }else{ //No decorator
-                    pathTarget = [Canvas getNoDecoratorPath];
+                    //pathTarget = [Canvas getNoDecoratorPath];
+                    pathTarget = nil;
                 }
                 
                 
-                
-                
-                
-                CGAffineTransform transformTarget = CGAffineTransformIdentity;
-                transformTarget = CGAffineTransformConcat(transformTarget, CGAffineTransformMakeRotation(angle));
-                transformTarget = CGAffineTransformConcat(transformTarget, CGAffineTransformMakeTranslation(targetAnchor.x -(cos(angle)*halfDec - sin(angle)*0 ),
-                                                                                                            targetAnchor.y -(sin(angle)*halfDec + cos(angle)*0 )));
-                [pathTarget applyTransform:transformTarget];
-                
-                [conn.lineColor setStroke];
-                [conn.lineColor setFill];
-                
-                
-                [pathTarget stroke];
-                if([conn.targetDecorator isEqualToString:FILL_DIAMOND] ||
-                   [conn.targetDecorator isEqualToString:INPUT_FILL_CLOSED_ARROW] ||
-                   [conn.targetDecorator isEqualToString:OUTPUT_FILL_CLOSED_ARROW]){
-                    [pathTarget fill];
+                if(pathTarget != nil){
+                    
+                    CGAffineTransform transformTarget = CGAffineTransformIdentity;
+                    transformTarget = CGAffineTransformConcat(transformTarget, CGAffineTransformMakeRotation(angle));
+                    transformTarget = CGAffineTransformConcat(transformTarget, CGAffineTransformMakeTranslation(targetAnchor.x -(cos(angle)*halfDec - sin(angle)*0 ),
+                                                                                                                targetAnchor.y -(sin(angle)*halfDec + cos(angle)*0 )));
+                    [pathTarget applyTransform:transformTarget];
+                    
+                    [conn.lineColor setStroke];
+                    [conn.lineColor setFill];
+                    
+                    
+                    [pathTarget stroke];
+                    if([conn.targetDecorator isEqualToString:FILL_DIAMOND] ||
+                       [conn.targetDecorator isEqualToString:INPUT_FILL_CLOSED_ARROW] ||
+                       [conn.targetDecorator isEqualToString:OUTPUT_FILL_CLOSED_ARROW]){
+                        [pathTarget fill];
+                    }
+                    
                 }
                 
+
                 
                 //Source, igual que el target, pero cambia el punto de la transformación
                 
                 
                 if([conn.targetDecorator isEqualToString:NO_DECORATION]){
-                    pathSource = [Canvas getNoDecoratorPath];
+                    //pathSource = [Canvas getNoDecoratorPath];
+                    pathSource = nil;
                 }else if([conn.sourceDecorator isEqualToString:INPUT_ARROW]){
                     
                     pathSource = [Canvas getInputArrowPath];
@@ -465,26 +475,31 @@
                     pathSource = [Canvas getOutputClosedArrowPath];
                 }else{ //No decorator
                     pathSource = [Canvas getNoDecoratorPath];
+                    pathSource = nil;
                 }
                 
-                CGAffineTransform transformSource = CGAffineTransformIdentity;
-                transformSource = CGAffineTransformConcat(transformSource, CGAffineTransformMakeRotation(angle + M_PI));
-                transformSource = CGAffineTransformConcat(transformSource,
-                                                          CGAffineTransformMakeTranslation(sourceAnchor.x -(cos(angle +M_PI)*halfDec - sin(angle+M_PI)*0 ),
-                                                                                           sourceAnchor.y -(sin(angle+M_PI)*halfDec + cos(angle+M_PI)*0 )));
-                [pathSource applyTransform:transformSource];
                 
-                
-                [conn.lineColor setStroke];
-                [conn.lineColor setFill];
-                
-                
-                [pathSource stroke];
-                if([conn.sourceDecorator isEqualToString:FILL_DIAMOND] ||
-                   [conn.sourceDecorator isEqualToString:INPUT_FILL_CLOSED_ARROW] ||
-                   [conn.sourceDecorator isEqualToString:OUTPUT_FILL_CLOSED_ARROW]){
-                    [pathSource fill];
+                if(pathSource != nil){
+                    CGAffineTransform transformSource = CGAffineTransformIdentity;
+                    transformSource = CGAffineTransformConcat(transformSource, CGAffineTransformMakeRotation(angle + M_PI));
+                    transformSource = CGAffineTransformConcat(transformSource,
+                                                              CGAffineTransformMakeTranslation(lineStart.x +(cos(angle +M_PI)*halfDec - sin(angle+M_PI)*0 ),
+                                                                                               lineStart.y +(sin(angle+M_PI)*halfDec + cos(angle+M_PI)*0 )));
+                    [pathSource applyTransform:transformSource];
+                    
+                    
+                    [conn.lineColor setStroke];
+                    [conn.lineColor setFill];
+                    
+                    
+                    [pathSource stroke];
+                    if([conn.sourceDecorator isEqualToString:FILL_DIAMOND] ||
+                       [conn.sourceDecorator isEqualToString:INPUT_FILL_CLOSED_ARROW] ||
+                       [conn.sourceDecorator isEqualToString:OUTPUT_FILL_CLOSED_ARROW]){
+                        [pathSource fill];
+                    }
                 }
+                
                 
                 
             }
@@ -547,7 +562,7 @@
     }
     
     
-    
+    /*
     
     NSDictionary * dic = @{NSForegroundColorAttributeName: fontColor,
                            NSFontAttributeName: font};
@@ -583,7 +598,7 @@
     
     
     
-    
+    */
     
     
     

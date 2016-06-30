@@ -445,6 +445,10 @@
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
     [alert show];
+    
+    //Remove
+    [grayView removeFromSuperview];
+    grayView = nil;
 }
 
 
@@ -456,6 +460,12 @@
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
     [alert show];
+    
+    //Remove grayview
+    [grayView removeFromSuperview];
+    grayView = nil;
+    
+    
     //Ignoro las actualizaciones del servidor
     
     //Hide ask for master
@@ -1766,7 +1776,7 @@
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
     {
         SLComposeViewController *tweet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
-        [tweet setInitialText:@"I just edited a new model"];
+        [tweet setInitialText:@"I just edited a new model with DSL-Comet https://appsto.re/es/sUlScb.i"];
         [tweet addImage:image];
         [tweet setCompletionHandler:^(SLComposeViewControllerResult result)
          {
@@ -2223,6 +2233,19 @@
         [askForMasterButton setHidden:YES];
         [chatButton setHidden:NO];
     }else{
+        
+        grayView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, askForMasterButton.frame.size.width, askForMasterButton.frame.size.height)];
+        [grayView setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.5]];
+        
+        UIActivityIndicatorView * spinner = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+        spinner.center = grayView.center;
+        spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+        [grayView addSubview:spinner];
+        [spinner startAnimating];
+        
+        
+        [askForMasterButton addSubview:grayView];
+        
         NSError * error = nil;
         // NSArray * peers = [[NSArray alloc] initWithObjects:dele.manager, nil];
         

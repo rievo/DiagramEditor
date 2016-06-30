@@ -90,6 +90,6 @@
 
 -(BOOL)isPaletteItemOfClass:(NSString *)cname;
 
--(BOOL)sourceMatchesWithClass:(NSString *)cname;
--(BOOL)targetMatchesWithClass:(NSString *)cname;
+-(BOOL)targetMatchesWithComponent:(Component *)targetNode;
+-(BOOL)sourceMatchesWithComponent:(Component *)source;
 @end

@@ -141,6 +141,9 @@ DrawingViewDelegate
     float originalSheetHeight;
     __weak IBOutlet UIButton *findOutlet;
     __weak IBOutlet UIButton *changePaletteOutlet;
+    
+    
+    UIView * grayView;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
