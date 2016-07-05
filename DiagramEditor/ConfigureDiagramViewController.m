@@ -97,11 +97,11 @@
     [palettesTable setDataSource:self];
     [palettesTable setDelegate:self];
     
-    
+    /*
     UILongPressGestureRecognizer * longp = [[UILongPressGestureRecognizer alloc] initWithTarget:self
                                                                                          action:@selector(showInfo)];
     longp.minimumPressDuration = 3.0;
-    [myInfo addGestureRecognizer:longp];
+    [myInfo addGestureRecognizer:longp];*/
     
     filesArray = [[NSMutableArray alloc] init];
     [filesTable setDataSource:self];
@@ -110,9 +110,9 @@
     
     
     
-    //Load files from server
+    //Load palettes from server
     NSThread * thread = [[NSThread alloc] initWithTarget:self
-                                                selector:@selector(loadFilesFromServer)
+                                                selector:@selector(loadPalettesFromServer)
                                                   object:nil];
     [thread start];
     
@@ -250,9 +250,12 @@
     
 }
 
--(void)loadFilesFromServer{
-    NSLog(@"Loading files from server");
-    NSURL *url = [NSURL URLWithString:getPalettes];
+-(void)loadPalettesFromServer{
+    NSLog(@"Loading palettes from server");
+    NSNumber * versionNumber =  [NSNumber numberWithInteger:graphicRVersion];
+    NSString * urlStr = [NSString stringWithFormat:@"%@&version=%@", getPalettes, [versionNumber description]];
+    //NSURL *url = [NSURL URLWithString:getPalettes];
+    NSURL *url = [NSURL URLWithString:urlStr];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
@@ -825,19 +828,30 @@
     [dele.manager stopAdvertising];
 }
 
-
--(void)showInfo{
-    NSString * str = @"D_i^e_^g_^o V_a^q^e_r_o M^e_l_c__h^^o_r";
-    str = [str stringByReplacingOccurrencesOfString:@"_" withString:@""];
-    str = [str stringByReplacingOccurrencesOfString:@"^" withString:@""];
+- (IBAction)showInfo:(id)sender {
+    NSString * str = @"Created in Miso Group \nhttp://www.miso.es\n\nCreated by \nDiego Vaquero Melchor";
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
-                                                    message:str
-                                                   delegate:self
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-    [alert show];
+    UIAlertController * alert=   [UIAlertController
+                                  alertControllerWithTitle:@"Info"
+                                  message:str
+                                  preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* ok = [UIAlertAction
+                         actionWithTitle:@"OK"
+                         style:UIAlertActionStyleDefault
+                         handler:^(UIAlertAction * action)
+                         {
+                             [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                         }];
+    
+    [alert addAction:ok];
+
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
+
+
 
 #pragma mark UItableView delegate methods
 
@@ -862,17 +876,39 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;    //count of section
+    if(tableView == filesTable){
+        return 2; //One for local files and one for server files
+    }else if(tableView == palettesTable){
+        return 1;
+    }else
+        return 0;
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
+    
+    localPalettes = [[NSMutableArray alloc] init];
+    serverPalettes = [[NSMutableArray alloc] init];
+    
+    for(PaletteFile * pf in filesArray){
+        if(pf.fromServer == YES){
+            [serverPalettes addObject:pf];
+        }else{
+            [localPalettes addObject:pf];
+        }
+    }
+    
     if(tableView == palettesTable)
         return [palettes count];
-    else if(tableView == filesTable)
-        return [filesArray count];
-    
+    else if(tableView == filesTable){
+        //return [filesArray count];
+        if(section == 0){ //Local palettes
+            return localPalettes.count;
+        }else{ //Server palettes
+            return serverPalettes.count;
+        }
+    }
     else
         return 0;
 }
@@ -899,6 +935,25 @@
         Palette * temp = [palettes objectAtIndex:indexPath.row];
         cell.textLabel.text = temp.name;
     }else if(tableView == filesTable){
+        
+        PaletteFile * pf = nil;
+        UIImage * image = nil;
+        if(indexPath.section == 0){ //Local palettes
+            pf = [localPalettes objectAtIndex:indexPath.row];
+            image = [UIImage imageNamed:@"localFilled"];
+            NSArray * array = [pf.name componentsSeparatedByString:@"."];
+            cell.textLabel.text = array[0];
+            cell.accessoryView = [[ UIImageView alloc ] initWithImage:image];
+            [cell.accessoryView setFrame:CGRectMake(0, 0, 20, 20)];
+        }else if(indexPath.section == 1){ //Server palettes
+            pf = [serverPalettes objectAtIndex:indexPath.row];
+            image = [UIImage imageNamed:@"cloudFilled"];
+            NSArray * array = [pf.name componentsSeparatedByString:@"."];
+            cell.textLabel.text = array[0];
+            cell.accessoryView = [[ UIImageView alloc ] initWithImage:image];
+            [cell.accessoryView setFrame:CGRectMake(0, 0, 20, 20)];
+        }
+        /*
         UIImage * image ;
         
         
@@ -913,7 +968,7 @@
         NSArray * array = [pf.name componentsSeparatedByString:@"."];
         cell.textLabel.text = array[0];
         cell.accessoryView = [[ UIImageView alloc ] initWithImage:image];
-        [cell.accessoryView setFrame:CGRectMake(0, 0, 20, 20)];
+        [cell.accessoryView setFrame:CGRectMake(0, 0, 20, 20)];*/
         
     }
     
@@ -978,8 +1033,15 @@
         
     }else if(tableView == filesTable){
         [folder setHidden:YES];
+        [infoButton setHidden:YES];
         //[palette resetPalette];
-        PaletteFile * file = [filesArray objectAtIndex:indexPath.row];
+        PaletteFile * file = nil;
+        if(indexPath.section == 0){ //Local palettes
+            file = [localPalettes objectAtIndex:indexPath.row];
+        }else{ //server palettes
+            file = [serverPalettes objectAtIndex:indexPath.row];
+        }
+        [filesArray objectAtIndex:indexPath.row];
         tempPaletteFile = file.name;
         
         dele.graphicRContent = file.content;
@@ -1064,6 +1126,36 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+
+        UILabel *myLabel = [[UILabel alloc] init];
+
+        myLabel.frame = CGRectMake(0, 0, tableView.frame.size.width, 25);
+        myLabel.font = [UIFont boldSystemFontOfSize:16];
+        myLabel.text = [self tableView:tableView titleForHeaderInSection:section];
+        myLabel.textColor = dele.blue1;
+        myLabel.textAlignment = NSTextAlignmentCenter;
+        myLabel.backgroundColor = dele.blue4;
+        
+        UIView *headerView = [[UIView alloc] init];
+        [headerView addSubview:myLabel];
+        
+        return headerView;
+
+    
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    if(tableView == filesTable){
+        if(section == 0){
+            return @"Local palettes";
+        }else{
+            return @"Palettes from server";
+        }
+    }else{
+        return @"Subpalettes";
+    }
+}
 
 -(NSArray *)tableView:(UITableView *)tableView
 editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -2412,6 +2504,8 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [folder setHidden:NO];
     
+    [infoButton setHidden:NO];
+    
     [palette resetPalette];
     
     palette.paletteItems = [[NSMutableArray alloc ]init];
@@ -2480,7 +2574,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
 - (IBAction)reloadServerPalettes:(id)sender {
     //Load files from server
     NSThread * thread = [[NSThread alloc] initWithTarget:self
-                                                selector:@selector(loadFilesFromServer)
+                                                selector:@selector(loadPalettesFromServer)
                                                   object:nil];
     [thread start];
 }

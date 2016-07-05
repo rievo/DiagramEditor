@@ -98,6 +98,8 @@
     
     //[attributesTable reloadData];
     
+    classLabel.text = connection.className;
+    
     
     sourceComponentViewContainer.backgroundColor = [UIColor clearColor];
     targetComponentViewContainer.backgroundColor = [UIColor clearColor];
@@ -185,6 +187,21 @@
         
     }
 }
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    CustomTableHeader * head = [[[NSBundle mainBundle]loadNibNamed:@"CustomTableHeader" owner:self options:nil]objectAtIndex:0];
+    if(section == 0){ //Attributes
+        return head.bounds.size.height;
+    }else if(section == 1){ //Instances
+        if(associatedComponentsArray.count == 0){
+            return 0;
+        }else{
+            return head.bounds.size.height;
+        }
+    }else{
+        return 0;
+    }
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
@@ -195,9 +212,9 @@
         else
             return attributesArray.count;
     }else if(section == 1){ //Instances
-        if(instancesCollapsed == YES)
-            return 0;
-        else
+        //if(instancesCollapsed == YES)
+        //    return 0;
+        //else
             return  associatedComponentsArray.count;
     }else{
         return 0;
@@ -403,14 +420,22 @@
         }
         
     }else if(section == 1){ //Instances
-        head.sectionNameLabel.text = @"References";
-        head.countLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)associatedComponentsArray.count];
-        if(instancesCollapsed == true){
-            head.openCloseOutlet.image  = [UIImage imageNamed:@"rightArrow"];
-            
+        
+        if(associatedComponentsArray.count == 0){
+            return nil;
         }else{
-            head.openCloseOutlet.image  = [UIImage imageNamed:@"upArrowBlack"];
+            head.sectionNameLabel.text = @"References";
+            head.countLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)associatedComponentsArray.count];
+            if(instancesCollapsed == true){
+                head.openCloseOutlet.image  = [UIImage imageNamed:@"rightArrow"];
+                
+            }else{
+                head.openCloseOutlet.image  = [UIImage imageNamed:@"upArrowBlack"];
+            }
         }
+
+    
+        
     }else{
         
     }

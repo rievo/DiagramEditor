@@ -20,6 +20,7 @@
 
 @interface ConnectionDetailsView : UIView<UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>{
     id delegate;
+    __weak IBOutlet UILabel *classLabel;
     NSMutableArray * associatedComponentsArray;
     
     NSMutableArray * attributesArray;

@@ -29,7 +29,7 @@
                                     </connections>
                                 </button>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="32O-Cs-ACI">
-                                    <rect key="frame" x="8" y="107" width="387" height="337"/>
+                                    <rect key="frame" x="8" y="130" width="387" height="314"/>
                                     <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </tableView>
@@ -88,9 +88,25 @@
                                         <constraint firstItem="wRU-XO-ZXo" firstAttribute="leading" secondItem="0gc-Ow-wyz" secondAttribute="leading" constant="13" id="xuC-ZT-BQB"/>
                                     </constraints>
                                 </view>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3sS-e0-euN">
-                                    <rect key="frame" x="298" y="82" width="97" height="30"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Class:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VFt-bT-BfJ">
+                                    <rect key="frame" x="8" y="101" width="58" height="21"/>
                                     <constraints>
+                                        <constraint firstAttribute="width" constant="58" id="rWg-1B-uL7"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                    <color key="textColor" red="0.7137255072593689" green="0.74901962280273438" blue="0.81960785388946533" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="9gt-Xk-bgf">
+                                    <rect key="frame" x="74" y="101" width="216" height="21"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" red="0.7137255072593689" green="0.74901962280273438" blue="0.81960785388946533" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3sS-e0-euN">
+                                    <rect key="frame" x="298" y="97" width="97" height="30"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="97" id="Jua-xW-DGu"/>
                                         <constraint firstAttribute="height" constant="30" id="SlH-tY-8qb"/>
                                     </constraints>
                                     <state key="normal" title="Add reference">
@@ -107,13 +123,17 @@
                                 <constraint firstItem="0gc-Ow-wyz" firstAttribute="centerX" secondItem="dj3-Rm-B84" secondAttribute="centerX" constant="0.5" id="69F-hC-rP0"/>
                                 <constraint firstItem="32O-Cs-ACI" firstAttribute="leading" secondItem="dj3-Rm-B84" secondAttribute="leading" constant="8" id="9ob-RE-JLc"/>
                                 <constraint firstAttribute="bottom" secondItem="32O-Cs-ACI" secondAttribute="bottom" constant="8" id="A1T-MG-vZn"/>
+                                <constraint firstItem="3sS-e0-euN" firstAttribute="leading" secondItem="9gt-Xk-bgf" secondAttribute="trailing" constant="8" id="A46-Bs-bY8"/>
                                 <constraint firstAttribute="trailing" secondItem="32O-Cs-ACI" secondAttribute="trailing" constant="8" id="NkX-r4-8Ni"/>
+                                <constraint firstItem="32O-Cs-ACI" firstAttribute="top" secondItem="VFt-bT-BfJ" secondAttribute="bottom" constant="8" id="WOf-dS-Ns8"/>
                                 <constraint firstAttribute="trailing" secondItem="3sS-e0-euN" secondAttribute="trailing" constant="8" id="X2w-T6-GEJ"/>
-                                <constraint firstItem="32O-Cs-ACI" firstAttribute="top" secondItem="0gc-Ow-wyz" secondAttribute="bottom" constant="17" id="aIH-Cp-oCP"/>
+                                <constraint firstItem="9gt-Xk-bgf" firstAttribute="leading" secondItem="VFt-bT-BfJ" secondAttribute="trailing" constant="8" id="a0K-WC-nvT"/>
                                 <constraint firstItem="g6v-Qp-JEp" firstAttribute="top" secondItem="dj3-Rm-B84" secondAttribute="top" constant="8" id="fDF-9Z-5QX"/>
-                                <constraint firstItem="32O-Cs-ACI" firstAttribute="top" secondItem="3sS-e0-euN" secondAttribute="bottom" constant="-5" id="hLs-XF-s8d"/>
-                                <constraint firstItem="32O-Cs-ACI" firstAttribute="top" secondItem="dj3-Rm-B84" secondAttribute="top" constant="107" id="jFP-Nq-aZ2"/>
+                                <constraint firstItem="3sS-e0-euN" firstAttribute="top" secondItem="g6v-Qp-JEp" secondAttribute="bottom" constant="59" id="fPU-nu-Ofx"/>
                                 <constraint firstAttribute="trailing" secondItem="g6v-Qp-JEp" secondAttribute="trailing" constant="8" id="q1q-p9-80y"/>
+                                <constraint firstItem="VFt-bT-BfJ" firstAttribute="top" secondItem="dj3-Rm-B84" secondAttribute="top" constant="101" id="ses-kE-jTf"/>
+                                <constraint firstItem="VFt-bT-BfJ" firstAttribute="leading" secondItem="dj3-Rm-B84" secondAttribute="leading" constant="8" id="tnt-uG-2uX"/>
+                                <constraint firstItem="9gt-Xk-bgf" firstAttribute="top" secondItem="0gc-Ow-wyz" secondAttribute="bottom" constant="11" id="xfG-bK-p0m"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -140,6 +160,7 @@
             <connections>
                 <outlet property="addReferenceButton" destination="3sS-e0-euN" id="VAs-Ra-hEs"/>
                 <outlet property="background" destination="bPL-1j-T8f" id="XHl-FV-upp"/>
+                <outlet property="classLabel" destination="9gt-Xk-bgf" id="n0N-GO-AEq"/>
                 <outlet property="informationTable" destination="32O-Cs-ACI" id="ifc-Qs-lUg"/>
                 <outlet property="sourceComponentViewContainer" destination="wRU-XO-ZXo" id="Iwp-AP-WUk"/>
                 <outlet property="targetComponentViewContainer" destination="2S1-bM-D6N" id="snj-3q-Okf"/>

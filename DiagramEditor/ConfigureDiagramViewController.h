@@ -27,6 +27,8 @@
     
     __weak IBOutlet UITableView *filesTable;
     NSMutableArray * filesArray; //Server and local palettes
+    NSMutableArray * serverPalettes;
+    NSMutableArray * localPalettes;
     
     
     __weak IBOutlet UITableView *palettesTable;
@@ -58,7 +60,8 @@
     
     BOOL doingTutorial;
     UIVisualEffectView *blurEffectView;
-    __weak IBOutlet UIView * myInfo;
+    
+    __weak IBOutlet UIButton *infoButton;
 }
 
 @property NSString * tempPaletteFile;

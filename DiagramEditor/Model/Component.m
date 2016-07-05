@@ -37,6 +37,8 @@
 #define leftMargin 15
 
 #define fontSize 14
+
+
 @implementation Component
 
 
@@ -58,7 +60,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     
     
     
-    font = [UIFont fontWithName:@"Helvetica" size:10.0];
+    font = [UIFont fontWithName:@"Helvetica" size:fontSize];
     
     [self addTapGestureRecognizer];
     [self addLongPressGestureRecognizer];
@@ -74,7 +76,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         textLayer = [[CATextLayer alloc] init];
         
         textLayer.foregroundColor = [UIColor clearColor].CGColor;
-        CGRect rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize/2, self.frame.size.width - 2 * leftMargin,fontSize);
+        CGRect rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize, self.frame.size.width - 2 * leftMargin,fontSize);
         textLayer.frame = rect;
         textLayer.contentsScale = [UIScreen mainScreen].scale;
         [textLayer setFont:@"Helvetica-Light"];
@@ -100,7 +102,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     self = [super initWithFrame:frame];
     if (self) {
         
-        font = [UIFont fontWithName:@"Helvetica" size:10.0];
+        font = [UIFont fontWithName:@"Helvetica" size:fontSize];
         
         [self addTapGestureRecognizer];
         [self addLongPressGestureRecognizer];
@@ -121,11 +123,11 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
             textLayer = [[CATextLayer alloc] init];
             
             textLayer.foregroundColor = [UIColor blackColor].CGColor;
-            CGRect rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize/2, self.frame.size.width - (2*leftMargin),fontSize);
+            CGRect rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize, self.frame.size.width - (2*leftMargin),fontSize);
             textLayer.frame = rect;
             textLayer.contentsScale = [UIScreen mainScreen].scale;
             [textLayer setFont:@"Helvetica-Light"];
-            [textLayer setFontSize:14];
+            [textLayer setFontSize:fontSize];
             textLayer.alignmentMode = kCAAlignmentCenter;
             textLayer.truncationMode = kCATruncationStart;
             textLayer.backgroundColor = [UIColor clearColor].CGColor;
@@ -156,11 +158,11 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     
     textLayer.foregroundColor = [UIColor blackColor].CGColor;
     
-    CGRect rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize/2, self.frame.size.width - (2*leftMargin),fontSize);
+    CGRect rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize, self.frame.size.width - (2*leftMargin),fontSize);
     textLayer.frame = rect;
     textLayer.contentsScale = [UIScreen mainScreen].scale;
     [textLayer setFont:@"Helvetica-Light"];
-    [textLayer setFontSize:14];
+    [textLayer setFontSize:fontSize];
     textLayer.alignmentMode = kCAAlignmentCenter;
     textLayer.truncationMode = kCATruncationStart;
     textLayer.backgroundColor = [UIColor clearColor].CGColor;
@@ -1305,7 +1307,7 @@ withSelectedComponent:(Component *)comp
         textLayer = [[CATextLayer alloc] init];
         
         textLayer.foregroundColor = [UIColor clearColor].CGColor;
-        CGRect rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize/2, self.frame.size.width - (2*leftMargin),fontSize);
+        CGRect rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize, self.frame.size.width - (2*leftMargin),fontSize);
         textLayer.frame = rect;
         textLayer.contentsScale = [UIScreen mainScreen].scale;
         [textLayer setFont:@"Helvetica-Light"];

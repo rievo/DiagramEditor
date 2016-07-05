@@ -55,6 +55,9 @@ FOUNDATION_EXPORT NSString *const DASH_DOT;
 
 
 
+#pragma mark GRAPHICR Version
+#define graphicRVersion 2
+
 #pragma mark Collaboration
 FOUNDATION_EXPORT NSString *const kInitialInfoFromServer;
 FOUNDATION_EXPORT NSString *const kChangedState;

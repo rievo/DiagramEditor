@@ -1379,11 +1379,12 @@
                 //LinkPalette * lp = [temp.linkPaletteDic objectForKey:key];
                 
                 if(lp.instances.count > 0){
-                    NSLog(@"Nodo instances:%lu ", (unsigned long)lp.instances.count);
+                    NSLog(@"Node instances:%lu ", (unsigned long)lp.instances.count);
                     for(Component * comp in lp.instances){
                         [writer writeStartElement:@"link_palette_instance"];
                         [writer writeAttribute:@"id" value: [[NSNumber numberWithInt:(int)comp ]description]];
-                        [writer writeAttribute:@"className" value:temp.className];
+                        [writer writeAttribute:@"className" value:comp.className];
+                        [writer writeAttribute:@"reference" value:lp.referenceInClass];
                         //For each instance, fill its attributes
                         for(ClassAttribute * ca in comp.attributes){
                             [writer writeStartElement:@"attribute"];

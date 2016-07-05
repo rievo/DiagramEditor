@@ -298,7 +298,7 @@
             float modulet = sqrtf(pow(tx, 2) + pow(ty, 2));
             float div = modulet / (count-1);
             
-            float margin = 10;
+            float margin = 3;
             
             
             for(int c = 0; c < connectionsBetweenOutAndIns.count; c++){

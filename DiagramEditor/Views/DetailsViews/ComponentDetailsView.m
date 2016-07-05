@@ -493,11 +493,11 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
     
     // Text Color
     UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
-    [header.textLabel setTextColor:dele.blue1];
+    [header.textLabel setTextColor:dele.blue3];
     
     // Another way to set the background color
     // Note: does not preserve gradient effect of original header
-     header.contentView.backgroundColor = dele.blue3;
+     header.contentView.tintColor = dele.blue3;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
