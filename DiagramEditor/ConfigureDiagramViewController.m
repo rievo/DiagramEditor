@@ -1938,6 +1938,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
             [palette preparePalette];
             
             dele.paletteItems = [[NSMutableArray alloc] initWithArray:palette.paletteItems];
+            
             [refreshTimer invalidate];
 
             

@@ -1583,6 +1583,9 @@
                                     [dele.components removeAllObjects];
                                     [dele.connections removeAllObjects];
                                     
+                                    dele.elementsDictionary = nil;
+                                    dele.noVisibleItems = nil;
+                                    
                                     for(Alert * al in dele.notesArray){
                                         [al removeFromSuperview];
                                     }

@@ -76,7 +76,15 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         textLayer = [[CATextLayer alloc] init];
         
         textLayer.foregroundColor = [UIColor clearColor].CGColor;
-        CGRect rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize, self.frame.size.width - 2 * leftMargin,fontSize);
+        CGRect rect;
+        if([_labelPosition isEqualToString:@"border"]){
+            rect = CGRectMake(leftMargin - self.frame.size.width, self.frame.size.height/2 - fontSize, (self.frame.size.width * 2) - (2*leftMargin),fontSize);
+        }else if([_labelPosition isEqualToString:@"node"]){
+            rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize, self.frame.size.width - (2*leftMargin),fontSize);
+        }else{
+            rect = CGRectMake(leftMargin - self.frame.size.width, self.frame.size.height/2 - fontSize, (self.frame.size.width * 2) - (2*leftMargin),fontSize);
+        }
+        // = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize, self.frame.size.width - 2 * leftMargin,fontSize);
         textLayer.frame = rect;
         textLayer.contentsScale = [UIScreen mainScreen].scale;
         [textLayer setFont:@"Helvetica-Light"];
@@ -640,13 +648,29 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     
     CGRect labelFrame = textLayer.frame;
     
+    
+    CGRect rect;
+    
+    if([_labelPosition isEqualToString:@"border"]){
+        rect = CGRectMake(0-self.frame.size.width/2 +leftMargin, 0 - 2*fontSize, (self.frame.size.width * 2) - (2*leftMargin),fontSize*2);
+    }else if([_labelPosition isEqualToString:@"node"]){
+        rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize, self.frame.size.width - (2*leftMargin),fontSize);
+    }else{
+        rect = CGRectMake(0-self.frame.size.width/2 +leftMargin ,0 - 2*fontSize, (self.frame.size.width * 2) - (2*leftMargin),fontSize*2);
+    }
+    
+    [textLayer setFrame:rect];
+    /*
     //Update position
     if([_labelPosition isEqualToString:@"node"]){ //Center name
         labelFrame.origin.y = self.frame.size.height/2 - labelFrame.size.height/2;
         [textLayer setFrame:labelFrame];
     }else{
+        labelFrame.origin.y = 0 - labelFrame.size.height;
+        [textLayer setFrame:labelFrame];
+    }else{
         
-    }
+    }*/
     
     //textLayer.string = name;
     textLayer.string = text;
@@ -1307,7 +1331,16 @@ withSelectedComponent:(Component *)comp
         textLayer = [[CATextLayer alloc] init];
         
         textLayer.foregroundColor = [UIColor clearColor].CGColor;
-        CGRect rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize, self.frame.size.width - (2*leftMargin),fontSize);
+        CGRect rect;
+        if([_labelPosition isEqualToString:@"node"]){
+             rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize, self.frame.size.width - (2*leftMargin),fontSize);
+        }else if([_labelPosition isEqualToString:@"border"]){
+           
+            rect = CGRectMake(leftMargin - self.frame.size.width, self.frame.size.height/2 - fontSize, (self.frame.size.width * 2) - (2*leftMargin),fontSize);
+        }else{
+            rect = CGRectMake(leftMargin - self.frame.size.width, self.frame.size.height/2 - fontSize, (self.frame.size.width * 2) - (2*leftMargin),fontSize);
+        }
+        
         textLayer.frame = rect;
         textLayer.contentsScale = [UIScreen mainScreen].scale;
         [textLayer setFont:@"Helvetica-Light"];

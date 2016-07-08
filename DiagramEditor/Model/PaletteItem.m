@@ -347,8 +347,11 @@
         }
         
         CGAffineTransform transformSource = CGAffineTransformIdentity;
+        float angle = M_PI;
+        transformSource = CGAffineTransformConcat(transformSource, CGAffineTransformMakeRotation(angle));
         transformSource = CGAffineTransformConcat(transformSource,
                                                   CGAffineTransformMakeTranslation(fixed.origin.x,fixed.size.height/2 + fixed.origin.y -decoratorSize/2));
+
         [pathSource applyTransform:transformSource];
         [pathSource stroke];
         if([self.sourceDecoratorName isEqualToString:FILL_DIAMOND] ||
