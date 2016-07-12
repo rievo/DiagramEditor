@@ -1159,30 +1159,33 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 -(NSArray *)tableView:(UITableView *)tableView
 editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
-    PaletteFile * pf = [filesArray objectAtIndex:indexPath.row];
     
-
-    
-    if(pf.fromServer == YES){ //From server
-        UITableViewRowAction *download = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault
-                                                                         title:@"Download"
-                                                                       handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
-                                       {
-                                           download.backgroundColor = dele.blue1;
-                                           [self downloadFileAtIndexPath:indexPath];
-                                       }];
-        download.backgroundColor = dele.blue1;
-       
-        return @[download];
-    }else{ //Local file
+    if(indexPath.section == 0){ //Local files
+        //PaletteFile * pf = [localPalettes objectAtIndex:indexPath.row];
         UITableViewRowAction *remove = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive
-                                                                           title:@"Delete"
-                                                                         handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
-                                         {
-                                             [self removeFileAtIndexPath:indexPath];
-                                         }];
+                                                                          title:@"Delete"
+                                                                        handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
+                                        {
+                                            [self removeFileAtIndexPath:indexPath];
+                                        }];
         return @[remove];
+    }else if(indexPath.section == 1){ //server files
+         //PaletteFile * pf = [serverPalettes objectAtIndex:indexPath.row];
+        UITableViewRowAction *download = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault
+                                                                            title:@"Download"
+                                                                          handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
+                                          {
+                                              download.backgroundColor = dele.blue1;
+                                              [self downloadFileAtIndexPath:indexPath];
+                                          }];
+        download.backgroundColor = dele.blue1;
+        
+        return @[download];
+
+    }else{
+        return nil;
     }
+
 }
 
 -(void)downloadFileAtIndexPath:(NSIndexPath *)ip{
