@@ -1355,10 +1355,15 @@
         [writer writeAttribute:@"height" value: [[NSNumber numberWithFloat:temp.frame.size.height]description]];
         [writer writeAttribute:@"className" value:temp.className];
         
+        if(temp.labelPosition != nil){
+            [writer writeAttribute:@"labelPosition" value:temp.labelPosition];
+        }
+        
         //For each component, fill his attributes
         for(ClassAttribute * ca in temp.attributes){
             [writer writeStartElement:@"attribute"];
             [writer writeAttribute:@"name" value:ca.name];
+            [writer writeAttribute:@"type" value:ca.type];
             //[writer writeAttribute:@"default_value" value:ca.defaultValue];
             if(ca.currentValue != nil)
                 [writer writeAttribute:@"current_value" value:ca.currentValue];
@@ -1374,9 +1379,29 @@
         //LinkPalettes for this node
         if (temp.isExpandable) {
             //NSArray * keys = [temp.linkPaletteDic allKeys];
-            
+            [writer writeStartElement:@"link_palettes"];
             for(LinkPalette * lp in temp.expandableItems){
-                //LinkPalette * lp = [temp.linkPaletteDic objectForKey:key];
+                
+                [writer writeStartElement:@"link_palette"];
+                //LinkPalette info
+                [writer writeAttribute:@"isExpandableItem" value:[NSString stringWithFormat:@" %s", lp.isExpandableItem ? "true" : "false"]];
+                [writer writeAttribute:@"expandableIndex" value: [[NSNumber numberWithInt:lp.expandableIndex ]description]];
+                if(lp.anEReference != nil)
+                    [writer writeAttribute:@"anEReference" value:lp.anEReference];
+                if(lp.lineStyle != nil)
+                    [writer writeAttribute:@"lineStyle" value:lp.lineStyle];
+                if(lp.paletteName != nil)
+                    [writer writeAttribute:@"paletteName" value:lp.paletteName];
+                if(lp.anDiagramElement != nil)
+                    [writer writeAttribute:@"anDiagramElement" value:lp.anDiagramElement];
+                if(lp.className != nil)
+                    [writer writeAttribute:@"className" value:lp.className];
+                if(lp.referenceInClass != nil)
+                    [writer writeAttribute:@"referenceInClass" value:lp.referenceInClass];
+                if(lp.sourceDecoratorName != nil)
+                    [writer writeAttribute:@"sourceDecoratorName" value:lp.sourceDecoratorName];
+                if(lp.targetDecoratorName != nil)
+                    [writer writeAttribute:@"targetDecoratorName" value:lp.targetDecoratorName];
                 
                 if(lp.instances.count > 0){
                     NSLog(@"Node instances:%lu ", (unsigned long)lp.instances.count);
@@ -1395,6 +1420,7 @@
                             else
                                 [writer writeAttribute:@"current_value" value:@""];
                             
+                            [writer writeAttribute:@"type" value:ca.type];
                             
                             [writer writeEndElement];
                         }
@@ -1403,7 +1429,10 @@
                     
                     
                 }
+                
+                [writer writeEndElement];
             }
+            [writer writeEndElement];
         }
        
         

@@ -1964,8 +1964,11 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
                     
                     [array addObject: comp];
                     
-                }else
+                }else{
                     [loadedComponents addObject:comp];
+                }
+                
+
             }
             
             NSMutableArray * loadedConnections = [[NSMutableArray alloc] init];
@@ -2231,7 +2234,8 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString * colorString = [dic objectForKey:@"_color"];
     NSString * type = [dic objectForKey:@"_type"];
     
-
+    NSString * labelPosition = [dic objectForKey:@"_labelPosition"];
+    temp.labelPosition = labelPosition;
     
     NSString * className = [dic objectForKey:@"_className"];
     
@@ -2274,6 +2278,9 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
         
         ClassAttribute * atr = [[ClassAttribute alloc] init];
         atr.name = aname;
+        atr.type = type;
+        
+
         //atr.defaultValue = adefVal;
         //atr.max = amax;
         //atr.min = amin;
@@ -2289,6 +2296,68 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
         
     }
     
+    temp.expandableItems = [[NSMutableArray alloc] init];
+    //Link_palettes
+    NSDictionary * linkPalettesDic = [dic objectForKey:@"link_palettes"];
+    if(linkPalettesDic != nil){
+        temp.isExpandable = YES;
+        NSArray * linksPalettes = [linkPalettesDic objectForKey:@"link_palette"];
+        if([linksPalettes isKindOfClass:[NSDictionary class]]){
+            linksPalettes = [[NSArray alloc] initWithObjects:linksPalettes, nil];
+        }
+        
+        for(NSDictionary * d in linksPalettes){
+            LinkPalette * lp = [[LinkPalette alloc] init];
+            lp.anEReference = [d objectForKey:@"_anEReference"];
+            lp.className = [d objectForKey:@"_className"];
+            lp.expandableIndex = [[d objectForKey:@"_expandableIndex"]intValue];
+            lp.lineStyle = [d objectForKey:@"_lineStyle"];
+            lp.paletteName = [d objectForKey:@"_paletteName"];
+            lp.referenceInClass = [d objectForKey:@"_referenceInClass"];
+            lp.sourceDecoratorName = [d objectForKey:@"_sourceDecoratorName"];
+            lp.targetDecoratorName = [d objectForKey:@"_targetDecoratorName"];
+            
+            
+            NSArray * instances = [d objectForKey:@"link_palette_instance"];
+            if([instances isKindOfClass:[NSDictionary class]]){
+                instances = [[NSArray alloc] initWithObjects:instances, nil];
+            }
+            
+            lp.instances = [[NSMutableArray alloc] init];
+            
+            
+            for(NSDictionary * instance in instances){
+                //A new component instance
+                Component * comp = [[Component alloc] init];
+                comp.attributes = [[NSMutableArray alloc]init];
+
+                comp.className = [instance objectForKey:@"_className"];
+                comp.componentId = [instance objectForKey:@"_id"];
+                
+                NSArray * atrsArray = [instance objectForKey:@"attribute"];
+                if([atrsArray isKindOfClass:[NSDictionary class]]){
+                    atrsArray = [[NSArray alloc] initWithObjects:atrsArray, nil];
+                }
+                
+                for(NSDictionary * atrDic in atrsArray){
+                    ClassAttribute * ca = [[ClassAttribute alloc] init];
+                    ca.currentValue = [atrDic objectForKey:@"_current_value"];
+                    ca.name = [atrDic objectForKey:@"_name"];
+                    NSString * type = [atrDic objectForKey:@"_type"];
+                    if(type == nil){
+                        type = @"EString";
+                    }
+                    ca.type = type;
+                    [comp.attributes addObject:ca];
+                }
+                [lp.instances addObject:comp];
+                
+            }
+            
+            [temp.expandableItems addObject:lp];
+            int r =2;
+        }
+    }
     
     
     //Complete this Component for its paletteItem

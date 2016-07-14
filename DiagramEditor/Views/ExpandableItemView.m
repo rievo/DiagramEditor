@@ -97,7 +97,7 @@
     NSString * text = @"";
     
     for(ClassAttribute * ca in c.attributes){
-        text = [text stringByAppendingString:[NSString stringWithFormat:@"%@ : \"%@\",", ca.name, ca.currentValue]];
+        text = [text stringByAppendingString:[NSString stringWithFormat:@"%@ : \"%@\" ", ca.name, ca.currentValue]];
         
     }
     
@@ -137,8 +137,8 @@
         Component * instance = [lp.instances objectAtIndex:indexPath.row];
         
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
-        if (cell == nil)
-        {
+        //if (cell == nil)
+        //{
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                                           reuseIdentifier:MyIdentifier] ;
             //cell.textLabel.text = [NSString stringWithFormat:@"->%@",[instance getName]];
@@ -146,7 +146,7 @@
             cell.textLabel.minimumScaleFactor = 0.5;
             cell.textLabel.textColor = dele.blue4;
             cell.backgroundColor = [UIColor clearColor];
-        }
+        //}
         return cell;
     }else if(tableView == componentTable){
         /*static NSString *MyIdentifier = @"cellCompAttribute";
