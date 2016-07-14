@@ -189,6 +189,22 @@
     float lw = 4.0;
     CGRect fixed = CGRectMake(2*lw, 2*lw +5, rect.size.width - 4*lw , rect.size.height - 4*lw);
     
+    if(width != nil && height != nil){ //remake fixed
+
+        float scale = MIN(fixed.size.width / width.floatValue, fixed.size.height / height.floatValue);
+        
+        
+        float newW = width.floatValue * scale;
+        float newH = height.floatValue * scale;
+        
+        float xo = rect.size.width/2 - newW/2;
+        float yo = rect.size.height/2 - newH/2;
+        
+        
+        fixed = CGRectMake(xo , yo, newW, newH);
+        
+    }
+    
     //Draw border
     UIBezierPath * border = [[UIBezierPath alloc ] init];
     [border moveToPoint:rect.origin];
