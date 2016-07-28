@@ -1600,7 +1600,7 @@
     
     UIAlertController * alert=   [UIAlertController
                                   alertControllerWithTitle:@"Attention"
-                                  message:@"You are about to change te palette. \nUnsaved changes will be lost. \nAre you sure?"
+                                  message:@"You are about to change the palette. \nUnsaved changes will be lost. \nAre you sure?"
                                   preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction* yesButton = [UIAlertAction
