@@ -21,6 +21,7 @@
 @class Palette;
 @class PaletteItem;
 @class ComponentDetailsView;
+@class NoteView;
 
 #import "DrawingView.h"
 
@@ -142,6 +143,8 @@ DrawingViewDelegate
     __weak IBOutlet UIButton *findOutlet;
     __weak IBOutlet UIButton *changePaletteOutlet;
     
+    CreateNoteView * tempCreateNote;
+    NoteView * tempNoteView;
     
     UIView * grayView;
 }

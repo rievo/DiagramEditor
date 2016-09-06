@@ -50,58 +50,71 @@
     
     UIView * viewToIncrust ;
     
+    float start = 0;
     
-    if(preview == nil){ //Only text
+    int mult = 1; //Only text
+    
+    if(associatedNote.image != nil)
+        mult ++;
+    
+    if(associatedNote.location != nil)
+        mult ++;
+    
+    CGRect fr = CGRectMake(0, 0, scrollView.bounds.size.width * mult, scrollView.bounds.size.height);
+    viewToIncrust = [[UIView alloc] initWithFrame:fr];
+    
+    
+    //Add text
+    tv = [[UITextView alloc] initWithFrame:CGRectMake(start +margin,
+                                                      margin,
+                                                      scrollView.bounds.size.width - 2*margin,
+                                                      scrollView.bounds.size.height- 2*margin)];
+    tv.backgroundColor = dele.blue1;
+    tv.textColor = dele.blue4;
+    tv.text = associatedNote.text;
+    [viewToIncrust addSubview:tv];
+    
+    scrollView.contentSize = CGSizeMake(scrollView.frame.size.width, scrollView.frame.size.height);
+    
+    
+    if(associatedNote.image != nil){  //Add Image
+        start = scrollView.contentSize.width;
         
-        viewToIncrust = [[UIView alloc] initWithFrame:scrollView.bounds];
+        UIImageView * iv = [[UIImageView alloc] initWithFrame:CGRectMake(scrollView.contentSize.width + margin,
+                                                                         margin,
+                                                                         scrollView.bounds.size.width -2*margin,
+                                                                         scrollView.bounds.size.height -2*margin)];
         
+        [iv setImage:associatedNote.image];
+        [iv setContentMode:UIViewContentModeScaleAspectFit];
         
-        //Add text
-        tv = [[UITextView alloc] initWithFrame:CGRectMake(margin,
-                                                                       margin,
-                                                                       scrollView.bounds.size.width - 2*margin,
-                                                                       scrollView.bounds.size.height- 2*margin)];
-        tv.backgroundColor = dele.blue1;
-        tv.textColor = dele.blue4;
-        tv.text = associatedNote.text;
-        [viewToIncrust addSubview:tv];
-        
-        
-        [scrollView addSubview:viewToIncrust];
-        scrollView.contentSize = CGSizeMake(scrollView.frame.size.width , scrollView.frame.size.height);
-    }else{ //Image and text
-        CGRect fr = CGRectMake(0, 0, scrollView.bounds.size.width * 2, scrollView.bounds.size.height);
-        viewToIncrust = [[UIView alloc] initWithFrame:fr];
-        
-        
-        
-        //Add view
-        UIImageView * iv = [[UIImageView alloc] initWithImage:preview];
-        [iv setFrame:CGRectMake(scrollView.frame.size.width/2 - preview.size.width/2,
-                                scrollView.frame.size.height/2 - preview.size.height/2,
-                                preview.size.width,
-                                preview.size.height)];
-
         [viewToIncrust addSubview:iv];
         
-        float start = 0;
-        start = scrollView.bounds.size.width;
-        //Add text
-        tv = [[UITextView alloc] initWithFrame:CGRectMake(start +margin,
-                                                                       margin,
-                                                                       scrollView.bounds.size.width - 2*margin,
-                                                                       scrollView.bounds.size.height- 2*margin)];
-        tv.backgroundColor = dele.blue1;
-        tv.textColor = dele.blue4;
-        tv.text = associatedNote.text;
-        [viewToIncrust addSubview:tv];
+        scrollView.contentSize = CGSizeMake(scrollView.contentSize.width + iv.frame.size.width, scrollView.frame.size.height);
         
-        
-        [scrollView addSubview:viewToIncrust];
-        
-        [scrollView addSubview:viewToIncrust];
-        scrollView.contentSize = CGSizeMake(scrollView.frame.size.width * 2, scrollView.frame.size.height);
+        [iv setBackgroundColor:[UIColor greenColor]];
     }
+    
+    
+    //TODO: Show map here
+    
+    
+    if(associatedNote.location != nil){
+        start = scrollView.contentSize.width + 2*margin;
+        MKMapView * map;
+        map = [[MKMapView alloc] initWithFrame:CGRectMake(start, margin, scrollView.bounds.size.width -3*margin,
+                                                          scrollView.bounds.size.height -2 *margin)];
+        [viewToIncrust addSubview:map];
+        
+        scrollView.contentSize = CGSizeMake(scrollView.contentSize.width + scrollView.bounds.size.width, scrollView.frame.size.height);
+        
+        [self updateMap:map withLocation:associatedNote.location];
+    }
+    
+    
+    [scrollView addSubview:viewToIncrust];
+    
+    
     
     
     viewToIncrust.backgroundColor = dele.blue3;
@@ -111,6 +124,28 @@
     //self.pageControl.currentPage = 0
 }
 
+-(void)updateMap:(MKMapView *) map
+    withLocation:(CLLocation *)location{
+    [map setCenterCoordinate:location.coordinate animated:YES];
+    
+    MKPointAnnotation * pin = [[MKPointAnnotation alloc]init];
+    pin.coordinate = location.coordinate;
+    [map addAnnotation:pin];
+    
+    MKCoordinateSpan span;
+    span.latitudeDelta = 0.002;
+    span.longitudeDelta = 0.002;
+    
+    
+    // create region, consisting of span and location
+    MKCoordinateRegion region;
+    region.span = span;
+    region.center = location.coordinate;
+    
+    // move the map to our location
+    [map setRegion:region animated:YES];
+}
+
 
 - (IBAction)deleteThisNote:(id)sender {
     [dele.notesArray removeObject:associatedNote];
@@ -118,7 +153,7 @@
     
     [self removeFromSuperview];
     
-
+    
     
     [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
     
@@ -240,4 +275,5 @@
                          [self setNeedsDisplay];
                      }];
 }
+
 @end

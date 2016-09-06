@@ -98,6 +98,9 @@
 		F17B75B01C22DA7200AB1B57 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = F17B75AF1C22DA7200AB1B57 /* arrow.png */; };
 		F17B75B31C22DBFE00AB1B57 /* ComponentsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F17B75B21C22DBFE00AB1B57 /* ComponentsListViewController.m */; };
 		F17D1C081C7F1EDC0080EA29 /* reload.png in Resources */ = {isa = PBXBuildFile; fileRef = F17D1C071C7F1EDC0080EA29 /* reload.png */; };
+		F17FC7FE1D78187700DCA5CC /* geoposition.png in Resources */ = {isa = PBXBuildFile; fileRef = F17FC7FD1D78187700DCA5CC /* geoposition.png */; };
+		F17FC8001D781CD000DCA5CC /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F17FC7FF1D781CD000DCA5CC /* CoreLocation.framework */; };
+		F17FC8021D78248A00DCA5CC /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F17FC8011D78248A00DCA5CC /* MapKit.framework */; };
 		F1801F3B1C774137005BA437 /* cloudFilled.png in Resources */ = {isa = PBXBuildFile; fileRef = F1801F3A1C774137005BA437 /* cloudFilled.png */; };
 		F1801F3D1C77413E005BA437 /* localFilled.png in Resources */ = {isa = PBXBuildFile; fileRef = F1801F3C1C77413E005BA437 /* localFilled.png */; };
 		F181349C1CBCF169000AE209 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = F181349B1CBCF169000AE209 /* menu.png */; };
@@ -284,6 +287,9 @@
 		F17B75B11C22DBFE00AB1B57 /* ComponentsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComponentsListViewController.h; sourceTree = "<group>"; };
 		F17B75B21C22DBFE00AB1B57 /* ComponentsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComponentsListViewController.m; sourceTree = "<group>"; };
 		F17D1C071C7F1EDC0080EA29 /* reload.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reload.png; sourceTree = "<group>"; };
+		F17FC7FD1D78187700DCA5CC /* geoposition.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = geoposition.png; sourceTree = "<group>"; };
+		F17FC7FF1D781CD000DCA5CC /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		F17FC8011D78248A00DCA5CC /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		F1801F3A1C774137005BA437 /* cloudFilled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloudFilled.png; sourceTree = "<group>"; };
 		F1801F3C1C77413E005BA437 /* localFilled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = localFilled.png; sourceTree = "<group>"; };
 		F181349B1CBCF169000AE209 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
@@ -363,6 +369,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F17FC8021D78248A00DCA5CC /* MapKit.framework in Frameworks */,
+				F17FC8001D781CD000DCA5CC /* CoreLocation.framework in Frameworks */,
 				F17A94231CFC5069008AE1EE /* Social.framework in Frameworks */,
 				F1F29C691C64C8F70035F0B6 /* AudioToolbox.framework in Frameworks */,
 				F1B789991C60F064001B6DB4 /* CoreGraphics.framework in Frameworks */,
@@ -566,6 +574,7 @@
 			children = (
 				F1FEE7001CDCA51C00FD4E9B /* actions */,
 				F19607FB1CF347E1000DC248 /* addImage.png */,
+				F17FC7FD1D78187700DCA5CC /* geoposition.png */,
 				F17B75AF1C22DA7200AB1B57 /* arrow.png */,
 				F19C258D1C43AB580002E490 /* back.png */,
 				F1C6347A1C2842C30072912D /* camera.png */,
@@ -613,6 +622,8 @@
 		F185106A1C1824C8004EC4C8 = {
 			isa = PBXGroup;
 			children = (
+				F17FC8011D78248A00DCA5CC /* MapKit.framework */,
+				F17FC7FF1D781CD000DCA5CC /* CoreLocation.framework */,
 				F17A94221CFC5069008AE1EE /* Social.framework */,
 				F18510751C1824C8004EC4C8 /* DiagramEditor */,
 				F18510741C1824C8004EC4C8 /* Products */,
@@ -834,6 +845,7 @@
 				F17A93F31CF706F8008AE1EE /* YesOrNoView.xib in Resources */,
 				F163AFE61C7B1A1B00BAE67C /* tapDark.png in Resources */,
 				F18510831C1824C8004EC4C8 /* Assets.xcassets in Resources */,
+				F17FC7FE1D78187700DCA5CC /* geoposition.png in Resources */,
 				F17D1C081C7F1EDC0080EA29 /* reload.png in Resources */,
 				F15ADC1E1C92BEF40068142E /* share.png in Resources */,
 				F17B75AD1C22D9CC00AB1B57 /* list.png in Resources */,

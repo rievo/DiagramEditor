@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 #import "Component.h"
 
@@ -18,6 +19,7 @@
 @property NSDate * date;
 @property UIImage * attach;
 @property Component * associatedComponent;
+@property CLLocation * location;
 
 @property NSString * aCId;
 @property int identifier;

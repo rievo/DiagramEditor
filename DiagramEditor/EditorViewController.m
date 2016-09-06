@@ -71,6 +71,17 @@
                                     scrollView.frame.origin.y + askForMasterButton.frame.size.height + askForMasterButton.frame.origin.y,
                                     chatButton.frame.size.width,
                                     chatButton.frame.size.height)];
+    
+    if(tempCreateNote != nil){
+        [tempCreateNote setNeedsDisplay];
+    }
+    
+    if(tempNoteView != nil){
+        [tempNoteView setNeedsDisplay];
+    }
+    
+    [self hideAlerts];
+    
 }
 - (void)viewDidLoad {
     
@@ -2463,11 +2474,14 @@
             CreateNoteView * cnv =  [[[NSBundle mainBundle] loadNibNamed:@"CreateNoteView"
                                                                                       owner:self
                                                                                     options:nil] objectAtIndex:0];
+            //[cnv setCenter:self.view.center];
             [cnv setFrame: self.view.frame];
             cnv.parentVC = self;
             cnv.delegate = self;
             cnv.noteCenter = pointInSV;
             [self.view addSubview:cnv];
+            
+            tempCreateNote = cnv;
             
         }else{
             [self sendAlert:view onPoint:pointInSV];
@@ -2738,6 +2752,7 @@
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     [dateFormat setDateFormat:@"HH:mm:ss"];
     
+    tempNoteView = nv;
     
     NSDate * dateToParse = sender.date;
 
@@ -2815,6 +2830,7 @@
 
 -(void)createNoteViewConfirmWithText:(NSString *)text
                             andImage:(UIImage *)image
+                         andLocation:(CLLocation *)location
                              onPoint:(CGPoint)point{
     
     Alert * alert = [[Alert alloc] init];
@@ -2829,6 +2845,7 @@
     alert.who = dele.myPeerInfo.peerID;
     alert.attach = image;
     alert.identifier = (int)alert;
+    alert.location = location;
     
     //Check if there is a component on this position
     for(Component * comp in dele.components){
@@ -2840,6 +2857,8 @@
     
     
     [self sendNote:alert onPoint:point];
+    
+    tempCreateNote = nil;
 }
 
 #pragma mark DrawingViewDelegate methods
@@ -3437,4 +3456,6 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
     
     [self presentViewController:alert animated:YES completion:nil];
 }
+
+
 @end
