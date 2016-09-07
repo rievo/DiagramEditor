@@ -2876,4 +2876,14 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
                                       newSize.height +10)];
     [self.view addSubview:dele.tutSheet];
 }
+
+
+
+#pragma mark Create New palette
+
+- (IBAction)createANewPalette:(id)sender {
+    
+}
+
+
 @end
