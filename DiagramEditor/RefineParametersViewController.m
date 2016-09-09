@@ -7,15 +7,14 @@
 //
 
 #import "RefineParametersViewController.h"
+#import "ConfigureGraphicsViewController.h"
 #import "HeaderTableViewCell.h"
 #import "SubsetionTableViewCell.h"
 
 #import "ClassAttribute.h"
 #import "Reference.h"
+#import "RemovableReference.h"
 
-@interface RefineParametersViewController ()
-
-@end
 
 @implementation RefineParametersViewController
 
@@ -43,7 +42,7 @@
 }
 
 - (IBAction)goToNextScreen:(id)sender {
-    
+    [self performSegueWithIdentifier:@"showConfigureGraphics" sender:self];
 }
 
 #pragma mark UITableview methods
@@ -64,10 +63,7 @@
 
     
     JsonClass * c = [visibles objectAtIndex:indexPath.section];
-    
-    NSLog(@"Sección %ld , %@", (long)indexPath.section, c.name);
-    NSLog(@"Sub %ld", (long)indexPath.row);
-    
+
     if(indexPath.row == 0){ //Attributes header
         HeaderTableViewCell * cell = (HeaderTableViewCell *) [tableView dequeueReusableCellWithIdentifier:@"headerCell"];
         
@@ -76,7 +72,7 @@
             cell = [nib objectAtIndex:0];
         }
         
-        cell.label.text = @"Attributes";
+        cell.label.text = @"Attributes that will become label";
         return cell;
     }else if(indexPath.row > 0 && indexPath.row < c.attributes.count + 1){ //Is an attribute
         
@@ -90,6 +86,9 @@
         }
         
         cell.label.text = attr.name;
+        
+        cell.associatedElement = attr;
+        
         return cell;
     }else if(indexPath.row == c.attributes.count + 1){ //References header
         HeaderTableViewCell * cell = (HeaderTableViewCell *) [tableView dequeueReusableCellWithIdentifier:@"headerCell"];
@@ -99,12 +98,12 @@
             cell = [nib objectAtIndex:0];
         }
         
-        cell.label.text = @"References";
+        cell.label.text = @"Possible references as links";
         return cell;
     }else{ //Reference
         SubsetionTableViewCell * cell = (SubsetionTableViewCell *) [tableView dequeueReusableCellWithIdentifier:@"subsectionCell"];
         
-        Reference * ref = [c.references objectAtIndex:indexPath.row -2 - c.attributes.count];
+        RemovableReference * ref = (RemovableReference * )[c.references objectAtIndex:indexPath.row -2 - c.attributes.count];
         
         if(cell== nil){
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SubsetionTableViewCell" owner:self options:nil];
@@ -112,6 +111,9 @@
         }
         
         cell.label.text = ref.name;
+        
+        cell.associatedElement = ref;
+        
         return cell;
     }
         
@@ -171,6 +173,38 @@
         return 30.0;
     }else{
         return 45.0;
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:@"showConfigureGraphics"]){
+        
+        //Remove hidden references
+        
+        for(JsonClass * c in visibles){
+            NSMutableArray * toRemove = [[NSMutableArray alloc] init];
+            
+            for(RemovableReference * ref in c.references){
+                //RemovableReference * ref = (RemovableReference *)r;
+                if(ref.isPresent == NO){
+                    [toRemove addObject:ref];
+                }
+            }
+            
+            for(RemovableReference * r in toRemove){
+                [c.references removeObject:r];
+            }
+        }
+        
+        ConfigureGraphicsViewController * vc = (ConfigureGraphicsViewController *)segue.destinationViewController;
+        vc.root = _root;
+        vc.classes = _classes;
+        
+        vc.visibles = visibles;
+        vc.hidden = _hidden;
+        
+        vc.nodes = _nodes;
+        vc.edges = _edges;
     }
 }
 

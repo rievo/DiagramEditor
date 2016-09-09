@@ -10,6 +10,7 @@
 #import "JsonClass.h"
 #import "ClassAttribute.h"
 #import "VisibleClassesViewController.h"
+#import "RemovableReference.h"
 
 @interface SelectRootClassViewController ()
 
@@ -110,11 +111,13 @@
         //Parse references
         NSArray * refDicArray= [classDic objectForKey:@"references"];
         for(NSDictionary * refDic in refDicArray){
-            Reference * ref = [[Reference alloc] init];
+            RemovableReference * ref = [[RemovableReference alloc] init];
             
             ref.name = [refDic objectForKey:@"name"];
             ref.target = [refDic objectForKey:@"target"];
             ref.opposite = [refDic objectForKey:@"opposite"];
+            
+            ref.isPresent = YES;
             
             NSNumber * min = [f numberFromString:[refDic objectForKey:@"min"]];
             ref.min = min;
@@ -194,6 +197,9 @@
 {
     
     dispatch_async(dispatch_get_main_queue(),^{
+        
+        JsonClass * newRoot = [classesArray objectAtIndex:indexPath.row];
+        rootClass = newRoot;
         [self performSegueWithIdentifier:@"setVisibleClasses" sender:self];
     });
 }
@@ -216,6 +222,22 @@
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
 }
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    return @"      Which class will be the root?";
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
+{
+    // Background color
+    view.tintColor = dele.blue4;
+    
+    // Text Color
+    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+    [header.textLabel setTextColor:[UIColor whiteColor]];
+    
+}
+
 
 
 @end

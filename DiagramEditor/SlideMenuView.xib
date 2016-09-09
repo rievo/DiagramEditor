@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="SlideMenuView">
+            <rect key="frame" x="0.0" y="0.0" width="150" height="300"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Miso" translatesAutoresizingMaskIntoConstraints="NO" id="Uho-M9-LX0">
+                    <rect key="frame" x="20" y="8" width="110" height="101"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="101" id="07T-SW-Z9J"/>
+                        <constraint firstAttribute="width" constant="110" id="PEr-Rq-oAX"/>
+                    </constraints>
+                </imageView>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="GzV-z2-wY1">
+                    <rect key="frame" x="0.0" y="94" width="150" height="198"/>
+                    <color key="backgroundColor" red="0.50980395078659058" green="0.56470590829849243" blue="0.67843139171600342" alpha="0.0" colorSpace="calibratedRGB"/>
+                    <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" red="0.35686275362968445" green="0.42745098471641541" blue="0.57254904508590698" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="Uho-M9-LX0" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="5mB-4Y-Xg9"/>
+                <constraint firstItem="Uho-M9-LX0" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="MBl-kH-aXt"/>
+                <constraint firstItem="GzV-z2-wY1" firstAttribute="top" secondItem="Uho-M9-LX0" secondAttribute="bottom" constant="-15" id="b0T-LU-MRp"/>
+                <constraint firstAttribute="trailing" secondItem="GzV-z2-wY1" secondAttribute="trailing" id="dUL-Ib-Skx"/>
+                <constraint firstItem="GzV-z2-wY1" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="qnx-xv-oct"/>
+                <constraint firstAttribute="bottom" secondItem="GzV-z2-wY1" secondAttribute="bottom" constant="8" id="ugz-za-yc2"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="table" destination="GzV-z2-wY1" id="QRJ-33-fgo"/>
+            </connections>
+        </view>
+    </objects>
+    <resources>
+        <image name="Miso" width="280" height="225"/>
+    </resources>
+</document>

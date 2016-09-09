@@ -10,9 +10,29 @@
 
 @implementation SubsetionTableViewCell
 
+@synthesize control;
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    
+    [control addTarget:self action:@selector(changeSwitch:) forControlEvents:UIControlEventValueChanged];
+
+    
+}
+
+- (void)changeSwitch:(id)sender{
+    
+    Boolean val = [sender isOn];
+    
+    
+    if([_associatedElement isKindOfClass:[ClassAttribute class]]){
+        ClassAttribute * temp = _associatedElement;
+        temp.isLabel = val;
+    }else if([_associatedElement isKindOfClass:[RemovableReference class]]){
+        RemovableReference * temp = _associatedElement;
+        temp.isPresent = val;
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

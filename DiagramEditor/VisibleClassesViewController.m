@@ -26,6 +26,8 @@
     table.delegate = self;
     table.dataSource= self;
     
+    [table setAllowsSelection:NO];
+    
     visibles = [[NSMutableArray alloc] initWithArray:classesArray]; //All visibles by default
     hidden = [[NSMutableArray alloc] init];
     
@@ -40,6 +42,10 @@
     
     nodes = [[NSMutableArray alloc] init];
     edges = [[NSMutableArray alloc] init];
+    
+    //Set root as hidden
+    [visibles removeObject:_root];
+    [hidden addObject:_root];
     
 
 }
@@ -84,6 +90,9 @@
         
         cell.associatedClass = class;
         cell.nameLabel.text = class.name;
+        
+        [cell prepare];
+        
         
         return cell;
         
@@ -223,6 +232,15 @@
          
          vc.visibles = visibles;
          vc.hidden = hidden;
+         
+         
+         for(JsonClass * c in visibles){
+             if(c.visibleMode == 0){ //Node
+                 [nodes addObject:c];
+             }else{//Edge
+                 [edges addObject:c];
+             }
+         }
          
          vc.nodes = nodes;
          vc.edges = edges;

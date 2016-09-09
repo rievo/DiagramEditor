@@ -167,6 +167,21 @@
     }
 }
 
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    return @"     Ecores on server";
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
+{
+    // Background color
+    view.tintColor = dele.blue4;
+    
+    // Text Color
+    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+    [header.textLabel setTextColor:[UIColor whiteColor]];
+    
+}
+
 
 
 #pragma mark Segue stuff
@@ -176,6 +191,8 @@
         controller.selectedJson = selectedJson;
     }
 }
+
+
 
 
 @end

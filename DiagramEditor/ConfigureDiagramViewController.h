@@ -12,9 +12,10 @@
 @class AppDelegate;
 @class Palette;
 #import "CloudDiagramsExplorer.h"
+#import "SlideMenuView.h"
 
 
-@interface ConfigureDiagramViewController : UIViewController<UIScrollViewDelegate, UIGestureRecognizerDelegate, UITableViewDataSource, UITableViewDelegate, PasteViewDelegate, ExploreFilesDelegate, CloudDiagramsExplorer>{
+@interface ConfigureDiagramViewController : UIViewController<UIScrollViewDelegate, UIGestureRecognizerDelegate, UITableViewDataSource, UITableViewDelegate, PasteViewDelegate, ExploreFilesDelegate, CloudDiagramsExplorer, SlideMenuDelegate>{
     NSDictionary * configuration;
     AppDelegate * dele;
     __weak IBOutlet UIScrollView *scrollView;
@@ -62,6 +63,9 @@
     UIVisualEffectView *blurEffectView;
     
     __weak IBOutlet UIButton *infoButton;
+    
+    
+    SlideMenuView * menu;
 }
 
 @property NSString * tempPaletteFile;

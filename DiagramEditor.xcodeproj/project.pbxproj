@@ -140,6 +140,16 @@
 		F1B77AC41D804A3C00753DB0 /* HeaderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1B77AC21D804A3C00753DB0 /* HeaderTableViewCell.xib */; };
 		F1B77AC81D804A9800753DB0 /* SubsetionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1B77AC61D804A9800753DB0 /* SubsetionTableViewCell.m */; };
 		F1B77AC91D804A9800753DB0 /* SubsetionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1B77AC71D804A9800753DB0 /* SubsetionTableViewCell.xib */; };
+		F1B77ACC1D816AEC00753DB0 /* ConfigureGraphicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1B77ACB1D816AEC00753DB0 /* ConfigureGraphicsViewController.m */; };
+		F1B77ACF1D81709000753DB0 /* RemovableReference.m in Sources */ = {isa = PBXBuildFile; fileRef = F1B77ACE1D81709000753DB0 /* RemovableReference.m */; };
+		F1B77AD41D81732100753DB0 /* NodeVisualInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1B77AD21D81732100753DB0 /* NodeVisualInfoTableViewCell.m */; };
+		F1B77AD51D81732100753DB0 /* NodeVisualInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1B77AD31D81732100753DB0 /* NodeVisualInfoTableViewCell.xib */; };
+		F1B77AD91D818F4C00753DB0 /* ReferenciVisualInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1B77AD71D818F4C00753DB0 /* ReferenciVisualInfoTableViewCell.m */; };
+		F1B77ADA1D818F4C00753DB0 /* ReferenciVisualInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1B77AD81D818F4C00753DB0 /* ReferenciVisualInfoTableViewCell.xib */; };
+		F1B77ADE1D82AC0200753DB0 /* EdgeVisualInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1B77ADC1D82AC0200753DB0 /* EdgeVisualInfoTableViewCell.m */; };
+		F1B77ADF1D82AC0200753DB0 /* EdgeVisualInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1B77ADD1D82AC0200753DB0 /* EdgeVisualInfoTableViewCell.xib */; };
+		F1B77AE51D82BE8500753DB0 /* SlideMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1B77AE41D82BE8500753DB0 /* SlideMenuView.m */; };
+		F1B77AE71D82BE8F00753DB0 /* SlideMenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1B77AE61D82BE8F00753DB0 /* SlideMenuView.xib */; };
 		F1B789931C60F045001B6DB4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1B789921C60F045001B6DB4 /* UIKit.framework */; };
 		F1B789991C60F064001B6DB4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1B789981C60F064001B6DB4 /* CoreGraphics.framework */; };
 		F1B7899B1C610292001B6DB4 /* Minus-100.png in Resources */ = {isa = PBXBuildFile; fileRef = F1B7899A1C610292001B6DB4 /* Minus-100.png */; };
@@ -362,6 +372,22 @@
 		F1B77AC51D804A9800753DB0 /* SubsetionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubsetionTableViewCell.h; sourceTree = "<group>"; };
 		F1B77AC61D804A9800753DB0 /* SubsetionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubsetionTableViewCell.m; sourceTree = "<group>"; };
 		F1B77AC71D804A9800753DB0 /* SubsetionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SubsetionTableViewCell.xib; sourceTree = "<group>"; };
+		F1B77ACA1D816AEC00753DB0 /* ConfigureGraphicsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigureGraphicsViewController.h; sourceTree = "<group>"; };
+		F1B77ACB1D816AEC00753DB0 /* ConfigureGraphicsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigureGraphicsViewController.m; sourceTree = "<group>"; };
+		F1B77ACD1D81709000753DB0 /* RemovableReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemovableReference.h; sourceTree = "<group>"; };
+		F1B77ACE1D81709000753DB0 /* RemovableReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemovableReference.m; sourceTree = "<group>"; };
+		F1B77AD11D81732100753DB0 /* NodeVisualInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeVisualInfoTableViewCell.h; sourceTree = "<group>"; };
+		F1B77AD21D81732100753DB0 /* NodeVisualInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodeVisualInfoTableViewCell.m; sourceTree = "<group>"; };
+		F1B77AD31D81732100753DB0 /* NodeVisualInfoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NodeVisualInfoTableViewCell.xib; sourceTree = "<group>"; };
+		F1B77AD61D818F4C00753DB0 /* ReferenciVisualInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReferenciVisualInfoTableViewCell.h; sourceTree = "<group>"; };
+		F1B77AD71D818F4C00753DB0 /* ReferenciVisualInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReferenciVisualInfoTableViewCell.m; sourceTree = "<group>"; };
+		F1B77AD81D818F4C00753DB0 /* ReferenciVisualInfoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReferenciVisualInfoTableViewCell.xib; sourceTree = "<group>"; };
+		F1B77ADB1D82AC0200753DB0 /* EdgeVisualInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EdgeVisualInfoTableViewCell.h; sourceTree = "<group>"; };
+		F1B77ADC1D82AC0200753DB0 /* EdgeVisualInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EdgeVisualInfoTableViewCell.m; sourceTree = "<group>"; };
+		F1B77ADD1D82AC0200753DB0 /* EdgeVisualInfoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EdgeVisualInfoTableViewCell.xib; sourceTree = "<group>"; };
+		F1B77AE31D82BE8500753DB0 /* SlideMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideMenuView.h; sourceTree = "<group>"; };
+		F1B77AE41D82BE8500753DB0 /* SlideMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideMenuView.m; sourceTree = "<group>"; };
+		F1B77AE61D82BE8F00753DB0 /* SlideMenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SlideMenuView.xib; sourceTree = "<group>"; };
 		F1B789921C60F045001B6DB4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F1B789941C60F04B001B6DB4 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		F1B789961C60F05D001B6DB4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -696,6 +722,9 @@
 				F1B4861F1C47A2DD00752157 /* palettes */,
 				F18510791C1824C8004EC4C8 /* AppDelegate.h */,
 				F185107A1C1824C8004EC4C8 /* AppDelegate.m */,
+				F1B77AE31D82BE8500753DB0 /* SlideMenuView.h */,
+				F1B77AE41D82BE8500753DB0 /* SlideMenuView.m */,
+				F1B77AE61D82BE8F00753DB0 /* SlideMenuView.xib */,
 				F18510821C1824C8004EC4C8 /* Assets.xcassets */,
 				F1685EA61C1829F00094097E /* Canvas.h */,
 				F1685EA71C1829F00094097E /* Canvas.m */,
@@ -733,6 +762,7 @@
 		F1B77AA31D80017D00753DB0 /* Creating palette stuff */ = {
 			isa = PBXGroup;
 			children = (
+				F1B77AD01D8172F700753DB0 /* ConfigureGraphicsCells */,
 				F1B77AA41D8001AE00753DB0 /* SelectEcoreViewController.h */,
 				F1B77AA51D8001AE00753DB0 /* SelectEcoreViewController.m */,
 				F1B77AAD1D800ACC00753DB0 /* SelectRootClassViewController.h */,
@@ -741,6 +771,8 @@
 				F1B77AB11D801C8C00753DB0 /* VisibleClassesViewController.m */,
 				F1B77ABD1D80466F00753DB0 /* RefineParametersViewController.h */,
 				F1B77ABE1D80466F00753DB0 /* RefineParametersViewController.m */,
+				F1B77ACA1D816AEC00753DB0 /* ConfigureGraphicsViewController.h */,
+				F1B77ACB1D816AEC00753DB0 /* ConfigureGraphicsViewController.m */,
 				F1B77AAA1D8009A000753DB0 /* JsonClass.h */,
 				F1B77AAB1D8009A000753DB0 /* JsonClass.m */,
 				F1B77AB81D80280800753DB0 /* NodeEdgeCell.xib */,
@@ -752,8 +784,26 @@
 				F1B77AC51D804A9800753DB0 /* SubsetionTableViewCell.h */,
 				F1B77AC61D804A9800753DB0 /* SubsetionTableViewCell.m */,
 				F1B77AC71D804A9800753DB0 /* SubsetionTableViewCell.xib */,
+				F1B77ACD1D81709000753DB0 /* RemovableReference.h */,
+				F1B77ACE1D81709000753DB0 /* RemovableReference.m */,
 			);
 			name = "Creating palette stuff";
+			sourceTree = "<group>";
+		};
+		F1B77AD01D8172F700753DB0 /* ConfigureGraphicsCells */ = {
+			isa = PBXGroup;
+			children = (
+				F1B77AD11D81732100753DB0 /* NodeVisualInfoTableViewCell.h */,
+				F1B77AD21D81732100753DB0 /* NodeVisualInfoTableViewCell.m */,
+				F1B77AD31D81732100753DB0 /* NodeVisualInfoTableViewCell.xib */,
+				F1B77ADB1D82AC0200753DB0 /* EdgeVisualInfoTableViewCell.h */,
+				F1B77ADC1D82AC0200753DB0 /* EdgeVisualInfoTableViewCell.m */,
+				F1B77ADD1D82AC0200753DB0 /* EdgeVisualInfoTableViewCell.xib */,
+				F1B77AD61D818F4C00753DB0 /* ReferenciVisualInfoTableViewCell.h */,
+				F1B77AD71D818F4C00753DB0 /* ReferenciVisualInfoTableViewCell.m */,
+				F1B77AD81D818F4C00753DB0 /* ReferenciVisualInfoTableViewCell.xib */,
+			);
+			name = ConfigureGraphicsCells;
 			sourceTree = "<group>";
 		};
 		F1FEE7001CDCA51C00FD4E9B /* actions */ = {
@@ -864,6 +914,7 @@
 				F1AB3B161C22B19800EDBB1D /* resize.png in Resources */,
 				F1C417BA1CB66F2D0075234C /* CustomTableHeader.xib in Resources */,
 				F17A93F51CF70768008AE1EE /* delete.png in Resources */,
+				F1B77AE71D82BE8F00753DB0 /* SlideMenuView.xib in Resources */,
 				F16C7DC81C578D3900CA9B25 /* ConnectionDetailsView.xib in Resources */,
 				F1FEE70C1CDCA63400FD4E9B /* question.png in Resources */,
 				F1FEE7641CEB479000FD4E9B /* riTriangle.png in Resources */,
@@ -904,10 +955,12 @@
 				F153796F1C919B2F001D8FFB /* ClassesFilterView.xib in Resources */,
 				F19C25901C43AB8B0002E490 /* palette.png in Resources */,
 				F1BC049C1D1C1025000F059C /* SessionUserCell.xib in Resources */,
+				F1B77AD51D81732100753DB0 /* NodeVisualInfoTableViewCell.xib in Resources */,
 				F15BE9FF1CABC60E00EDABA5 /* hidePaletteEditorOld.png in Resources */,
 				F1801F3D1C77413E005BA437 /* localFilled.png in Resources */,
 				F1801F3B1C774137005BA437 /* cloudFilled.png in Resources */,
 				F17A942B1D003DCF008AE1EE /* TutorialSheet.xib in Resources */,
+				F1B77ADA1D818F4C00753DB0 /* ReferenciVisualInfoTableViewCell.xib in Resources */,
 				F10AB80B1C50E85100DE6DCE /* cancel.png in Resources */,
 				F1FEE72E1CE3693200FD4E9B /* ChatView.xib in Resources */,
 				F17A93F31CF706F8008AE1EE /* YesOrNoView.xib in Resources */,
@@ -937,6 +990,7 @@
 				F1FEE7661CEB479A00FD4E9B /* leTriangle.png in Resources */,
 				F1FEE7301CE36C1500FD4E9B /* chat.png in Resources */,
 				F1391F1E1CBB9770004BAD71 /* SessionUsersView.xib in Resources */,
+				F1B77ADF1D82AC0200753DB0 /* EdgeVisualInfoTableViewCell.xib in Resources */,
 				F1786DF41C56649B00963663 /* ExploreFilesView.xib in Resources */,
 				F10AB8061C50E53100DE6DCE /* open.png in Resources */,
 				F17B75B01C22DA7200AB1B57 /* arrow.png in Resources */,
@@ -956,9 +1010,11 @@
 				F107E4641C72221A007DD29E /* ThinkingView.m in Sources */,
 				F1685EA81C1829F00094097E /* Canvas.m in Sources */,
 				F16C7DCB1C578D4B00CA9B25 /* ConnectionDetailsView.m in Sources */,
+				F1B77AD41D81732100753DB0 /* NodeVisualInfoTableViewCell.m in Sources */,
 				F16C35C31C9824F0006F4255 /* Constants.m in Sources */,
 				F19607F31CF32E2A000DC248 /* NoteView.m in Sources */,
 				F185107B1C1824C8004EC4C8 /* AppDelegate.m in Sources */,
+				F1B77ACF1D81709000753DB0 /* RemovableReference.m in Sources */,
 				F1685EAE1C1831840094097E /* ComponentDetailsView.m in Sources */,
 				F15865141C85A2CA007D2E75 /* CloudDiagramsExplorer.m in Sources */,
 				F153797D1C91B9EA001D8FFB /* RowSwitchTableViewCell.m in Sources */,
@@ -985,11 +1041,13 @@
 				F1B77AB21D801C8C00753DB0 /* VisibleClassesViewController.m in Sources */,
 				F1FEE72B1CE3693200FD4E9B /* ChatTableViewCell.m in Sources */,
 				F130A47E1D12DBDA00BDD212 /* ExpandableItemView.m in Sources */,
+				F1B77AE51D82BE8500753DB0 /* SlideMenuView.m in Sources */,
 				F1B77ABC1D8028AF00753DB0 /* NodeEdgeCell.m in Sources */,
 				F17A93EE1CF5EC44008AE1EE /* DrawnAlert.m in Sources */,
 				F18A55E91C845CF500B134F0 /* NoDraggableClassesView.m in Sources */,
 				F16C35C01C98247A006F4255 /* MCManager.m in Sources */,
 				F1587B041C19BC4600E963BE /* Palette.m in Sources */,
+				F1B77ACC1D816AEC00753DB0 /* ConfigureGraphicsViewController.m in Sources */,
 				F19607F81CF34710000DC248 /* CreateNoteView.m in Sources */,
 				F1B77AA61D8001AE00753DB0 /* SelectEcoreViewController.m in Sources */,
 				F17B75B31C22DBFE00AB1B57 /* ComponentsListViewController.m in Sources */,
@@ -1006,6 +1064,7 @@
 				F1853A031C5253740015A9E0 /* StringAttributeTableViewCell.m in Sources */,
 				F1FEE7111CE07F1C00FD4E9B /* DrawingAlert.m in Sources */,
 				F1B77AAF1D800ACC00753DB0 /* SelectRootClassViewController.m in Sources */,
+				F1B77ADE1D82AC0200753DB0 /* EdgeVisualInfoTableViewCell.m in Sources */,
 				F158651C1C85AA59007D2E75 /* DiagramFile.m in Sources */,
 				F1C417B81CB66F120075234C /* CustomTableHeader.m in Sources */,
 				F157993B1C86FDE00009D4C7 /* CloudFileCollectionViewCell.m in Sources */,
@@ -1014,6 +1073,7 @@
 				F16C7DD01C57AD4400CA9B25 /* SureView.m in Sources */,
 				F1FEE7621CEB278A00FD4E9B /* Alert.m in Sources */,
 				F1786DF71C5664AB00963663 /* ExploreFilesView.m in Sources */,
+				F1B77AD91D818F4C00753DB0 /* ReferenciVisualInfoTableViewCell.m in Sources */,
 				F18510781C1824C8004EC4C8 /* main.m in Sources */,
 				F14DBF841C849F4600963AA6 /* MyTextField.m in Sources */,
 				F1685EAB1C182B7D0094097E /* Connection.m in Sources */,

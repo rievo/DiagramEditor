@@ -144,6 +144,56 @@
                                                object:nil];
     
     
+    UISwipeGestureRecognizer * ges = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swiped:)];
+    ges.direction = UISwipeGestureRecognizerDirectionRight;
+    [self.view addGestureRecognizer:ges];
+
+    NSArray * arr =[[NSBundle mainBundle] loadNibNamed:@"SlideMenuView" owner:nil options:nil];
+    menu = [arr objectAtIndex:0];
+    
+    CGRect oldMenuFrame = menu.frame;
+    oldMenuFrame.size.height = self.view.frame.size.height;
+    oldMenuFrame.origin.x = 0 - oldMenuFrame.size.width;
+    
+    [menu setFrame:oldMenuFrame];
+    
+    menu.delegate = self;
+    
+    [self.view addSubview:menu];
+    
+    UISwipeGestureRecognizer * hideMenuGes = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(shouldHideMenu:)];
+    hideMenuGes.direction = UISwipeGestureRecognizerDirectionLeft;
+    [self.view addGestureRecognizer:hideMenuGes];
+    
+}
+
+-(void)shouldHideMenu:(UISwipeGestureRecognizer *)recog{
+    [self hideMenu];
+}
+-(void)hideMenu{
+    CGRect oldMenuFrame = menu.frame;
+    oldMenuFrame.origin.x = 0 -oldMenuFrame.size.width;
+    
+    [UIView beginAnimations:@"showMenu" context:nil];
+    [UIView setAnimationDuration:0.3];
+    [menu setFrame:oldMenuFrame];
+    [UIView commitAnimations];
+}
+-(void)showMenu{
+    
+    CGRect oldMenuFrame = menu.frame;
+    oldMenuFrame.origin.x = 0 ;
+    
+    [UIView beginAnimations:@"showMenu" context:nil];
+    [UIView setAnimationDuration:0.3];
+    [menu setFrame:oldMenuFrame];
+    [UIView commitAnimations];
+    
+}
+
+-(void)swiped:(UISwipeGestureRecognizer *)recog{
+    NSLog(@"swiped");
+    [self showMenu];
 }
 
 
@@ -829,26 +879,7 @@
 }
 
 - (IBAction)showInfo:(id)sender {
-    NSString * str = @"Created in Miso Group \nhttp://www.miso.es\n\nCreated by \nDiego Vaquero Melchor";
     
-    UIAlertController * alert=   [UIAlertController
-                                  alertControllerWithTitle:@"Info"
-                                  message:str
-                                  preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction* ok = [UIAlertAction
-                         actionWithTitle:@"OK"
-                         style:UIAlertActionStyleDefault
-                         handler:^(UIAlertAction * action)
-                         {
-                             [alert dismissViewControllerAnimated:YES completion:nil];
-                             
-                         }];
-    
-    [alert addAction:ok];
-
-    
-    [self presentViewController:alert animated:YES completion:nil];
 }
 
 
@@ -2885,5 +2916,53 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     
 }
 
+
+#pragma mark SlideMenuDelegate
+-(void)menuSelectedOption:(int)option{
+    
+    [self hideMenu];
+    
+    
+    switch (option) {
+        case 0: //Load old model
+                [self showOptionsPopup];
+            break;
+            
+        case 1: //Create a palette
+            [self performSegueWithIdentifier:@"showCreatePalette" sender:self];
+            break;
+            
+        case 2: //Show info
+            [self showInfo];
+            break;
+            
+        default:
+            break;
+    }
+
+}
+
+-(void)showInfo{
+    NSString * str = @"Created in Miso Group \nhttp://www.miso.es\n\nCreated by \nDiego Vaquero Melchor";
+    
+    UIAlertController * alert=   [UIAlertController
+                                  alertControllerWithTitle:@"Info"
+                                  message:str
+                                  preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* ok = [UIAlertAction
+                         actionWithTitle:@"OK"
+                         style:UIAlertActionStyleDefault
+                         handler:^(UIAlertAction * action)
+                         {
+                             [alert dismissViewControllerAnimated:YES completion:nil];
+                             
+                         }];
+    
+    [alert addAction:ok];
+    
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
 
 @end

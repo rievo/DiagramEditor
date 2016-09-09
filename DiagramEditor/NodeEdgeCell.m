@@ -24,13 +24,17 @@
     [picker setDataSource:self];
     [picker setDelegate:self];
     
-    associatedClass = nil;
+    associatedClass.visibleMode = 0;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
     
     // Configure the view for the selected state
+}
+
+-(void)prepare{
+    associatedClass.visibleMode = 0; //Default node
 }
 
 

@@ -17,7 +17,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T9p-7F-UB1">
-                        <rect key="frame" x="201" y="8" width="111" height="56"/>
+                        <rect key="frame" x="201" y="0.0" width="111" height="72"/>
                     </pickerView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="6uh-pf-nzq">
                         <rect key="frame" x="27" y="8" width="166" height="56"/>
@@ -30,10 +30,10 @@
                 <constraints>
                     <constraint firstAttribute="trailingMargin" secondItem="T9p-7F-UB1" secondAttribute="trailing" id="3b0-P9-VEW"/>
                     <constraint firstItem="T9p-7F-UB1" firstAttribute="width" secondItem="6uh-pf-nzq" secondAttribute="height" multiplier="74:21" constant="-86.333333333333314" id="3mz-Li-jhe"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="T9p-7F-UB1" secondAttribute="bottom" id="4Ag-PK-4HC"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="T9p-7F-UB1" secondAttribute="bottom" constant="-8" id="4Ag-PK-4HC"/>
                     <constraint firstAttribute="bottomMargin" secondItem="6uh-pf-nzq" secondAttribute="bottom" id="CtW-vj-Znr"/>
                     <constraint firstAttribute="topMargin" secondItem="6uh-pf-nzq" secondAttribute="top" id="HJ7-ta-D5r"/>
-                    <constraint firstAttribute="topMargin" secondItem="T9p-7F-UB1" secondAttribute="top" id="WUr-eu-fc6"/>
+                    <constraint firstAttribute="topMargin" secondItem="T9p-7F-UB1" secondAttribute="top" constant="8" id="WUr-eu-fc6"/>
                     <constraint firstItem="T9p-7F-UB1" firstAttribute="leading" secondItem="6uh-pf-nzq" secondAttribute="trailing" constant="8" id="ha5-sQ-EAb"/>
                     <constraint firstAttribute="leadingMargin" secondItem="6uh-pf-nzq" secondAttribute="leading" constant="-19" id="nYe-lN-BhY"/>
                 </constraints>

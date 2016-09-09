@@ -8,8 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ClassAttribute.h"
+#import "Reference.h"
+#import "RemovableReference.h"
+
 @interface SubsetionTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *label;
 @property (weak, nonatomic) IBOutlet UISwitch *control;
+
+
+@property id associatedElement;
 
 @end

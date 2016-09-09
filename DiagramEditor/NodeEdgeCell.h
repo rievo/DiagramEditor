@@ -16,4 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIPickerView *picker;
 @property JsonClass * associatedClass;
 
+-(void)prepare;
+
 @end
