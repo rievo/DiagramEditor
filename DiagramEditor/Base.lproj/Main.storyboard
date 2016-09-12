@@ -113,22 +113,22 @@
                                     <action selector="showEditor:" destination="rN5-PV-uVv" eventType="touchUpInside" id="olY-7G-aiJ"/>
                                 </connections>
                             </button>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="49n-J5-Ec4">
-                                <rect key="frame" x="201" y="29" width="51" height="31"/>
-                                <connections>
-                                    <action selector="changeSearchSessions:" destination="rN5-PV-uVv" eventType="valueChanged" id="8y9-tV-Dy8"/>
-                                </connections>
-                            </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Look for nearby sessions:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jo4-hN-ubP">
-                                <rect key="frame" x="20" y="34" width="173" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Look for sessions:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jo4-hN-ubP">
+                                <rect key="frame" x="20" y="34" width="130" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="173" id="W9g-Uz-jye"/>
+                                    <constraint firstAttribute="width" constant="130" id="W9g-Uz-jye"/>
                                     <constraint firstAttribute="height" constant="21" id="f0v-Nx-jEf"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <color key="textColor" red="0.7137255072593689" green="0.74901962280273438" blue="0.81960785388946533" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="49n-J5-Ec4">
+                                <rect key="frame" x="158" y="29" width="51" height="31"/>
+                                <connections>
+                                    <action selector="changeSearchSessions:" destination="rN5-PV-uVv" eventType="valueChanged" id="8y9-tV-Dy8"/>
+                                </connections>
+                            </switch>
                         </subviews>
                         <color key="backgroundColor" red="0.22745098039215686" green="0.30588235294117649" blue="0.47058823529411764" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>

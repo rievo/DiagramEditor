@@ -23,6 +23,6 @@
 @end
 @protocol SlideMenuDelegate <NSObject>
 
--(void)menuSelectedOption:(int)option;
+-(void)menuSelectedOption:(int)option inSection:(int)section;
 
 @end

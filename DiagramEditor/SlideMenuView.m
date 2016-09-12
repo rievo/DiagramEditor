@@ -46,7 +46,16 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return 1;
+    if(section == 0){ //Old models
+        return 1;
+    }else if(section == 1){ //Create palette
+        return 1;
+    }else if(section == 2){ //Info
+        return 2;
+    }else{
+        return 0;
+    }
+    return 0;
 }
 
 
@@ -78,7 +87,11 @@
     }else if(indexPath.section == 1){
         cell.textLabel.text = @"Create palette";
     }else if(indexPath.section == 2){
-        cell.textLabel.text = @"Who are we?";
+        if(indexPath.row == 0){
+            cell.textLabel.text = @"Who are we?";
+        }else if(indexPath.row == 1){
+            cell.textLabel.text = @"Tutorial";
+        }
     }
     
     return cell;
@@ -125,7 +138,7 @@ heightForHeaderInSection:(NSInteger)section{
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    [delegate menuSelectedOption:(int)indexPath.section];
+    [delegate menuSelectedOption:(int)indexPath.row inSection:(int)indexPath.section];
 }
 
 

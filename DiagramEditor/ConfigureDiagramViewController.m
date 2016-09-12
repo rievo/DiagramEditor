@@ -2918,12 +2918,13 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
 
 
 #pragma mark SlideMenuDelegate
--(void)menuSelectedOption:(int)option{
+-(void)menuSelectedOption:(int)option
+                inSection:(int)section{
     
     [self hideMenu];
     
     
-    switch (option) {
+    switch (section) {
         case 0: //Load old model
                 [self showOptionsPopup];
             break;
@@ -2933,7 +2934,12 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
             break;
             
         case 2: //Show info
-            [self showInfo];
+            if(option == 0) //Who are we
+                [self showInfo];
+            else if(option == 1){ //Tutorial
+                doingTutorial = YES;
+                [self startConfigureCVTutorial];
+            }
             break;
             
         default:
