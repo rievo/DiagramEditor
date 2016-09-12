@@ -66,6 +66,7 @@
     
     
     SlideMenuView * menu;
+    UIVisualEffectView * blurMenuView;
 }
 
 @property NSString * tempPaletteFile;

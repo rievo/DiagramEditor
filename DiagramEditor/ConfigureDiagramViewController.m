@@ -178,6 +178,9 @@
     [UIView setAnimationDuration:0.3];
     [menu setFrame:oldMenuFrame];
     [UIView commitAnimations];
+    
+    [blurMenuView removeFromSuperview];
+    blurMenuView = nil;
 }
 -(void)showMenu{
     
@@ -188,6 +191,17 @@
     [UIView setAnimationDuration:0.3];
     [menu setFrame:oldMenuFrame];
     [UIView commitAnimations];
+    
+    blurMenuView.backgroundColor = [UIColor clearColor];
+    
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    UIVisualEffectView * blur= [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    blur.frame = self.view.bounds;
+    blur.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self.view addSubview:blur];
+    
+    blurMenuView = blur;
+    [self.view bringSubviewToFront:menu];
     
 }
 
@@ -2808,6 +2822,8 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
                                     [self dismissViewControllerAnimated:YES completion:nil];
                                     [self showAndDisablePaletteFileGroup];
                                     
+                                    
+                                    
                                 }];
     UIAlertAction* noButton = [UIAlertAction
                                actionWithTitle:@"No, thanks"
@@ -2871,7 +2887,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.view bringSubviewToFront:folder];
     [folder setUserInteractionEnabled:NO];
     
-    [dele.tutSheet.textView setText:@"From this button you can open an old diagram, either from server or the device.\nTap here to continue..."];
+    [dele.tutSheet.textView setText:@"You can swipe from left to show menu. Give it a try.\nTap here to continue..."];
     
     CGFloat fixedWidth = dele.tutSheet.textView.frame.size.width;
     CGSize newSize = [dele.tutSheet.textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
