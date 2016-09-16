@@ -26,7 +26,7 @@
 #import "NoteView.h"
 #import "CreateNoteView.h"
 #import "ColorPalette.h"
-
+#import "PaletteFile.h"
 #import "DrawnAlert.h"
 #import "PathPiece.h"
 
@@ -1342,7 +1342,7 @@
     [writer writeStartElement:@"diagram"];
     [writer writeAttribute:@"version" value: @"2.0"];
     [writer writeStartElement:@"palette_name"];
-    [writer writeAttribute:@"name" value: dele.currentPaletteFileName];
+    [writer writeAttribute:@"name" value: dele.currentPaletteFile.name];
     [writer writeEndElement];
     
     [writer writeStartElement:@"subpalette"];
@@ -1619,7 +1619,7 @@
                                 style:UIAlertActionStyleDefault
                                 handler:^(UIAlertAction * action)
                                 {
-                                    dele.currentPaletteFileName = nil;
+                                    dele.currentPaletteFile = nil;
                                     [dele.components removeAllObjects];
                                     [dele.connections removeAllObjects];
                                     
@@ -3431,7 +3431,7 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
                              [alert dismissViewControllerAnimated:YES completion:nil];
                              
                              
-                             dele.currentPaletteFileName = nil;
+                             dele.currentPaletteFile = nil;
                              [dele.components removeAllObjects];
                              [dele.connections removeAllObjects];
                              

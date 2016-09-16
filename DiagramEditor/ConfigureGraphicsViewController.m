@@ -13,6 +13,7 @@
 #import "ReferenciVisualInfoTableViewCell.h"
 
 #import "SubsetionTableViewCell.h"
+#import "CreateGraphicRViewController.h"
 
 
 @implementation ConfigureGraphicsViewController
@@ -66,13 +67,22 @@
         
         if([_nodes containsObject:c]){ //It is a node
             NodeVisualInfoTableViewCell * cell = (NodeVisualInfoTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"NodeVisualInfoTableViewCell"];
+            
+            
+            
             if(cell == nil){
                 NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"NodeVisualInfoTableViewCell" owner:self options:nil];
                 cell = [nib objectAtIndex:0];
             }
+            cell.associatedComponent = c.associatedComponent;
+            [cell prepareComponent];
+            
             return cell;
         }else{ //It is an edge
             EdgeVisualInfoTableViewCell * cell = (EdgeVisualInfoTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"EdgeVisualInfoTableViewCell"];
+            
+            cell.conn = c.associatedComponent;
+            
             if(cell == nil){
                 NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"EdgeVisualInfoTableViewCell" owner:self options:nil];
                 cell = [nib objectAtIndex:0];
@@ -80,15 +90,31 @@
             return cell;
         }
     }else if(indexPath.row == 1){ //References header
-        HeaderTableViewCell * cell = (HeaderTableViewCell *) [tableView dequeueReusableCellWithIdentifier:@"headerCell"];
         
-        if(cell== nil){
-            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"HeaderTableViewCell" owner:self options:nil];
-            cell = [nib objectAtIndex:0];
+        if([_nodes containsObject:c]){
+            HeaderTableViewCell * cell = (HeaderTableViewCell *) [tableView dequeueReusableCellWithIdentifier:@"headerCell"];
+            
+            if(cell== nil){
+                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"HeaderTableViewCell" owner:self options:nil];
+                cell = [nib objectAtIndex:0];
+            }
+            
+            cell.label.text = @"References";
+            return cell;
+            
+        }else{
+            HeaderTableViewCell * cell = (HeaderTableViewCell *) [tableView dequeueReusableCellWithIdentifier:@"headerCell"];
+            
+            if(cell== nil){
+                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"HeaderTableViewCell" owner:self options:nil];
+                cell = [nib objectAtIndex:0];
+            }
+            
+            cell.label.text = @"Source reference?";
+            return cell;
+
         }
         
-        cell.label.text = @"References";
-        return cell;
     }else{ //Reference visual info (if the class is an Edge, it will show other info
         
         if([_nodes containsObject:c]){ //It is a node
@@ -108,6 +134,9 @@
             Reference * thisReference = [c.references objectAtIndex:indexPath.row -2];
             
             SubsetionTableViewCell * cell = (SubsetionTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"subsetionTableViewCell"];
+            
+            cell.associatedElement = thisReference;
+            
             if(cell == nil){
                 NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SubsetionTableViewCell" owner:self options:nil];
                 cell = [nib objectAtIndex:0];
@@ -172,7 +201,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-
+    
     JsonClass * c = [_visibles objectAtIndex:indexPath.section];
     
     
@@ -199,15 +228,32 @@
             return cell.bounds.size.height;
         }else if(indexPath.row == 1){
             return 45.0;
-        }else{
+        }else{ //I need to know wich reference will be the source and wich one will be the target
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SubsetionTableViewCell" owner:self options:nil];
             UIView * cell = [nib objectAtIndex:0];
             return cell.bounds.size.height;
         }
     }
     
-
+    
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:@"finishCreateGraphicR"]){
+        
+        
+        CreateGraphicRViewController * vc = (CreateGraphicRViewController *)segue.destinationViewController;
+        vc.root = _root;
+        vc.classes = _classes;
+        
+        vc.visibles = _visibles;
+        vc.hidden = _hidden;
+        
+        vc.nodes = _nodes;
+        vc.edges = _edges;
+        
+        vc.selectedJson = _selectedJson;
+    }
+}
 
 @end

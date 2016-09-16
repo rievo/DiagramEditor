@@ -398,6 +398,26 @@
             </objects>
             <point key="canvasLocation" x="3185" y="-231"/>
         </scene>
+        <!--Create GraphicR View Controller-->
+        <scene sceneID="R8T-UA-jBx">
+            <objects>
+                <viewController id="2dN-tB-oBJ" customClass="CreateGraphicRViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="xx1-0A-EXY"/>
+                        <viewControllerLayoutGuide type="bottom" id="wWq-Zf-OwC"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ea6-hN-Wsa">
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="400" height="400"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="K6W-fj-vVt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2639" y="253"/>
+        </scene>
         <!--Configure Graphics View Controller-->
         <scene sceneID="n2c-zc-1ud">
             <objects>
@@ -417,6 +437,11 @@
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="TbQ-bG-wGa">
                                             <connections>
                                                 <action selector="goBack:" destination="UHo-om-wZw" id="cgD-sD-9qD"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Finish" id="jg2-Jz-cSj">
+                                            <connections>
+                                                <segue destination="2dN-tB-oBJ" kind="show" identifier="finishCreateGraphicR" id="jIG-Qx-ffN"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>

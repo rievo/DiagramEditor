@@ -98,10 +98,10 @@
     [palettesTable setDelegate:self];
     
     /*
-    UILongPressGestureRecognizer * longp = [[UILongPressGestureRecognizer alloc] initWithTarget:self
-                                                                                         action:@selector(showInfo)];
-    longp.minimumPressDuration = 3.0;
-    [myInfo addGestureRecognizer:longp];*/
+     UILongPressGestureRecognizer * longp = [[UILongPressGestureRecognizer alloc] initWithTarget:self
+     action:@selector(showInfo)];
+     longp.minimumPressDuration = 3.0;
+     [myInfo addGestureRecognizer:longp];*/
     
     filesArray = [[NSMutableArray alloc] init];
     [filesTable setDataSource:self];
@@ -123,11 +123,11 @@
                                                      object:nil];
     [locThread start];
     
-
+    
     
     //Pull to refresh
     
-    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
     [filesTable addSubview:refreshControl];
     
@@ -136,7 +136,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didReceiveAppDeleLetsgoToEditor)
                                                  name:@"receivingAppDeleGoEditor"
-                                                object:nil];
+                                               object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(closeSubPalette)
@@ -147,7 +147,7 @@
     UISwipeGestureRecognizer * ges = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swiped:)];
     ges.direction = UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:ges];
-
+    
     NSArray * arr =[[NSBundle mainBundle] loadNibNamed:@"SlideMenuView" owner:nil options:nil];
     menu = [arr objectAtIndex:0];
     
@@ -194,19 +194,20 @@
     
     blurMenuView.backgroundColor = [UIColor clearColor];
     
-    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-    UIVisualEffectView * blur= [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-    blur.frame = self.view.bounds;
-    blur.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [self.view addSubview:blur];
-    
-    blurMenuView = blur;
-    [self.view bringSubviewToFront:menu];
-    
+    if(blurMenuView  == nil){
+        
+        UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+        UIVisualEffectView * blur= [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+        blur.frame = self.view.bounds;
+        blur.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [self.view addSubview:blur];
+        
+        blurMenuView = blur;
+        [self.view bringSubviewToFront:menu];
+    }
 }
 
 -(void)swiped:(UISwipeGestureRecognizer *)recog{
-    NSLog(@"swiped");
     [self showMenu];
 }
 
@@ -227,15 +228,13 @@
     
     
     [self reloadServerPalettes:self];
-    // Do your job, when done:
-    [refreshControl endRefreshing];
-}
+    }
 
 
 
 
 -(void)viewWillAppear:(BOOL)animated{
-     dele.loadingADiagram = NO;
+    dele.loadingADiagram = NO;
 }
 
 #pragma mark Recover files from server and local device
@@ -264,16 +263,25 @@
     for (int count = 0; count < (int)[directoryContent count]; count++)
     {
         NSString * path = [NSString stringWithFormat:@"%@/%@", palettePath, directoryContent[count]];
-        NSString* contentins = [NSString stringWithContentsOfFile:path
-                                                      encoding:NSUTF8StringEncoding
-                                                         error:NULL];
-
+        NSString * fileContent = [NSString stringWithContentsOfFile:path
+                                                         encoding:NSUTF8StringEncoding
+                                                            error:NULL];
+        
+        NSError * jsonError;
+        NSData *objectData = [fileContent dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:objectData
+                                                             options:NSJSONReadingMutableContainers
+                                                               error:&jsonError];
+        
+        
         PaletteFile * pf = [[PaletteFile alloc] init];
+        
         NSArray * components = [path componentsSeparatedByString:@"/"];
         
         pf.name = [components objectAtIndex:components.count -1];
-        pf.content = contentins;
+        pf.content = [json objectForKey:@"content"];
         pf.fromServer = false;
+        pf.ecoreURI = [json objectForKey:@"ecoreURI"];
         
         [filesArray addObject:pf];
     }
@@ -281,7 +289,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [filesTable reloadData];
     });
-   
+    
     
     //NSFileManager  *manager = [NSFileManager defaultManager];
     // the preferred way to get the apps documents directory
@@ -290,26 +298,26 @@
     
     
     /*
-    //Load from bundle
-    NSArray * bpaths = [[NSBundle mainBundle] pathsForResourcesOfType:@".graphicR" inDirectory:nil];
-    NSString * contentstr = nil;
-    for(NSString * path in bpaths){
-        contentstr = [NSString stringWithContentsOfFile:path
-                                               encoding:NSUTF8StringEncoding
-                                                  error:nil];
-        PaletteFile * pf = [[PaletteFile alloc] init];
-        NSArray * components = [path componentsSeparatedByString:@"/"];
-        
-        pf.name = [components objectAtIndex:components.count -1];
-        pf.content = contentstr;
-        pf.fromServer = false;
-        
-        [filesArray addObject:pf];
-    }
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [filesTable reloadData];
-    });*/
+     //Load from bundle
+     NSArray * bpaths = [[NSBundle mainBundle] pathsForResourcesOfType:@".graphicR" inDirectory:nil];
+     NSString * contentstr = nil;
+     for(NSString * path in bpaths){
+     contentstr = [NSString stringWithContentsOfFile:path
+     encoding:NSUTF8StringEncoding
+     error:nil];
+     PaletteFile * pf = [[PaletteFile alloc] init];
+     NSArray * components = [path componentsSeparatedByString:@"/"];
+     
+     pf.name = [components objectAtIndex:components.count -1];
+     pf.content = contentstr;
+     pf.fromServer = false;
+     
+     [filesArray addObject:pf];
+     }
+     
+     dispatch_async(dispatch_get_main_queue(), ^{
+     [filesTable reloadData];
+     });*/
     
     
 }
@@ -347,6 +355,7 @@
                      pf.name = [ins objectForKey:@"name"];
                      pf.content = [ins objectForKey:@"content"];
                      pf.fromServer = true;
+                     pf.ecoreURI = [ins objectForKey:@"ecoreURI"];
                      [filesArray addObject:pf];
                  }
                  
@@ -363,6 +372,10 @@
              }
              
          }
+         
+         // Do your job, when done:
+         [refreshControl endRefreshing];
+
      }];
 }
 
@@ -425,7 +438,7 @@
         
         
         NSDictionary * listRepresentations =[[allGraphicRepresentations objectAtIndex:gr]objectForKey:@"listRepresentations"];
-
+        
         NSArray * lRArray;
         
         if([listRepresentations isKindOfClass:[NSDictionary class]]){
@@ -544,7 +557,7 @@
                 item.expandableItems = [[NSMutableArray alloc] init];
                 
                 for(NSDictionary * expItem in expandableItems){
-
+                    
                     NSDictionary * refDic = [expItem objectForKey:@"anEReference"];
                     NSString * reference = [refDic objectForKey:@"_href"];  //Con esta referencia marco el palete link como expandable
                     
@@ -571,7 +584,7 @@
                 }
                 
                 
-
+                
                 
                 
                 NSString * draggablestr = [diagPalette objectForKey:@"_isDraggable"];
@@ -624,18 +637,18 @@
                     item.height = [NSNumber numberWithFloat:scaledH];
                     
                     /*if(sizeStr != nil){
-                        //There is size value, but with and height
-                        NSNumber * s = [f numberFromString:sizeStr];
-                        float scaledS = s.floatValue * scale;
-                        item.width = [NSNumber numberWithFloat:scaledS];
-                        item.height = [NSNumber numberWithFloat:scaledS];
-                    }else{
-                        float scaledW = w.floatValue * scale;
-                        float scaledH = h.floatValue * scale;
-                        item.width = [NSNumber numberWithFloat:scaledW];
-                        item.height = [NSNumber numberWithFloat:scaledH];
-                        
-                    }*/
+                     //There is size value, but with and height
+                     NSNumber * s = [f numberFromString:sizeStr];
+                     float scaledS = s.floatValue * scale;
+                     item.width = [NSNumber numberWithFloat:scaledS];
+                     item.height = [NSNumber numberWithFloat:scaledS];
+                     }else{
+                     float scaledW = w.floatValue * scale;
+                     float scaledH = h.floatValue * scale;
+                     item.width = [NSNumber numberWithFloat:scaledW];
+                     item.height = [NSNumber numberWithFloat:scaledH];
+                     
+                     }*/
                     
                     
                     
@@ -759,7 +772,7 @@
             [palettes addObject:tempPalete];
         }
         
-       
+        
         
     }
     
@@ -846,7 +859,7 @@
         BOOL result = [self completePaletteForJSONAttributes];
         
         if(result == YES){
-            dele.currentPaletteFileName = tempPaletteFile;
+            dele.currentPaletteFile = tempPaletteFile;
             
             [searchSessionsOutlet setOn:NO];
             [dele.manager stopAdvertising];
@@ -866,7 +879,7 @@
             [[NSUserDefaults standardUserDefaults] setObject:@"done" forKey:@"configureTutorialStatus"];
             dele.shouldShowConfigureTutorial = NO;
         }else{
-
+            
             [spinnerView removeFromSuperview];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                             message:@"Json is not accesible"
@@ -999,21 +1012,21 @@
             [cell.accessoryView setFrame:CGRectMake(0, 0, 20, 20)];
         }
         /*
-        UIImage * image ;
-        
-        
-        PaletteFile * pf = [filesArray objectAtIndex:indexPath.row];
-        
-        if(pf.fromServer == true){
-            image = [UIImage imageNamed:@"cloudFilled"];
-        }else{
-            image = [UIImage imageNamed:@"localFilled"];
-        }
-        
-        NSArray * array = [pf.name componentsSeparatedByString:@"."];
-        cell.textLabel.text = array[0];
-        cell.accessoryView = [[ UIImageView alloc ] initWithImage:image];
-        [cell.accessoryView setFrame:CGRectMake(0, 0, 20, 20)];*/
+         UIImage * image ;
+         
+         
+         PaletteFile * pf = [filesArray objectAtIndex:indexPath.row];
+         
+         if(pf.fromServer == true){
+         image = [UIImage imageNamed:@"cloudFilled"];
+         }else{
+         image = [UIImage imageNamed:@"localFilled"];
+         }
+         
+         NSArray * array = [pf.name componentsSeparatedByString:@"."];
+         cell.textLabel.text = array[0];
+         cell.accessoryView = [[ UIImageView alloc ] initWithImage:image];
+         [cell.accessoryView setFrame:CGRectMake(0, 0, 20, 20)];*/
         
     }
     
@@ -1034,6 +1047,8 @@
         palette.paletteItems = selected.paletteItems;
         
         dele.subPalette = selected.name;
+        
+        
         [palette setHidden:NO];
         [palette setAlpha:0];
         
@@ -1055,7 +1070,7 @@
         [palette preparePalette];
         [confirmButton setHidden:NO];
         
-
+        
         if(doingTutorial == YES){
             [self.view bringSubviewToFront:dele.tutSheet];
             [dele.tutSheet.textView setText:@"Now you can preview the subpalette at the bottom of the screen.\n"
@@ -1087,10 +1102,11 @@
             file = [serverPalettes objectAtIndex:indexPath.row];
         }
         [filesArray objectAtIndex:indexPath.row];
-        tempPaletteFile = file.name;
+        tempPaletteFile = file;
         
         dele.graphicRContent = file.content;
         
+        tempPaletteFile = file;
         
         [subPaletteGroup setHidden:NO];
         
@@ -1163,7 +1179,7 @@
         return NO;
 }
 
- 
+
 - (void)tableView:(UITableView *)tableView
 commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
 forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -1172,21 +1188,21 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-
-        UILabel *myLabel = [[UILabel alloc] init];
-
-        myLabel.frame = CGRectMake(0, 0, tableView.frame.size.width, 25);
-        myLabel.font = [UIFont boldSystemFontOfSize:16];
-        myLabel.text = [self tableView:tableView titleForHeaderInSection:section];
-        myLabel.textColor = dele.blue1;
-        myLabel.textAlignment = NSTextAlignmentCenter;
-        myLabel.backgroundColor = dele.blue4;
-        
-        UIView *headerView = [[UIView alloc] init];
-        [headerView addSubview:myLabel];
-        
-        return headerView;
-
+    
+    UILabel *myLabel = [[UILabel alloc] init];
+    
+    myLabel.frame = CGRectMake(0, 0, tableView.frame.size.width, 25);
+    myLabel.font = [UIFont boldSystemFontOfSize:16];
+    myLabel.text = [self tableView:tableView titleForHeaderInSection:section];
+    myLabel.textColor = dele.blue1;
+    myLabel.textAlignment = NSTextAlignmentCenter;
+    myLabel.backgroundColor = dele.blue4;
+    
+    UIView *headerView = [[UIView alloc] init];
+    [headerView addSubview:myLabel];
+    
+    return headerView;
+    
     
 }
 
@@ -1215,7 +1231,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
                                         }];
         return @[remove];
     }else if(indexPath.section == 1){ //server files
-         //PaletteFile * pf = [serverPalettes objectAtIndex:indexPath.row];
+        //PaletteFile * pf = [serverPalettes objectAtIndex:indexPath.row];
         UITableViewRowAction *download = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault
                                                                             title:@"Download"
                                                                           handler:^(UITableViewRowAction *action, NSIndexPath *indexPath)
@@ -1226,15 +1242,15 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
         download.backgroundColor = dele.blue1;
         
         return @[download];
-
+        
     }else{
         return nil;
     }
-
+    
 }
 
 -(void)downloadFileAtIndexPath:(NSIndexPath *)ip{
-
+    
     PaletteFile * pf = filesArray[ip.row];
     
     NSError * error = nil;
@@ -1245,10 +1261,26 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     NSString * fileName = [NSString stringWithFormat:@"%@/%@", palettePath, pf.name];
     
-    [pf.content writeToFile:fileName
-              atomically:NO
-                encoding:NSStringEncodingConversionAllowLossy
-                   error:&error];
+    
+    //NSString * beautyContent = [pf.content stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+    [dic setObject:pf.content forKey:@"content"];
+    [dic setObject:pf.ecoreURI forKey:@"ecoreURI"];
+    
+    
+    
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic
+                                                       options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                         error:&error];
+
+    NSString *text = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    
+    
+    
+    [text writeToFile:fileName
+                 atomically:NO
+                   encoding:NSStringEncodingConversionAllowLossy
+                      error:&error];
     
     if(error != nil){
         NSLog(@"%@", [error localizedDescription]);
@@ -1272,8 +1304,8 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     });
     
     
-    //Download Json
-    NSString * jsonContent = [self searchJSONonServer:pf.name];
+    //Download Json with this uri
+    NSString * jsonContent = [self searchJSONonServer:pf.ecoreURI];
     NSError * jsonError = nil;
     
     if(jsonContent == nil){
@@ -1282,18 +1314,19 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
         NSLog(@"Json was found on server. Let's save it");
         NSString * jsonPath = [documentsDirectory stringByAppendingPathComponent:@"/Jsons"];
         
-        NSString * jsonName = [NSString stringWithFormat:@"%@/%@", jsonPath, pf.name];
+        //Save json with the ecore URI
+        NSString * jsonName = [NSString stringWithFormat:@"%@/%@", jsonPath, pf.ecoreURI];
         [jsonContent writeToFile:jsonName
-                     atomically:NO
-                       encoding:NSStringEncodingConversionAllowLossy
-                          error:&jsonError];
+                      atomically:NO
+                        encoding:NSStringEncodingConversionAllowLossy
+                           error:&jsonError];
         
         if(jsonError == nil){
             NSLog(@"json was properly saved");
         }else{
             NSLog(@"Error downloading the json");
         }
-
+        
     }
     
 }
@@ -1362,8 +1395,8 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
                                                               style:UIAlertActionStyleDefault
                                                             handler:^(UIAlertAction * _Nonnull action) {
                                                                 CloudDiagramsExplorer * cde = [[[NSBundle mainBundle]loadNibNamed:@"CloudDiagramsExplorer"
-                                                                                                                           owner:self
-                                                                                                                         options:nil]objectAtIndex:0];
+                                                                                                                            owner:self
+                                                                                                                          options:nil]objectAtIndex:0];
                                                                 [cde setFrame:self.view.frame];
                                                                 cde.delegate = self;
                                                                 [self.view addSubview:cde];
@@ -1458,9 +1491,9 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     PaletteItem * pi = nil;
     
     //Pasamos el json a un nsdictionary
-
     
-    NSString * jsonString = [self searchJsonNamed:tempPaletteFile];
+    
+    NSString * jsonString = [self searchJsonNamed:tempPaletteFile.ecoreURI];
     
     if(jsonString == nil){
         NSLog(@"Error, we don't have the Json");
@@ -1527,7 +1560,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
         dele.noVisibleItems = [[NSMutableArray alloc] init];
         //Load no visible elements
         for(NSDictionary * classDic in classes){
-
+            
             NSString * name = [classDic objectForKey:@"name"];
             
             //Check if I don't have a palette item with this name
@@ -1585,11 +1618,11 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
         
         //so we have the JSON, let's get associated ecore
         
-        NSString * ecoreContent = [self getEcoreNamed:tempPaletteFile];
+        NSString * ecoreContent = [self getEcoreNamed:tempPaletteFile.ecoreURI];
         
         dele.ecoreContent = ecoreContent;
         
-
+        
         
         return YES;
     }
@@ -1640,37 +1673,37 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
                 }
                 //add itsParents
                 /*for(int p = 0; p< itsParents.count; p++){
-                    if(![superClassToProcess containsObject:itsParents[p]])
-                        [superClassToProcess addObject:itsParents[p]];
-                }*/
+                 if(![superClassToProcess containsObject:itsParents[p]])
+                 [superClassToProcess addObject:itsParents[p]];
+                 }*/
                 
             }
         }
     }
     
-   /* NSDictionary * dic = nil;
-    NSString * name;
-    
-    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
-    f.numberStyle = NSNumberFormatterDecimalStyle;
-    
-    for(int i = 0; i< classArray.count; i++){
-        name = nil;
-        dic = [classArray objectAtIndex:i];
-        name = [dic objectForKey:@"name"];
-        NSArray * thisParents = [dic objectForKey:@"parents"];
-        
-        if([name isEqualToString:key]){
-            NSArray * pars = [dic objectForKey:@"parents"];
-            
-            if(pars.count != 0){
-                
-                for(NSString * str in pars){
-                    [parents addObject:str];
-                }
-            }
-        }
-    }*/
+    /* NSDictionary * dic = nil;
+     NSString * name;
+     
+     NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+     f.numberStyle = NSNumberFormatterDecimalStyle;
+     
+     for(int i = 0; i< classArray.count; i++){
+     name = nil;
+     dic = [classArray objectAtIndex:i];
+     name = [dic objectForKey:@"name"];
+     NSArray * thisParents = [dic objectForKey:@"parents"];
+     
+     if([name isEqualToString:key]){
+     NSArray * pars = [dic objectForKey:@"parents"];
+     
+     if(pars.count != 0){
+     
+     for(NSString * str in pars){
+     [parents addObject:str];
+     }
+     }
+     }
+     }*/
     //TODO: Recursive
 }
 
@@ -1773,7 +1806,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
                                         encoding:NSUTF8StringEncoding
                                            error:&error];
     
-     dele.loadingADiagram = YES;
+    dele.loadingADiagram = YES;
     
     
     
@@ -1903,7 +1936,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
         tempC = [NSString stringWithFormat:@"#%@",tempC];
         da.color = [ColorPalette colorFromHexString:tempC];
         
-       
+        
         UIBezierPath * path = [[UIBezierPath alloc] init];
         NSMutableArray * partsHolder = [[NSMutableArray alloc] init];
         
@@ -1923,7 +1956,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
             [partsHolder addObject:pp];
         }
         
-
+        
         for(PathPiece * pp in partsHolder){
             
             if([pp.type isEqualToString:CGPathElementMoveToPoint]){
@@ -1940,17 +1973,17 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
         
         da.path = path;
         [dele.drawnsArray addObject:da];
-
+        
         
     }
-
+    
     NSDictionary * paletteNameDic = [diagramDic objectForKey:@"palette_name"];
     NSString * paletteName = [paletteNameDic objectForKey:@"_name"];
     NSArray * parts = [paletteName componentsSeparatedByString:@"."];
     tempPaletteFile = parts[0];
     paletteName = parts[0];
     //Try loading palette with that name
-    NSString * paletteContent = [self loadPaletteNamed:tempPaletteFile];
+    NSString * paletteContent = [self loadPaletteNamed:tempPaletteFile.ecoreURI];
     
     if(paletteContent == nil){ //Error, we don't have this palette
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
@@ -1976,7 +2009,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
             
             
             //Reset things
-             dele.loadingADiagram = NO;
+            dele.loadingADiagram = NO;
             dele.subPalette = nil;
             paletteContent = nil;
         }else{
@@ -1988,9 +2021,9 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
             dele.paletteItems = [[NSMutableArray alloc] initWithArray:palette.paletteItems];
             
             [refreshTimer invalidate];
-
             
-            dele.currentPaletteFileName = tempPaletteFile;
+            
+            dele.currentPaletteFile = tempPaletteFile;
             BOOL result = [self completePaletteForJSONAttributes];
             
             
@@ -2013,7 +2046,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
                     [loadedComponents addObject:comp];
                 }
                 
-
+                
             }
             
             NSMutableArray * loadedConnections = [[NSMutableArray alloc] init];
@@ -2052,7 +2085,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
             }else{ //No se ha podido encontrar el json
                 NSLog(@"No te dejo seguir");
             }
-
+            
         }
         
         
@@ -2081,11 +2114,11 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     pal = [self searchOnLocalPalettes:name];
     
     if(pal == nil)
-       pal= [self searchOnServerPalettes:name];
+        pal= [self searchOnServerPalettes:name];
     
     /*if(pal == nil){
-        
-    }*/
+     
+     }*/
     return pal;
 }
 
@@ -2141,22 +2174,22 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
         
     }
     /*
-    //Load local files
-    NSArray * bpaths = [[NSBundle mainBundle] pathsForResourcesOfType:@".graphicR" inDirectory:nil];
-    NSString * contentstr = nil;
-    for(NSString * path in bpaths){
-        contentstr = [NSString stringWithContentsOfFile:path
-                                               encoding:NSUTF8StringEncoding
-                                                  error:nil];
-        PaletteFile * pf = [[PaletteFile alloc] init];
-        NSArray * components = [path componentsSeparatedByString:@"/"];
-        
-        pf.name = [components objectAtIndex:components.count -1];
-        pf.content = contentstr;
-        pf.fromServer = false;
-        
-        [filesArray addObject:pf];
-    }*/
+     //Load local files
+     NSArray * bpaths = [[NSBundle mainBundle] pathsForResourcesOfType:@".graphicR" inDirectory:nil];
+     NSString * contentstr = nil;
+     for(NSString * path in bpaths){
+     contentstr = [NSString stringWithContentsOfFile:path
+     encoding:NSUTF8StringEncoding
+     error:nil];
+     PaletteFile * pf = [[PaletteFile alloc] init];
+     NSArray * components = [path componentsSeparatedByString:@"/"];
+     
+     pf.name = [components objectAtIndex:components.count -1];
+     pf.content = contentstr;
+     pf.fromServer = false;
+     
+     [filesArray addObject:pf];
+     }*/
     
     
     for(PaletteFile * pf in filesArray){
@@ -2197,22 +2230,22 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
 
 -(NSString *)searchOnLocalPalettes: (NSString *)name{
     /*NSString * temp = nil;
-    
-    NSArray * bpaths = [[NSBundle mainBundle] pathsForResourcesOfType:@".graphicR" inDirectory:nil];
-    for(NSString * path in bpaths){
-        NSArray * components = [path componentsSeparatedByString:@"/"];
-        
-        NSString * n = [components objectAtIndex:components.count -1];
-        if([n isEqualToString:name]){
-            temp = [NSString stringWithContentsOfFile:path
-                                             encoding:NSUTF8StringEncoding
-                                                error:nil];
-            return temp;
-        }
-    }
-    
-    
-    return temp;*/
+     
+     NSArray * bpaths = [[NSBundle mainBundle] pathsForResourcesOfType:@".graphicR" inDirectory:nil];
+     for(NSString * path in bpaths){
+     NSArray * components = [path componentsSeparatedByString:@"/"];
+     
+     NSString * n = [components objectAtIndex:components.count -1];
+     if([n isEqualToString:name]){
+     temp = [NSString stringWithContentsOfFile:path
+     encoding:NSUTF8StringEncoding
+     error:nil];
+     return temp;
+     }
+     }
+     
+     
+     return temp;*/
     
     //Load local palettes
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -2235,12 +2268,12 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
             return contentins;
         }
         /*NSString * path = [NSString stringWithFormat:@"%@/%@", palettePath, directoryContent[count]];
-        NSString* contentins = [NSString stringWithContentsOfFile:path
-                                                         encoding:NSUTF8StringEncoding
-                                                            error:NULL];
+         NSString* contentins = [NSString stringWithContentsOfFile:path
+         encoding:NSUTF8StringEncoding
+         error:NULL];
+         
+         */
         
-*/
-
     }
     
     return nil;
@@ -2249,7 +2282,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark Component methods
 
 -(Component *)componentFromDictionary: (NSDictionary *)dic{
-   
+    
     
     
     
@@ -2268,13 +2301,13 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     
     NSString * dragstr = [dic objectForKey:@"_isDraggable"];
-
+    
     
     Component * temp = [[Component alloc] initWithFrame:CGRectMake(x, y, width, height)];
     [temp prepare];
     
     
-
+    
     
     NSString * colorString = [dic objectForKey:@"_color"];
     NSString * type = [dic objectForKey:@"_type"];
@@ -2308,13 +2341,13 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
         attrDic =[[NSArray alloc] initWithObjects:attrDic, nil];
     }
     
-
+    
     for(NSDictionary * ad in attrDic){
         NSString * aname = [ad objectForKey:@"_name"];
         //NSString * adefVal = [ad objectForKey:@"_default_value"];
         //NSString * maxStr = [ad objectForKey:@"_max"];
         //NSString * minStr = [ad objectForKey:@"_min"];
-
+        
         //NSNumber *amax = [f numberFromString:maxStr];
         //NSNumber *amin = [f numberFromString:minStr];
         
@@ -2325,14 +2358,14 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
         atr.name = aname;
         atr.type = type;
         
-
+        
         //atr.defaultValue = adefVal;
         //atr.max = amax;
         //atr.min = amin;
         //atr.type = atype;
         atr.currentValue = acurrVal;
         
-
+        
         
         
         [dele completeClassAttribute:atr withClasName:temp.className];
@@ -2375,7 +2408,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
                 //A new component instance
                 Component * comp = [[Component alloc] init];
                 comp.attributes = [[NSMutableArray alloc]init];
-
+                
                 comp.className = [instance objectForKey:@"_className"];
                 comp.componentId = [instance objectForKey:@"_id"];
                 
@@ -2507,22 +2540,22 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
                 
                 return bodystr;
             }
-
+            
         }else{ //Some error
             NSLog(@"Error parsing data");
             return nil;
         }
     }
-
+    
     return nil;
 }
--(NSString *)searchJsonNamed:(NSString *)name{
+-(NSString *)searchJsonNamed:(NSString *)uri{
     NSString * result = nil;
     
-    result = [self searchLocalJSON:name];
+    result = [self searchLocalJSONByURI:uri];
     
     if(result == nil)
-        result = [self searchJSONonServer:name];
+        result = [self searchJSONonServer:uri];
     
     return result;
 }
@@ -2554,8 +2587,36 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     return nil;
 }
+-(NSString *)searchLocalJSONByURI:(NSString *)uri{
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    
+    NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
+    
+    NSString *palettePath = [documentsDirectory stringByAppendingPathComponent:@"/Jsons"];
+    
+    /*
+    NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:palettePath error:NULL];
+    
+    for (int count = 0; count < (int)[directoryContent count]; count++){
+        NSString * jname = directoryContent[count];
+        if([jname isEqualToString:name]){
+            
+            //Read this and return
+            NSString * path = [NSString stringWithFormat:@"%@/%@", palettePath, directoryContent[count]];
+            NSString* contentins = [NSString stringWithContentsOfFile:path
+                                                             encoding:NSUTF8StringEncoding
+                                                                error:NULL];
+            return contentins;
+            
+            
+        }
+    }*/
+    return nil;
+}
 
--(NSString *)searchJSONonServer:(NSString *)name{
+
+-(NSString *)searchJSONonServer:(NSString *)uri{
     
     //ThinkingView * thinking = [[[NSBundle mainBundle] loadNibNamed:@"ThinkingView"
     //                                                                    owner:self
@@ -2564,11 +2625,11 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     //[thinking setFrame:self.view.frame];
     
     
-    NSArray * parts = [name componentsSeparatedByString:@"."];
-    NSString * trueName = parts[0] ;
+    /*NSArray * parts = [name componentsSeparatedByString:@"."];
+    NSString * trueName = parts[0] ;*/
     //Get json content from
     NSLog(@"Loading files from server");
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/jsons/%@?json=true", baseURL, trueName]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/jsonbyuri?json=true&uri=%@", baseURL, uri]];
     
     NSURLRequest * urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:2.0];
     NSURLResponse * response = nil;
@@ -2629,7 +2690,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     palette.paletteItems = [[NSMutableArray alloc ]init];
     
     dele.paletteItems = [[NSMutableArray alloc ]init];
-    dele.currentPaletteFileName = nil;
+    dele.currentPaletteFile = nil;
     dele.subPalette = nil;
     dele.graphicR = nil;
     dele.loadingADiagram = NO;
@@ -2657,7 +2718,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
                                            dele.tutSheet.frame.origin.y,
                                            dele.tutSheet.frame.size.width,
                                            newSize.height)];
-
+        
     }
     
     //Quitar el subpalette y mostrar el palettefilegroup
@@ -2707,7 +2768,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     }else{
         
         NSString * fileContent = file.content;
-
+        
         
         //Do we have JSON for this old diagram?
         NSString * paletteFile = [self extractPaletteNameFromXMLDiagram:fileContent];
@@ -2723,7 +2784,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
 
 -(BOOL)parseRemainingContent{
     NSString * palettefile = [self extractPaletteNameFromXMLDiagram:contentToParse];
-
+    
     NSArray * parts = [palettefile componentsSeparatedByString:@"."];
     tempPaletteFile = parts[0];
     
@@ -2779,7 +2840,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     //Go to editor
     
-
+    
     
     //Complete everything
     return YES;
@@ -2839,7 +2900,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
                                    
                                    [[NSUserDefaults standardUserDefaults] setObject:@"done" forKey:@"configureTutorialStatus"];
                                    dele.shouldShowConfigureTutorial = NO;
-
+                                   
                                }];
     
     
@@ -2852,8 +2913,8 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.view bringSubviewToFront:paletteFileGroup];
     [paletteFileGroup setUserInteractionEnabled:NO];
     dele.tutSheet = [[[NSBundle mainBundle]loadNibNamed:@"TutorialSheet"
-                                                                owner:self
-                                                              options:nil]objectAtIndex:0];
+                                                  owner:self
+                                                options:nil]objectAtIndex:0];
     
     [dele.tutSheet prepare];
     [dele.tutSheet.textView setSelectable:NO];
@@ -2864,9 +2925,9 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGSize newSize = [dele.tutSheet.textView sizeThatFits:CGSizeMake(fixedWidth, MAXFLOAT)];
     
     [dele.tutSheet setFrame:CGRectMake(self.view.center.x - dele.tutSheet.frame.size.width/2,
-                             self.view.frame.size.height-dele.tutSheet.frame.size.height,
-                             dele.tutSheet.frame.size.width,
-                             newSize.height +10)];
+                                       self.view.frame.size.height-dele.tutSheet.frame.size.height,
+                                       dele.tutSheet.frame.size.width,
+                                       newSize.height +10)];
     
     
     [self.view addSubview:dele.tutSheet];
@@ -2899,7 +2960,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [self.view addSubview:dele.tutSheet];
     UITapGestureRecognizer * showSubPalGR = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                        action:@selector(showSubPaletteInfo:)];
+                                                                                    action:@selector(showSubPaletteInfo:)];
     [dele.tutSheet addGestureRecognizer:showSubPalGR];
 }
 -(void)showSubPaletteInfo:(UITapGestureRecognizer *)recog{
@@ -2920,7 +2981,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     [dele.tutSheet setFrame:CGRectMake(self.view.center.x - dele.tutSheet.frame.size.width/2,
                                        self.view.frame.size.height - newSize.height -10,
                                        dele.tutSheet.frame.size.width,
-                                      newSize.height +10)];
+                                       newSize.height +10)];
     [self.view addSubview:dele.tutSheet];
 }
 
@@ -2942,7 +3003,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     switch (section) {
         case 0: //Load old model
-                [self showOptionsPopup];
+            [self showOptionsPopup];
             break;
             
         case 1: //Create a palette
@@ -2961,7 +3022,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
         default:
             break;
     }
-
+    
 }
 
 -(void)showInfo{

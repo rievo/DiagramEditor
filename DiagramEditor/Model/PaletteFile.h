@@ -15,5 +15,7 @@
 @property NSString * content;
 @property BOOL fromServer;
 
+@property NSString * ecoreURI;
+
 
 @end

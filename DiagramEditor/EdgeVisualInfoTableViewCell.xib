@@ -129,6 +129,12 @@
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.84698671926843361" green="0.74743959899203238" blue="0.67367661442328786" alpha="1" colorSpace="calibratedRGB"/>
+            <connections>
+                <outlet property="lineStylePicker" destination="43P-Nw-1XB" id="Auf-zX-Lp4"/>
+                <outlet property="sourceDecoratorPicker" destination="FkV-Nj-0s1" id="6Hs-nN-vyq"/>
+                <outlet property="strokeColorPicker" destination="oNm-uP-BWE" id="CXp-aw-tuN"/>
+                <outlet property="targetDecoratorPicker" destination="czc-qZ-ds9" id="alc-B4-Sos"/>
+            </connections>
             <point key="canvasLocation" x="508" y="226"/>
         </tableViewCell>
     </objects>

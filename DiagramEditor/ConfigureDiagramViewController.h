@@ -13,7 +13,7 @@
 @class Palette;
 #import "CloudDiagramsExplorer.h"
 #import "SlideMenuView.h"
-
+@class PaletteFile;
 
 @interface ConfigureDiagramViewController : UIViewController<UIScrollViewDelegate, UIGestureRecognizerDelegate, UITableViewDataSource, UITableViewDelegate, PasteViewDelegate, ExploreFilesDelegate, CloudDiagramsExplorer, SlideMenuDelegate>{
     NSDictionary * configuration;
@@ -67,9 +67,11 @@
     
     SlideMenuView * menu;
     UIVisualEffectView * blurMenuView;
+    
+    UIRefreshControl *refreshControl;
 }
 
-@property NSString * tempPaletteFile;
+@property PaletteFile * tempPaletteFile;
 
 
 - (IBAction)cancelSubpaletteSelection:(id)sender;

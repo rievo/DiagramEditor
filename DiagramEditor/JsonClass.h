@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "ClassAttribute.h"
 #import "Reference.h"
+#import "Component.h"
 
 @interface JsonClass : NSObject
 
@@ -19,5 +20,9 @@
 @property NSMutableArray * references; //Reference array
 
 @property int visibleMode; //0 -> node  1-> Edge
+
+@property NSString * containmentReference;
+
+@property id associatedComponent;
 
 @end

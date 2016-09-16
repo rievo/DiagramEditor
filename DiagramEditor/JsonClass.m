@@ -22,6 +22,8 @@
         attributes = [[NSMutableArray alloc] init];
         references = [[NSMutableArray alloc] init];
         visibleMode = -1;
+        _containmentReference = nil;
+        _associatedComponent = nil;
     }
     return self;
 }

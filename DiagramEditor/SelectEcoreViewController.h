@@ -16,6 +16,8 @@
     
     EcoreFile * selectedJson;
     AppDelegate * dele;
+    
+    UIRefreshControl *refreshControl;
 }
 
 @end

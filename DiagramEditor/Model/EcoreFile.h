@@ -12,6 +12,6 @@
 
 @property NSString * name;
 @property NSString * content;
-
+@property NSString * uri;
 
 @end

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "JsonClass.h"
 #import "AppDelegate.h"
+#import "EcoreFile.h"
 
 @interface VisibleClassesViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>{
     
@@ -26,5 +27,9 @@
 
 @property NSMutableArray * classesArray;
 @property JsonClass * root;
+
+
+@property EcoreFile * selectedJson;
+
 
 @end

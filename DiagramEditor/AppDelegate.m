@@ -25,7 +25,7 @@
 
 @implementation AppDelegate
 
-@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR, evc, blue0, blue1, blue2, elementsDictionary, manager, ecoreContent, loadingADiagram, fingeredComponent, serverId, currentMasterId, myPeerInfo, myUUIDString, chat, notesArray, drawnsArray, missedServerAttemps, editorTutorialStatus, configureTutorialStatus, shouldShowConfigureTutorial, shouldShowEditorTutorial, colorDic;
+@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFile, subPalette, graphicR, evc, blue0, blue1, blue2, elementsDictionary, manager, ecoreContent, loadingADiagram, fingeredComponent, serverId, currentMasterId, myPeerInfo, myUUIDString, chat, notesArray, drawnsArray, missedServerAttemps, editorTutorialStatus, configureTutorialStatus, shouldShowConfigureTutorial, shouldShowEditorTutorial, colorDic;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -54,7 +54,7 @@
     
     missedServerAttemps = 0;
     
-    currentPaletteFileName = nil;
+    currentPaletteFile = nil;
     subPalette = nil;
     graphicR = nil;
     evc = nil;
@@ -156,7 +156,7 @@
         //NSLog(@"-> %@",[[dic allKeys]description]);
         self.components = [dic objectForKey:@"components"];
         self.connections = [dic objectForKey:@"connections"];
-        self.currentPaletteFileName = [dic objectForKey:@"currPalFilNam"];
+        //self.currentPaletteFileName = [dic objectForKey:@"currPalFilNam"];
         self.paletteItems = [dic objectForKey:@"paletteItems"];
         self.subPalette = [dic objectForKey:@"subpalette"];
         self.elementsDictionary = [dic objectForKey:@"elementsDictionary"];
@@ -507,8 +507,8 @@
         [dic setObject:elementsDictionary forKey:@"elementsDictionary"];
     if(paletteItems != nil)
         [dic setObject:paletteItems forKey:@"paletteItems"];
-    if(currentPaletteFileName != nil)
-        [dic setObject:currentPaletteFileName forKey:@"currPalFilNam"];
+    //if(currentPaletteFileName != nil)
+    //    [dic setObject:currentPaletteFileName forKey:@"currPalFilNam"];
     if(subPalette != nil)
         [dic setObject:subPalette forKey:@"subpalette"];
     if(graphicR != nil)
@@ -578,7 +578,7 @@
     connections  = [myDictionary objectForKey:@"connections"];
     elementsDictionary  = [myDictionary objectForKey:@"elementsDictionary"];
     paletteItems = [myDictionary objectForKey:@"paletteItems"];
-    currentPaletteFileName  = [myDictionary objectForKey:@"currPalFilNam"];
+    //currentPaletteFileName  = [myDictionary objectForKey:@"currPalFilNam"];
     subPalette = [myDictionary objectForKey:@"subpalette"];
     graphicR = [myDictionary objectForKey:@"graphicR"];
     serverId = [myDictionary objectForKey:@"serverId"];

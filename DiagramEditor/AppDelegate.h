@@ -13,7 +13,7 @@
 #import "PeerInfo.h"
 #import "TutorialSheet.h"
 
-
+@class PaletteFile;
 @class Canvas;
 @class Component;
 @class PaletteItem;
@@ -45,7 +45,8 @@
 @property EditorViewController * evc;
 @property CGRect originalCanvasRect;
 
-@property NSString * currentPaletteFileName;
+@property PaletteFile * currentPaletteFile;
+//@property NSString * currentPaletteFileName;
 @property NSString * subPalette;
 
 

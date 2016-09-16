@@ -159,6 +159,7 @@
         VisibleClassesViewController * vc = (VisibleClassesViewController*) segue.destinationViewController;
         vc.root = rootClass;
         vc.classesArray = classesArray;
+        vc.selectedJson = selectedJson;
     }
 }
 

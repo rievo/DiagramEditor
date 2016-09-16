@@ -115,6 +115,7 @@
         return @"";
     }
 }
+
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UIView * header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 40)];
     header.backgroundColor = dele.blue3;
@@ -122,7 +123,7 @@
     UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 40)];
     label.text = [self tableView:tableView titleForHeaderInSection:section];
 
-    label.textColor = dele.blue2;
+    label.textColor = dele.blue1;
     label.textAlignment = NSTextAlignmentCenter;
     
     [header addSubview:label];

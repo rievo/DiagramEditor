@@ -9,6 +9,7 @@
 #import "VisibleClassesViewController.h"
 #import "NodeEdgeCell.h"
 #import "RefineParametersViewController.h"
+#import "Connection.h"
 
 
 @interface VisibleClassesViewController ()
@@ -47,6 +48,14 @@
     [visibles removeObject:_root];
     [hidden addObject:_root];
     
+    
+    //Set abstract classes as no visibles
+    for(JsonClass * c in classesArray){
+        if(c.abstract == YES){
+            [visibles removeObject:c];
+            [hidden addObject:c];
+        }
+    }
 
 }
 
@@ -90,6 +99,11 @@
         
         cell.associatedClass = class;
         cell.nameLabel.text = class.name;
+        
+        
+        
+        
+        cell.root = _root;
         
         [cell prepare];
         
@@ -158,9 +172,9 @@
     [header.textLabel setTextColor:[UIColor whiteColor]];
     
     if(section == 0){//Visible
-        header.textLabel.text = @"Visible classes";
+        header.textLabel.text = @"    Visible classes";
     }else{ //Hidden
-        header.textLabel.text = @"Hidden classes";
+        header.textLabel.text = @"    Hidden classes";
     }
     
 
@@ -187,7 +201,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if(indexPath.section == 0){
-        return 73.0;
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"NodeEdgeCell" owner:self options:nil];
+        NodeEdgeCell * cell = [nib objectAtIndex:0];
+        return cell.bounds.size.height;
     }else{
         return 50.0;
     }
@@ -233,6 +249,8 @@
          vc.visibles = visibles;
          vc.hidden = hidden;
          
+         vc.selectedJson = _selectedJson;
+         
          
          for(JsonClass * c in visibles){
              if(c.visibleMode == 0){ //Node
@@ -241,6 +259,17 @@
                  [edges addObject:c];
              }
          }
+         
+         
+         for(JsonClass * c in visibles){
+             if([nodes containsObject:c]){
+                 c.associatedComponent = [[Component alloc ] init];
+             }else{
+                 c.associatedComponent = [[Connection alloc ] init];
+             }
+         }
+         //Create json class component in order to store graphic info
+         
          
          vc.nodes = nodes;
          vc.edges = edges;

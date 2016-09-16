@@ -10,6 +10,8 @@
 
 @implementation NodeVisualInfoTableViewCell
 
+@synthesize associatedComponent;
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
@@ -31,7 +33,35 @@
     [_borderStylePicker setDelegate:self];
     [_borderStylePicker setDataSource:self];
     
+    //associatedComponent = (Component *)associatedComponent;
+    
+    [self prepareComponent];
 }
+
+-(void)prepareComponent{
+    
+    
+    
+    
+    associatedComponent.type = @"graphicR:Node";
+    
+    NSInteger index = [_shapePicker selectedRowInComponent:0];
+    associatedComponent.shapeType = [shapes objectAtIndex:index];
+    
+    index = [_fillColorPicker selectedRowInComponent:0];
+    associatedComponent.colorString = [colors objectAtIndex:index];
+    
+    associatedComponent.borderColorString = @"black";
+    
+    index = [_borderStylePicker selectedRowInComponent:0];
+    associatedComponent.borderStyleString = [borders objectAtIndex:index];
+    
+    index = [_shapePicker selectedRowInComponent:0];
+    associatedComponent.shapeType = [shapes objectAtIndex:index];
+
+    
+}
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
@@ -56,8 +86,8 @@
 
 -(void)fillColors{
     colors = [[NSMutableArray alloc] initWithObjects:
-              @"black",
               @"white",
+              @"black",
               @"blue",
               @"chocolate",
               @"gray",
@@ -123,13 +153,14 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    // This method is triggered whenever the user makes a change to the picker selection.
-    // The parameter named row and component represents what was selected.
-    /*
-    if(row == 0){ // Node
-        associatedClass.visibleMode = 0;
-    }else{ //Edge
-        associatedClass.visibleMode = 1;
-    }*/
+    
+    if(pickerView == _shapePicker){
+        associatedComponent.shapeType = [shapes objectAtIndex:row];
+    }else if(pickerView == _fillColorPicker){
+        associatedComponent.colorString = [colors objectAtIndex:row];
+    }else if(pickerView == _borderStylePicker){
+        associatedComponent.borderStyleString = [borders objectAtIndex:row];
+    }
+
 }
 @end

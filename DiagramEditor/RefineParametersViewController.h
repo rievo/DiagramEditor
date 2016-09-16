@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "JsonClass.h"
 #import "AppDelegate.h"
+#import "EcoreFile.h"
 
 @interface RefineParametersViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>{
     
@@ -26,5 +27,7 @@
 @property NSMutableArray * classes;
 
 @property JsonClass * root;
+
+@property EcoreFile * selectedJson;
 
 @end

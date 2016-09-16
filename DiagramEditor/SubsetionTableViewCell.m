@@ -21,6 +21,14 @@
     
 }
 
+-(void)prepare{
+    if([_associatedElement isKindOfClass:[ClassAttribute class]]){
+        _associatedElement = (ClassAttribute *)_associatedElement;
+        ClassAttribute * attr = (ClassAttribute *)_associatedElement;
+        attr.isLabel = [control isOn];
+    }
+}
+
 - (void)changeSwitch:(id)sender{
     
     Boolean val = [sender isOn];

@@ -33,6 +33,17 @@
     dele = [[UIApplication sharedApplication]delegate];
     
     [self populateTable];
+    
+    // Initialize the refresh control.
+    refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refresh:) forControlEvents:UIControlEventValueChanged];
+    [ecoresTable addSubview:refreshControl];
+}
+
+- (void)refresh:(UIRefreshControl *)refreshControl {
+    // Do your job, when done:
+    [self populateTable];
+    
 }
 
 -(void)populateTable{
@@ -45,8 +56,8 @@
 
 -(void)loadEcoresFromServer{
     NSLog(@"Loading jsons from server");
-    NSNumber * versionNumber =  [NSNumber numberWithInteger:graphicRVersion];
-    NSString * urlStr = [NSString stringWithFormat:@"%@&version=%@", getJsons, [versionNumber description]];
+    //NSNumber * versionNumber =  [NSNumber numberWithInteger:graphicRVersion];
+    NSString * urlStr = [NSString stringWithFormat:@"%@", getJsons];
     
     
     NSURL *url = [NSURL URLWithString:urlStr];
@@ -76,6 +87,7 @@
                      EcoreFile * ef = [[EcoreFile alloc] init];
                      ef.name = [ins objectForKey:@"name"];
                      ef.content = [ins objectForKey:@"content"];
+                     ef.uri = [ins objectForKey:@"URI"];
                      
                      [jsonsArray addObject:ef];
                  }
@@ -93,6 +105,8 @@
              }
              
          }
+         
+         [refreshControl endRefreshing];
      }];
 }
 

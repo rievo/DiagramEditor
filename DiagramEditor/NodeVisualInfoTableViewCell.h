@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Component.h"
+#import "Connection.h"
 
 @interface NodeVisualInfoTableViewCell : UITableViewCell<UIPickerViewDelegate, UIPickerViewDataSource>{
     NSMutableArray * colors;
@@ -19,4 +21,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *widthTextField;
 @property (weak, nonatomic) IBOutlet UITextField *HeightTextField;
 @property (weak, nonatomic) IBOutlet UIPickerView *borderStylePicker;
+
+
+@property Component * associatedComponent;
+
+-(void)prepareComponent;
 @end

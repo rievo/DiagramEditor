@@ -88,6 +88,7 @@
         cell.label.text = attr.name;
         
         cell.associatedElement = attr;
+        [cell prepare];
         
         return cell;
     }else if(indexPath.row == c.attributes.count + 1){ //References header
@@ -205,6 +206,8 @@
         
         vc.nodes = _nodes;
         vc.edges = _edges;
+        
+        vc.selectedJson = _selectedJson;
     }
 }
 
