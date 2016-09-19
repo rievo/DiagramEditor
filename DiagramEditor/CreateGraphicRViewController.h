@@ -10,8 +10,13 @@
 #import "JsonClass.h"
 #import "EcoreFile.h"
 
-@interface CreateGraphicRViewController : UIViewController{
+@interface CreateGraphicRViewController : UIViewController<UIAlertViewDelegate>{
     NSString * text;
+    __weak IBOutlet UITextView *textview;
+    UIAlertView * goodAlert;
+    UIAlertView * badAlert;
+    __weak IBOutlet UITextField *nameTextField;
+    __weak IBOutlet UIButton *createButton;
 }
 
 
@@ -28,4 +33,5 @@
 
 @property EcoreFile * selectedJson;
 
+- (IBAction)updateName:(id)sender;
 @end

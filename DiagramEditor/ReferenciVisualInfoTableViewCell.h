@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "RemovableReference.h"
 @interface ReferenciVisualInfoTableViewCell : UITableViewCell<UIPickerViewDelegate, UIPickerViewDataSource>{
     NSMutableArray * colors;
     NSMutableArray * sourceDecorators;
@@ -25,5 +25,5 @@
 @property (weak, nonatomic) IBOutlet UIPickerView *targetDecoratorPicker;
 
 
-
+@property RemovableReference * ref;
 @end

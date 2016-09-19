@@ -12,4 +12,10 @@
 
 @property Boolean isPresent;
 
+
+@property NSString * color;
+@property NSString * style;
+@property NSString * sourceDecorator;
+@property NSString * targetDecorator;
+
 @end

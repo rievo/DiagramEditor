@@ -127,6 +127,8 @@
                 cell = [nib objectAtIndex:0];
             }
             
+            cell.ref = (RemovableReference *)thisReference;
+            
             cell.nameLabel.text = thisReference.name;
             
             return cell;

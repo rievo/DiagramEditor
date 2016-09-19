@@ -409,10 +409,93 @@
                     <view key="view" contentMode="scaleToFill" id="ea6-hN-Wsa">
                         <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tg3-yS-kku">
+                                <rect key="frame" x="0.0" y="0.0" width="400" height="44"/>
+                                <items>
+                                    <navigationItem title="Finish details" id="bKD-4z-sVk">
+                                        <barButtonItem key="leftBarButtonItem" title="Back" id="Hhg-Po-FFQ"/>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="czS-mS-ftS">
+                                <rect key="frame" x="23" y="321" width="355" height="59"/>
+                                <color key="backgroundColor" red="0.7137255072593689" green="0.74901962280273438" blue="0.81960785388946533" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="59" id="pUy-XX-9RJ"/>
+                                </constraints>
+                                <state key="normal" title="Create Palette and upload to server">
+                                    <color key="titleColor" red="0.13333334028720856" green="0.21176470816135406" blue="0.37647059559822083" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="createAndUploadToServer:" destination="2dN-tB-oBJ" eventType="touchUpInside" id="ReD-N8-jJL"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="9kl-No-sIw">
+                                <rect key="frame" x="23" y="131" width="357" height="182"/>
+                                <color key="backgroundColor" red="0.83356131937225952" green="0.87812682122159647" blue="0.958861510804359" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.13333334028720856" green="0.21176470816135406" blue="0.37647059559822083" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter a name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bTO-wD-ySg">
+                                <rect key="frame" x="23" y="54" width="146" height="33"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="146" id="iVr-Xo-bfy"/>
+                                    <constraint firstAttribute="height" constant="33" id="qYu-cb-in9"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="22"/>
+                                <color key="textColor" red="0.7137255072593689" green="0.74901962280273438" blue="0.81960785388946533" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XMX-FS-OPU">
+                                <rect key="frame" x="177" y="54" width="203" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2mH-da-YDB">
+                                <rect key="frame" x="281" y="92" width="99" height="30"/>
+                                <color key="backgroundColor" red="0.7137255072593689" green="0.74901962280273438" blue="0.81960785388946533" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="99" id="SGT-aa-EkP"/>
+                                    <constraint firstAttribute="height" constant="30" id="gzQ-yy-ZTA"/>
+                                </constraints>
+                                <state key="normal" title="Update name">
+                                    <color key="titleColor" red="0.13333334028720856" green="0.21176470816135406" blue="0.37647059559822083" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="updateName:" destination="2dN-tB-oBJ" eventType="touchUpInside" id="jDn-2L-VVc"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.35686275362968445" green="0.42745098471641541" blue="0.57254904508590698" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="tg3-yS-kku" firstAttribute="top" secondItem="xx1-0A-EXY" secondAttribute="bottom" id="05t-BO-N9d"/>
+                            <constraint firstItem="2mH-da-YDB" firstAttribute="top" secondItem="XMX-FS-OPU" secondAttribute="bottom" constant="8" id="1mR-gM-Vqm"/>
+                            <constraint firstItem="czS-mS-ftS" firstAttribute="leading" secondItem="ea6-hN-Wsa" secondAttribute="leadingMargin" constant="3" id="DRZ-JB-ymx"/>
+                            <constraint firstItem="XMX-FS-OPU" firstAttribute="top" secondItem="xx1-0A-EXY" secondAttribute="bottom" constant="54" id="FpP-Qp-IhJ"/>
+                            <constraint firstItem="9kl-No-sIw" firstAttribute="top" secondItem="2mH-da-YDB" secondAttribute="bottom" constant="9" id="GLw-Rw-Zsb"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="bTO-wD-ySg" secondAttribute="leading" constant="-3" id="Oss-Ts-bbl"/>
+                            <constraint firstItem="bTO-wD-ySg" firstAttribute="top" secondItem="xx1-0A-EXY" secondAttribute="bottom" constant="54" id="SFm-Qq-s64"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="XMX-FS-OPU" secondAttribute="trailing" id="Y5O-AA-zWT"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="2mH-da-YDB" secondAttribute="trailing" id="YSP-bo-JkB"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="9kl-No-sIw" secondAttribute="trailing" id="Yti-2J-Ds2"/>
+                            <constraint firstItem="9kl-No-sIw" firstAttribute="leading" secondItem="ea6-hN-Wsa" secondAttribute="leadingMargin" constant="3" id="a2V-S6-mUo"/>
+                            <constraint firstItem="XMX-FS-OPU" firstAttribute="leading" secondItem="bTO-wD-ySg" secondAttribute="trailing" constant="8" id="bpg-9W-tbi"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="tg3-yS-kku" secondAttribute="trailing" constant="-20" id="fQ7-wU-SRQ"/>
+                            <constraint firstItem="czS-mS-ftS" firstAttribute="top" secondItem="9kl-No-sIw" secondAttribute="bottom" constant="8" id="isF-gh-sbV"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="tg3-yS-kku" secondAttribute="leading" constant="20" id="oEW-jH-B0F"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="czS-mS-ftS" secondAttribute="trailing" constant="2" id="pLr-uu-Tp6"/>
+                            <constraint firstItem="wWq-Zf-OwC" firstAttribute="top" secondItem="czS-mS-ftS" secondAttribute="bottom" constant="20" id="s9R-Du-aro"/>
+                        </constraints>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="400" height="400"/>
+                    <connections>
+                        <outlet property="createButton" destination="czS-mS-ftS" id="yPw-Ui-ffY"/>
+                        <outlet property="nameTextField" destination="XMX-FS-OPU" id="oHJ-Vb-bzC"/>
+                        <outlet property="textview" destination="9kl-No-sIw" id="cdg-g5-Rc3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K6W-fj-vVt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

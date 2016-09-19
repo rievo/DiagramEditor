@@ -10,6 +10,8 @@
 
 @implementation ReferenciVisualInfoTableViewCell
 
+@synthesize ref;
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
@@ -34,6 +36,18 @@
     [self fillColors];
     [self fillDecorators];
     [self fillStyles];
+    
+    NSInteger index = [_colorPicker selectedRowInComponent:0];
+    ref.color = [colors objectAtIndex:index];
+    
+    index = [_stylePicker selectedRowInComponent:0];
+    ref.style = [styles objectAtIndex:index];
+    
+    index = [_sourceDecoratorPicker selectedRowInComponent:0];
+    ref.sourceDecorator = [sourceDecorators objectAtIndex:index];
+    
+    index = [_targetDecoratorPicker selectedRowInComponent:0];
+    ref.targetDecorator = [targetDecorators objectAtIndex:index];
 }
 
 
@@ -69,13 +83,13 @@
 
 -(void)fillColors{
     colors = [[NSMutableArray alloc] initWithObjects:
+              @"orange",
               @"black",
               @"white",
               @"blue",
               @"chocolate",
               @"gray",
               @"green",
-              @"orange",
               @"purple",
               @"red",
               @"yellow",
@@ -138,7 +152,15 @@
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-
+    if(pickerView == _stylePicker){
+        ref.style = [styles objectAtIndex:row];
+    }else if(pickerView == _colorPicker){
+        ref.color = [colors objectAtIndex:row];
+    }else if(pickerView == _sourceDecoratorPicker){
+        ref.sourceDecorator = [sourceDecorators objectAtIndex:row];
+    }else if(pickerView == _targetDecoratorPicker){
+        ref.targetDecorator = [targetDecorators objectAtIndex:row];
+    }
 }
 
 @end

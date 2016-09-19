@@ -18,7 +18,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self formGraphicR];
+    [createButton setEnabled:NO];
+    //[self formGraphicR];
     
 }
 
@@ -28,7 +29,7 @@
 }
 
 
--(void)formGraphicR{
+-(void)formGraphicRWithName:(NSString *)name{
     text = @"";
     
     //text = [text stringByAppendingString:@""];
@@ -40,7 +41,7 @@
     
     NSString * extension = @"wt";
     NSString * fileName =[NSString stringWithFormat:@"%@.ecore", _selectedJson.name];
-    NSString * name = @"test";
+
     
     text = [text stringByAppendingString:[NSString stringWithFormat:@"<allGraphicRepresentation extension=\"%@\">",extension]];
     
@@ -110,8 +111,10 @@
                                                       fileName,
                                                       c.name, ref.name]];
                 
+                //TODO: Meter el color de la referencia aquí
+                
                 text = [text stringByAppendingString:
-                        [NSString stringWithFormat:@"<color xsi:type=\"graphicR:SiriusSystemColors\" name=\"%@\"  />\n", @"red"]];
+                        [NSString stringWithFormat:@"<color xsi:type=\"graphicR:SiriusSystemColors\" name=\"%@\"  />\n", ref.color]];
                 
                 text = [text stringByAppendingString:@"</linkPalette>"];
             }
@@ -119,12 +122,17 @@
             text = [text stringByAppendingString:@"</node_elements>"];
             
             
-            text = [text stringByAppendingString:[NSString stringWithFormat:@"<node_shape xsi:type=\"graphicR:%@\">", associated.shapeType]];
-
+            if(associated.shapeType == nil){
+                text = [text stringByAppendingString:[NSString stringWithFormat:@"<node_shape xsi:type=\"graphicR:%@\">", @"Ellipse"]];
+            }else{
+                text = [text stringByAppendingString:[NSString stringWithFormat:@"<node_shape xsi:type=\"graphicR:%@\">", associated.shapeType]];
+            }
+            
+            
             
             text = [text stringByAppendingString:[NSString stringWithFormat:@"<color xsi:type=\"graphicR:SiriusSystemColors\" name=\"%@\"  />\n", associated.colorString]]; //Fill color
             
-            text = [text stringByAppendingString:[NSString stringWithFormat:@"<borderColor xsi:type=\"graphicR:SiriusSystemColors\" name=\"%@\"  />\n", associated.borderColorString]]; //Fill color
+            text = [text stringByAppendingString:[NSString stringWithFormat:@"<borderColor xsi:type=\"graphicR:SiriusSystemColors\" name=\"%@\"  />\n", associated.borderColorString]]; //Border color
             
             text = [text stringByAppendingString:@"</node_shape>"];
             
@@ -144,7 +152,115 @@
     text = [text stringByAppendingString:@"</allGraphicRepresentation>"];
     text = [text stringByAppendingString:@"</graphicR:GraphicRepresentation>"];
     
-    int r  = 2;
+    
+    [textview setText:text];
+    
 }
 
+
+-(void)sendPaletteToServer:(NSString * )content{
+    
+    
+    
+    NSMutableDictionary * dic = [[NSMutableDictionary alloc]init];
+    [dic setObject:content forKey:@"content"];
+    [dic setObject:nameTextField.text forKey:@"name"];
+    [dic setObject:_selectedJson.uri forKey:@"ecoreURI"];
+    [dic setObject:@"2" forKey:@"version"];
+    
+    
+    NSError *jsonError = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic
+                                                       options:0
+                                                         error:&jsonError];
+    
+    NSString *string = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding] ;
+    
+    NSData * data = [string dataUsingEncoding:NSUTF8StringEncoding];
+    
+    if(jsonError == nil){
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://diagrameditorserver.herokuapp.com/palettes?json=true"]];
+        
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+        [request setHTTPMethod:@"POST"];
+        [request setTimeoutInterval:5.0];
+        [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        [request setHTTPBody: data];
+        
+        
+        [NSURLConnection sendAsynchronousRequest:request
+                                           queue:[NSOperationQueue mainQueue]
+                               completionHandler:^(NSURLResponse *response,
+                                                   NSData *data, NSError *connectionError)
+         {
+             NSError * error;
+             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:data
+                                                                 options:0
+                                                                   error:&error];
+             
+             
+             
+             
+             NSString * code = [dic objectForKey:@"code"];
+             
+             
+             if([code isEqualToString:@"200"]){ //Good :)
+                 goodAlert  = [[UIAlertView alloc] initWithTitle:@"Info"
+                                                                 message:@"Palette saved on server"
+                                                                delegate:self
+                                                       cancelButtonTitle:@"OK"
+                                                       otherButtonTitles:nil];
+                 [goodAlert show];
+                 
+             }else{//Default error
+                 badAlert  = [[UIAlertView alloc] initWithTitle:@"Error uploading palette"
+                                                                 message:[NSString stringWithFormat:@"Info: %@", connectionError]
+                                                                delegate:self
+                                                       cancelButtonTitle:@"OK"
+                                                       otherButtonTitles:nil];
+                 [badAlert show];
+                 
+             }
+        
+            
+             
+         }];
+    }else{
+        NSLog(@"Error generating palette json");
+    }
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(alertView == badAlert){
+        
+    }else if(alertView == goodAlert){
+        [self dismissViewControllerAnimated:NO completion:nil];
+        [self dismissViewControllerAnimated:NO completion:nil];
+        [self dismissViewControllerAnimated:NO completion:nil];
+        [self dismissViewControllerAnimated:NO completion:nil];
+        [self dismissViewControllerAnimated:NO completion:nil];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+- (IBAction)createAndUploadToServer:(id)sender {
+    [self sendPaletteToServer:text];
+}
+
+- (IBAction)updateName:(id)sender {
+    if(nameTextField.text.length == 0){ //Error
+       UIAlertView * alert =  [[UIAlertView alloc] initWithTitle:@"Name cannot be empty"
+                                   message:nil
+                                  delegate:nil
+                         cancelButtonTitle:@"OK"
+                         otherButtonTitles:nil];
+        [alert show];
+    }else{
+        [self formGraphicRWithName:nameTextField.text];
+        [createButton setEnabled:YES];
+    }
+}
 @end
