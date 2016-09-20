@@ -15,7 +15,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
-    
+    [super awakeFromNib];
     [switchValue addTarget:self action:@selector(changeSwitch:) forControlEvents:UIControlEventValueChanged];
     
 }

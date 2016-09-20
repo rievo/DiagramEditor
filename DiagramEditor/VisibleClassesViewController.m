@@ -37,7 +37,7 @@
     [recognizer setDirection:(UISwipeGestureRecognizerDirectionLeft)];
     [table addGestureRecognizer:recognizer];
     
-    dele = [[UIApplication sharedApplication]delegate];
+    dele =(AppDelegate *) [[UIApplication sharedApplication]delegate];
     
     table.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     

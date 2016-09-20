@@ -53,7 +53,7 @@
 }
 
 -(void)retrieveAttributesForThisClassName{
-    AppDelegate * dele = [[UIApplication sharedApplication]delegate];
+    AppDelegate * dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
     for(PaletteItem * pi in dele.paletteItems){
         if([pi.className isEqualToString:className]){ //Match, retrieve attributes
@@ -67,7 +67,7 @@
 }
 
 -(void)retrieveConnectionGraphicInfo{
-    AppDelegate * dele = [[UIApplication sharedApplication]delegate];
+    AppDelegate * dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
     for(PaletteItem * pi in dele.paletteItems){
         if([pi.className isEqualToString:className]){ //Match, retrieve attributes

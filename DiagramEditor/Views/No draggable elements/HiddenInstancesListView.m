@@ -16,6 +16,7 @@
 @synthesize className, delegate, connection;
 
 -(void)awakeFromNib{
+    [super awakeFromNib];
     [instancesTable setDataSource:self];
     [instancesTable setDelegate:self];
     instancesArray = [[NSMutableArray alloc] init];
@@ -35,7 +36,7 @@
 
 
 -(void)recoverInstancesOfClass:(NSString *)cn{
-    AppDelegate * dele = [[UIApplication sharedApplication]delegate];
+    AppDelegate * dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     NSMutableArray * array = [dele.elementsDictionary objectForKey:cn];
     instancesArray = array;
     [instancesTable reloadData];

@@ -27,7 +27,7 @@
     
     [table setAllowsSelection:NO];
     
-    dele = [[UIApplication sharedApplication]delegate];
+    dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
 }
 
 - (void)didReceiveMemoryWarning {

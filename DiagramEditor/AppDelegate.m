@@ -34,6 +34,9 @@
     
     paletteItems = [[NSMutableArray alloc] init];
     
+    _paletteH = -1;
+    _paletteW = -1;
+    
     blue0 = [[UIColor alloc]initWithRed:91.0/256.0 green:109.0/256.0 blue:146.0/256.0 alpha:1.0];
     blue1 = [[UIColor alloc]initWithRed:182/256.0 green:191/256.0 blue:209/256.0 alpha:1.0];
     blue2 = [[UIColor alloc]initWithRed:130/256.0 green:144/256.0 blue:173/256.0 alpha:1.0];

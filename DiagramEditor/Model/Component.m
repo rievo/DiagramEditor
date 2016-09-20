@@ -67,7 +67,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     [self addPanGestureRecognizer];
     
     
-    dele = [[UIApplication sharedApplication]delegate];
+    dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
     
     self.backgroundColor = [UIColor clearColor];
@@ -117,7 +117,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         [self addPanGestureRecognizer];
         
         
-        dele = [[UIApplication sharedApplication]delegate];
+        dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
         
         
         self.backgroundColor = [UIColor clearColor];
@@ -131,7 +131,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
             textLayer = [[CATextLayer alloc] init];
             
             textLayer.foregroundColor = [UIColor blackColor].CGColor;
-            CGRect rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize, self.frame.size.width - (2*leftMargin),fontSize);
+            CGRect rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize, self.frame.size.width - (2*leftMargin),fontSize+5);
             textLayer.frame = rect;
             textLayer.contentsScale = [UIScreen mainScreen].scale;
             [textLayer setFont:@"Helvetica-Light"];
@@ -166,7 +166,8 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     
     textLayer.foregroundColor = [UIColor blackColor].CGColor;
     
-    CGRect rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize, self.frame.size.width - (2*leftMargin),fontSize);
+    
+    CGRect rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize, self.frame.size.width - (2*leftMargin),fontSize+5);
     textLayer.frame = rect;
     textLayer.contentsScale = [UIScreen mainScreen].scale;
     [textLayer setFont:@"Helvetica-Light"];
@@ -654,7 +655,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     if([_labelPosition isEqualToString:@"border"]){
         rect = CGRectMake(0-self.frame.size.width/2 +leftMargin, 0 - 2*fontSize, (self.frame.size.width * 2) - (2*leftMargin),fontSize*2);
     }else if([_labelPosition isEqualToString:@"node"]){
-        rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize, self.frame.size.width - (2*leftMargin),fontSize);
+        rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize, self.frame.size.width - (2*leftMargin),fontSize+10);
     }else{
         rect = CGRectMake(0-self.frame.size.width/2 +leftMargin ,0 - 2*fontSize, (self.frame.size.width * 2) - (2*leftMargin),fontSize*2);
     }
@@ -1331,14 +1332,15 @@ withSelectedComponent:(Component *)comp
         textLayer = [[CATextLayer alloc] init];
         
         textLayer.foregroundColor = [UIColor clearColor].CGColor;
+        
         CGRect rect;
         if([_labelPosition isEqualToString:@"node"]){
-             rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize, self.frame.size.width - (2*leftMargin),fontSize);
+             rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize, self.frame.size.width - (2*leftMargin),fontSize+5);
         }else if([_labelPosition isEqualToString:@"border"]){
            
             rect = CGRectMake(leftMargin - self.frame.size.width, self.frame.size.height/2 - fontSize, (self.frame.size.width * 2) - (2*leftMargin),fontSize);
         }else{
-            rect = CGRectMake(leftMargin - self.frame.size.width, self.frame.size.height/2 - fontSize, (self.frame.size.width * 2) - (2*leftMargin),fontSize);
+            rect = CGRectMake(leftMargin - self.frame.size.width, self.frame.size.height/2 - fontSize, (self.frame.size.width * 2) - (2*leftMargin),fontSize+5);
         }
         
         textLayer.frame = rect;

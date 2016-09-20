@@ -13,6 +13,7 @@
 @synthesize al, delegate;
 
 -(void)awakeFromNib{
+    [super awakeFromNib];
     UITapGestureRecognizer * gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [self addGestureRecognizer:gr];
 }

@@ -17,14 +17,11 @@
 
 @synthesize table;
 
--(void)awakeFromNib{
-
-}
 
 
 
 -(void)recoverUsersFromAppDelegateSession{
-    dele = [[UIApplication sharedApplication]delegate];
+    dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     NSArray * peers = dele.manager.session.connectedPeers;
     
     usersArray = [[NSMutableArray alloc] init];

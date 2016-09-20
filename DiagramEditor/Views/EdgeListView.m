@@ -19,7 +19,7 @@
 
 
 -(void)awakeFromNib{
-    
+    [super awakeFromNib];
     table.delegate = self;
     table.dataSource = self;
     
@@ -31,7 +31,7 @@
     
     //Recover all edges from appdelegate
     
-    dele = [[UIApplication sharedApplication]delegate];
+    dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
 
 }
 

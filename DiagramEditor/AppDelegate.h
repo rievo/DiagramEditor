@@ -12,6 +12,7 @@
 #import "Constants.h"
 #import "PeerInfo.h"
 #import "TutorialSheet.h"
+#import "Palette.h"
 
 @class PaletteFile;
 @class Canvas;
@@ -100,6 +101,10 @@
 @property NSMutableArray * noVisibleItems;
 
 @property NSMutableDictionary * colorDic;
+
+@property Palette * paletteView;
+@property float paletteW;
+@property float paletteH;
 
 -(int)getOutConnectionsForComponent: (Component *)comp
                              ofType: (NSString * )type;

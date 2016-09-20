@@ -27,7 +27,7 @@
     
     componentsTable.delegate = self;
     componentsTable.dataSource = self;
-    dele = [[UIApplication sharedApplication]delegate];
+    dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
     filteredArray = [[NSMutableArray alloc] init];
     searchBar.delegate = self;

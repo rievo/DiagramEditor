@@ -90,7 +90,7 @@
     tempPaletteFile = nil;
     
     
-    dele = [UIApplication sharedApplication].delegate;
+    dele = (AppDelegate *) [UIApplication sharedApplication].delegate;
     
     
     palettes = [[NSMutableArray alloc] init];
@@ -844,6 +844,9 @@
         dele.paletteItems = [[NSMutableArray alloc] initWithArray:palette.paletteItems];
         [refreshTimer invalidate];
         
+        dele.paletteView = palette;
+        dele.paletteH= palette.frame.size.height;
+        dele.paletteW = palette.frame.size.width;
         
         UIView * spinnerView = [[UIView alloc] initWithFrame:self.view.frame];
         spinnerView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
@@ -867,9 +870,6 @@
             
             [spinnerView removeFromSuperview];
             
-            [self performSegueWithIdentifier:@"showEditor" sender:self];
-            
-            
             //Finish ConfigureView tutorial
             doingTutorial = NO;
             
@@ -878,6 +878,8 @@
             
             [[NSUserDefaults standardUserDefaults] setObject:@"done" forKey:@"configureTutorialStatus"];
             dele.shouldShowConfigureTutorial = NO;
+            
+            [self performSegueWithIdentifier:@"showEditor" sender:self];
         }else{
             
             [spinnerView removeFromSuperview];
@@ -905,9 +907,6 @@
     [dele.manager stopAdvertising];
 }
 
-- (IBAction)showInfo:(id)sender {
-    
-}
 
 
 
@@ -1092,8 +1091,7 @@
         
         
     }else if(tableView == filesTable){
-        [folder setHidden:YES];
-        [infoButton setHidden:YES];
+        
         //[palette resetPalette];
         PaletteFile * file = nil;
         if(indexPath.section == 0){ //Local palettes
@@ -1110,7 +1108,7 @@
         
         [subPaletteGroup setHidden:NO];
         
-        [subPaletteGroup setCenter:CGPointMake(self.view.frame.size.width + subPaletteGroup.frame.size.width/2, self.view.center.y)];
+        [subPaletteGroup setCenter:CGPointMake(self.view.frame.size.width + subPaletteGroup.frame.size.width, self.view.center.y)];
         oldSubPaletteGroupFrame = subPaletteGroup.frame;
         
         oldPaletteFileGroupFrame = paletteFileGroup.frame;
@@ -1883,7 +1881,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary * subpaldic = [diagramDic objectForKey:@"subpalette"];
     NSString * subpalette= [subpaldic objectForKey:@"_name"];
     
-    dele = [[UIApplication sharedApplication]delegate];
+    dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     dele.subPalette = subpalette;
     
     
@@ -2073,11 +2071,11 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
             if(result == YES){ //Tenemos el json y todo lo demás
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    //[self performSegueWithIdentifier:@"showEditor" sender:self];
+                    
                     dele.loadingADiagram = YES;
                     
                     [self performSegueWithIdentifier:@"showEditor" sender:self];
-                    //[self presentViewController:vc animated:YES completion:nil];
+                    
                 });
                 
                 

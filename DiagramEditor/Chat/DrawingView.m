@@ -62,7 +62,7 @@
 -(void)prepare{
     path = [[UIBezierPath alloc] init];
     
-    dele = [[UIApplication sharedApplication]delegate];
+    dele =(AppDelegate *) [[UIApplication sharedApplication]delegate];
     
     canvas = [[UIView alloc] initWithFrame:owner.scrollView.frame];
     //canvas.backgroundColor = [UIColor colorWithRed:0.5 green:0.7 blue:0.1 alpha:0.5];

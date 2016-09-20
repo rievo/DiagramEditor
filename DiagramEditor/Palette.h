@@ -21,5 +21,4 @@
 @property NSMutableArray * paletteItems;
 @property NSString * name;
 
-@property UISlider * sliderToChange;
 @end

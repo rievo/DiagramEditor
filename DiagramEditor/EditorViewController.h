@@ -40,7 +40,8 @@ CreateNoteViewDelegate,
 DrawingViewDelegate
 >{
     AppDelegate * dele;
-    __weak IBOutlet Palette *palette;
+
+    Palette *palette;
     
     PaletteItem * tempIcon;
     __weak IBOutlet UIButton *newDiagram;

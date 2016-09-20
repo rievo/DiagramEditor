@@ -13,7 +13,7 @@
 @synthesize countLabel, containerTable, sectionIndex, owner, openCloseOutlet;
 
 -(void)awakeFromNib{
-    
+    [super awakeFromNib];
     UITapGestureRecognizer * tapGr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [self addGestureRecognizer:tapGr];
 }

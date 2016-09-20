@@ -80,11 +80,12 @@
         [tempNoteView setNeedsDisplay];
     }
     
-    [self hideAlerts];
+   // [self hideAlerts];
     
 }
 - (void)viewDidLoad {
     
+    //self.view.translatesAutoresizingMaskIntoConstraints = YES;
     useImageAsIcon = true;
     
     [askForMasterButton setHidden:YES];
@@ -107,7 +108,7 @@
     
     sharingDiagram = NO;
     
-    dele = [[UIApplication sharedApplication]delegate];
+    dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
     dele.manager.browser.delegate = self;
     
@@ -118,12 +119,7 @@
         dele.drawnsArray = [[NSMutableArray alloc] init];
     
     
-    //Show-hide palette
-    isPaletteCollapsed = YES;
-    paletteCenter = palette.center;
-    paletteRect = palette.frame;
-    [self collapsePalette];
-    //[self fitPaletteToScreen];
+
     
     
     canvas = [[Canvas alloc] initWithFrame:CGRectMake(0, 0, canvasW, canvasW)];
@@ -223,10 +219,26 @@
     }else{
     }
     
-    palette.paletteItems = [[NSMutableArray alloc] initWithArray:dele.paletteItems];
+    
+    palette = [[Palette alloc] initWithFrame:CGRectMake(70,
+                                                        self.view.frame.size.height - 80 -30,
+                                                        self.view.frame.size.width-70 -20,
+                                                        80)];
+    palette.backgroundColor = dele.blue3;
+    [self.view addSubview:palette];
+    
+    palette.paletteItems = dele.paletteItems;
     [palette preparePalette];
+    
     palette.name = dele.subPalette;
-    //palette.sliderToChange = slider;
+
+    
+    //Show-hide palette
+    isPaletteCollapsed = YES;
+    paletteCenter = palette.center;
+    paletteRect = palette.frame;
+    [self collapsePalette];
+    //[self fitPaletteToScreen];
     
     dele.evc = self;
     
@@ -649,9 +661,9 @@
 
 
 -(void)viewWillAppear:(BOOL)animated{
-    palette.paletteItems = [[NSMutableArray alloc] initWithArray:dele.paletteItems];
+    /*palette.paletteItems = [[NSMutableArray alloc] initWithArray:dele.paletteItems];
     [palette preparePalette];
-    palette.name = dele.subPalette;
+    palette.name = dele.subPalette;*/
     
     //Añadimos a los items de la paleta el gestor de gestos para poder arrastrarlos
     for(int i  =0; i< palette.paletteItems.count; i++){

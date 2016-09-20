@@ -13,10 +13,11 @@
 @synthesize delegate;
 
 -(void)awakeFromNib{
+    [super awakeFromNib];
     table.dataSource = self;
     table.delegate = self;
     
-    dele = [[UIApplication sharedApplication]delegate];
+    dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
     
 }

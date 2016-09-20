@@ -464,7 +464,7 @@
 -(NSString *)getSourceClassName{
     NSString * result = @"";
     
-    AppDelegate * dele = [[UIApplication sharedApplication]delegate];
+    AppDelegate * dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
     PaletteItem * temp = nil;
     
@@ -486,7 +486,7 @@
 -(NSString *)getTargetClassName{
     NSString * result = @"";
     
-    AppDelegate * dele = [[UIApplication sharedApplication]delegate];
+    AppDelegate * dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
     PaletteItem * temp = nil;
     

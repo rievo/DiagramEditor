@@ -27,7 +27,7 @@
     table.dataSource = self;
     table.delegate = self;
     
-    dele = [[UIApplication sharedApplication]delegate];
+    dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
     [table setAllowsSelection:NO];
 }

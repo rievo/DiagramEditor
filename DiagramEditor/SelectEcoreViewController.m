@@ -30,7 +30,7 @@
     
     selectedJson = nil;
     
-    dele = [[UIApplication sharedApplication]delegate];
+    dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
     [self populateTable];
     

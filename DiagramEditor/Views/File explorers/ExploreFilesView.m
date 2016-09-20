@@ -14,6 +14,7 @@
 
 
 -(void)awakeFromNib{
+    [super awakeFromNib];
     filesTable.delegate = self;
     filesTable.dataSource = self;
     
@@ -30,7 +31,7 @@
     }
     
     [filesTable reloadData];
-    dele = [UIApplication sharedApplication].delegate;
+    dele = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
     tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [background addGestureRecognizer:tapgr];

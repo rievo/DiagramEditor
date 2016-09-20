@@ -16,7 +16,8 @@
 @synthesize background, preview, associatedNote;
 
 -(void)awakeFromNib{
-    dele = [[UIApplication sharedApplication]delegate];
+    [super awakeFromNib];
+    dele =(AppDelegate *) [[UIApplication sharedApplication]delegate];
     UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [background addGestureRecognizer:tapgr];
     [tapgr setDelegate:self];

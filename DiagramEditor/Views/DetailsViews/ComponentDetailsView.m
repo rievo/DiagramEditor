@@ -30,6 +30,7 @@
 
 
 -(void)awakeFromNib{
+    [super awakeFromNib];
     tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                     action:@selector(handleTap:)];
     [tapgr setDelegate:self];
@@ -86,7 +87,7 @@
     
     [previewComponent setNeedsDisplay];
     
-    dele = [[UIApplication sharedApplication]delegate];
+    dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
     NSArray * parsedArr = [comp.type componentsSeparatedByString:@":"];
     typeLabel.text = [parsedArr objectAtIndex:parsedArr.count-1];

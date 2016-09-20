@@ -29,7 +29,7 @@ static const CGFloat KEYBOARD_ANIMATION_DURATION = 0.3;
 
 -(void)prepare{
     
-    dele = [[UIApplication sharedApplication]delegate];
+    dele =(AppDelegate *) [[UIApplication sharedApplication]delegate];
     
     //tf.delegate = self;
     dele.messagesArray = [[NSMutableArray alloc] init];

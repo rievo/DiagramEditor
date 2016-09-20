@@ -22,6 +22,7 @@
 
 
 -(void)awakeFromNib{
+    [super awakeFromNib];
     UITapGestureRecognizer * tapGr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [background addGestureRecognizer:tapGr];
     [tapGr setDelegate:self];
@@ -33,7 +34,7 @@
     attributesTable.delegate = self;
     attributesTable.dataSource = self;
     
-    dele = [[UIApplication sharedApplication]delegate];
+    dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
     oldFrame = itemInfoGroup.frame;
     outCenter = CGPointMake(container.center.x, background.frame.size.height + itemInfoGroup.frame.size.height);

@@ -17,15 +17,22 @@
 
 @implementation Palette
 
-@synthesize paletteItems,name, sliderToChange;
+@synthesize paletteItems,name;
 
 
 -(void)preparePalette{
     
-    //self.delegate = self;
-    self.contentSize = CGSizeMake(0, self.bounds.size.height);
+     dele = (AppDelegate *)[UIApplication sharedApplication].delegate;
     
-    dele = [UIApplication sharedApplication].delegate;
+    NSLog(@"Contentsizebefore = (%f,%f)", self.contentSize.width, self.contentSize.height);
+    
+    //self.delegate = self;
+    
+    self.contentSize = CGSizeMake(0, self.frame.size.width);
+    NSLog(@"Contentsizeafter = (%f,%f)", self.contentSize.width, self.contentSize.height);
+   
+    NSLog(@"\n");
+    //self.backgroundColor = dele.blue0;
     
     if(paletteItems == nil)
         paletteItems = [[NSMutableArray alloc] init];
@@ -40,10 +47,10 @@
         
         float a = distanceToBorder;
         
-        CGFloat x  = i* self.contentSize.height + xmargin;
+        CGFloat x  = i* self.frame.size.height + xmargin;
         x = x + i* separationBetweenElements;
         
-        CGRect insideRect = CGRectMake(x, a, self.contentSize.height -2*a, self.contentSize.height -2*a);
+        CGRect insideRect = CGRectMake(x, a, self.frame.size.height -2*a, self.frame.size.height -2*a);
         
         
         temp.frame = insideRect;
@@ -53,11 +60,12 @@
         
 
         [self addSubview:temp];
-        self.contentSize = CGSizeMake(self.contentSize.width + temp.frame.size.width + xmargin + separationBetweenElements, self.contentSize.height);
+        self.contentSize = CGSizeMake(self.contentSize.width + temp.frame.size.width + xmargin + separationBetweenElements,
+                                      self.frame.size.height);
         
         
     }
-    self.contentSize = CGSizeMake(self.contentSize.width + xmargin, self.contentSize.height);
+    self.contentSize = CGSizeMake(self.contentSize.width + xmargin, self.frame.size.height);
     
     self.delegate = self;
 
@@ -72,13 +80,4 @@
     }
     paletteItems = [[NSMutableArray alloc] init];
 }
-
-
-#pragma mark UIScrollView
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    sliderToChange.value=self.contentOffset.x;
-}
-
 @end

@@ -13,6 +13,8 @@
 @synthesize textview, backView, delegate, background;
 
 -(void)awakeFromNib{
+    [super awakeFromNib];
+    
     UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                                              action:@selector(handleTap:)];
     [background addGestureRecognizer:tapgr];

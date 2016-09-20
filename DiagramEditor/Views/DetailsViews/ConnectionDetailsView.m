@@ -29,6 +29,7 @@
 
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [background addGestureRecognizer:tapgr];
     [tapgr setDelegate:self];
@@ -53,7 +54,7 @@
 
 - (IBAction)removeThisConnection:(id)sender {
     
-    AppDelegate * dele = [[UIApplication sharedApplication] delegate];
+    AppDelegate * dele = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [dele.connections removeObject:self.connection];
     [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
     [self closeConnectionDetailsView];

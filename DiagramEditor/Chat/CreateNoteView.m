@@ -103,6 +103,7 @@
 }
 
 -(void)awakeFromNib{
+    [super awakeFromNib];
     color = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
     [self bringSubviewToFront:container];
     
@@ -110,7 +111,7 @@
     [background addGestureRecognizer:tapgr];
     [tapgr setDelegate:self];
     
-    dele = [[UIApplication sharedApplication]delegate];
+    dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
     [self prepare];
 }

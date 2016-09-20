@@ -50,7 +50,7 @@
     
     highlightColor = [UIColor colorWithRed:210/255.0 green:144/255.0 blue:212/255.0 alpha:0.5];
     
-    dele = [[UIApplication sharedApplication]delegate];
+    dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
     fontColor = [UIColor blackColor];
     font = [UIFont fontWithName:@"Helvetica" size:10.0];
@@ -60,7 +60,7 @@
     
     self.backgroundColor = [dele blue0];
     
-    dele = [[UIApplication sharedApplication]delegate];
+
     
     [self setUserInteractionEnabled:YES];
     
