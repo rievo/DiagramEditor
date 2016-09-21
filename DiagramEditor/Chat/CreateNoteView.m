@@ -58,6 +58,12 @@
                                                       scrollView.bounds.size.height -2 *margin)];
     [viewToIncrust addSubview:map];
     
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleMapTap:)];
+    tapRecognizer.numberOfTapsRequired = 1;
+    tapRecognizer.numberOfTouchesRequired = 1;
+    
+    [map addGestureRecognizer:tapRecognizer];
+    
     
     
     //Merge all views
@@ -67,6 +73,14 @@
     [scrollView setPagingEnabled:YES];
 }
 
+-(void)handleMapTap:(UITapGestureRecognizer *)recognizer{
+    CGPoint point = [recognizer locationInView:map];
+    
+    CLLocationCoordinate2D tapPoint = [map convertPoint:point toCoordinateFromView:map];
+    noteLocation = [[CLLocation alloc] initWithLatitude:tapPoint.latitude longitude:tapPoint.longitude];
+    NSLog(@"Cordinate: %.3f,%.3f",tapPoint.latitude, tapPoint.longitude );
+    [self updateMapViewWithLocation:tapPoint];
+}
 
 -(void)drawRect:(CGRect)rect{
     UIBezierPath * backRect = [UIBezierPath bezierPathWithRect:rect];
@@ -293,15 +307,21 @@
         [manager stopUpdatingLocation];
         noteLocation = newLocation;
         locationManager = nil;
-        [self updateMapViewWithLocation];
+        [self updateMapViewWithLocation:noteLocation.coordinate];
     }
 }
 
--(void)updateMapViewWithLocation{
-    [map setCenterCoordinate:noteLocation.coordinate animated:YES];
+-(void)updateMapViewWithLocation:(CLLocationCoordinate2D)location{
+    [map setCenterCoordinate:location animated:YES];
+    
+    //Remove al annotations in order to add a new one
+    [map removeAnnotations:[map annotations]];
+    
+    [map setShowsUserLocation:YES];
+    
     
     MKPointAnnotation * pin = [[MKPointAnnotation alloc]init];
-    pin.coordinate = noteLocation.coordinate;
+    pin.coordinate = location;
     [map addAnnotation:pin];
     
     MKCoordinateSpan span;
@@ -312,7 +332,7 @@
     // create region, consisting of span and location
     MKCoordinateRegion region;
     region.span = span;
-    region.center = noteLocation.coordinate;
+    region.center = location;
     
     // move the map to our location
     [map setRegion:region animated:YES];
