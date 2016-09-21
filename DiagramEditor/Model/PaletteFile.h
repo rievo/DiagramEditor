@@ -16,6 +16,6 @@
 @property BOOL fromServer;
 
 @property NSString * ecoreURI;
-
+@property NSString * extension;
 
 @end

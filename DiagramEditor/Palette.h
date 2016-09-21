@@ -20,5 +20,6 @@
 
 @property NSMutableArray * paletteItems;
 @property NSString * name;
+@property NSString * extension;
 
 @end

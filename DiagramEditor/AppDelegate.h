@@ -105,6 +105,7 @@
 @property Palette * paletteView;
 @property float paletteW;
 @property float paletteH;
+@property NSString * paletteExtension;
 
 -(int)getOutConnectionsForComponent: (Component *)comp
                              ofType: (NSString * )type;

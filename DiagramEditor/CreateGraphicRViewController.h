@@ -17,6 +17,8 @@
     UIAlertView * badAlert;
     __weak IBOutlet UITextField *nameTextField;
     __weak IBOutlet UIButton *createButton;
+    
+    NSString * extension;
 }
 
 

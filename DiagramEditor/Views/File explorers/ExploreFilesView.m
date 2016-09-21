@@ -28,6 +28,7 @@
     
     for(int i = 0; i<allFiles.count; i++){
         [files addObject: [allFiles objectAtIndex:i]];
+        
     }
     
     [filesTable reloadData];

@@ -40,7 +40,7 @@ static const CGFloat KEYBOARD_ANIMATION_DURATION = 0.3;
 
     dic = [[NSMutableDictionary alloc] init];
     
-    dele = [[UIApplication sharedApplication]delegate];
+    dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
     whoFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:9.0];
     bodyFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:11.0];

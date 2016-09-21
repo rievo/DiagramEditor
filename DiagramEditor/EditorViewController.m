@@ -1102,6 +1102,9 @@
     [dic setObject:toSave forKey:@"content"];
     [dic setObject:name forKey:@"name"];
     
+    if(dele.paletteExtension != nil)
+        [dic setObject:dele.paletteExtension forKey:@"paletteExtension"];
+    
     NSString *base64Encoded = [imageData base64EncodedStringWithOptions:0];
     [dic setObject:base64Encoded forKey:@"imageData"];
     
@@ -1172,24 +1175,7 @@
              }
              
          }];
-        //NSData * data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-        
-        
-        /*if(!error){
-         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
-         message:@"Diagram saved properly on server"
-         delegate:self
-         cancelButtonTitle:@"OK"
-         otherButtonTitles:nil];
-         [alert show];
-         }else{
-         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-         message:@"Diagram was not saved on server"
-         delegate:self
-         cancelButtonTitle:@"OK"
-         otherButtonTitles:nil];
-         [alert show];
-         }*/
+
     }else{
         NSLog(@"Error generating diagram json");
     }
@@ -1197,6 +1183,9 @@
 
 -(void) saveDiagramOnDevice{
     textToSave = [self generateXML];
+    
+    
+    
     
     UIAlertController *alertController = [UIAlertController
                                           alertControllerWithTitle:@"Save name on device"
@@ -1220,9 +1209,12 @@
                                        [alertController setEditing:NO];
                                        
                                        if (nameTF.text.length != 0) {
-                                           //[self saveDiagramOnServerWithName:nameTF.text];
+                                           
+                                           
                                            NSString * newName = [nameTF.text lowercaseString];
-                                           //---------
+                                    
+                                           
+                                           
                                            BOOL result = [self writeFile:newName];
                                            [self.view endEditing:YES];
                                            
@@ -1312,7 +1304,24 @@
     if(fileExists == YES){
         return NO;
     }else{
-        [textToSave writeToFile:filePath atomically:NO encoding:NSUTF8StringEncoding error:&error];
+        
+        //Write JSOn object
+        NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+        [dic setObject:textToSave forKey:@"content"];
+        [dic setObject:name forKey:@"name"];
+        [dic setObject:dele.paletteExtension forKey:@"paletteExtension"];
+        
+        
+        NSError * jsonError = nil;
+        NSData * data = [NSJSONSerialization dataWithJSONObject:dic
+                                                        options:NSJSONWritingPrettyPrinted
+                                                          error:&jsonError];
+        
+        NSLog(@"jsonerror: %@", [jsonError description]);
+        
+        NSString * text = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        
+        [text writeToFile:filePath atomically:NO encoding:NSUTF8StringEncoding error:&error];
         
         if(error){
             NSLog(@"%@",[error description]);

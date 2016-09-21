@@ -356,6 +356,7 @@
                      pf.content = [ins objectForKey:@"content"];
                      pf.fromServer = true;
                      pf.ecoreURI = [ins objectForKey:@"ecoreURI"];
+                     pf.extension = [ins objectForKey:@"extension"];
                      [filesArray addObject:pf];
                  }
                  
@@ -410,7 +411,7 @@
     return nil;
 }
 
--(void)extractPalettesForContentsOfFile: (NSString *)text{
+-(void)extractPalettesForContentsOfFile: (PaletteFile *) file{
     // [palette resetPalette];
     
     [palettes removeAllObjects];
@@ -420,7 +421,7 @@
     }
     
     
-    configuration = [NSDictionary dictionaryWithXMLString:text];
+    configuration = [NSDictionary dictionaryWithXMLString:file.content];
     
     NSArray * allGraphicRepresentations = (NSArray *)[configuration objectForKey:@"allGraphicRepresentation"];
     
@@ -454,9 +455,11 @@
             
             NSDictionary * allGraphicRepresentation = [lRArray objectAtIndex:i];
             
-            NSString * paletteName = [allGraphicRepresentation objectForKey:@"_extension"];
-            tempPalete.name = paletteName;
-            tempPalete.name = [[allGraphicRepresentations objectAtIndex:gr]objectForKey:@"_extension"];
+            //NSString * paletteName = [allGraphicRepresentation objectForKey:@"_extension"];
+            //tempPalete.name = paletteName;
+            tempPalete.extension = file.extension;
+            tempPalete.name = file.name;
+            
             
             NSDictionary * layers = [allGraphicRepresentation objectForKey:@"layers"];
             NSArray * elements = [layers objectForKey:@"elements"];
@@ -1047,6 +1050,8 @@
         
         dele.subPalette = selected.name;
         
+        dele.paletteExtension = selected.extension;
+        
         
         [palette setHidden:NO];
         [palette setAlpha:0];
@@ -1137,7 +1142,7 @@
                                                   
                                               }
                                               completion:^(BOOL finished) {
-                                                  [self extractPalettesForContentsOfFile:file.content];
+                                                  [self extractPalettesForContentsOfFile:file];
                                                   
                                                   
                                                   if(doingTutorial == YES){
@@ -1800,9 +1805,16 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     finalPath = [finalPath stringByAppendingString:path];
     
     NSError * error = nil;
-    content = [NSString stringWithContentsOfFile:finalPath
+    
+    NSString * jsonString = [NSString stringWithContentsOfFile:finalPath
                                         encoding:NSUTF8StringEncoding
                                            error:&error];
+    
+    NSError * jsonError;
+    NSData *objectData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:objectData
+                                                         options:NSJSONReadingMutableContainers
+                                                           error:&jsonError];
     
     dele.loadingADiagram = YES;
     
@@ -1810,18 +1822,41 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     
     //Do we have JSON for this old diagram?
-    NSString * paletteFile = [self extractPaletteNameFromXMLDiagram:content];
-    NSArray * parts = [paletteFile componentsSeparatedByString:@"."];
-    tempPaletteFile = parts[0];
+    //TODO: Get palette with this extension
+    //NSString * paletteFile = [self extractPaletteNameFromXMLDiagram:[json objectForKey:@"content"]];
+    dele.paletteExtension = [json objectForKey:@"paletteExtension"];
+    tempPaletteFile  = [self paletteWithExtension:dele.paletteExtension];
+    //NSArray * parts = [paletteFile. componentsSeparatedByString:@"."];
+    //tempPaletteFile = parts[0];
     
+    NSString * c = [json objectForKey:@"content"];
     
     //TODO: Recover json for this palette
     
-    [self parseXMLDiagramWithText:content ];
+    [self parseXMLDiagramWithText:c];
     
     
     
 }
+
+
+-(PaletteFile *)paletteWithExtension:(NSString *)ext{
+    
+    for(PaletteFile * p in localPalettes){
+        if([p.extension isEqualToString:ext]){
+            return p;
+        }
+    }
+    
+    for(PaletteFile * p in serverPalettes){
+        if([p.extension isEqualToString:ext]){
+            return p;
+        }
+    }
+    
+    return nil;
+}
+
 
 
 #pragma mark UIViewController
@@ -1975,15 +2010,19 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
         
     }
     
-    NSDictionary * paletteNameDic = [diagramDic objectForKey:@"palette_name"];
-    NSString * paletteName = [paletteNameDic objectForKey:@"_name"];
-    NSArray * parts = [paletteName componentsSeparatedByString:@"."];
-    tempPaletteFile = parts[0];
-    paletteName = parts[0];
-    //Try loading palette with that name
-    NSString * paletteContent = [self loadPaletteNamed:tempPaletteFile.ecoreURI];
+   // NSDictionary * paletteNameDic = [diagramDic objectForKey:@"palette_name"];
+    //NSString * paletteName = [paletteNameDic objectForKey:@"_name"];
+    //NSArray * parts = [paletteName componentsSeparatedByString:@"."];
+    //tempPaletteFile = parts[0];
+    //paletteName = parts[0];
     
-    if(paletteContent == nil){ //Error, we don't have this palette
+    //Try loading palette with that name
+    
+    //TODO: Load palette with extension
+    PaletteFile * pal = [self paletteWithExtension:tempPaletteFile.extension];
+   // NSString * paletteContent = [self loadPaletteNamed:tempPaletteFile.name];
+    
+    if(pal == nil){ //Error, we don't have this palette
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                         message:@"This diagram uses an unknown palette."
                                                        delegate:self
@@ -1991,7 +2030,9 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
                                               otherButtonTitles:nil];
         [alert show];
     }else{
-        [self extractPalettesForContentsOfFile:paletteContent];
+        [self extractPalettesForContentsOfFile:pal];
+        
+        dele.subPalette = pal.name;
         
         Palette * paletteForUse = [self extractSubPalette:dele.subPalette];
         
@@ -2009,7 +2050,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
             //Reset things
             dele.loadingADiagram = NO;
             dele.subPalette = nil;
-            paletteContent = nil;
+            pal = nil;
         }else{
             palette = paletteForUse;
             
@@ -2767,11 +2808,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
         
         NSString * fileContent = file.content;
         
-        
-        //Do we have JSON for this old diagram?
-        NSString * paletteFile = [self extractPaletteNameFromXMLDiagram:fileContent];
-        NSArray * parts = [paletteFile componentsSeparatedByString:@"."];
-        tempPaletteFile = parts[0];
+        tempPaletteFile = [self paletteWithExtension:file.paletteExtension];
         
         
         //TODO: Recover json for this palette

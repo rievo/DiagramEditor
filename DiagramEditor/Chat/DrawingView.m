@@ -28,9 +28,7 @@
 }
 
 
--(void)awakeFromNib{
-    
-}
+
 
 - (IBAction)cancelDrawing:(id)sender {
     [self removeFromSuperview];

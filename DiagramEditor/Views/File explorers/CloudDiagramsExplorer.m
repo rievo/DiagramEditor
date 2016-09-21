@@ -76,6 +76,7 @@
                      df.name = [fileDic objectForKey:@"name"];
                      df.dateString = [fileDic objectForKey:@"dateString"];
                      df.content = [fileDic objectForKey:@"content"];
+                     df.paletteExtension = [fileDic objectForKey:@"paletteExtension"];
                      
                      [df updatePreviewForString:[fileDic objectForKey:@"imageString"]];
                      [filesArray addObject:df];

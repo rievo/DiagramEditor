@@ -19,6 +19,8 @@
     [super viewDidLoad];
     
     [createButton setEnabled:NO];
+    [textview setEditable:NO];
+    
     //[self formGraphicR];
     
 }
@@ -35,11 +37,11 @@
     //text = [text stringByAppendingString:@""];
     text = [text stringByAppendingString:@"<?xml version=\"1.0\" encoding=\"ASCII\"?>\n"];
     text = [text stringByAppendingString:@"<graphicR:GraphicRepresentation xmi:version=\"2.0\"\n"];
-    text = [text stringByAppendingString:@"xmlns:xmi=\"http://www.omg.org/XMI\" "];
-    text = [text stringByAppendingString:@"xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "];
-    text = [text stringByAppendingString:@"xmlns:graphicR=\"http://mondo.org/graphic_representation/1.0.3\">"];
+    text = [text stringByAppendingString:@" xmlns:xmi=\"http://www.omg.org/XMI\" "];
+    text = [text stringByAppendingString:@" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "];
+    text = [text stringByAppendingString:@" xmlns:graphicR=\"http://mondo.org/graphic_representation/1.0.3\">"];
     
-    NSString * extension = @"wt";
+    extension = [_selectedJson.name lowercaseString];
     NSString * fileName =[NSString stringWithFormat:@"%@.ecore", _selectedJson.name];
 
     
@@ -166,6 +168,7 @@
     [dic setObject:content forKey:@"content"];
     [dic setObject:nameTextField.text forKey:@"name"];
     [dic setObject:_selectedJson.uri forKey:@"ecoreURI"];
+    [dic setObject:extension forKey:@"extension"];
     [dic setObject:@"2" forKey:@"version"];
     
     

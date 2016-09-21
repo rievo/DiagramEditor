@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
+#import "DiagramFile.h"
 
 @protocol ExploreFilesDelegate
 -(void)reactToFile:(NSString * )path;
