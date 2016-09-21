@@ -75,10 +75,11 @@
     tv.text = associatedNote.text;
     [viewToIncrust addSubview:tv];
     
+    
     scrollView.contentSize = CGSizeMake(scrollView.frame.size.width, scrollView.frame.size.height);
     
     
-    if(associatedNote.image != nil){  //Add Image
+    if(associatedNote.attach != nil){  //Add Image
         start = scrollView.contentSize.width;
         
         UIImageView * iv = [[UIImageView alloc] initWithFrame:CGRectMake(scrollView.contentSize.width + margin,
