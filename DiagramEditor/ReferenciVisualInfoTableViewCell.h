@@ -26,4 +26,6 @@
 
 
 @property RemovableReference * ref;
+
+-(void)prepare;
 @end

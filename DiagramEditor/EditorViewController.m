@@ -1509,6 +1509,7 @@
     
     [writer writeStartElement:@"edges"];
     Connection * c = nil;
+    
     for(int i = 0; i<dele.connections.count; i++){
         c = [dele.connections objectAtIndex:i];
         [writer writeStartElement:@"edge"];
@@ -1516,6 +1517,9 @@
         [writer writeAttribute:@"source" value:[[NSNumber numberWithInt:(int)c.source]description]];
         [writer writeAttribute:@"target" value:[[NSNumber numberWithInt:(int)c.target]description]];
         [writer writeAttribute:@"className" value:c.className];
+        if(c.isLinkPalette == true){
+            [writer writeAttribute:@"link" value:c.linkPaletteRefName];
+        }
         [writer writeEndElement];
     }
     [writer writeEndElement];

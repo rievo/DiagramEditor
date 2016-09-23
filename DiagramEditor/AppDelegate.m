@@ -18,6 +18,7 @@
 #import "Alert.h"
 #import "YesOrNoView.h"
 #import "ColorPalette.h"
+#import "LinkPalette.h"
 
 @interface AppDelegate ()
 
@@ -590,6 +591,7 @@
     NSLog(@"\n--------------------\nEl master es %@\n--------------------\n", currentMasterId.peerID.displayName);
 }
 
+
 -(PaletteItem *) getPaletteItemForClassName:(NSString *)name{
     for(PaletteItem * pi in paletteItems){
         if([pi.className isEqualToString:name]){
@@ -602,6 +604,59 @@
             return pi;
         }
     }
+    
+    return nil;
+}
+
+//Should return a PaletteItem of the class \(name) and the reference \(refName) inside this class
+-(PaletteItem *) getPaletteItemForClassName:(NSString *)name andRefName:(NSString *)refName{
+    
+    PaletteItem * selected= nil;
+    
+    for(PaletteItem * pi in paletteItems){
+        if([pi.className isEqualToString:name]){
+            selected = pi;
+        }
+    }
+    
+    for(PaletteItem * pi in _noVisibleItems){
+        if([pi.className isEqualToString:name]){
+            selected = pi;
+        }
+    }
+    /*
+    Reference * ref = nil;
+    if(selected != nil){ //We have the class. Look for this ref
+        for(Reference * r in selected.references){
+            if([r.name isEqualToString:refName]){
+                ref = r;
+            }
+        }
+    }*/
+    
+    
+    LinkPalette * resultLP = [selected.linkPaletteDic objectForKey:refName];
+    
+    if(resultLP != nil){
+        
+        PaletteItem * pi = [[PaletteItem alloc] init];
+        pi.type = nil;
+        pi.lineColorNameString = [resultLP.colorDic objectForKey:@"name"];
+        pi.className = resultLP.className;
+        pi.sourceDecoratorName = resultLP.sourceDecoratorName;
+        pi.targetDecoratorName = resultLP.targetDecoratorName;
+        pi.lineStyle = resultLP.lineStyle;
+        
+        pi.isLinkPalette = true;
+        
+        return pi;
+    }else{
+        return nil;
+    }
+        
+    /*if(ref != nil){
+        NSLog(@"We have the reference, let's make a Palette item for it");
+    }*/
     
     return nil;
 }

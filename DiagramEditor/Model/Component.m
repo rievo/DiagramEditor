@@ -841,9 +841,6 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     for(PaletteItem * pi in dele.paletteItems){
         if([pi.type isEqualToString:@"graphicR:Edge"]){
 
-            /*if([pi sourceMatchesWithClass:source] && [pi targetMatchesWithClass:target]){
-                [edgesArray addObject:pi];
-            }*/
             if([pi sourceMatchesWithComponent:source] && [pi targetMatchesWithComponent:target]){
                 [edgesArray addObject:pi];
             }
@@ -855,10 +852,12 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     
     NSMutableArray * linkPaletteArray = [[NSMutableArray alloc] init];
     
+    
+    //We will use the linkPaletteDic of the source, that is their possible link palettes
     NSArray * keys = [source.linkPaletteDic allKeys];
     
-    for(NSString * key in keys){ //will go from me
-        LinkPalette * lp = [source.linkPaletteDic objectForKey:key];
+    for(NSString * key in keys){ ////For each key going out from source
+        LinkPalette * lp = [source.linkPaletteDic objectForKey:key]; //Lp = {isExpandableItem, instances, anEReference, lineStyle, paletteName, colorDic, anDiagramEelement, className, referenceInClass, targetDecoratorName, sourceDecoratorName}
         NSString * referenceName = lp.referenceInClass;
         
         //Searh this reference on class
@@ -866,9 +865,12 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         
         
         Reference * ref = [piSource getReferenceForName:referenceName];
+        
+        //piSource.isLinkPalette = true;
+        //piSource.linkPaletteReferenceName = ref.name;
         //Look for this reference
         
-        NSString * targetClassName = ref.target; //Taret node has the same class?
+        NSString * targetClassName = ref.target; //Target node has the same class?
         
         BOOL isKind = [target isComponentOfClass:targetClassName];
         
@@ -892,6 +894,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
             return  result;
         }else{ //It is a linkPalette
             LinkPalette * lp = [linkPaletteArray objectAtIndex:0];
+            //PaletteItem * selected = [dele getPaletteItemForClassName:lp.className andRefName:lp.referenceInClass];
             PaletteItem * selected = [dele getPaletteItemForClassName:lp.className];
             NSString * result = [self checkIntegrityForSource:source andTarget:target withEdge:selected];
             return result;
@@ -900,6 +903,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         
         //User may select one of them
         for(LinkPalette * lp in linkPaletteArray){
+            //PaletteItem * temp = [dele getPaletteItemForClassName:lp.className andRefName:lp.referenceInClass];
             PaletteItem * temp = [dele getPaletteItemForClassName:lp.className];
             temp.targetDecoratorName = lp.targetDecoratorName;
             temp.sourceDecoratorName = lp.sourceDecoratorName;
@@ -908,6 +912,10 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
             temp.lineColorNameString = colorName;
             temp.lineColor = [ColorPalette colorForString:colorName];
             temp.dialog = lp.paletteName;
+            
+            temp.isLinkPalette = true;
+            temp.linkPaletteReferenceName = lp.referenceInClass;
+            
             [edgesArray addObject:temp];
         }
         
@@ -1134,6 +1142,9 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         conn.className = tempClassName;
         //TODO: conn.attributes =
         [dele.connections addObject:conn];
+        
+        conn.isLinkPalette = pi.isLinkPalette;
+        conn.linkPaletteRefName = pi.linkPaletteReferenceName;
         
         conn.lineWidth = pi.lineWidth;
         conn.lineStyle = pi.lineStyle;

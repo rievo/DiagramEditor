@@ -128,7 +128,7 @@
             }
             
             cell.ref = (RemovableReference *)thisReference;
-            
+            [cell prepare];
             cell.nameLabel.text = thisReference.name;
             
             return cell;

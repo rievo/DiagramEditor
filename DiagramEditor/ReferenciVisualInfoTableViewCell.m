@@ -16,6 +16,10 @@
     [super awakeFromNib];
     // Initialization code
     
+
+}
+
+-(void)prepare{
     colors = [[NSMutableArray alloc] init];
     styles = [[NSMutableArray alloc] init];
     sourceDecorators = [[NSMutableArray alloc] init];

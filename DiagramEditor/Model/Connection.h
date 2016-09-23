@@ -38,6 +38,9 @@
 @property NSString * lineColorNameString;
 
 
+@property BOOL isLinkPalette;
+@property NSString * linkPaletteRefName;
+
 @property NSMutableDictionary * instancesOfClassesDictionary;
 
 -(void)retrieveAttributesForThisClassName;

@@ -25,6 +25,9 @@
 @property BOOL isDragable;
 
 
+@property BOOL isLinkPalette;
+@property NSString * linkPaletteReferenceName;
+
 //Edge
 @property NSNumber * lineWidth;
 @property NSString * lineStyle;

@@ -414,6 +414,8 @@
 -(void)extractPalettesForContentsOfFile: (PaletteFile *) file{
     // [palette resetPalette];
     
+    NSLog(@"extractPalettesForContentsOfFile");
+    
     [palettes removeAllObjects];
     
     if(palettes == nil){
@@ -2504,10 +2506,12 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
                      andComponentsArray: (NSMutableArray *)components{
     Connection * conn = [[Connection alloc]init];
     
+    //TODO Error aquí
     
     NSString * sourceId = [dic objectForKey:@"_source"];
     NSString * targetId = [dic objectForKey:@"_target"];
     NSString * className = [dic objectForKey:@"_className"];
+    NSString * link = [dic objectForKey:@"_link"];
     
     Component * source = nil;
     Component * target = nil;
@@ -2528,19 +2532,35 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     conn.target = target;
     conn.className = className;
     
-    
-    for(PaletteItem * pi in dele.paletteItems){
-        if([pi.className isEqualToString:conn.className]){
-            conn.lineColor = pi.lineColor;
-            conn.lineColorNameString = pi.lineColorNameString;
-            conn.lineWidth = pi.lineWidth;
-            conn.lineStyle = pi.lineStyle;
-            
-            conn.sourceDecorator = pi.sourceDecoratorName;
-            conn.targetDecorator = pi.targetDecoratorName;
+    if(link != nil){ //It is a linkPalette
+        for(PaletteItem * pi in dele.paletteItems){ //Get the class linkpalette
+            if([pi.className isEqualToString:conn.className]){
+                
+                //Pi = the class that has that linkPalette (e.g class)
+                LinkPalette * lp = [pi.linkPaletteDic objectForKey:link];
+                
+                conn.lineColorNameString = [lp.colorDic objectForKey:@"_name"];
+                conn.lineColor = [ColorPalette colorForString:conn.lineColorNameString];
+                conn.lineWidth = [NSNumber numberWithFloat:2.0]; //TODO: FIX THIS
+                conn.lineStyle = lp.lineStyle;
+                conn.sourceDecorator = lp.sourceDecoratorName;
+                conn.targetDecorator = lp.targetDecoratorName;
+                
+            }
+        }
+    }else{
+        for(PaletteItem * pi in dele.paletteItems){
+            if([pi.className isEqualToString:conn.className]){
+                conn.lineColor = pi.lineColor;
+                conn.lineColorNameString = pi.lineColorNameString;
+                conn.lineWidth = pi.lineWidth;
+                conn.lineStyle = pi.lineStyle;
+                
+                conn.sourceDecorator = pi.sourceDecoratorName;
+                conn.targetDecorator = pi.targetDecoratorName;
+            }
         }
     }
-    
     
     return conn;
 }

@@ -119,6 +119,7 @@
 
 -(void)recoverInfoFromData: (NSData *)data;
 
+-(PaletteItem *) getPaletteItemForClassName:(NSString *)name andRefName:(NSString *)refName;
 -(PaletteItem *) getPaletteItemForClassName:(NSString *)name;
 
 -(void) completeClassAttribute:(ClassAttribute *)ca
