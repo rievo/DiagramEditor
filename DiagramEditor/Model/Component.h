@@ -40,6 +40,8 @@
     
     NSString * tempClassName;
     float lastScale;
+    
+    PaletteItem * usingItem;
 }
 
 

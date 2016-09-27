@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Reference.h"
 @class Component;
+@class PaletteItem;
 
 @interface Connection : UIView<NSCoding>
 
@@ -44,7 +45,7 @@
 @property NSMutableDictionary * instancesOfClassesDictionary;
 
 -(void)retrieveAttributesForThisClassName;
--(void)retrieveConnectionGraphicInfo;
+-(void)retrieveConnectionGraphicInfoWithPaletteItem: (PaletteItem *) p;
 -(NSString *)getName;
 
 @end

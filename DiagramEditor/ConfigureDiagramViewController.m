@@ -536,6 +536,7 @@
                     lp.paletteName = [lpDic objectForKey:@"_palette_name"];
                     lp.targetDecoratorName = [lpDic objectForKey:@"_decoratorName"];
                     lp.targetDecoratorName = [lp.targetDecoratorName lowercaseString];
+                    lp.colorDic = [lpDic objectForKey:@"color"];
                     NSString * sourceDecName = [lpDic objectForKey:@"_sourceDecoratorName"];
                     if(sourceDecName == nil){
                         sourceDecName = NO_DECORATION;

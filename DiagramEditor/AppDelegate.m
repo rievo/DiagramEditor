@@ -641,7 +641,8 @@
         
         PaletteItem * pi = [[PaletteItem alloc] init];
         pi.type = nil;
-        pi.lineColorNameString = [resultLP.colorDic objectForKey:@"name"];
+        pi.lineColorNameString = [resultLP.colorDic objectForKey:@"_name"];
+        pi.lineColor = [ColorPalette colorForString:pi.lineColorNameString];
         pi.className = resultLP.className;
         pi.sourceDecoratorName = resultLP.sourceDecoratorName;
         pi.targetDecoratorName = resultLP.targetDecoratorName;

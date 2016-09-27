@@ -292,12 +292,15 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
                 conn.sourceDecorator = connectionToDo.sourceDecoratorName;
                 
                 
+                conn.isLinkPalette = usingItem.isLinkPalette;
                 conn.className = connectionToDo.className;
+                
+            
                 
                 //conn.className = tempClassName;
                 
                 [conn retrieveAttributesForThisClassName];
-                [conn retrieveConnectionGraphicInfo];
+                [conn retrieveConnectionGraphicInfoWithPaletteItem:usingItem];
                 
                 [dele.connections addObject:conn];
                 
@@ -316,7 +319,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
                 conn.className = kDefaultConnection;
                 
                 [conn retrieveAttributesForThisClassName];
-                [conn retrieveConnectionGraphicInfo];
+                [conn retrieveConnectionGraphicInfoWithPaletteItem:usingItem];
                 
                 [dele.connections addObject:conn];
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
@@ -698,7 +701,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
                            andTarget: (Component *)target
                             withEdge: (PaletteItem *)pi{
     NSString * res = nil;
-    
+    usingItem = nil;
     //Sacamos, de ese tipo, cuántas conexiones pueden salir del source
     //Recorremos las referencias de source, comprobando si el target es del tipo pi.className
     
@@ -823,7 +826,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         return nil;
     }
     
-    
+    usingItem = pi;
     
     return res;
 }
@@ -895,7 +898,8 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         }else{ //It is a linkPalette
             LinkPalette * lp = [linkPaletteArray objectAtIndex:0];
             //PaletteItem * selected = [dele getPaletteItemForClassName:lp.className andRefName:lp.referenceInClass];
-            PaletteItem * selected = [dele getPaletteItemForClassName:lp.className];
+            PaletteItem * selected = [dele getPaletteItemForClassName:lp.className andRefName:lp.referenceInClass];
+            usingItem = selected;
             NSString * result = [self checkIntegrityForSource:source andTarget:target withEdge:selected];
             return result;
         }
@@ -1162,7 +1166,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         conn.targetDecorator = pi.targetDecoratorName;
         
         [conn retrieveAttributesForThisClassName];
-        [conn retrieveConnectionGraphicInfo];
+        //[conn retrieveConnectionGraphicInfo:ni];
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
         

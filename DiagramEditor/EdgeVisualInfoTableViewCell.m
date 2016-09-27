@@ -82,32 +82,33 @@
 
 -(void)fillColors{
     colors = [[NSMutableArray alloc] initWithObjects:
+              
               @"black",
+              @"orange",
               @"white",
               @"blue",
               @"chocolate",
               @"gray",
               @"green",
-              @"orange",
               @"purple",
               @"red",
               @"yellow",
-              @"lightBlue",
-              @"lightChocolate",
-              @"lightGray",
-              @"lightGreen",
-              @"lightOrange",
-              @"lightPurple",
-              @"lightRed",
-              @"lightYellow",
-              @"darkBlue",
-              @"darkChocolate",
-              @"darkGray",
-              @"darkOrange",
-              @"darkPurple",
-              @"darkRed",
-              @"darkYellow",
-              @"darkGreen",nil];
+              @"light_blue",
+              @"light_chocolate",
+              @"light_gray",
+              @"light_green",
+              @"light_orange",
+              @"light_purple",
+              @"light_red",
+              @"light_yellow",
+              @"dark_blue",
+              @"dark_chocolate",
+              @"dark_gray",
+              @"dark_orange",
+              @"dark_purple",
+              @"dark_red",
+              @"dark_yellow",
+              @"dark_green",nil];
 }
 
 

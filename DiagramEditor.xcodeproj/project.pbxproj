@@ -242,8 +242,8 @@
 		F15865131C85A2CA007D2E75 /* CloudDiagramsExplorer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CloudDiagramsExplorer.m; sourceTree = "<group>"; };
 		F158651A1C85AA59007D2E75 /* DiagramFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiagramFile.h; sourceTree = "<group>"; };
 		F158651B1C85AA59007D2E75 /* DiagramFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiagramFile.m; sourceTree = "<group>"; };
-		F1587B021C19BC4600E963BE /* Palette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Palette.h; sourceTree = "<group>"; };
-		F1587B031C19BC4600E963BE /* Palette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Palette.m; sourceTree = "<group>"; };
+		F1587B021C19BC4600E963BE /* Palette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Palette.h; path = ../Palette.h; sourceTree = "<group>"; };
+		F1587B031C19BC4600E963BE /* Palette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Palette.m; path = ../Palette.m; sourceTree = "<group>"; };
 		F15A96071C27F69100ACA6FA /* XMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLWriter.h; sourceTree = "<group>"; };
 		F15A96081C27F69100ACA6FA /* XMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLWriter.m; sourceTree = "<group>"; };
 		F15ADC1D1C92BEF40068142E /* share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share.png; sourceTree = "<group>"; };
@@ -393,9 +393,9 @@
 		F1B77ADB1D82AC0200753DB0 /* EdgeVisualInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EdgeVisualInfoTableViewCell.h; sourceTree = "<group>"; };
 		F1B77ADC1D82AC0200753DB0 /* EdgeVisualInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EdgeVisualInfoTableViewCell.m; sourceTree = "<group>"; };
 		F1B77ADD1D82AC0200753DB0 /* EdgeVisualInfoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EdgeVisualInfoTableViewCell.xib; sourceTree = "<group>"; };
-		F1B77AE31D82BE8500753DB0 /* SlideMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideMenuView.h; sourceTree = "<group>"; };
-		F1B77AE41D82BE8500753DB0 /* SlideMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideMenuView.m; sourceTree = "<group>"; };
-		F1B77AE61D82BE8F00753DB0 /* SlideMenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SlideMenuView.xib; sourceTree = "<group>"; };
+		F1B77AE31D82BE8500753DB0 /* SlideMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SlideMenuView.h; path = ../SlideMenuView.h; sourceTree = "<group>"; };
+		F1B77AE41D82BE8500753DB0 /* SlideMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SlideMenuView.m; path = ../SlideMenuView.m; sourceTree = "<group>"; };
+		F1B77AE61D82BE8F00753DB0 /* SlideMenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SlideMenuView.xib; path = ../SlideMenuView.xib; sourceTree = "<group>"; };
 		F1B789921C60F045001B6DB4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F1B789941C60F04B001B6DB4 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		F1B789961C60F05D001B6DB4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -453,6 +453,8 @@
 		F10BE4341C29663E0053A7F9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F1587B021C19BC4600E963BE /* Palette.h */,
+				F1587B031C19BC4600E963BE /* Palette.m */,
 				F1FEE7601CEB278A00FD4E9B /* Alert.h */,
 				F1FEE7611CEB278A00FD4E9B /* Alert.m */,
 				F1431E891C524127006A45BC /* ClassAttribute.h */,
@@ -500,6 +502,9 @@
 		F1431E8C1C5249D4006A45BC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F1B77AE31D82BE8500753DB0 /* SlideMenuView.h */,
+				F1B77AE41D82BE8500753DB0 /* SlideMenuView.m */,
+				F1B77AE61D82BE8F00753DB0 /* SlideMenuView.xib */,
 				F130A47B1D12DBA200BDD212 /* ExpandableItem */,
 				F1786DE31C561AB100963663 /* AttributeCells */,
 				F15865151C85A4FB007D2E75 /* DetailsViews */,
@@ -730,9 +735,6 @@
 				F1B4861F1C47A2DD00752157 /* palettes */,
 				F18510791C1824C8004EC4C8 /* AppDelegate.h */,
 				F185107A1C1824C8004EC4C8 /* AppDelegate.m */,
-				F1B77AE31D82BE8500753DB0 /* SlideMenuView.h */,
-				F1B77AE41D82BE8500753DB0 /* SlideMenuView.m */,
-				F1B77AE61D82BE8F00753DB0 /* SlideMenuView.xib */,
 				F18510821C1824C8004EC4C8 /* Assets.xcassets */,
 				F1685EA61C1829F00094097E /* Canvas.h */,
 				F1685EA71C1829F00094097E /* Canvas.m */,
@@ -745,8 +747,6 @@
 				F18510871C1824C8004EC4C8 /* Info.plist */,
 				F18510841C1824C8004EC4C8 /* LaunchScreen.storyboard */,
 				F185107F1C1824C8004EC4C8 /* Main.storyboard */,
-				F1587B021C19BC4600E963BE /* Palette.h */,
-				F1587B031C19BC4600E963BE /* Palette.m */,
 			);
 			path = DiagramEditor;
 			sourceTree = "<group>";

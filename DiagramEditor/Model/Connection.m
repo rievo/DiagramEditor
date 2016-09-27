@@ -12,7 +12,7 @@
 #import "PaletteItem.h"
 #import "ColorPalette.h"
 #import "ClassAttribute.h"
-
+#import "LinkPalette.h"
 #import "Constants.h"
 
 @implementation Connection
@@ -66,18 +66,27 @@
     }
 }
 
--(void)retrieveConnectionGraphicInfo{
+-(void)retrieveConnectionGraphicInfoWithPaletteItem: (PaletteItem *) p{
     AppDelegate * dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
-    for(PaletteItem * pi in dele.paletteItems){
-        if([pi.className isEqualToString:className]){ //Match, retrieve attributes
-            self.lineColor = pi.lineColor;
-            self.lineWidth = pi.lineWidth;
-            self.lineColorNameString = pi.lineColorNameString;
-            self.lineStyle = pi.lineStyle;
-            break;
+    
+    if(_isLinkPalette == true){
+        self.lineColor = p.lineColor;
+        self.lineWidth = p.lineWidth;
+        self.lineColorNameString = p.lineColorNameString;
+        self.lineStyle = p.lineStyle;
+    }else{
+        for(PaletteItem * pi in dele.paletteItems){
+            if([pi.className isEqualToString:className]){ //Match, retrieve attributes
+                self.lineColor = pi.lineColor;
+                self.lineWidth = pi.lineWidth;
+                self.lineColorNameString = pi.lineColorNameString;
+                self.lineStyle = pi.lineStyle;
+                break;
+            }
         }
     }
+    
 }
 
 
