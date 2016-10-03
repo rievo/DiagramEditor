@@ -251,11 +251,28 @@
 }
 
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(indexPath.section >= 1){
+    
+
+    
+    
+    if(indexPath.section >= 1){ //Attributes section
         return YES;
     }else{
         return NO;
     }
+    /*if(indexPath.section == 0){ //Attributes
+        return NO;
+    }else{
+        if(connections.count == 0){
+            return YES;
+        }else{
+            if(indexPath.section == 1){
+                return YES;
+            }else{
+                return NO;
+            }
+        }
+    }*/
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -334,6 +351,11 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
                     atvc.detailsPreview = previewComponent;
                     
                     
+                    if([dele amITheMaster] || dele.inMultipeerMode == NO){
+                        [atvc.textField setEnabled:YES];
+                    }else{
+                        [atvc.textField setEnabled:NO];
+                    }
                     
                     for(ClassAttribute * atr in comp.attributes){
                         if([atr.name isEqualToString:atvc.attributeNameLabel.text]){
@@ -362,6 +384,12 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
                     batvc.associatedAttribute = attr;
                     batvc.backgroundColor = [UIColor clearColor];
                     
+                    if([dele amITheMaster]|| dele.inMultipeerMode == NO){
+                        [batvc.switchValue setEnabled:YES];
+                    }else{
+                        [batvc.switchValue setEnabled:NO];
+                    }
+                    
                     //Update switch value for this attribute value
                     if(attr.currentValue == nil){
                         [batvc.switchValue setOn:NO];
@@ -386,6 +414,8 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
                     //gatvc.typeLabel.text = attr.type;
                     gatvc.backgroundColor = [UIColor clearColor];
                     gatvc.selectionStyle = UITableViewCellSelectionStyleNone;
+                    
+                    
                 }
                 return gatvc;
             }

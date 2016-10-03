@@ -107,6 +107,8 @@
 @property float paletteH;
 @property NSString * paletteExtension;
 
+@property BOOL inMultipeerMode;
+
 -(int)getOutConnectionsForComponent: (Component *)comp
                              ofType: (NSString * )type;
 -(int)getInConnectionsForComponent: (Component *)comp
@@ -128,6 +130,7 @@
 -(BOOL)amITheMaster;
 -(BOOL)amITheServer;
 
+-(UIColor*)getColorForPeerWithName:(NSString *) name;
 
 +(NSString *)getBase64StringFromImage:(UIImage *)image;
 +(UIImage *)getImageFromBase64String:(NSString *)string;

@@ -17,9 +17,10 @@
 
 @synthesize table;
 
-
-
-
+-(void)reload{
+    //Reload table
+    [self recoverUsersFromAppDelegateSession];
+}
 -(void)recoverUsersFromAppDelegateSession{
     dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     NSArray * peers = dele.manager.session.connectedPeers;
@@ -139,8 +140,8 @@
     cell.nameLabel.text = text;
     
     
-    
-    UIColor * color = [dele.colorDic objectForKey:peer.displayName];
+    UIColor * color = [dele getColorForPeerWithName:peer.displayName];
+    //UIColor * color = [dele.colorDic objectForKey:peer.displayName];
     
     if(color == nil){
         cell.colorView.backgroundColor = [UIColor redColor];
@@ -149,7 +150,7 @@
     }
     
     if(peer  == dele.serverId.peerID){
-        
+        cell.colorView.backgroundColor = dele.myColor;
         cell.serverLabel.text = @"(S)";
     }else{
         cell.serverLabel.text = @"";
@@ -299,6 +300,9 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
                                                        object:nil
                                                      userInfo:dic];
     [table endEditing:YES];
+    
+    //Reload table
+    [self recoverUsersFromAppDelegateSession];
 }
 
 

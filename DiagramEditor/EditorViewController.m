@@ -459,6 +459,7 @@
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
     [alert show];
+    dele.inMultipeerMode = NO;
 }
 
 -(void)handlePetitionDenied:(NSNotification *)not{
@@ -2089,6 +2090,10 @@
     resendTimer = nil;
     
     [showUsersPeersViewButton setHidden:YES];
+    [chatButton setHidden:YES];
+    [askForMasterButton setHidden:YES];
+    
+    dele.inMultipeerMode = NO;
 }
 
 -(void)browserViewControllerDidFinish:(MCBrowserViewController *)browserViewController{
@@ -2109,6 +2114,7 @@
                                                   owner:self
                                                 options:nil]objectAtIndex:0];
     
+    dele.inMultipeerMode = YES;
     /*[usersListView setFrame:CGRectMake(0,
      0,
      sessionListContainer.frame.size.width,
@@ -2222,6 +2228,8 @@
                                toPeers:dele.manager.session.connectedPeers
                               withMode:MCSessionSendDataReliable
                                  error:&error];
+        
+        [dele.colorDic setObject:colorToSend forKey:dele.manager.session.connectedPeers[i]];
     }
 }
 
@@ -2346,6 +2354,7 @@
 
 - (IBAction)showUsersList:(id)sender {
     [usersListView setFrame:self.view.frame];
+    [usersListView reload];
     [self.view addSubview:usersListView];
 }
 
