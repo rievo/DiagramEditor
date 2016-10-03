@@ -20,6 +20,7 @@
 		F10CC8EE1CC0E133007F2B11 /* hidePaletteEditor.png in Resources */ = {isa = PBXBuildFile; fileRef = F10CC8ED1CC0E133007F2B11 /* hidePaletteEditor.png */; };
 		F10CC8F01CC518D1007F2B11 /* masterBox.png in Resources */ = {isa = PBXBuildFile; fileRef = F10CC8EF1CC518D1007F2B11 /* masterBox.png */; };
 		F10F0FA31C1AF67000165561 /* ColorPalette.m in Sources */ = {isa = PBXBuildFile; fileRef = F10F0FA21C1AF67000165561 /* ColorPalette.m */; };
+		F128C9801D9BD0CD00288623 /* photo.png in Resources */ = {isa = PBXBuildFile; fileRef = F128C97F1D9BD0CD00288623 /* photo.png */; };
 		F130A47E1D12DBDA00BDD212 /* ExpandableItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = F130A47D1D12DBDA00BDD212 /* ExpandableItemView.m */; };
 		F130A4801D12DBE400BDD212 /* ExpandableItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F130A47F1D12DBE400BDD212 /* ExpandableItemView.xib */; };
 		F13666651D86E52B00B060B5 /* SourceRefTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F13666631D86E52B00B060B5 /* SourceRefTableViewCell.m */; };
@@ -199,6 +200,7 @@
 		F10CC8EF1CC518D1007F2B11 /* masterBox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = masterBox.png; sourceTree = "<group>"; };
 		F10F0FA11C1AF67000165561 /* ColorPalette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPalette.h; sourceTree = "<group>"; };
 		F10F0FA21C1AF67000165561 /* ColorPalette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorPalette.m; sourceTree = "<group>"; };
+		F128C97F1D9BD0CD00288623 /* photo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo.png; sourceTree = "<group>"; };
 		F130A47C1D12DBDA00BDD212 /* ExpandableItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpandableItemView.h; sourceTree = "<group>"; };
 		F130A47D1D12DBDA00BDD212 /* ExpandableItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpandableItemView.m; sourceTree = "<group>"; };
 		F130A47F1D12DBE400BDD212 /* ExpandableItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExpandableItemView.xib; sourceTree = "<group>"; };
@@ -648,10 +650,8 @@
 		F17B75AE1C22D9D500AB1B57 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
-				F1B77AA11D80002200753DB0 /* createPalette.png */,
 				F1FEE7001CDCA51C00FD4E9B /* actions */,
 				F19607FB1CF347E1000DC248 /* addImage.png */,
-				F17FC7FD1D78187700DCA5CC /* geoposition.png */,
 				F17B75AF1C22DA7200AB1B57 /* arrow.png */,
 				F19C258D1C43AB580002E490 /* back.png */,
 				F1C6347A1C2842C30072912D /* camera.png */,
@@ -659,9 +659,10 @@
 				F1FEE72F1CE36C1500FD4E9B /* chat.png */,
 				F18A8E1F1C7C5A5900D87C00 /* circle.png */,
 				F1801F3A1C774137005BA437 /* cloudFilled.png */,
+				F1B77AA11D80002200753DB0 /* createPalette.png */,
 				F17A93F41CF70768008AE1EE /* delete.png */,
-				F13D28501D05B28E001D953B /* rightArrow.png */,
 				F16733EF1CBBD6C000E76C3A /* downArrowBlack.png */,
+				F17FC7FD1D78187700DCA5CC /* geoposition.png */,
 				F171FA741C885F0C005C37D4 /* go.png */,
 				F163C5381C9D6501007824D2 /* hand.png */,
 				F10CC8ED1CC0E133007F2B11 /* hidePaletteEditor.png */,
@@ -678,18 +679,20 @@
 				F10AB80A1C50E85100DE6DCE /* ok.png */,
 				F10AB8051C50E53100DE6DCE /* open.png */,
 				F19C258F1C43AB8B0002E490 /* palette.png */,
+				F128C97F1D9BD0CD00288623 /* photo.png */,
 				F17D1C071C7F1EDC0080EA29 /* reload.png */,
 				F1AB3B151C22B19800EDBB1D /* resize.png */,
+				F13D28501D05B28E001D953B /* rightArrow.png */,
 				F1FEE7631CEB479000FD4E9B /* riTriangle.png */,
 				F17B75AA1C22D79F00AB1B57 /* save.png */,
 				F15379781C91A25C001D8FFB /* search.png */,
-				F13D284E1D0578EA001D953B /* trash0.png */,
 				F14181C81C68DCB600E838F9 /* settings.png */,
 				F15ADC1D1C92BEF40068142E /* share.png */,
 				F10CC8EB1CC0E0CF007F2B11 /* showPaletteEditor.png */,
 				F15BEA001CABC62400EDABA5 /* showPaletteEditorOld.png */,
 				F163AFE91C7B1ABE00BAE67C /* tap.png */,
 				F163AFE51C7B1A1B00BAE67C /* tapDark.png */,
+				F13D284E1D0578EA001D953B /* trash0.png */,
 				F16733F11CBBD6C500E76C3A /* upArrowBlack.png */,
 				F16C35C41C98277F006F4255 /* users.png */,
 			);
@@ -965,6 +968,7 @@
 				F10CC8F01CC518D1007F2B11 /* masterBox.png in Resources */,
 				F15865111C85A2B5007D2E75 /* CloudDiagramsExplorer.xib in Resources */,
 				F17B75A91C22D6E100AB1B57 /* newDocument.png in Resources */,
+				F128C9801D9BD0CD00288623 /* photo.png in Resources */,
 				F16733F01CBBD6C000E76C3A /* downArrowBlack.png in Resources */,
 				F153796F1C919B2F001D8FFB /* ClassesFilterView.xib in Resources */,
 				F19C25901C43AB8B0002E490 /* palette.png in Resources */,

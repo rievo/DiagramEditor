@@ -7,6 +7,8 @@
 //
 
 #import "ReferenciVisualInfoTableViewCell.h"
+#import "ColorPalette.h"
+#import "Canvas.h"
 
 @implementation ReferenciVisualInfoTableViewCell
 
@@ -167,4 +169,160 @@
     }
 }
 
+
+-(UIView *)pickerView:(UIPickerView *)pickerView
+           viewForRow:(NSInteger)row
+         forComponent:(NSInteger)component
+          reusingView:(UIView *)view{
+    UIView * v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, pickerView.frame.size.width, pickerView.frame.size.height -5)];
+
+    
+    
+    
+    if(pickerView == _colorPicker){
+        NSString * colorName = [colors objectAtIndex:row];
+        float margin = 5;
+        UIView * colorView = [[UIView alloc] initWithFrame:CGRectMake(margin,
+                                                                      margin,
+                                                                      v.frame.size.width - 2*margin,
+                                                                      v.frame.size.height - 2*margin)];
+        UIColor * color = [ColorPalette colorForString:colorName];
+        [colorView setBackgroundColor:color];
+        
+        
+        UILabel * label = [[UILabel alloc] initWithFrame:v.frame];
+        
+        UIColor * textColor = nil;
+        
+        if([colorName isEqualToString:@"black"]){
+            textColor = [UIColor whiteColor];
+        }else{
+            textColor = [UIColor blackColor];
+        }
+        
+        label.text = [colors objectAtIndex:row];
+        label.textColor = textColor;
+        [label setTextAlignment:NSTextAlignmentCenter];
+        label.adjustsFontSizeToFitWidth = YES;
+        label.minimumScaleFactor = 0.5;
+        
+        
+        [v addSubview: colorView];
+        [v addSubview:label];
+        
+    }else if(pickerView == _stylePicker){
+
+        UILabel * label = [[UILabel alloc] initWithFrame:v.frame];
+        label.text = [styles objectAtIndex:row];
+        [label setTextAlignment:NSTextAlignmentCenter];
+        label.adjustsFontSizeToFitWidth = YES;
+        label.minimumScaleFactor = 0.5;
+        [v addSubview:label];
+        
+    }else if(pickerView == _sourceDecoratorPicker){
+
+        
+        float margin = 5;
+        UIView * decView = [[UIView alloc] initWithFrame:CGRectMake(margin,
+                                                                      margin,
+                                                                      v.frame.size.width - 2*margin,
+                                                                      v.frame.size.height - 2*margin)];
+        
+        NSString * decorator = [sourceDecorators objectAtIndex:row];
+        
+        UIBezierPath * path = nil;
+        
+        if([decorator isEqualToString:@"noDecoration"]){
+            path = [Canvas getNoDecoratorPath];
+        }else if([decorator isEqualToString:@"inputArrow"]){
+             path = [Canvas getInputArrowPath];
+        }else if([decorator isEqualToString:@"diamond"]){
+             path = [Canvas getDiamondPath];
+        }else if([decorator isEqualToString:@"fillDiamond"]){
+             path = [Canvas getDiamondPath];
+        }else if([decorator isEqualToString:@"inputClosedArrow"]){
+             path = [Canvas getInputClosedArrowPath];
+        }else if([decorator isEqualToString:@"outputArrow"]){
+             path = [Canvas getOutputArrowPath];
+        }else if([decorator isEqualToString:@"outputClosedArrow"]){
+             path = [Canvas getOutputClosedArrowPath];
+        }else if([decorator isEqualToString:@"inputFillClosedArrow"]){
+            path = [Canvas getInputFillClosedArrowPath];
+        }else if([decorator isEqualToString:@"outputFillClosedArrow"]){
+            path = [Canvas getOutputArrowPath];
+        }
+        
+        CGAffineTransform transform = CGAffineTransformIdentity;
+        transform = CGAffineTransformConcat(transform, CGAffineTransformMakeTranslation(decView.frame.size.width/2, decView.frame.size.height/2));
+        [path applyTransform:transform];
+        
+        CAShapeLayer * draw = [CAShapeLayer layer];
+        if([decorator isEqualToString:@"fillDiamond"] || [decorator isEqualToString:@"outputFillClosedArrow"] ||
+           [decorator isEqualToString:@"inputFillClosedArrow"]){
+            draw.fillColor = [UIColor blackColor].CGColor;
+        }else{
+            draw.fillColor = [UIColor clearColor].CGColor;
+        }
+        draw.strokeColor = [UIColor blackColor].CGColor;
+        draw.opacity = 1.0;
+        draw.path = path.CGPath;
+        
+        
+        
+        [decView.layer addSublayer:draw];
+        [v addSubview:decView];
+        
+    }else if(pickerView == _targetDecoratorPicker){
+        float margin = 5;
+        UIView * decView = [[UIView alloc] initWithFrame:CGRectMake(margin,
+                                                                    margin,
+                                                                    v.frame.size.width - 2*margin,
+                                                                    v.frame.size.height - 2*margin)];
+        
+        NSString * decorator = [sourceDecorators objectAtIndex:row];
+        
+        UIBezierPath * path = nil;
+        
+        if([decorator isEqualToString:@"noDecoration"]){
+            path = [Canvas getNoDecoratorPath];
+        }else if([decorator isEqualToString:@"inputArrow"]){
+            path = [Canvas getInputArrowPath];
+        }else if([decorator isEqualToString:@"diamond"]){
+            path = [Canvas getDiamondPath];
+        }else if([decorator isEqualToString:@"fillDiamond"]){
+            path = [Canvas getDiamondPath];
+        }else if([decorator isEqualToString:@"inputClosedArrow"]){
+            path = [Canvas getInputClosedArrowPath];
+        }else if([decorator isEqualToString:@"outputArrow"]){
+            path = [Canvas getOutputArrowPath];
+        }else if([decorator isEqualToString:@"outputClosedArrow"]){
+            path = [Canvas getOutputClosedArrowPath];
+        }else if([decorator isEqualToString:@"inputFillClosedArrow"]){
+            path = [Canvas getInputFillClosedArrowPath];
+        }else if([decorator isEqualToString:@"outputFillClosedArrow"]){
+            path = [Canvas getOutputArrowPath];
+        }
+        
+        CGAffineTransform transform = CGAffineTransformIdentity;
+        transform = CGAffineTransformConcat(transform, CGAffineTransformMakeTranslation(decView.frame.size.width/2, decView.frame.size.height/2));
+        [path applyTransform:transform];
+        
+        CAShapeLayer * draw = [CAShapeLayer layer];
+        if([decorator isEqualToString:@"fillDiamond"] || [decorator isEqualToString:@"outputFillClosedArrow"] ||
+           [decorator isEqualToString:@"inputFillClosedArrow"]){
+            draw.fillColor = [UIColor blackColor].CGColor;
+        }else{
+            draw.fillColor = [UIColor clearColor].CGColor;
+        }
+        draw.strokeColor = [UIColor blackColor].CGColor;
+        draw.opacity = 1.0;
+        draw.path = path.CGPath;
+        
+        
+        
+        [decView.layer addSublayer:draw];
+        [v addSubview:decView];
+    }
+    return  v;
+}
 @end

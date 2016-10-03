@@ -10,12 +10,21 @@
 #import "JsonClass.h"
 #import "AppDelegate.h"
 #import "EcoreFile.h"
+#import "NodeVisualInfoTableViewCell.h"
 
-
-@interface ConfigureGraphicsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>{
+@interface ConfigureGraphicsViewController : UIViewController<UITableViewDelegate,
+UITableViewDataSource,
+NodeVisualInfoDelegate,
+UIImagePickerControllerDelegate,
+UINavigationControllerDelegate>{
     
     __weak IBOutlet UITableView *table;
     AppDelegate * dele;
+    UIImagePickerController * picker;
+    UIPopoverController *popover ;
+    
+    
+    NodeVisualInfoTableViewCell * updatingCell;
 }
 
 @property NSMutableArray * nodes;

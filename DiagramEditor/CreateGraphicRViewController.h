@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "JsonClass.h"
 #import "EcoreFile.h"
+#import "AppDelegate.h"
 
 @interface CreateGraphicRViewController : UIViewController<UIAlertViewDelegate>{
     NSString * text;
@@ -19,6 +20,7 @@
     __weak IBOutlet UIButton *createButton;
     
     NSString * extension;
+    AppDelegate * dele;
 }
 
 

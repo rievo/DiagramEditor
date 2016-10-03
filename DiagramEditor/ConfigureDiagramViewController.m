@@ -1455,7 +1455,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     UIPopoverPresentationController * popover = ac.popoverPresentationController;
     if(popover){
         
-        popover.sourceView = folder;
+        popover.sourceView = confirmButton;
         popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
     }
     

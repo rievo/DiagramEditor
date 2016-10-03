@@ -18,7 +18,7 @@
     table.delegate = self;
     
     dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-    
+    table.separatorColor = [UIColor clearColor];
     
 }
 

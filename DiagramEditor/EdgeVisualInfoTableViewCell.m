@@ -36,6 +36,27 @@
     [self fillDecorators];
     [self fillStyles];
 
+    
+    [self prepareConnection];
+}
+
+-(void)prepareConnection{
+    _conn = [[Connection alloc] init];
+
+    NSInteger index = [_strokeColorPicker selectedRowInComponent:0];
+    _conn.lineColorNameString = [colors objectAtIndex:index];
+    
+   
+    
+    index = [_lineStylePicker selectedRowInComponent:0];
+    _conn.lineStyle = [styles objectAtIndex:index];
+    
+
+    index = [_sourceDecoratorPicker selectedRowInComponent:0];
+    _conn.sourceDecorator = [sourceDecorators objectAtIndex:index];
+    
+    index = [_targetDecoratorPicker selectedRowInComponent:0];
+    _conn.targetDecorator = [targetDecorators objectAtIndex:index];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -44,10 +65,6 @@
     // Configure the view for the selected state
 }
 
--(void)prepareConnection{
-    _conn = [[Connection alloc] init];
-    
-}
 
 
 -(void)fillDecorators{

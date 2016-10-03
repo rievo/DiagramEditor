@@ -30,6 +30,7 @@
     dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
     [table setAllowsSelection:NO];
+    table.separatorColor = [UIColor clearColor];
 }
 
 - (void)didReceiveMemoryWarning {

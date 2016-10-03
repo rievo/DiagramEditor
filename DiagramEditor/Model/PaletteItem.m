@@ -19,6 +19,7 @@
 #import "Canvas.h"
 #import "AppDelegate.h"
 #import "Reference.h"
+#import "ColorPalette.h"
 
 #import "Constants.h"
 
@@ -61,6 +62,8 @@
     [coder encodeObject:self.parentsClassArray forKey:@"parentsClassArray"];
     [coder encodeObject:self.labelsAttributesArray forKey:@"labelsAttributesArray"];
     
+    [coder encodeObject:self.lineColorNameString forKey:@"lineColorNameString"];
+    [coder encodeObject:self.lineStyle forKey:@"lineStyle"];
 }
 
 - (id)initWithCoder:(NSCoder *)coder {
@@ -95,6 +98,10 @@
         self.containerReference = [coder decodeObjectForKey:@"containerReference"];
         self.parentsClassArray= [coder decodeObjectForKey:@"parentsClassArray"];
         self.labelsAttributesArray = [coder decodeObjectForKey:@"labelsAttributesArray"];
+        
+        self.lineColorNameString = [coder decodeObjectForKey:@"lineColorNameString"];
+        self.lineStyle = [coder decodeObjectForKey:@"lineStyle"];
+        self.lineColor = [ColorPalette colorForString:self.lineColorNameString];
 
     }
     return self;
@@ -228,10 +235,11 @@
         
     }else if([type isEqualToString:kEdge]){
 
+        [lineColor setStroke];
         path = [[UIBezierPath alloc]init];
 
-        [path moveToPoint:CGPointMake(2*lw, rect.size.height /2)];
-        [path addLineToPoint:CGPointMake(rect.size.width - 2* lw, rect.size.height /2)];
+        [path moveToPoint:CGPointMake(2*lw+5, rect.size.height /2)];
+        [path addLineToPoint:CGPointMake(rect.size.width - 2* lw -5, rect.size.height /2)];
         
 
     }else if([shapeType isEqualToString:kDiamond]){ //Diamond
@@ -312,6 +320,8 @@
     
     
     [fillColor setFill];
+    
+    
     [borderColor setStroke];
     [path setLineWidth:borderWidth.floatValue];
     
@@ -319,7 +329,10 @@
 
     
     if([type isEqualToString:kEdge]){
-        [path setLineWidth:lineWidth.floatValue];
+        if(lineWidth.floatValue <= 0)
+            [path setLineWidth:2.0];
+        else
+            [path setLineWidth:lineWidth.floatValue];
         [lineColor setStroke];
         [lineColor setFill];
         [self updatePath:path forStyle:lineStyle];

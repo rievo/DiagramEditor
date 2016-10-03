@@ -62,6 +62,8 @@
 
 @property NSString * name;
 
+@property float width;
+@property float height;
 
 @property PaletteItem * parentItem;
 

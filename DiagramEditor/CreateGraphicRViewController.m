@@ -8,6 +8,7 @@
 
 #import "CreateGraphicRViewController.h"
 #import "RemovableReference.h"
+#import "PaletteItem.h"
 
 @interface CreateGraphicRViewController ()
 
@@ -21,8 +22,16 @@
     [createButton setEnabled:NO];
     [textview setEditable:NO];
     
+    dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     //[self formGraphicR];
-    
+    UITapGestureRecognizer * recog = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    [recog setNumberOfTapsRequired:1];
+    [self.view addGestureRecognizer:recog];
+}
+
+
+-(void)handleTap:(UITapGestureRecognizer *)recog{
+    [self.view endEditing:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -43,7 +52,7 @@
     
     extension = [_selectedJson.name lowercaseString];
     NSString * fileName =[NSString stringWithFormat:@"%@.ecore", _selectedJson.name];
-
+    
     
     text = [text stringByAppendingString:[NSString stringWithFormat:@"<allGraphicRepresentation extension=\"%@\">",extension]];
     
@@ -107,7 +116,7 @@
             //Now references
             for(RemovableReference * ref in c.references){
                 text = [text stringByAppendingString:
-                        [NSString stringWithFormat:@"<linkPalette palette_name=\"Create link %@\">", ref.name]];
+                        [NSString stringWithFormat:@"<linkPalette palette_name=\"Create link %@\"  decoratorName=\"%@\">", ref.name, ref.sourceDecorator]];
                 
                 text = [text stringByAppendingString:[NSString stringWithFormat:@"<anEReference href=\"%@#//%@/%@\"/>",
                                                       fileName,
@@ -127,7 +136,15 @@
             if(associated.shapeType == nil){
                 text = [text stringByAppendingString:[NSString stringWithFormat:@"<node_shape xsi:type=\"graphicR:%@\">", @"Ellipse"]];
             }else{
-                text = [text stringByAppendingString:[NSString stringWithFormat:@"<node_shape xsi:type=\"graphicR:%@\">", associated.shapeType]];
+                
+                if(associated.isImage == YES){ //Is image
+                    NSString * iconPath = @"";
+                    NSString * imageString = @"";
+                    imageString = [AppDelegate getBase64StringFromImage:associated.image];
+                   text = [text stringByAppendingString:[NSString stringWithFormat:@"<node_shape xsi:type=\"graphicR:IconElement\"  filepath=\"%@\"  embeddedImage=\"%@\">", iconPath, imageString]];
+                }else{
+                     text = [text stringByAppendingString:[NSString stringWithFormat:@"<node_shape xsi:type=\"graphicR:%@\">", associated.shapeType]];
+                }
             }
             
             
@@ -139,7 +156,25 @@
             text = [text stringByAppendingString:@"</node_shape>"];
             
         }else{ //Edge
+            
+            PaletteItem * pi = [dele getPaletteItemForClassName:c.name];
+            
+            
+            text = [text stringByAppendingString:@"<directions>"];
+            
+            text = [text stringByAppendingString:[NSString stringWithFormat:@"<sourceLink anDiagramElement=\"%@\"  decoratorName=\"%@\"  >" ,[self getAnDiagramElement], pi.sourceDecoratorName]];
+            text = [text stringByAppendingString:[NSString stringWithFormat:@"<anEReference href=\"%@\">", pi.containerReference]];
+            text = [text stringByAppendingString:@"</sourceLink>"];
+            
+            text = [text stringByAppendingString:[NSString stringWithFormat:@"<targetLink anDiagramElement=\"%@\"  decoratorName=\"%@\"  >" ,[self getAnDiagramElement], pi.targetDecoratorName]];
+            text = [text stringByAppendingString:[NSString stringWithFormat:@"<anEReference href=\"%@\">", pi.containerReference]];
+            text = [text stringByAppendingString:@"</targetLink>"];
+            
+            text = [text stringByAppendingString:@"</directions>"];
+            
+            
             text = [text stringByAppendingString:@"<edge_style>"];
+            text = [text stringByAppendingString:[NSString stringWithFormat:@"<color xsi:type=\"graphicR:SiriusSystemColors\"  name=\"%@\" />", pi.lineColorNameString]];
             text = [text stringByAppendingString:@"</edge_style>"];
         }
         
@@ -159,6 +194,10 @@
     
 }
 
+
+-(NSString *)getAnDiagramElement{
+    return @"";
+}
 
 -(void)sendPaletteToServer:(NSString * )content{
     
@@ -210,23 +249,23 @@
              
              if([code isEqualToString:@"200"]){ //Good :)
                  goodAlert  = [[UIAlertView alloc] initWithTitle:@"Info"
-                                                                 message:@"Palette saved on server"
-                                                                delegate:self
-                                                       cancelButtonTitle:@"OK"
-                                                       otherButtonTitles:nil];
+                                                         message:@"Palette saved on server"
+                                                        delegate:self
+                                               cancelButtonTitle:@"OK"
+                                               otherButtonTitles:nil];
                  [goodAlert show];
                  
              }else{//Default error
                  badAlert  = [[UIAlertView alloc] initWithTitle:@"Error uploading palette"
-                                                                 message:[NSString stringWithFormat:@"Info: %@", connectionError]
-                                                                delegate:self
-                                                       cancelButtonTitle:@"OK"
-                                                       otherButtonTitles:nil];
+                                                        message:[NSString stringWithFormat:@"Info: %@", connectionError]
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
                  [badAlert show];
                  
              }
-        
-            
+             
+             
              
          }];
     }else{
@@ -255,11 +294,11 @@
 
 - (IBAction)updateName:(id)sender {
     if(nameTextField.text.length == 0){ //Error
-       UIAlertView * alert =  [[UIAlertView alloc] initWithTitle:@"Name cannot be empty"
-                                   message:nil
-                                  delegate:nil
-                         cancelButtonTitle:@"OK"
-                         otherButtonTitles:nil];
+        UIAlertView * alert =  [[UIAlertView alloc] initWithTitle:@"Name cannot be empty"
+                                                          message:nil
+                                                         delegate:nil
+                                                cancelButtonTitle:@"OK"
+                                                otherButtonTitles:nil];
         [alert show];
     }else{
         [self formGraphicRWithName:nameTextField.text];
