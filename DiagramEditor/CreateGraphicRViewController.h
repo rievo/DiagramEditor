@@ -21,6 +21,7 @@
     
     NSString * extension;
     AppDelegate * dele;
+    IBOutlet UISwitch *geopaletteSwitch;
 }
 
 

@@ -21,6 +21,8 @@
 		F10CC8F01CC518D1007F2B11 /* masterBox.png in Resources */ = {isa = PBXBuildFile; fileRef = F10CC8EF1CC518D1007F2B11 /* masterBox.png */; };
 		F10F0FA31C1AF67000165561 /* ColorPalette.m in Sources */ = {isa = PBXBuildFile; fileRef = F10F0FA21C1AF67000165561 /* ColorPalette.m */; };
 		F128C9801D9BD0CD00288623 /* photo.png in Resources */ = {isa = PBXBuildFile; fileRef = F128C97F1D9BD0CD00288623 /* photo.png */; };
+		F128C9861DA3BE3500288623 /* GeoComponentPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = F128C9851DA3BE3500288623 /* GeoComponentPointAnnotation.m */; };
+		F128C9891DA3BE8600288623 /* GeoComponentAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = F128C9881DA3BE8600288623 /* GeoComponentAnnotationView.m */; };
 		F130A47E1D12DBDA00BDD212 /* ExpandableItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = F130A47D1D12DBDA00BDD212 /* ExpandableItemView.m */; };
 		F130A4801D12DBE400BDD212 /* ExpandableItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F130A47F1D12DBE400BDD212 /* ExpandableItemView.xib */; };
 		F13666651D86E52B00B060B5 /* SourceRefTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F13666631D86E52B00B060B5 /* SourceRefTableViewCell.m */; };
@@ -201,6 +203,10 @@
 		F10F0FA11C1AF67000165561 /* ColorPalette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPalette.h; sourceTree = "<group>"; };
 		F10F0FA21C1AF67000165561 /* ColorPalette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorPalette.m; sourceTree = "<group>"; };
 		F128C97F1D9BD0CD00288623 /* photo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = photo.png; sourceTree = "<group>"; };
+		F128C9841DA3BE3500288623 /* GeoComponentPointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeoComponentPointAnnotation.h; sourceTree = "<group>"; };
+		F128C9851DA3BE3500288623 /* GeoComponentPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeoComponentPointAnnotation.m; sourceTree = "<group>"; };
+		F128C9871DA3BE8600288623 /* GeoComponentAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeoComponentAnnotationView.h; sourceTree = "<group>"; };
+		F128C9881DA3BE8600288623 /* GeoComponentAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeoComponentAnnotationView.m; sourceTree = "<group>"; };
 		F130A47C1D12DBDA00BDD212 /* ExpandableItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpandableItemView.h; sourceTree = "<group>"; };
 		F130A47D1D12DBDA00BDD212 /* ExpandableItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpandableItemView.m; sourceTree = "<group>"; };
 		F130A47F1D12DBE400BDD212 /* ExpandableItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExpandableItemView.xib; sourceTree = "<group>"; };
@@ -465,6 +471,10 @@
 				F10F0FA21C1AF67000165561 /* ColorPalette.m */,
 				F1685EA31C18294A0094097E /* Component.h */,
 				F1685EA41C18294A0094097E /* Component.m */,
+				F128C9841DA3BE3500288623 /* GeoComponentPointAnnotation.h */,
+				F128C9851DA3BE3500288623 /* GeoComponentPointAnnotation.m */,
+				F128C9871DA3BE8600288623 /* GeoComponentAnnotationView.h */,
+				F128C9881DA3BE8600288623 /* GeoComponentAnnotationView.m */,
 				F1685EA91C182B7D0094097E /* Connection.h */,
 				F1685EAA1C182B7D0094097E /* Connection.m */,
 				F158651A1C85AA59007D2E75 /* DiagramFile.h */,
@@ -1079,6 +1089,7 @@
 				F1391F1C1CBB9765004BAD71 /* SessionUsersView.m in Sources */,
 				F10AB80F1C50E9FB00DE6DCE /* PasteView.m in Sources */,
 				F17A93E91CF5E419008AE1EE /* DrawingView.m in Sources */,
+				F128C9891DA3BE8600288623 /* GeoComponentAnnotationView.m in Sources */,
 				F1685EA21C18289E0094097E /* EditorViewController.m in Sources */,
 				F1A20A7E1C1981290037C05D /* XMLDictionary.m in Sources */,
 				F1853A031C5253740015A9E0 /* StringAttributeTableViewCell.m in Sources */,
@@ -1092,6 +1103,7 @@
 				F1B77AC81D804A9800753DB0 /* SubsetionTableViewCell.m in Sources */,
 				F16C7DD01C57AD4400CA9B25 /* SureView.m in Sources */,
 				F1FEE7621CEB278A00FD4E9B /* Alert.m in Sources */,
+				F128C9861DA3BE3500288623 /* GeoComponentPointAnnotation.m in Sources */,
 				F1786DF71C5664AB00963663 /* ExploreFilesView.m in Sources */,
 				F1B77AD91D818F4C00753DB0 /* ReferenciVisualInfoTableViewCell.m in Sources */,
 				F18510781C1824C8004EC4C8 /* main.m in Sources */,

@@ -22,4 +22,6 @@
 @property NSString * name;
 @property NSString * extension;
 
+@property BOOL isGeopalette;
+
 @end

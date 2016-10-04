@@ -29,6 +29,8 @@
 #import "PaletteFile.h"
 #import "DrawnAlert.h"
 #import "PathPiece.h"
+#import "GeoComponentAnnotationView.h"
+#import "GeoComponentPointAnnotation.h"
 
 #define fileExtension @"demiso"
 #import <Social/Social.h>
@@ -80,7 +82,7 @@
         [tempNoteView setNeedsDisplay];
     }
     
-   // [self hideAlerts];
+    // [self hideAlerts];
     
 }
 - (void)viewDidLoad {
@@ -88,13 +90,14 @@
     //self.view.translatesAutoresizingMaskIntoConstraints = YES;
     useImageAsIcon = true;
     
+    [map setHidden:YES];
     [askForMasterButton setHidden:YES];
     [chatButton setHidden:YES];
     
     //Make chatButton float
     UIPanGestureRecognizer * chatGR = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleChatButtonPan:)];
     [chatButton addGestureRecognizer:chatGR];
-
+    
     
     [super viewDidLoad];
     
@@ -119,31 +122,77 @@
         dele.drawnsArray = [[NSMutableArray alloc] init];
     
     
-
+    
+    if (dele.isGeoPalette == NO) { //Prepare canvas
+        //Prepare canvas
+        canvas = [[Canvas alloc] initWithFrame:CGRectMake(0, 0, canvasW, canvasW)];
+        
+        [canvas prepareCanvas];
+        dele.can = canvas;
+        dele.originalCanvasRect = canvas.frame;
+        //canvas.backgroundColor = [dele blue0];
+        canvas.backgroundColor = [UIColor colorWithRed:218/255.0 green:224/255.0 blue:235/255.0 alpha:0.6];
+        [canvas setNeedsDisplay];
+        
+        //Add canvas to scrollView contents
+        [scrollView addSubview:canvas];
+        [scrollView setScrollEnabled:YES];
+        [scrollView setContentSize:CGSizeMake(canvas.frame.size.width, canvas.frame.size.height)];
+        [scrollView setBounces:NO];
+        scrollView.contentSize = CGSizeMake(canvas.frame.size.width, canvas.frame.size.height);
+        scrollView.minimumZoomScale = 0.7;
+        scrollView.maximumZoomScale = 4.0;
+        scrollView.delegate = self;
+        
+        //[self setZoomForIntValue:0]; //No zoom
+        float nullZoom = [self getZoomScaleForIntValue:0];
+        [scrollView setZoomScale:nullZoom animated:YES];
+        
+        
+        //Si estoy cargando un fichero
+        if(dele.loadingADiagram){
+            
+            for(Component * comp in dele.components){
+                [canvas addSubview:comp];
+                [comp updateNameLabel];
+            }
+            
+            
+            
+            //Load notes
+            for(Alert * al in dele.notesArray){
+                if(useImageAsIcon == YES){
+                    if(al.attach != nil)
+                        al.image = al.attach;
+                    else{
+                        al.image = noteAlert.image;
+                    }
+                }else{
+                    al.image = noteAlert.image;
+                }
+                [canvas addSubview:al];
+                [al setUserInteractionEnabled:YES];
+                UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showNoteContent:)];
+                [al addGestureRecognizer:tapgr];
+                
+                UIPanGestureRecognizer * pang = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleNotePan:)];
+                [al addGestureRecognizer:pang];
+            }
+            
+            //repaint canvas
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+        }else{
+        }
+        
+    }else{ //Is geoPalette, prepare map
+        [map setHidden:NO];
+        [map setDelegate:self];
+        [map setShowsUserLocation:YES];
+    }
     
     
-    canvas = [[Canvas alloc] initWithFrame:CGRectMake(0, 0, canvasW, canvasW)];
     
-    [canvas prepareCanvas];
-    dele.can = canvas;
-    dele.originalCanvasRect = canvas.frame;
-    //canvas.backgroundColor = [dele blue0];
-    canvas.backgroundColor = [UIColor colorWithRed:218/255.0 green:224/255.0 blue:235/255.0 alpha:0.6];
-    [canvas setNeedsDisplay];
     
-    //Add canvas to scrollView contents
-    [scrollView addSubview:canvas];
-    [scrollView setScrollEnabled:YES];
-    [scrollView setContentSize:CGSizeMake(canvas.frame.size.width, canvas.frame.size.height)];
-    [scrollView setBounces:NO];
-    scrollView.contentSize = CGSizeMake(canvas.frame.size.width, canvas.frame.size.height);
-    scrollView.minimumZoomScale = 0.7;
-    scrollView.maximumZoomScale = 4.0;
-    scrollView.delegate = self;
-    
-    //[self setZoomForIntValue:0]; //No zoom
-    float nullZoom = [self getZoomScaleForIntValue:0];
-    [scrollView setZoomScale:nullZoom animated:YES];
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -172,58 +221,26 @@
     
     
     
-    UITapGestureRecognizer * zoomTapGr = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                 action:@selector(doZoom:)];
-    
-    [zoomTapGr setNumberOfTapsRequired:2];
-    [scrollView setUserInteractionEnabled:YES];
-    [scrollView setCanCancelContentTouches:YES];
-    //[scrollView addGestureRecognizer:zoomTapGr];
-    zoomTapGr.delegate = self;
-    zoomLevel = 0; //No zoom
-    
-    
-    
-    //Si estoy cargando un fichero
-    if(dele.loadingADiagram){
-        
-        for(Component * comp in dele.components){
-            [canvas addSubview:comp];
-            [comp updateNameLabel];
-        }
-        
-        
-
-        //Load notes
-        for(Alert * al in dele.notesArray){
-            if(useImageAsIcon == YES){
-                if(al.attach != nil)
-                    al.image = al.attach;
-                else{
-                    al.image = noteAlert.image;
-                }
-            }else{
-                al.image = noteAlert.image;
-            }
-            [canvas addSubview:al];
-            [al setUserInteractionEnabled:YES];
-            UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showNoteContent:)];
-            [al addGestureRecognizer:tapgr];
-            
-            UIPanGestureRecognizer * pang = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleNotePan:)];
-            [al addGestureRecognizer:pang];
-        }
-        
-        //repaint canvas
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
-    }else{
-    }
+    /*UITapGestureRecognizer * zoomTapGr = [[UITapGestureRecognizer alloc] initWithTarget:self
+     action:@selector(doZoom:)];
+     
+     [zoomTapGr setNumberOfTapsRequired:2];
+     [scrollView setUserInteractionEnabled:YES];
+     [scrollView setCanCancelContentTouches:YES];
+     //[scrollView addGestureRecognizer:zoomTapGr];
+     zoomTapGr.delegate = self;
+     zoomLevel = 0; //No zoom*/
     
     
+    
+    
+    //Prepare bot palette
     palette = [[Palette alloc] initWithFrame:CGRectMake(70,
                                                         self.view.frame.size.height - 80 -30,
                                                         self.view.frame.size.width-70 -20,
                                                         80)];
+    
+    palette.isGeopalette = dele.paletteView.isGeopalette;
     palette.backgroundColor = dele.blue3;
     [self.view addSubview:palette];
     
@@ -231,7 +248,7 @@
     [palette preparePalette];
     
     palette.name = dele.subPalette;
-
+    
     
     //Show-hide palette
     isPaletteCollapsed = YES;
@@ -360,7 +377,7 @@
             xorigin = 0.0;
         }
         
-       
+        
         yorigin = p.y;
         if(yorigin > self.view.frame.size.height - chatButton.frame.size.height)
             yorigin = self.view.frame.size.height - chatButton.frame.size.height;
@@ -381,14 +398,14 @@
                              [chatButton setEnabled:YES];
                          }];
         
-
+        
         
         
     }else if(recog.state == UIGestureRecognizerStateChanged){
         float x;
         float y;
         if(p.x > self.view.frame.size.width / 2){ // Go to right
-           x = self.view.frame.size.width - chatButton.frame.size.width/2;
+            x = self.view.frame.size.width - chatButton.frame.size.width/2;
         }else{ //Go to left
             x = 0.0 + chatButton.frame.size.width/2;
         }
@@ -411,8 +428,8 @@
 
 -(void)handleDrawTouch:(UITapGestureRecognizer *)recog{
     DrawingView * dv = [[[NSBundle mainBundle] loadNibNamed:@"DrawingView"
-                                   owner:self
-                                 options:nil] objectAtIndex:0];
+                                                      owner:self
+                                                    options:nil] objectAtIndex:0];
     
     dv.owner = self;
     [dv setFrame:self.view.frame];
@@ -663,8 +680,8 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     /*palette.paletteItems = [[NSMutableArray alloc] initWithArray:dele.paletteItems];
-    [palette preparePalette];
-    palette.name = dele.subPalette;*/
+     [palette preparePalette];
+     palette.name = dele.subPalette;*/
     
     //Añadimos a los items de la paleta el gestor de gestos para poder arrastrarlos
     for(int i  =0; i< palette.paletteItems.count; i++){
@@ -743,7 +760,7 @@
             
             CGPoint pointInSV = [self.view convertPoint:p toView:canvas];
             
-        
+            
             
             //Is it on the canvas?
             if(CGRectContainsPoint(scrollView.frame, p)){
@@ -769,7 +786,13 @@
                         
                         [dele.components addObject:comp];
                         [comp updateNameLabel];
-                        [canvas addSubview:comp];
+                        
+                        if(dele.isGeoPalette == NO){
+                            [canvas addSubview:comp];
+                        }else{ //Add to canvas
+                            [self addComponentAsAnnotationToMap:comp onPoint:p];
+                        }
+                        
                         
                     }else if([sender.type isEqualToString:@"graphicR:Edge"]){
                         //It is an edge
@@ -818,6 +841,21 @@
         
     }
     
+    
+}
+
+
+-(void)addComponentAsAnnotationToMap:(Component *)comp
+                             onPoint:(CGPoint) p{
+    
+    CLLocationCoordinate2D tapPoint = [map convertPoint:p toCoordinateFromView:self.view];
+    
+    
+    GeoComponentPointAnnotation * point = [[GeoComponentPointAnnotation alloc] init];
+    point.coordinate = tapPoint;
+    point.component = comp;
+    
+    [map addAnnotation:point];
     
 }
 
@@ -1176,7 +1214,7 @@
              }
              
          }];
-
+        
     }else{
         NSLog(@"Error generating diagram json");
     }
@@ -1213,7 +1251,7 @@
                                            
                                            
                                            NSString * newName = [nameTF.text lowercaseString];
-                                    
+                                           
                                            
                                            
                                            BOOL result = [self writeFile:newName];
@@ -1221,7 +1259,7 @@
                                            
                                            
                                            if(result == NO){ //Error
-  
+                                               
                                                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
                                                                                                message:@"A file already exists with that name"
                                                                                               delegate:self
@@ -1238,7 +1276,7 @@
                                                                                      otherButtonTitles:nil];
                                                [alert show];
                                            }
-
+                                           
                                            //---------
                                        }else{
                                            
@@ -1257,28 +1295,28 @@
     [self presentViewController:alertController animated:YES completion:^{
         
     }];
-
+    
     
     /*
-    
-    [snv removeFromSuperview];
-    
-    [saveBackgroundBlackView removeFromSuperview];
-    saveBackgroundBlackView = [[UIView alloc] initWithFrame:self.view.frame];
-    [saveBackgroundBlackView setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5]];
-    
-    snv = [[[NSBundle mainBundle] loadNibNamed:@"SaveNameView"
-                                         owner:self
-                                       options:nil] objectAtIndex:0];
-    
-    if(oldFileName.length  > 0)
-        snv.textField.text = oldFileName;
-    //snv.center = saveBackgroundBlackView.center;
-    //[saveBackgroundBlackView addSubview:snv];
-    [snv setFrame:self.view.frame];
-    snv.delegate = self;
-    
-    [self.view addSubview:snv];*/
+     
+     [snv removeFromSuperview];
+     
+     [saveBackgroundBlackView removeFromSuperview];
+     saveBackgroundBlackView = [[UIView alloc] initWithFrame:self.view.frame];
+     [saveBackgroundBlackView setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5]];
+     
+     snv = [[[NSBundle mainBundle] loadNibNamed:@"SaveNameView"
+     owner:self
+     options:nil] objectAtIndex:0];
+     
+     if(oldFileName.length  > 0)
+     snv.textField.text = oldFileName;
+     //snv.center = saveBackgroundBlackView.center;
+     //[saveBackgroundBlackView addSubview:snv];
+     [snv setFrame:self.view.frame];
+     snv.delegate = self;
+     
+     [self.view addSubview:snv];*/
 }
 
 -(BOOL)writeFile: (NSString *)name{
@@ -1286,7 +1324,7 @@
     NSString *documentsDirectory = [paths objectAtIndex:0]; // Get documents folder
     NSString *folderPath = [documentsDirectory stringByAppendingPathComponent:@"/diagrams"];
     NSFileManager *fileManager  = [NSFileManager defaultManager];
-
+    
     
     NSError *error = nil;
     if (![fileManager fileExistsAtPath:folderPath])
@@ -1467,7 +1505,7 @@
             }
             [writer writeEndElement];
         }
-       
+        
         
         [writer writeEndElement];
         
@@ -1481,11 +1519,11 @@
         for(Component * temp in instancesForThisKey){
             [writer writeStartElement:@"node"];
             
-
+            
             [writer writeAttribute:@"id" value: [[NSNumber numberWithInt:(int)temp ]description]];
-           
+            
             [writer writeAttribute:@"type" value:temp.type];
-
+            
             [writer writeAttribute:@"className" value:temp.className];
             [writer writeAttribute:@"isDraggable" value:@"false"];
             //For each component, fill his attributes
@@ -1506,7 +1544,7 @@
     [writer writeEndElement];//Close nodes
     
     
-
+    
     
     [writer writeStartElement:@"edges"];
     Connection * c = nil;
@@ -1546,7 +1584,7 @@
         [writer writeStartElement:@"notes"];
         
         for(Alert * al in dele.notesArray){
-
+            
             [writer writeStartElement:@"note"];
             [writer writeAttribute:@"who" value:al.who.displayName];
             [writer writeAttribute:@"date" value:[al.date description]];
@@ -1575,7 +1613,7 @@
             [writer writeAttribute:@"date" value:[da.date description]];
             [writer writeAttribute:@"color" value:[ColorPalette hexStringForColor:da.color]];
             [writer writeAttribute:@"id" value:[NSString stringWithFormat:@"%d", da.identifier]];
-        
+            
             
             [writer writeStartElement:@"path"];
             NSArray * parts = [self getPointsArrayFromUIBezierPath:da.path];
@@ -1588,7 +1626,7 @@
                 
                 [writer writeStartElement:@"p"];
                 [writer writeAttribute:@"x" value:[NSString stringWithFormat:@"%.3f", p.x]];
-                 [writer writeAttribute:@"y" value:[NSString stringWithFormat:@"%.4f", p.y]];
+                [writer writeAttribute:@"y" value:[NSString stringWithFormat:@"%.4f", p.y]];
                 [writer writeAttribute:@"type" value:type];
                 [writer writeEndElement];
             }
@@ -1598,15 +1636,15 @@
         }
         [writer writeEndElement];
     }
-
+    
     
     [writer writeEndElement];//Close diagram
     
-
-
+    
+    
     
     NSString * diagramString = [writer toString];
-
+    
     
     NSString * result = @""; //result = [result stringByAppendingString:@""];
     result = [result stringByAppendingString:@"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"];
@@ -1681,7 +1719,7 @@
     
     
     [self presentViewController:alert animated:YES completion:nil];
-
+    
 }
 
 
@@ -1816,10 +1854,10 @@
                                                               [self saveImageOnCameraRoll:finalImage];
                                                           }];
     UIAlertAction * postTwitter = [UIAlertAction actionWithTitle:@"Post on Twitter"
-                                                            style:UIAlertActionStyleDefault
-                                                          handler:^(UIAlertAction * _Nonnull action) {
-                                                              [self postTweet:finalImage];
-                                                          }];
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             [self postTweet:finalImage];
+                                                         }];
     
     UIAlertAction * cancel = [UIAlertAction actionWithTitle:@"Cancel"
                                                       style:UIAlertActionStyleCancel
@@ -2001,41 +2039,41 @@
 
 
 /*
-#pragma mark SaveNameDelegate
--(void)saveName: (NSString *)name{
-    BOOL result = [self writeFile:name];
-    [self.view endEditing:YES];
-    
-    
-    
-    [snv setHidden:YES];
-    
-    if(result == NO){ //Error
-        oldFileName = nil;
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                        message:@"Error saving diagram"
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-    }else{
-        oldFileName = name;
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
-                                                        message:@"Diagram was saved properly"
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-    }
-    
-    
-    
-}
--(void)cancelSaving{
-    [saveBackgroundBlackView setHidden:YES];
-}
-*/
+ #pragma mark SaveNameDelegate
+ -(void)saveName: (NSString *)name{
+ BOOL result = [self writeFile:name];
+ [self.view endEditing:YES];
+ 
+ 
+ 
+ [snv setHidden:YES];
+ 
+ if(result == NO){ //Error
+ oldFileName = nil;
+ UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+ message:@"Error saving diagram"
+ delegate:self
+ cancelButtonTitle:@"OK"
+ otherButtonTitles:nil];
+ [alert show];
+ }else{
+ oldFileName = name;
+ 
+ UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
+ message:@"Diagram was saved properly"
+ delegate:self
+ cancelButtonTitle:@"OK"
+ otherButtonTitles:nil];
+ [alert show];
+ }
+ 
+ 
+ 
+ }
+ -(void)cancelSaving{
+ [saveBackgroundBlackView setHidden:YES];
+ }
+ */
 
 
 #pragma mark SureViewDelegate methods
@@ -2506,8 +2544,8 @@
         
         if(recog.view == noteAlert){
             CreateNoteView * cnv =  [[[NSBundle mainBundle] loadNibNamed:@"CreateNoteView"
-                                                                                      owner:self
-                                                                                    options:nil] objectAtIndex:0];
+                                                                   owner:self
+                                                                 options:nil] objectAtIndex:0];
             //[cnv setCenter:self.view.center];
             [cnv setFrame: self.view.frame];
             cnv.parentVC = self;
@@ -2626,7 +2664,7 @@
     NSValue * val = [NSValue valueWithCGPoint:point];
     [dic setObject:val forKey:@"where"];
     
-
+    
     
     Alert * alert = [[Alert alloc] init];
     alert.frame = alerts.frame;
@@ -2704,7 +2742,7 @@
     CGRect  new = alerts.frame;
     new.size.width = new.size.width * 1.5;
     new.size.height = new.size.height * 1.5;
-
+    
     
     if(alert == nil){
         alert = [[Alert alloc] init];
@@ -2712,7 +2750,7 @@
     }
     [alert setFrame:new];
     [alert setCenter:where];
-
+    
     
     if([type isEqualToString:kNoteType]){
         
@@ -2789,11 +2827,11 @@
     tempNoteView = nv;
     
     NSDate * dateToParse = sender.date;
-
+    
     nv.dateLabel.text = [dateFormat stringFromDate:dateToParse];
     
     [nv prepare];
-
+    
     [self.view addSubview:nv];
     [dele.notesArray addObject:sender];
 }
@@ -2900,7 +2938,7 @@
     
 }
 -(void)drawingViewDidCloseWithPath:(UIBezierPath *)path{
-
+    
     DrawnAlert * da = [[DrawnAlert alloc] init];
     da.who = dele.myPeerInfo.peerID;
     da.date = [NSDate date];
@@ -2915,7 +2953,7 @@
     
     //Send drawn to users
     
-   
+    
     
     NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
     
@@ -2954,7 +2992,7 @@
 #pragma mark Get point array from UIBezierPath
 -(NSMutableArray *)getPointsArrayFromUIBezierPath:(UIBezierPath *)path{
     NSMutableArray * pieces = [[NSMutableArray alloc] init];
-
+    
     CGPathRef thecg = path.CGPath;
     CGPathApply(thecg, (__bridge void * _Nullable)(pieces), MyCGPathApplierFunc);
     
@@ -3065,7 +3103,7 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
     
     
     UITapGestureRecognizer * focusCollapseButton = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                    action:@selector(bringCollapseButtonToFront:)];
+                                                                                           action:@selector(bringCollapseButtonToFront:)];
     [dele.tutSheet addGestureRecognizer:focusCollapseButton];
 }
 
@@ -3088,7 +3126,7 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
                                        newSize.height +10)];
     
     UITapGestureRecognizer * showItemsInfoGR = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                           action:@selector(showPaletteItemsInfo:)];
+                                                                                       action:@selector(showPaletteItemsInfo:)];
     [dele.tutSheet addGestureRecognizer:showItemsInfoGR];
 }
 
@@ -3111,7 +3149,7 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
                                        newSize.height +10)];
     
     UITapGestureRecognizer * showAlertsGR = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                       action:@selector(focusAlerts:)];
+                                                                                    action:@selector(focusAlerts:)];
     [dele.tutSheet addGestureRecognizer:showAlertsGR];
 }
 
@@ -3147,7 +3185,7 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
                                        newSize.height +80)];
     
     UITapGestureRecognizer * showMakeConnectionGR = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                    action:@selector(showHowToMakeConnectionsBetweenNodes:)];
+                                                                                            action:@selector(showHowToMakeConnectionsBetweenNodes:)];
     [dele.tutSheet addGestureRecognizer:showMakeConnectionGR];
 }
 
@@ -3209,7 +3247,7 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
     
     
     UITapGestureRecognizer * startToolbarGR = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                     action:@selector(showResetCanvasInfo:)];
+                                                                                      action:@selector(showResetCanvasInfo:)];
     [dele.tutSheet addGestureRecognizer:startToolbarGR];
 }
 
@@ -3272,9 +3310,9 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
                                        saveDiagram.frame.size.height + saveDiagram.frame.origin.y + 5,
                                        dele.tutSheet.frame.size.width ,
                                        newSize.height )];
-
+    
     UITapGestureRecognizer * showfindtutGr = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                      action:@selector(showFindTutorial:)];
+                                                                                     action:@selector(showFindTutorial:)];
     [dele.tutSheet addGestureRecognizer:showfindtutGr];
 }
 
@@ -3335,7 +3373,7 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
                                        newSize.height )];
     
     UITapGestureRecognizer * showChangePalGR = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                     action:@selector(showChangePaletteInfo:)];
+                                                                                       action:@selector(showChangePaletteInfo:)];
     [dele.tutSheet addGestureRecognizer:showChangePalGR];
 }
 
@@ -3368,7 +3406,7 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
                                        newSize.height )];
     
     UITapGestureRecognizer * showShDiaGR = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                       action:@selector(shareDiagramTuto:)];
+                                                                                   action:@selector(shareDiagramTuto:)];
     [dele.tutSheet addGestureRecognizer:showShDiaGR];
     
     
@@ -3399,9 +3437,9 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
                                        newSize.height )];
     
     UITapGestureRecognizer * showCameraGR = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                   action:@selector(showCameraTuto:)];
+                                                                                    action:@selector(showCameraTuto:)];
     [dele.tutSheet addGestureRecognizer:showCameraGR];
-
+    
 }
 
 -(void)showCameraTuto:(UITapGestureRecognizer *)recog{
@@ -3429,9 +3467,9 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
                                        newSize.height )];
     
     UITapGestureRecognizer * endTutoGR = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                    action:@selector(endEditorTutorial:)];
+                                                                                 action:@selector(endEditorTutorial:)];
     [dele.tutSheet addGestureRecognizer:endTutoGR];
-
+    
 }
 
 -(void)endEditorTutorial:(UITapGestureRecognizer *)recog{
@@ -3489,6 +3527,23 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
     [alert addAction:ok];
     
     [self presentViewController:alert animated:YES completion:nil];
+}
+
+
+
+#pragma mark MKMapView delegate methods
+
+-(MKAnnotationView *)mapView:(MKMapView *)mv viewForAnnotation:(id <MKAnnotation>)annotation
+{
+    
+    if([annotation isKindOfClass:[MKUserLocation class]]){
+        return nil;
+    }
+    
+    Component * associated = ((GeoComponentPointAnnotation *)annotation).component;
+    
+    GeoComponentAnnotationView * pin = [[GeoComponentAnnotationView alloc] initWithAnnotation:annotation component:associated];
+    return pin;
 }
 
 

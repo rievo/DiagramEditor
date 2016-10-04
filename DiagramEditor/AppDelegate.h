@@ -34,7 +34,7 @@
 @property NSMutableDictionary * elementsDictionary;
 
 @property NSMutableArray * paletteItems;
-
+@property BOOL isGeoPalette;
 
 @property UIColor * blue0;
 @property UIColor * blue1;

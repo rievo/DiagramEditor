@@ -54,7 +54,7 @@
     NSString * fileName =[NSString stringWithFormat:@"%@.ecore", _selectedJson.name];
     
     
-    text = [text stringByAppendingString:[NSString stringWithFormat:@"<allGraphicRepresentation extension=\"%@\">",extension]];
+    text = [text stringByAppendingString:[NSString stringWithFormat:@"<allGraphicRepresentation extension=\"%@\"  isGeopalette=\"%@\">",extension, [self isGeoPalette]]];
     
     text = [text stringByAppendingString:@"<listRepresentations xsi:type=\"graphicR:RepresentationDD\">"];
     
@@ -199,6 +199,13 @@
     return @"";
 }
 
+-(NSString *) isGeoPalette{
+    if(geopaletteSwitch.isOn == TRUE){
+        return @"true";
+    }else{
+        return @"false";
+    }
+}
 -(void)sendPaletteToServer:(NSString * )content{
     
     

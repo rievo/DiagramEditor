@@ -37,7 +37,8 @@ SureViewDelegate,
 EdgeListDelegate,
 MCBrowserViewControllerDelegate,
 CreateNoteViewDelegate,
-DrawingViewDelegate
+DrawingViewDelegate,
+MKMapViewDelegate
 >{
     AppDelegate * dele;
 
@@ -148,6 +149,7 @@ DrawingViewDelegate
     NoteView * tempNoteView;
     
     UIView * grayView;
+    IBOutlet MKMapView *map;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 

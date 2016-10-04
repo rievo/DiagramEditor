@@ -407,37 +407,43 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     
     if([dele amITheMaster] || dele.manager.session.connectedPeers.count == 0){
         
-        CGPoint translatedPoint =  [sender locationInView: dele.can];
         
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
-        
-        if(sender.state == UIGestureRecognizerStateBegan){
+        if(dele.isGeoPalette == NO){
+            CGPoint translatedPoint =  [sender locationInView: dele.can];
             
-        }else if(sender.state == UIGestureRecognizerStateChanged){
-            //NSLog(@"moooved");
-            [dele.can setNeedsDisplay];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
             
-            float halfW;
-            float halfh;
+            if(sender.state == UIGestureRecognizerStateBegan){
+                
+            }else if(sender.state == UIGestureRecognizerStateChanged){
+                //NSLog(@"moooved");
+                [dele.can setNeedsDisplay];
+                
+                float halfW;
+                float halfh;
+                
+                halfW = self.frame.size.width / 2;
+                halfh = self.frame.size.height / 2;
+                
+                
+                if(translatedPoint.x <  halfW)
+                    translatedPoint.x = halfW;
+                if(translatedPoint.x > dele.originalCanvasRect.size.width - halfW)
+                    translatedPoint.x = dele.originalCanvasRect.size.width - halfW;
+                
+                if(translatedPoint.y < halfh)
+                    translatedPoint.y = halfh;
+                if(translatedPoint.y > dele.originalCanvasRect.size.height - halfh)
+                    translatedPoint.y = dele.originalCanvasRect.size.height - halfh;
+                
+                self.center = translatedPoint;
+                
+            }else if(sender.state == UIGestureRecognizerStateEnded){
+                [dele.can setNeedsDisplay];
+            }
+
+        }else{
             
-            halfW = self.frame.size.width / 2;
-            halfh = self.frame.size.height / 2;
-            
-            
-            if(translatedPoint.x <  halfW)
-                translatedPoint.x = halfW;
-            if(translatedPoint.x > dele.originalCanvasRect.size.width - halfW)
-                translatedPoint.x = dele.originalCanvasRect.size.width - halfW;
-            
-            if(translatedPoint.y < halfh)
-                translatedPoint.y = halfh;
-            if(translatedPoint.y > dele.originalCanvasRect.size.height - halfh)
-                translatedPoint.y = dele.originalCanvasRect.size.height - halfh;
-            
-            self.center = translatedPoint;
-            
-        }else if(sender.state == UIGestureRecognizerStateEnded){
-            [dele.can setNeedsDisplay];
         }
         
     }else{

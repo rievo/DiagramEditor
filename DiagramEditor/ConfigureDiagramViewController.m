@@ -442,6 +442,17 @@
         
         NSDictionary * listRepresentations =[[allGraphicRepresentations objectAtIndex:gr]objectForKey:@"listRepresentations"];
         
+        NSString * isgeopaletteStr = [[allGraphicRepresentations objectAtIndex:gr]objectForKey:@"_isGeopalette"];
+        BOOL isGeopalette = false;
+        
+        if([isgeopaletteStr isEqualToString:@"true"]){
+            isGeopalette = YES;
+        }else if([isgeopaletteStr isEqualToString:@"false"]){
+            isGeopalette = NO;
+        }else{
+            isGeopalette = NO;
+        }
+        
         NSArray * lRArray;
         
         if([listRepresentations isKindOfClass:[NSDictionary class]]){
@@ -456,6 +467,9 @@
             [tempPalete preparePalette];
             
             NSDictionary * allGraphicRepresentation = [lRArray objectAtIndex:i];
+            tempPalete.isGeopalette = isGeopalette;
+            
+            dele.isGeoPalette = isGeopalette;
             
             //NSString * paletteName = [allGraphicRepresentation objectForKey:@"_extension"];
             //tempPalete.name = paletteName;
