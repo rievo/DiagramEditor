@@ -33,6 +33,10 @@
 #import "GeoComponentPointAnnotation.h"
 
 #define fileExtension @"demiso"
+
+#import "AlertAnnotationView.h"
+#import "AlertAnnotation.h"
+
 #import <Social/Social.h>
 
 @import Foundation;
@@ -188,6 +192,7 @@
         [map setHidden:NO];
         [map setDelegate:self];
         [map setShowsUserLocation:YES];
+        dele.map = map;
     }
     
     
@@ -204,6 +209,17 @@
                                              selector:@selector(showConnectionDetails:)
                                                  name:@"showConnNot"
                                                object:nil];
+    
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self
+                                            selector:@selector(updateMap:)
+                                                name:@"repaintMap"
+                                              object:nil];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self
+                                            selector:@selector(startFlyover:)
+                                                name:@"startFlyover"
+                                              object:nil];
     
     
     compDetView = [[[NSBundle mainBundle] loadNibNamed:@"ComponentDetailsView"
@@ -317,10 +333,25 @@
     [showUsersPeersViewButton setHidden:YES];
     
     //arrowFrame = arrowAlert.frame;
-    interrogationFrame = interrogationAlert.frame;
-    exclamationFrame = exclamationAlert.frame;
-    noteFrame = noteAlert.frame;
-    drawFrame = drawAlert.frame;
+    interrogationFrame = alerts.frame;
+    exclamationFrame = alerts.frame;
+    noteFrame = alerts.frame;
+    drawFrame = alerts.frame;
+    
+    float h = 40;
+    float hmargin = 3;
+    
+    interrogationFrame.origin.y = interrogationFrame.origin.y + h +hmargin;
+    [interrogationAlert setFrame:interrogationFrame];
+    
+    exclamationFrame.origin.y = exclamationFrame.origin.y + 2*(h +hmargin);
+    [exclamationAlert setFrame:exclamationFrame];
+    
+    noteFrame.origin.y = noteFrame.origin.y + 3*(h +hmargin);
+    [noteAlert setFrame:noteFrame];
+    
+    drawFrame.origin.y = drawFrame.origin.y + 4*(h +hmargin);
+    [drawAlert setFrame:drawFrame];
     
     //arrowCenter = arrowAlert.center;
     interrogationCenter = interrogationAlert.center;
@@ -854,10 +885,14 @@
     GeoComponentPointAnnotation * point = [[GeoComponentPointAnnotation alloc] init];
     point.coordinate = tapPoint;
     point.component = comp;
+
     
     [map addAnnotation:point];
     
 }
+
+
+
 
 
 -(void)handleTap:(UITapGestureRecognizer *)recog{
@@ -2038,6 +2073,7 @@
 }
 
 
+
 /*
  #pragma mark SaveNameDelegate
  -(void)saveName: (NSString *)name{
@@ -2528,6 +2564,8 @@
     CGPoint point = [recog locationInView:self.view];
     
     
+    
+    
     if(recog.state == UIGestureRecognizerStateBegan){
         UIImage * image = [view.image copy];
         temporalAlertIcon = [[UIImageView alloc] initWithFrame:view.frame ];
@@ -2550,7 +2588,19 @@
             [cnv setFrame: self.view.frame];
             cnv.parentVC = self;
             cnv.delegate = self;
-            cnv.noteCenter = pointInSV;
+            
+            
+            if(dele.isGeoPalette == YES){
+                //point =
+                //(cnv.noteCenter = [map convertPoint:point fromView:self.view];
+                //point = [recog locationInView:self.view];
+                point = [recog locationInView:self.view];
+                //cnv.noteCenter = [map convertPoint:point toView:map];
+                cnv.noteCenter = point;
+            }else{
+                cnv.noteCenter = pointInSV;
+            }
+            
             [self.view addSubview:cnv];
             
             tempCreateNote = cnv;
@@ -2598,14 +2648,21 @@
         alert.image = noteAlert.image;
     }
     
-    CGRect  new = alerts.frame;
+    CGRect  new = alerts.bounds;
     new.size.width = new.size.width * 1.5;
     new.size.height = new.size.height * 1.5;
     [alert setBounds:new];
     
     //Add note to myself
-    [canvas addSubview:alert];
+   
     [dele.notesArray addObject:alert];
+    
+    
+    if(dele.isGeoPalette == YES){
+        [self addAlertToMap:alert onPoint:point];
+    }else{ //Use canvas
+         [canvas addSubview:alert];
+    }
     
     
     NSError * error = nil;
@@ -2688,7 +2745,13 @@
     [alert addGestureRecognizer:showNotecontent];
     [alert setUserInteractionEnabled:YES];
     
-    [canvas addSubview:alert];
+    
+    if(dele.isGeoPalette == YES){
+        [self addAlertToMap:alert onPoint:point];
+    }else{
+        [canvas addSubview:alert];
+    }
+    
     [dele.notesArray addObject:alert];
     
     //Add self destruct
@@ -2839,9 +2902,15 @@
 -(void)removeAlert: (NSTimer * )sender{
     NSDictionary * dic = sender.userInfo;
     
-    UIImageView * view = [dic objectForKey:@"view"];
+    Alert * view = [dic objectForKey:@"view"];
     
     [view removeFromSuperview];
+    
+    if(view.associatedAnnotationView != nil){
+        AlertAnnotationView * alertview = view.associatedAnnotationView;
+        [map removeAnnotation: alertview.point];
+    }
+    
     
     [sender invalidate];
     sender = nil;
@@ -3537,14 +3606,261 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
 {
     
     if([annotation isKindOfClass:[MKUserLocation class]]){
-        return nil;
+       
+    }else if([annotation isKindOfClass:[AlertAnnotation class]]){
+        //It is an alert annotation
+        Alert * associated = ((AlertAnnotation *)annotation).alert;
+        AlertAnnotationView * pin = [[AlertAnnotationView alloc] initWithAnnotation:annotation alert:associated];
+        
+        
+        NSArray * gestureRecog = pin.gestureRecognizers;
+        
+        for(UIGestureRecognizer * r in gestureRecog){
+            [pin removeGestureRecognizer:r];
+        }
+        
+        associated.associatedAnnotationView = pin;
+        
+        [pin setEnabled:NO];
+        
+        pin.point = annotation;
+        
+        return pin;
+        
+        
+    }else{
+        Component * associated = ((GeoComponentPointAnnotation *)annotation).component;
+        
+        GeoComponentAnnotationView * pin = [[GeoComponentAnnotationView alloc] initWithAnnotation:annotation component:associated];
+        
+        
+        associated.annotationView = pin;
+        
+        pin.point = annotation;
+        
+        NSArray * gestureRecog = pin.gestureRecognizers;
+        
+        for(UIGestureRecognizer * r in gestureRecog){
+            [pin removeGestureRecognizer:r];
+        }
+        
+        [pin setEnabled:NO];
+        UIPanGestureRecognizer * pangr = [[UIPanGestureRecognizer alloc] initWithTarget:self
+                                                                                 action:@selector(handleAnnotationPoint:)];
+        pangr.cancelsTouchesInView = NO;
+        [pin addGestureRecognizer:pangr];
+        return pin;
     }
-    
-    Component * associated = ((GeoComponentPointAnnotation *)annotation).component;
-    
-    GeoComponentAnnotationView * pin = [[GeoComponentAnnotationView alloc] initWithAnnotation:annotation component:associated];
-    return pin;
+
+    return nil;
 }
 
 
+
+-(void)handleAnnotationPoint:(UIPanGestureRecognizer *)recog{
+   
+    GeoComponentAnnotationView * view = (GeoComponentAnnotationView *)recog.view;
+    
+    CGPoint p = [recog locationInView:map];
+    
+    p.x = p.x + view.frame.size.width/4;
+    p.y = p.y + view.frame.size.height;
+    
+    CLLocationCoordinate2D coor = [map convertPoint:p toCoordinateFromView:self.view];
+    //NSLog(@"%.3f,%.3f", coor.latitude, coor.longitude);
+    if(recog.state == UIGestureRecognizerStateBegan){
+        
+    }else if(recog.state == UIGestureRecognizerStateChanged){
+        [view.point setCoordinate:coor];
+        view.coordinate = coor;
+    }else if(recog.state == UIGestureRecognizerStateEnded){
+        view.coordinate = coor;
+    }
+      [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:nil];
+    
+}
+
+
+/*
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)annotationView didChangeDragState:(MKAnnotationViewDragState)newState
+   fromOldState:(MKAnnotationViewDragState)oldState
+{
+    
+    GeoComponentAnnotationView * annoview = (GeoComponentAnnotationView *)annotationView;
+    if (newState == MKAnnotationViewDragStateStarting)
+    {
+        annotationView.dragState = MKAnnotationViewDragStateDragging;
+    }
+    else if (newState == MKAnnotationViewDragStateEnding || newState == MKAnnotationViewDragStateCanceling)
+    {
+        annotationView.dragState = MKAnnotationViewDragStateNone;
+        
+        CLLocationCoordinate2D droppedAt = annotationView.annotation.coordinate;
+        annoview.coordinate = droppedAt;
+        
+    }
+}*/
+
+
+-(void)updateMap:(NSNotification *)not{
+    //Repaint polylines
+    
+    [map removeOverlays:map.overlays];
+    
+    connOverlayDic = [[NSMutableDictionary alloc] init];
+    
+    
+    for(Connection * conn in dele.connections){
+        Component * source = conn.source;
+        Component * target = conn.target;
+        
+        GeoComponentAnnotationView * sView = source.annotationView;
+        GeoComponentAnnotationView * tView = target.annotationView;
+        
+        
+        int numPoints = 2;
+        CLLocationCoordinate2D* coords = malloc(numPoints * sizeof(CLLocationCoordinate2D));
+        coords[0] = sView.point.coordinate;
+        coords[1] = tView.point.coordinate;
+        
+        MKPolyline * line = [MKPolyline polylineWithCoordinates:coords count:numPoints];
+
+        
+        NSString * key = [NSString stringWithFormat:@"%d",(int)line];
+        [connOverlayDic setObject:conn forKey:key];
+        
+        
+        [map addOverlay:line];
+        [map setNeedsDisplay];
+        
+       
+    }
+    
+   
+}
+
+-(MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay
+{
+    if ([overlay isKindOfClass:[MKPolyline class]]) {
+        //Get associated connection
+        NSString * key = [NSString stringWithFormat:@"%d", (int)overlay];
+        Connection * associatedConnection = [connOverlayDic objectForKey:key];
+        
+        
+        MKPolylineRenderer *pr = [[MKPolylineRenderer alloc] initWithPolyline:overlay];
+        
+        pr.lineWidth = 5;
+        if(associatedConnection == nil){
+            pr.strokeColor = [UIColor blackColor];
+        }else{
+            if(associatedConnection.lineColor == nil){
+                pr.strokeColor = [UIColor blackColor];
+            }else{
+                pr.strokeColor = associatedConnection.lineColor;
+            }
+           
+        }
+        
+        
+        return pr;
+    }
+    
+    return nil;
+}
+
+
+-(void)startFlyover:(NSNotification *)notification{
+
+    
+    componentIndexFlyover = 0;
+    /*
+   flyoverTimer =  [NSTimer scheduledTimerWithTimeInterval:5.2
+                                     target:self
+                                   selector:@selector(moveToNextComponent)
+                                   userInfo:nil
+                                    repeats:YES];*/
+    
+    [self moveToNextComponent];
+}
+
+-(void)moveToNextComponent{
+    
+    NSLog(@"Move to next component");
+    
+    if(componentIndexFlyover >= dele.components.count){
+        [flyoverTimer invalidate];
+        flyoverTimer = nil;
+    }else{
+        Component * comp = [dele.components objectAtIndex:componentIndexFlyover];
+         componentIndexFlyover ++;
+        CLLocationCoordinate2D coor = comp.annotationView.point.coordinate;
+        
+        
+         NSLog(@"Fly to component %d", componentIndexFlyover);
+        [self flyToLocation:coor];
+    }
+    
+}
+
+-(void)flyToLocation:(CLLocationCoordinate2D)toLocation {
+    
+    
+    CLLocationCoordinate2D startCoord = map.camera.centerCoordinate;
+    
+    CLLocationCoordinate2D eye = CLLocationCoordinate2DMake(toLocation.latitude, toLocation.longitude);
+    
+    
+    MKMapCamera *inCam = [MKMapCamera cameraLookingAtCenterCoordinate:toLocation
+                                                    fromEyeCoordinate:eye
+                                                          eyeAltitude:500];
+    
+    MKMapCamera *turnCam = [MKMapCamera cameraLookingAtCenterCoordinate:toLocation
+                                                      fromEyeCoordinate:startCoord
+                                                            eyeAltitude:500];
+    
+
+    
+    camerasArray = [NSMutableArray arrayWithObjects: inCam,turnCam, nil];
+    
+    [self gotoNextCamera];
+    
+}
+
+
+
+-(void)addAlertToMap:(Alert *)alert onPoint:(CGPoint)point{
+    AlertAnnotation * annotation = [[AlertAnnotation alloc] init];
+   
+    CLLocationCoordinate2D coordinate =[map convertPoint:point toCoordinateFromView:self.view];
+    annotation.coordinate = coordinate;
+    
+    alert.location = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
+    
+    
+    annotation.alert = alert;
+    
+    [map addAnnotation:annotation];
+}
+
+
+-(void)gotoNextCamera {
+    
+    if (camerasArray.count == 0) {
+         NSLog(@"Move to next component");
+        [self moveToNextComponent];
+        return;
+    }else{
+        MKMapCamera *nextCam = [camerasArray firstObject];
+        [camerasArray removeObjectAtIndex:0];
+        
+        [UIView animateWithDuration:5.0 animations:^{
+            map.camera = nextCam;
+        } completion:^(BOOL finished) {
+            [self gotoNextCamera];
+        }];
+    }
+    
+    
+    
+}
 @end

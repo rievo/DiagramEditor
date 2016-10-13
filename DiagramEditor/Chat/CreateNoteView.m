@@ -25,6 +25,8 @@
     viewToIncrust = [[UIView alloc] initWithFrame:fr];
     
     
+    scrollView.backgroundColor = dele.blue2;
+    
     
     float start = 0;
     
@@ -47,7 +49,7 @@
                             scrollView.bounds.size.width- 2*margin,
                             scrollView.bounds.size.height- 2*margin)];
     [viewToIncrust addSubview:preview];
-    [preview setBackgroundColor:[UIColor greenColor]];
+    
     
     
    

@@ -21,6 +21,7 @@
 #import "HiddenInstancesListView.h"
 
 #import "ClassAttribute.h"
+#import "GeoComponentAnnotationView.h"
 
 #define resizeW 40
 
@@ -58,16 +59,19 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
 
 -(void)prepare{
     
+    dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
     
     font = [UIFont fontWithName:@"Helvetica" size:fontSize];
     
     [self addTapGestureRecognizer];
     [self addLongPressGestureRecognizer];
-    [self addPanGestureRecognizer];
+    
+    if(dele.isGeoPalette == NO)
+        [self addPanGestureRecognizer];
     
     
-    dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+    
     
     
     self.backgroundColor = [UIColor clearColor];
@@ -111,13 +115,16 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     if (self) {
         
         font = [UIFont fontWithName:@"Helvetica" size:fontSize];
+        dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+        
         
         [self addTapGestureRecognizer];
         [self addLongPressGestureRecognizer];
-        [self addPanGestureRecognizer];
+        
+        if(dele.isGeoPalette == NO)
+            [self addPanGestureRecognizer];
         
         
-        dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
         
         
         self.backgroundColor = [UIColor clearColor];
@@ -249,7 +256,12 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
 
 -  (void)handleLongPress:(UILongPressGestureRecognizer*)sender {
     
-    CGPoint translatedPoint =  [sender locationInView: dele.can];
+    CGPoint translatedPoint;
+    
+    if(dele.isGeoPalette == NO)
+        translatedPoint =  [sender locationInView: dele.can];
+    else
+        translatedPoint = [sender locationInView:dele.map];
     
     
     if (sender.state == UIGestureRecognizerStateEnded) {
@@ -270,20 +282,29 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
             temp = [dele.components objectAtIndex:i];
             //if(temp != self){
             
-            if(CGRectContainsPoint(temp.frame, translatedPoint)){
-                selected = temp;
+            if(dele.isGeoPalette == NO){
+                if(CGRectContainsPoint(temp.frame, translatedPoint)){
+                    selected = temp;
+                }
+            }else{
+                CGPoint pOnMap = [dele.map convertPoint:translatedPoint toView:dele.map];
+                if(CGRectContainsPoint(temp.annotationView.frame, pOnMap)){
+                    selected = temp;
+                }
             }
             //}
         }
         
         if(selected == nil){
             //No hay ningún componente en ese punto, no hacemos nada
+            NSLog(@"No component on this point");
         }else{
             
             NSString * canIMakeConnection = [self checkIntegrityForSource:self
                                                                 andTarget:selected];
             
             if(canIMakeConnection == nil){
+                NSLog(@"canImakeConnection == nil");
                 Connection * conn = [[Connection alloc] init];
                 conn.source = self;
                 conn.target = selected;
@@ -295,7 +316,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
                 conn.isLinkPalette = usingItem.isLinkPalette;
                 conn.className = connectionToDo.className;
                 
-            
+                
                 
                 //conn.className = tempClassName;
                 
@@ -304,12 +325,19 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
                 
                 [dele.connections addObject:conn];
                 
-                [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+                if(dele.isGeoPalette == YES){
+                    [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:nil];
+                }else{
+                    
+                    [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+                }
                 
                 [self showAddReferencePopupForConnection:conn];
             }else if([canIMakeConnection isEqualToString:kNotYet]){
+                NSLog(@"canImakeConnection == knotyet");
                 //Tenemos que esperar a que el usuario seleccione el tipo de conexión
             }else if([canIMakeConnection isEqualToString:kDefaultConnection]){
+                NSLog(@"canImakeConnection == kdefaultconnection");
                 Connection * conn = [[Connection alloc] init];
                 conn.source = self;
                 conn.target = targetTemp;
@@ -322,7 +350,13 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
                 [conn retrieveConnectionGraphicInfoWithPaletteItem:usingItem];
                 
                 [dele.connections addObject:conn];
-                [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+                
+                if(dele.isGeoPalette == YES){
+                    [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:nil];
+                }else{
+                    [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+                }
+                
             }else{
                 NSLog(@"No se ha podido hacer la conexión");
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
@@ -403,6 +437,10 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
 }
 
 
+-(void)addLineOnMapForConnection:(Connection *)conn{
+    
+}
+
 -(void)handlePanComp:(UIPanGestureRecognizer *)sender{
     
     if([dele amITheMaster] || dele.manager.session.connectedPeers.count == 0){
@@ -441,7 +479,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
             }else if(sender.state == UIGestureRecognizerStateEnded){
                 [dele.can setNeedsDisplay];
             }
-
+            
         }else{
             
         }
@@ -671,16 +709,16 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     
     [textLayer setFrame:rect];
     /*
-    //Update position
-    if([_labelPosition isEqualToString:@"node"]){ //Center name
-        labelFrame.origin.y = self.frame.size.height/2 - labelFrame.size.height/2;
-        [textLayer setFrame:labelFrame];
-    }else{
-        labelFrame.origin.y = 0 - labelFrame.size.height;
-        [textLayer setFrame:labelFrame];
-    }else{
-        
-    }*/
+     //Update position
+     if([_labelPosition isEqualToString:@"node"]){ //Center name
+     labelFrame.origin.y = self.frame.size.height/2 - labelFrame.size.height/2;
+     [textLayer setFrame:labelFrame];
+     }else{
+     labelFrame.origin.y = 0 - labelFrame.size.height;
+     [textLayer setFrame:labelFrame];
+     }else{
+     
+     }*/
     
     //textLayer.string = name;
     textLayer.string = text;
@@ -849,7 +887,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     
     for(PaletteItem * pi in dele.paletteItems){
         if([pi.type isEqualToString:@"graphicR:Edge"]){
-
+            
             if([pi sourceMatchesWithComponent:source] && [pi targetMatchesWithComponent:target]){
                 [edgesArray addObject:pi];
             }
@@ -1356,9 +1394,9 @@ withSelectedComponent:(Component *)comp
         
         CGRect rect;
         if([_labelPosition isEqualToString:@"node"]){
-             rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize, self.frame.size.width - (2*leftMargin),fontSize+5);
+            rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize, self.frame.size.width - (2*leftMargin),fontSize+5);
         }else if([_labelPosition isEqualToString:@"border"]){
-           
+            
             rect = CGRectMake(leftMargin - self.frame.size.width, self.frame.size.height/2 - fontSize, (self.frame.size.width * 2) - (2*leftMargin),fontSize);
         }else{
             rect = CGRectMake(leftMargin - self.frame.size.width, self.frame.size.height/2 - fontSize, (self.frame.size.width * 2) - (2*leftMargin),fontSize+5);
@@ -1387,5 +1425,7 @@ withSelectedComponent:(Component *)comp
         return NO;
     }
 }
+
+
 
 @end

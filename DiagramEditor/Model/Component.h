@@ -14,6 +14,7 @@
 
 @class Component;
 @class PaletteItem;
+@class GeoComponentAnnotationView;
 
 @interface Component : UIView <UIGestureRecognizerDelegate, NoDraggableViewProtocol, HiddenInstancesListViewDelegate, NSCoding>{
     
@@ -88,6 +89,8 @@
 @property NSString * labelPosition;
 
 @property BOOL isExpandable;
+
+@property GeoComponentAnnotationView * annotationView;
 
 
 -(CGPoint)getTopAnchorPoint;

@@ -23,6 +23,14 @@
 		F128C9801D9BD0CD00288623 /* photo.png in Resources */ = {isa = PBXBuildFile; fileRef = F128C97F1D9BD0CD00288623 /* photo.png */; };
 		F128C9861DA3BE3500288623 /* GeoComponentPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = F128C9851DA3BE3500288623 /* GeoComponentPointAnnotation.m */; };
 		F128C9891DA3BE8600288623 /* GeoComponentAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = F128C9881DA3BE8600288623 /* GeoComponentAnnotationView.m */; };
+		F128C98B1DA6484800288623 /* mapIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = F128C98A1DA6484800288623 /* mapIcon.png */; };
+		F128C98E1DA6491400288623 /* MapOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F128C98D1DA6491400288623 /* MapOptionsViewController.m */; };
+		F128C9911DABAA0100288623 /* AlertAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = F128C9901DABAA0100288623 /* AlertAnnotationView.m */; };
+		F128C9941DABAA5600288623 /* AlertAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = F128C9931DABAA5600288623 /* AlertAnnotation.m */; };
+		F128C9981DAF7C0200288623 /* IntegerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F128C9961DAF7C0200288623 /* IntegerTableViewCell.m */; };
+		F128C9991DAF7C0200288623 /* IntegerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F128C9971DAF7C0200288623 /* IntegerTableViewCell.xib */; };
+		F128C99D1DAF7C1000288623 /* DoubleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F128C99B1DAF7C1000288623 /* DoubleTableViewCell.m */; };
+		F128C99E1DAF7C1000288623 /* DoubleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F128C99C1DAF7C1000288623 /* DoubleTableViewCell.xib */; };
 		F130A47E1D12DBDA00BDD212 /* ExpandableItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = F130A47D1D12DBDA00BDD212 /* ExpandableItemView.m */; };
 		F130A4801D12DBE400BDD212 /* ExpandableItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F130A47F1D12DBE400BDD212 /* ExpandableItemView.xib */; };
 		F13666651D86E52B00B060B5 /* SourceRefTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F13666631D86E52B00B060B5 /* SourceRefTableViewCell.m */; };
@@ -207,6 +215,19 @@
 		F128C9851DA3BE3500288623 /* GeoComponentPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeoComponentPointAnnotation.m; sourceTree = "<group>"; };
 		F128C9871DA3BE8600288623 /* GeoComponentAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeoComponentAnnotationView.h; sourceTree = "<group>"; };
 		F128C9881DA3BE8600288623 /* GeoComponentAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeoComponentAnnotationView.m; sourceTree = "<group>"; };
+		F128C98A1DA6484800288623 /* mapIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mapIcon.png; sourceTree = "<group>"; };
+		F128C98C1DA6491400288623 /* MapOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapOptionsViewController.h; sourceTree = "<group>"; };
+		F128C98D1DA6491400288623 /* MapOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapOptionsViewController.m; sourceTree = "<group>"; };
+		F128C98F1DABAA0100288623 /* AlertAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertAnnotationView.h; sourceTree = "<group>"; };
+		F128C9901DABAA0100288623 /* AlertAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertAnnotationView.m; sourceTree = "<group>"; };
+		F128C9921DABAA5600288623 /* AlertAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertAnnotation.h; sourceTree = "<group>"; };
+		F128C9931DABAA5600288623 /* AlertAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertAnnotation.m; sourceTree = "<group>"; };
+		F128C9951DAF7C0200288623 /* IntegerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntegerTableViewCell.h; sourceTree = "<group>"; };
+		F128C9961DAF7C0200288623 /* IntegerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntegerTableViewCell.m; sourceTree = "<group>"; };
+		F128C9971DAF7C0200288623 /* IntegerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntegerTableViewCell.xib; sourceTree = "<group>"; };
+		F128C99A1DAF7C1000288623 /* DoubleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoubleTableViewCell.h; sourceTree = "<group>"; };
+		F128C99B1DAF7C1000288623 /* DoubleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoubleTableViewCell.m; sourceTree = "<group>"; };
+		F128C99C1DAF7C1000288623 /* DoubleTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DoubleTableViewCell.xib; sourceTree = "<group>"; };
 		F130A47C1D12DBDA00BDD212 /* ExpandableItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpandableItemView.h; sourceTree = "<group>"; };
 		F130A47D1D12DBDA00BDD212 /* ExpandableItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpandableItemView.m; sourceTree = "<group>"; };
 		F130A47F1D12DBE400BDD212 /* ExpandableItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExpandableItemView.xib; sourceTree = "<group>"; };
@@ -497,6 +518,10 @@
 				F17A94201CFC4589008AE1EE /* PathPiece.m */,
 				F14CE3561D103AA3001A37D8 /* LinkPalette.h */,
 				F14CE3571D103AA3001A37D8 /* LinkPalette.m */,
+				F128C9921DABAA5600288623 /* AlertAnnotation.h */,
+				F128C9931DABAA5600288623 /* AlertAnnotation.m */,
+				F128C98F1DABAA0100288623 /* AlertAnnotationView.h */,
+				F128C9901DABAA0100288623 /* AlertAnnotationView.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -653,6 +678,12 @@
 				F1853A011C5253740015A9E0 /* StringAttributeTableViewCell.h */,
 				F1853A021C5253740015A9E0 /* StringAttributeTableViewCell.m */,
 				F18539FF1C52533E0015A9E0 /* StringAttributeTableViewCell.xib */,
+				F128C9951DAF7C0200288623 /* IntegerTableViewCell.h */,
+				F128C9961DAF7C0200288623 /* IntegerTableViewCell.m */,
+				F128C9971DAF7C0200288623 /* IntegerTableViewCell.xib */,
+				F128C99A1DAF7C1000288623 /* DoubleTableViewCell.h */,
+				F128C99B1DAF7C1000288623 /* DoubleTableViewCell.m */,
+				F128C99C1DAF7C1000288623 /* DoubleTableViewCell.xib */,
 			);
 			path = AttributeCells;
 			sourceTree = "<group>";
@@ -660,6 +691,7 @@
 		F17B75AE1C22D9D500AB1B57 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				F128C98A1DA6484800288623 /* mapIcon.png */,
 				F1FEE7001CDCA51C00FD4E9B /* actions */,
 				F19607FB1CF347E1000DC248 /* addImage.png */,
 				F17B75AF1C22DA7200AB1B57 /* arrow.png */,
@@ -757,6 +789,8 @@
 				F16C35C21C9824F0006F4255 /* Constants.m */,
 				F1685EA01C18289E0094097E /* EditorViewController.h */,
 				F1685EA11C18289E0094097E /* EditorViewController.m */,
+				F128C98C1DA6491400288623 /* MapOptionsViewController.h */,
+				F128C98D1DA6491400288623 /* MapOptionsViewController.m */,
 				F18510871C1824C8004EC4C8 /* Info.plist */,
 				F18510841C1824C8004EC4C8 /* LaunchScreen.storyboard */,
 				F185107F1C1824C8004EC4C8 /* Main.storyboard */,
@@ -964,10 +998,12 @@
 				F163AFEA1C7B1ABE00BAE67C /* tap.png in Resources */,
 				F19C258E1C43AB580002E490 /* back.png in Resources */,
 				F1B7899B1C610292001B6DB4 /* Minus-100.png in Resources */,
+				F128C98B1DA6484800288623 /* mapIcon.png in Resources */,
 				F10AB8081C50E7E200DE6DCE /* PasteView.xib in Resources */,
 				F19607F51CF32E34000DC248 /* NoteView.xib in Resources */,
 				F19607FA1CF3471B000DC248 /* CreateNoteView.xib in Resources */,
 				F15BEA011CABC62400EDABA5 /* showPaletteEditorOld.png in Resources */,
+				F128C99E1DAF7C1000288623 /* DoubleTableViewCell.xib in Resources */,
 				F1786DED1C56222B00963663 /* GenericAttributeTableViewCell.xib in Resources */,
 				F16733F21CBBD6C500E76C3A /* upArrowBlack.png in Resources */,
 				F147B43E1C63507100A8F5E7 /* EdgeListView.xib in Resources */,
@@ -1010,6 +1046,7 @@
 				F1B77AB91D80280800753DB0 /* NodeEdgeCell.xib in Resources */,
 				F14181CB1C68DE4300E838F9 /* minusDark.png in Resources */,
 				F18A8E201C7C5A5900D87C00 /* circle.png in Resources */,
+				F128C9991DAF7C0200288623 /* IntegerTableViewCell.xib in Resources */,
 				F153797E1C91B9EA001D8FFB /* RowSwitchTableViewCell.xib in Resources */,
 				F19607FC1CF347E1000DC248 /* addImage.png in Resources */,
 				F1786DE51C561ADA00963663 /* BooleanAttributeTableViewCell.xib in Resources */,
@@ -1039,11 +1076,13 @@
 				F1685EA81C1829F00094097E /* Canvas.m in Sources */,
 				F16C7DCB1C578D4B00CA9B25 /* ConnectionDetailsView.m in Sources */,
 				F1B77AD41D81732100753DB0 /* NodeVisualInfoTableViewCell.m in Sources */,
+				F128C9941DABAA5600288623 /* AlertAnnotation.m in Sources */,
 				F16C35C31C9824F0006F4255 /* Constants.m in Sources */,
 				F19607F31CF32E2A000DC248 /* NoteView.m in Sources */,
 				F185107B1C1824C8004EC4C8 /* AppDelegate.m in Sources */,
 				F1B77ACF1D81709000753DB0 /* RemovableReference.m in Sources */,
 				F1685EAE1C1831840094097E /* ComponentDetailsView.m in Sources */,
+				F128C9911DABAA0100288623 /* AlertAnnotationView.m in Sources */,
 				F15865141C85A2CA007D2E75 /* CloudDiagramsExplorer.m in Sources */,
 				F153797D1C91B9EA001D8FFB /* RowSwitchTableViewCell.m in Sources */,
 				F17A93F11CF706E8008AE1EE /* YesOrNoView.m in Sources */,
@@ -1066,6 +1105,7 @@
 				F1B77AA91D80031B00753DB0 /* EcoreFile.m in Sources */,
 				F1A20A851C198A540037C05D /* PaletteItem.m in Sources */,
 				F1B77AC31D804A3C00753DB0 /* HeaderTableViewCell.m in Sources */,
+				F128C9981DAF7C0200288623 /* IntegerTableViewCell.m in Sources */,
 				F1B77AB21D801C8C00753DB0 /* VisibleClassesViewController.m in Sources */,
 				F1FEE72B1CE3693200FD4E9B /* ChatTableViewCell.m in Sources */,
 				F130A47E1D12DBDA00BDD212 /* ExpandableItemView.m in Sources */,
@@ -1075,6 +1115,7 @@
 				F18A55E91C845CF500B134F0 /* NoDraggableClassesView.m in Sources */,
 				F16C35C01C98247A006F4255 /* MCManager.m in Sources */,
 				F13666691D86E62F00B060B5 /* CreateGraphicRViewController.m in Sources */,
+				F128C99D1DAF7C1000288623 /* DoubleTableViewCell.m in Sources */,
 				F1587B041C19BC4600E963BE /* Palette.m in Sources */,
 				F1B77ACC1D816AEC00753DB0 /* ConfigureGraphicsViewController.m in Sources */,
 				F19607F81CF34710000DC248 /* CreateNoteView.m in Sources */,
@@ -1085,6 +1126,7 @@
 				F15379721C919B42001D8FFB /* ClassesFilterView.m in Sources */,
 				F1FEE7331CE36E2000FD4E9B /* Message.m in Sources */,
 				F15379771C919BA3001D8FFB /* AttributesFilterView.m in Sources */,
+				F128C98E1DA6491400288623 /* MapOptionsViewController.m in Sources */,
 				F18A55EE1C8487C200B134F0 /* HiddenInstancesListView.m in Sources */,
 				F1391F1C1CBB9765004BAD71 /* SessionUsersView.m in Sources */,
 				F10AB80F1C50E9FB00DE6DCE /* PasteView.m in Sources */,

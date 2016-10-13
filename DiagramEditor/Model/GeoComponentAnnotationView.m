@@ -10,6 +10,8 @@
 
 @implementation GeoComponentAnnotationView
 
+@synthesize coordinate;
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -30,11 +32,14 @@
     
     [self addSubview:_comp];
     
-    self.draggable = YES; //Can I drag this?
     
+    self.draggable = NO; //Can I drag this?
     
+  
     return  self;
 }
+
+
 
 /*
 - (UIView*)hitTest:(CGPoint)point withEvent:(UIEvent*)event
@@ -62,21 +67,14 @@
     }
     return isInside;
 }*/
-
-
-
-- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)annotationView didChangeDragState:(MKAnnotationViewDragState)newState fromOldState:(MKAnnotationViewDragState)oldState
-{
-    if (newState == MKAnnotationViewDragStateStarting)
-    {
-        annotationView.dragState = MKAnnotationViewDragStateDragging;
-    }
-    else if (newState == MKAnnotationViewDragStateEnding || newState == MKAnnotationViewDragStateCanceling)
-    {
-        annotationView.dragState = MKAnnotationViewDragStateNone;
-        CLLocationCoordinate2D droppedAt = annotationView.annotation.coordinate;
-        NSLog(@"dropped at %f,%f", droppedAt.latitude, droppedAt.longitude);
-    }
+- (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate {
+    [self willChangeValueForKey:@"coordinate"];
+    coordinate = newCoordinate;
+    [self didChangeValueForKey:@"coordinate"];
 }
 
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+       shouldReceiveTouch:(UITouch *)touch{
+    return YES;
+}
 @end

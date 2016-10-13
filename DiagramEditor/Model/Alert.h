@@ -10,6 +10,7 @@
 #import <MapKit/MapKit.h>
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 #import "Component.h"
+@class AlertAnnotationView;
 
 @interface Alert : UIImageView<NSCoding>
 
@@ -23,5 +24,7 @@
 
 @property NSString * aCId;
 @property int identifier;
+
+@property AlertAnnotationView * associatedAnnotationView;
 
 @end

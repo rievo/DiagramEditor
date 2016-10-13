@@ -150,6 +150,12 @@ MKMapViewDelegate
     
     UIView * grayView;
     IBOutlet MKMapView *map;
+    
+    NSMutableArray * camerasArray;
+    NSTimer * flyoverTimer;
+    int componentIndexFlyover;
+    
+    NSMutableDictionary * connOverlayDic;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 

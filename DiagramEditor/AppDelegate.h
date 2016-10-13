@@ -13,6 +13,8 @@
 #import "PeerInfo.h"
 #import "TutorialSheet.h"
 #import "Palette.h"
+#import <MapKit/MapKit.h>
+
 
 @class PaletteFile;
 @class Canvas;
@@ -43,6 +45,7 @@
 @property UIColor * blue4;
 
 @property Canvas * can;
+@property MKMapView * map;
 @property EditorViewController * evc;
 @property CGRect originalCanvasRect;
 

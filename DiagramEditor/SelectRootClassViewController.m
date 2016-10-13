@@ -54,97 +54,108 @@
                                      options:NSJSONReadingMutableContainers
                                      error:&jsonError];
     
-    extension = [jsonDict objectForKey:@"name"];
-
-    NSArray * classes = [jsonDict objectForKey:@"classes"];
-    
-    for(NSDictionary * classDic in classes){ //Parse class dic
+    if(jsonError != nil){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:[NSString stringWithFormat:@"Details\n%@", [jsonError description]]
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }else{
+        extension = [jsonDict objectForKey:@"name"];
         
-        JsonClass * c = [[JsonClass alloc]  init];
+        NSArray * classes = [jsonDict objectForKey:@"classes"];
         
-        
-        //Parse class name
-        NSString * className = [classDic objectForKey:@"name"];
-        c.name = className;
-        
-        
-        //Parse abstract attribute
-        NSString * isAbstractStr = [classDic objectForKey:@"abstract"];
-        if([isAbstractStr isEqualToString:@"false"]){
-            c.abstract = false;
-        }else if([isAbstractStr isEqualToString:@"true"]){
-            c.abstract = true;
-        }else{
-            c.abstract = false;
-        }
-        
-        
-        //Parse parents
-        NSArray * parentsArray = [classDic objectForKey:@"parents"];
-        c.parents = [[NSMutableArray alloc] initWithArray:parentsArray];
-        
-        
-        
-        NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
-        f.numberStyle = NSNumberFormatterDecimalStyle;
-        
-        //Parse attributes
-        NSArray * attrDicArray = [classDic objectForKey:@"attributes"];
-        for(NSDictionary * attrDic in attrDicArray){
-            ClassAttribute * attr = [[ClassAttribute alloc] init];
+        for(NSDictionary * classDic in classes){ //Parse class dic
+            
+            JsonClass * c = [[JsonClass alloc]  init];
             
             
-            attr.name = [attrDic objectForKey:@"name"];
-            attr.defaultValue = [attrDic objectForKey:@"default"];
-            attr.type = [attrDic objectForKey:@"type"];
+            //Parse class name
+            NSString * className = [classDic objectForKey:@"name"];
+            c.name = className;
             
-            NSNumber * min = [f numberFromString:[attrDic objectForKey:@"min"]];
-            attr.min = min;
             
-            NSNumber * max = [f numberFromString:[attrDic objectForKey:@"max"]];
-            attr.max = max;
-            
-            [c.attributes addObject:attr];
-        }
-        
-        
-        //Parse references
-        NSArray * refDicArray= [classDic objectForKey:@"references"];
-        for(NSDictionary * refDic in refDicArray){
-            RemovableReference * ref = [[RemovableReference alloc] init];
-            
-            ref.name = [refDic objectForKey:@"name"];
-            ref.target = [refDic objectForKey:@"target"];
-            ref.opposite = [refDic objectForKey:@"opposite"];
-            
-            ref.isPresent = YES;
-            
-            NSNumber * min = [f numberFromString:[refDic objectForKey:@"min"]];
-            ref.min = min;
-            
-            NSNumber * max = [f numberFromString:[refDic objectForKey:@"max"]];
-            ref.max = max;
-            
-            NSString * contStr = [classDic objectForKey:@"containment"];
-            if([contStr isEqualToString:@"false"]){
-                ref.containment = false;
-            }else if([contStr isEqualToString:@"true"]){
-                ref.containment = true;
+            //Parse abstract attribute
+            NSString * isAbstractStr = [classDic objectForKey:@"abstract"];
+            if([isAbstractStr isEqualToString:@"false"]){
+                c.abstract = false;
+            }else if([isAbstractStr isEqualToString:@"true"]){
+                c.abstract = true;
             }else{
-                ref.containment = false;
+                c.abstract = false;
             }
             
-            [c.references addObject:ref];
+            
+            //Parse parents
+            NSArray * parentsArray = [classDic objectForKey:@"parents"];
+            c.parents = [[NSMutableArray alloc] initWithArray:parentsArray];
+            
+            
+            
+            NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+            f.numberStyle = NSNumberFormatterDecimalStyle;
+            
+            //Parse attributes
+            NSArray * attrDicArray = [classDic objectForKey:@"attributes"];
+            for(NSDictionary * attrDic in attrDicArray){
+                ClassAttribute * attr = [[ClassAttribute alloc] init];
+                
+                
+                attr.name = [attrDic objectForKey:@"name"];
+                attr.defaultValue = [attrDic objectForKey:@"default"];
+                attr.type = [attrDic objectForKey:@"type"];
+                
+                NSNumber * min = [f numberFromString:[attrDic objectForKey:@"min"]];
+                attr.min = min;
+                
+                NSNumber * max = [f numberFromString:[attrDic objectForKey:@"max"]];
+                attr.max = max;
+                
+                [c.attributes addObject:attr];
+            }
+            
+            
+            //Parse references
+            NSArray * refDicArray= [classDic objectForKey:@"references"];
+            for(NSDictionary * refDic in refDicArray){
+                RemovableReference * ref = [[RemovableReference alloc] init];
+                
+                ref.name = [refDic objectForKey:@"name"];
+                ref.target = [refDic objectForKey:@"target"];
+                ref.opposite = [refDic objectForKey:@"opposite"];
+                
+                ref.isPresent = YES;
+                
+                NSNumber * min = [f numberFromString:[refDic objectForKey:@"min"]];
+                ref.min = min;
+                
+                NSNumber * max = [f numberFromString:[refDic objectForKey:@"max"]];
+                ref.max = max;
+                
+                NSString * contStr = [classDic objectForKey:@"containment"];
+                if([contStr isEqualToString:@"false"]){
+                    ref.containment = false;
+                }else if([contStr isEqualToString:@"true"]){
+                    ref.containment = true;
+                }else{
+                    ref.containment = false;
+                }
+                
+                [c.references addObject:ref];
+            }
+            
+            
+            
+            [classesArray addObject:c];
+            
         }
         
         
-        
-        [classesArray addObject:c];
-        
+        [table reloadData];
     }
     
     
-    [table reloadData];
 
 }
 

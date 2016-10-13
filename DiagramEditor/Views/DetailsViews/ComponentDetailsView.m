@@ -19,6 +19,9 @@
 #import "LinkPalette.h"
 #import "ExpandableItemView.h"
 #import "EditorViewController.h"
+#import "DoubleTableViewCell.h"
+#import "IntegerTableViewCell.h"
+
 
 @interface ComponentDetailsView ()
 
@@ -403,6 +406,51 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
                     
                 }
                 return batvc;
+            }else if([type isEqualToString:@"EDouble"] || [type isEqualToString:@"EFloat"]){
+                
+                DoubleTableViewCell * datvc = [tableView dequeueReusableCellWithIdentifier:@"DoubleCell"];
+                if(datvc == nil){
+                    NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"DoubleTableViewCell"
+                                                                  owner:self
+                                                                options:nil];
+                    datvc = [nib objectAtIndex:0];
+                    datvc.label.text = attr.name;
+                    datvc.associatedAttribute = attr;
+                    datvc.backgroundColor = [UIColor clearColor];
+                    datvc.comp = comp;
+                    
+                    if([dele amITheMaster]|| dele.inMultipeerMode == NO){
+                        [datvc.textField setEnabled:YES];
+                    }else{
+                        [datvc.textField setEnabled:NO];
+                    }
+                    
+                    //Update textfield value for this attribute value
+                    [datvc.textField setText:attr.currentValue];
+                    datvc.selectionStyle = UITableViewCellSelectionStyleNone;
+                }
+                return  datvc;
+ 
+            }else if([type isEqualToString:@"EInt"] || [type isEqualToString:@"EInteger"]){
+                
+                IntegerTableViewCell * iatvc = [tableView dequeueReusableCellWithIdentifier:@"IntCell"];
+                if(iatvc == nil){
+                    NSArray * nib = [[NSBundle mainBundle]loadNibNamed:@"IntegerTableViewCell" owner:self options:nil];
+                    iatvc  = [nib objectAtIndex:0];
+                    iatvc.label.text = attr.name;
+                    iatvc.associatedAttribute = attr;
+                    iatvc.backgroundColor = [UIColor clearColor];
+                    iatvc.comp = comp;
+                    
+                    if([dele amITheMaster]|| dele.inMultipeerMode == NO){
+                        [iatvc.textField setEnabled:YES];
+                    }else{
+                        [iatvc.textField setEnabled:NO];
+                    }
+                    [iatvc.textField setText:attr.currentValue];
+                    iatvc.selectionStyle = UITableViewCellSelectionStyleNone;
+                }
+                return iatvc;
             }else{
                 GenericAttributeTableViewCell * gatvc = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
                 if(gatvc == nil){
@@ -511,7 +559,10 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
             
             [dele.connections removeObject:toDelete];
             
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:nil];
             [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+            
+            
             [self updateLocalConenctions];
         }
     }
