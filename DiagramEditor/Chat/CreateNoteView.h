@@ -40,8 +40,10 @@
 //@property (weak, nonatomic) IBOutlet UITextView *textView;
 
 @property UIViewController * parentVC;
+@property MKMapView * map;
 
 @property id delegate;
+@property (strong, nonatomic) IBOutlet UIButton *addPositionButton;
 
 @property CGPoint noteCenter;
 

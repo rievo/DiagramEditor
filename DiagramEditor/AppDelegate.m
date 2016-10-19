@@ -125,6 +125,9 @@
     NSString * editor= [[NSUserDefaults standardUserDefaults]objectForKey:@"editorTutorialStatus"];
     NSString * configure= [[NSUserDefaults standardUserDefaults]objectForKey:@"configureTutorialStatus"];
     
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(goToRootViewController:) name:@"goToRootViewController" object:nil];
+    
     if(editor == nil){
         shouldShowEditorTutorial = YES;
     }else{
@@ -229,6 +232,8 @@
             
             for(int i = 0; i< components.count; i++){
                 [self.can addSubview: [components objectAtIndex:i]];
+                Component * t = [components objectAtIndex:i];
+                t.textLayer = nil;
                 [[components objectAtIndex:i]prepare];
             }
             
@@ -734,6 +739,10 @@
     
 
 }*/
+
+-(void)goToRootViewController:(NSNotification *)notification{
+    [self.window.rootViewController dismissViewControllerAnimated:NO completion:nil];
+}
 
 -(void)handleConnectedtimer{
     missedServerAttemps = missedServerAttemps +1;

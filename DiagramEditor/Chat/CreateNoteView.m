@@ -11,12 +11,13 @@
 
 @implementation CreateNoteView
 
-@synthesize parentVC, delegate;
+@synthesize parentVC, delegate,map;
 
 
 
 -(void)prepare{
     //Form ScrollView
+    scrollView.backgroundColor = [UIColor clearColor];
     
     //Text - Image - Geoposition
     UIView * viewToIncrust ;
@@ -45,14 +46,14 @@
     start = start + tv.frame.size.width + 3*margin;
     
     [preview setFrame:CGRectMake(start,
-                            margin,
-                            scrollView.bounds.size.width- 2*margin,
-                            scrollView.bounds.size.height- 2*margin)];
+                                 margin,
+                                 scrollView.bounds.size.width- 2*margin,
+                                 scrollView.bounds.size.height- 2*margin)];
     [viewToIncrust addSubview:preview];
     
     
     
-   
+    
     
     //Add map
     start = start + preview.frame.size.width + 3*margin;
@@ -70,18 +71,20 @@
     
     //Merge all views
     [scrollView addSubview:viewToIncrust];
-
+    
     scrollView.contentSize = CGSizeMake(scrollView.frame.size.width * 3, scrollView.frame.size.height);
     [scrollView setPagingEnabled:YES];
 }
 
 -(void)handleMapTap:(UITapGestureRecognizer *)recognizer{
-    CGPoint point = [recognizer locationInView:map];
-    
-    CLLocationCoordinate2D tapPoint = [map convertPoint:point toCoordinateFromView:map];
-    noteLocation = [[CLLocation alloc] initWithLatitude:tapPoint.latitude longitude:tapPoint.longitude];
-    NSLog(@"Cordinate: %.3f,%.3f",tapPoint.latitude, tapPoint.longitude );
-    [self updateMapViewWithLocation:tapPoint];
+    if(dele.isGeoPalette == NO){
+        CGPoint point = [recognizer locationInView:map];
+        
+        CLLocationCoordinate2D tapPoint = [map convertPoint:point toCoordinateFromView:map];
+        noteLocation = [[CLLocation alloc] initWithLatitude:tapPoint.latitude longitude:tapPoint.longitude];
+        NSLog(@"Cordinate: %.3f,%.3f",tapPoint.latitude, tapPoint.longitude );
+        [self updateMapViewWithLocation:tapPoint];
+    }
 }
 
 -(void)drawRect:(CGRect)rect{

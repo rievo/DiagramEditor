@@ -24,6 +24,7 @@
     IBOutlet UISwitch *geopaletteSwitch;
 }
 
+- (IBAction)finish:(id)sender;
 
 
 @property NSMutableArray * nodes;
@@ -37,6 +38,7 @@
 @property NSMutableArray * classes;
 
 @property EcoreFile * selectedJson;
+- (IBAction)saveOnDevice:(id)sender;
 
 - (IBAction)updateName:(id)sender;
 @end

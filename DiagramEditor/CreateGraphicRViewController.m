@@ -144,14 +144,15 @@
                    text = [text stringByAppendingString:[NSString stringWithFormat:@"<node_shape xsi:type=\"graphicR:IconElement\"  filepath=\"%@\"  embeddedImage=\"%@\">", iconPath, imageString]];
                 }else{
                      text = [text stringByAppendingString:[NSString stringWithFormat:@"<node_shape xsi:type=\"graphicR:%@\">", associated.shapeType]];
+                    text = [text stringByAppendingString:[NSString stringWithFormat:@"<color xsi:type=\"graphicR:SiriusSystemColors\" name=\"%@\"  />\n", associated.colorString]]; //Fill color
+                    
+                    text = [text stringByAppendingString:[NSString stringWithFormat:@"<borderColor xsi:type=\"graphicR:SiriusSystemColors\" name=\"%@\"  />\n", associated.borderColorString]]; //Border color
                 }
             }
             
             
             
-            text = [text stringByAppendingString:[NSString stringWithFormat:@"<color xsi:type=\"graphicR:SiriusSystemColors\" name=\"%@\"  />\n", associated.colorString]]; //Fill color
-            
-            text = [text stringByAppendingString:[NSString stringWithFormat:@"<borderColor xsi:type=\"graphicR:SiriusSystemColors\" name=\"%@\"  />\n", associated.borderColorString]]; //Border color
+           
             
             text = [text stringByAppendingString:@"</node_shape>"];
             
@@ -299,6 +300,9 @@
     [self sendPaletteToServer:text];
 }
 
+- (IBAction)saveOnDevice:(id)sender {
+}
+
 - (IBAction)updateName:(id)sender {
     if(nameTextField.text.length == 0){ //Error
         UIAlertView * alert =  [[UIAlertView alloc] initWithTitle:@"Name cannot be empty"
@@ -311,5 +315,12 @@
         [self formGraphicRWithName:nameTextField.text];
         [createButton setEnabled:YES];
     }
+}
+
+
+
+- (IBAction)finish:(id)sender {
+     [[NSNotificationCenter defaultCenter]postNotificationName:@"goToRootViewController" object:nil];
+    
 }
 @end

@@ -45,6 +45,16 @@
 }
 
 
+-(void)viewDidAppear:(BOOL)animated{
+    for(JsonClass * c in classesArray){
+        if(c.isRootClass == YES){
+            rootClass = c;
+            [self performSegueWithIdentifier:@"setVisibleClasses" sender:self];
+        }
+    }
+}
+
+
 -(void)parseJSonFile{
     NSError *jsonError;
     
@@ -75,6 +85,16 @@
             NSString * className = [classDic objectForKey:@"name"];
             c.name = className;
             
+            
+            //Is the root class?
+            NSString * rootStr = [classDic objectForKey:@"root"];
+            if([rootStr isEqualToString:@"true"]){
+                c.isRootClass = YES;
+            }else if([rootStr isEqualToString:@"false"]){
+                c.isRootClass = NO;
+            }else{
+                c.isRootClass = NO;
+            }
             
             //Parse abstract attribute
             NSString * isAbstractStr = [classDic objectForKey:@"abstract"];

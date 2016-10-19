@@ -156,6 +156,11 @@ MKMapViewDelegate
     int componentIndexFlyover;
     
     NSMutableDictionary * connOverlayDic;
+    
+    
+    IBOutlet UIButton *mapOptionsButton;
+    NSMutableArray * drawnsPolylineArray;
+    NSMutableDictionary * pathCoordinates;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 

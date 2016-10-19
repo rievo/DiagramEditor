@@ -67,8 +67,12 @@
     frame.size.height = previewComponentView.frame.size.height;
     [previewComponent setFrame:frame];
     
+    [previewComponentView setBounds:comp.bounds];
+    [previewComponent setBounds:comp.bounds];
+    
     [previewComponentView addSubview:previewComponent];
     
+    previewComponent.textLayer = nil;
     [previewComponent prepare];
     [previewComponent updateNameLabel];
 

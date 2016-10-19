@@ -15,9 +15,8 @@
 #import "XMLWriter.h"
 #import "XMLDictionary.h"
 #import "ClassAttribute.h"
-
 #import "NoDraggableComponentView.h"
-
+#import <MapKit/MKOverlay.h>
 #import "Constants.h"
 #import "DrawingAlert.h"
 #import "ChatView.h"
@@ -38,6 +37,7 @@
 #import "AlertAnnotation.h"
 
 #import <Social/Social.h>
+#import <MapKit/MapKit.h>
 
 @import Foundation;
 
@@ -56,6 +56,15 @@
         [self startEditorTutorial];
     }else{
         doingTutorial = NO;
+    }
+    
+    if(dele.isGeoPalette == YES){
+        [mapOptionsButton setHidden:NO];
+        CLLocationManager* myLocationManager = [[CLLocationManager alloc] init];
+        [myLocationManager requestWhenInUseAuthorization];
+        
+    }else{
+        [mapOptionsButton setHidden:YES];
     }
 }
 
@@ -89,6 +98,8 @@
     // [self hideAlerts];
     
 }
+
+
 - (void)viewDidLoad {
     
     //self.view.translatesAutoresizingMaskIntoConstraints = YES;
@@ -148,6 +159,8 @@
         scrollView.maximumZoomScale = 4.0;
         scrollView.delegate = self;
         
+        [mapOptionsButton setHidden:YES];
+        
         //[self setZoomForIntValue:0]; //No zoom
         float nullZoom = [self getZoomScaleForIntValue:0];
         [scrollView setZoomScale:nullZoom animated:YES];
@@ -189,10 +202,14 @@
         }
         
     }else{ //Is geoPalette, prepare map
+        [mapOptionsButton setHidden:NO];
         [map setHidden:NO];
         [map setDelegate:self];
         [map setShowsUserLocation:YES];
         dele.map = map;
+        drawnsPolylineArray = [[NSMutableArray alloc] init];
+        pathCoordinates = [[NSMutableDictionary alloc] init];
+        
     }
     
     
@@ -2597,6 +2614,7 @@
                 point = [recog locationInView:self.view];
                 //cnv.noteCenter = [map convertPoint:point toView:map];
                 cnv.noteCenter = point;
+                [cnv.addPositionButton setHidden:YES];
             }else{
                 cnv.noteCenter = pointInSV;
             }
@@ -3038,7 +3056,61 @@
                            toPeers:dele.manager.session.connectedPeers
                           withMode:MCSessionSendDataReliable
                              error:&error];
+    
+    if(dele.isGeoPalette == YES){
+        //TODO: Add path to map
+        [self addPathToMap:path];
+    }
 }
+
+
+
+
+-(void)addPathToMap:(UIBezierPath *)path{
+
+    NSMutableArray * bezierPoints = [[NSMutableArray alloc] init];
+    
+    CGPathApply(path.CGPath, (__bridge void *) bezierPoints, processPath);
+    
+    //bezierpoints will have the screen points of the drawn
+    
+    //For eachPoint get the associated map coordinate
+    
+    CLLocationCoordinate2D coordinateArray[bezierPoints.count];
+    
+    for(int i = 0; i< bezierPoints.count; i++){
+        NSValue * val = bezierPoints[i];
+        CLLocationCoordinate2D coor = [map convertPoint:val.CGPointValue toCoordinateFromView:self.view];
+        coordinateArray[i] = coor;
+    }
+    
+    MKPolyline * line = [MKPolyline polylineWithCoordinates:coordinateArray count:bezierPoints.count];
+    [map addOverlay:line];
+    
+    [drawnsPolylineArray addObject:line];
+}
+
+
+void processPath(void * info, const CGPathElement *element){
+    NSMutableArray * bezierpoints = (__bridge NSMutableArray *)info;
+    
+    CGPoint * points = element->points;
+    CGPathElementType type = element ->type;
+    
+    switch (type) {
+        case kCGPathElementMoveToPoint:
+            [bezierpoints addObject:[NSValue valueWithCGPoint:points[0]]];
+            break;
+            
+        case kCGPathElementAddLineToPoint:
+            [bezierpoints addObject:[NSValue valueWithCGPoint:points[0]]];
+            break;
+            
+        default:
+            break;
+    }
+}
+
 
 #pragma mark Show or hide annotations and drawings
 -(void)hideAnotations{
@@ -3705,7 +3777,17 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
 -(void)updateMap:(NSNotification *)not{
     //Repaint polylines
     
-    [map removeOverlays:map.overlays];
+    NSMutableArray * toRemove = [[NSMutableArray alloc] init];
+    
+    for (id<MKOverlay> overlayToRemove in map.overlays)
+    {
+        if (![drawnsPolylineArray containsObject:overlayToRemove])
+        {
+            [map removeOverlay:overlayToRemove];
+        }
+    }
+    
+    //[map removeOverlays:map.overlays];
     
     connOverlayDic = [[NSMutableDictionary alloc] init];
     
@@ -3736,6 +3818,12 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
        
     }
     
+    drawnsPolylineArray  = [[NSMutableArray alloc] init];
+    
+    for(DrawnAlert * da in dele.drawnsArray){
+        [self addPathToMap:da.path];
+       
+    }
    
 }
 

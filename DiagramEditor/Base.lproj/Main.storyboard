@@ -384,7 +384,11 @@
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tg3-yS-kku">
                                 <items>
                                     <navigationItem title="Finish details" id="bKD-4z-sVk">
-                                        <barButtonItem key="leftBarButtonItem" title="Back" id="Hhg-Po-FFQ"/>
+                                        <barButtonItem key="leftBarButtonItem" title="Finish" id="Hhg-Po-FFQ">
+                                            <connections>
+                                                <action selector="finish:" destination="2dN-tB-oBJ" id="YGr-jv-8JY"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -393,7 +397,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="59" id="pUy-XX-9RJ"/>
                                 </constraints>
-                                <state key="normal" title="Create Palette and upload to server">
+                                <state key="normal" title="Save on server">
                                     <color key="titleColor" red="0.13333334028720856" green="0.21176470816135406" blue="0.37647059559822083" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
@@ -442,17 +446,31 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="AoY-bX-jmZ"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F0J-yd-8Ei">
+                                <color key="backgroundColor" red="0.71372550729999995" green="0.74901962280000001" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="59" id="qBh-IY-5Q5"/>
+                                </constraints>
+                                <state key="normal" title="Save on device">
+                                    <color key="titleColor" red="0.13333334029999999" green="0.21176470820000001" blue="0.37647059560000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="saveOnDevice:" destination="2dN-tB-oBJ" eventType="touchUpInside" id="VYa-fK-6eB"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.35686275362968445" green="0.42745098471641541" blue="0.57254904508590698" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="tg3-yS-kku" firstAttribute="top" secondItem="xx1-0A-EXY" secondAttribute="bottom" id="05t-BO-N9d"/>
                             <constraint firstItem="2mH-da-YDB" firstAttribute="top" secondItem="XMX-FS-OPU" secondAttribute="bottom" constant="8" id="1mR-gM-Vqm"/>
-                            <constraint firstItem="czS-mS-ftS" firstAttribute="leading" secondItem="ea6-hN-Wsa" secondAttribute="leadingMargin" constant="3" id="DRZ-JB-ymx"/>
                             <constraint firstItem="AoY-bX-jmZ" firstAttribute="top" secondItem="2mH-da-YDB" secondAttribute="bottom" constant="8" id="DZV-b2-CZY"/>
                             <constraint firstItem="XMX-FS-OPU" firstAttribute="top" secondItem="xx1-0A-EXY" secondAttribute="bottom" constant="54" id="FpP-Qp-IhJ"/>
+                            <constraint firstItem="czS-mS-ftS" firstAttribute="leading" secondItem="F0J-yd-8Ei" secondAttribute="trailing" constant="4" id="Oqi-vB-lcj"/>
                             <constraint firstAttribute="leadingMargin" secondItem="bTO-wD-ySg" secondAttribute="leading" constant="-3" id="Oss-Ts-bbl"/>
+                            <constraint firstItem="F0J-yd-8Ei" firstAttribute="width" secondItem="czS-mS-ftS" secondAttribute="width" id="RW5-LN-srC"/>
                             <constraint firstItem="AoY-bX-jmZ" firstAttribute="leading" secondItem="3b9-1c-N8J" secondAttribute="trailing" constant="15" id="SFT-Hf-HVK"/>
                             <constraint firstItem="bTO-wD-ySg" firstAttribute="top" secondItem="xx1-0A-EXY" secondAttribute="bottom" constant="54" id="SFm-Qq-s64"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="F0J-yd-8Ei" secondAttribute="leading" id="WEz-0T-vwy"/>
                             <constraint firstAttribute="trailingMargin" secondItem="XMX-FS-OPU" secondAttribute="trailing" id="Y5O-AA-zWT"/>
                             <constraint firstAttribute="trailingMargin" secondItem="2mH-da-YDB" secondAttribute="trailing" id="YSP-bo-JkB"/>
                             <constraint firstAttribute="trailingMargin" secondItem="9kl-No-sIw" secondAttribute="trailing" id="Yti-2J-Ds2"/>
@@ -465,7 +483,9 @@
                             <constraint firstAttribute="leadingMargin" secondItem="tg3-yS-kku" secondAttribute="leading" constant="20" id="oEW-jH-B0F"/>
                             <constraint firstAttribute="trailingMargin" secondItem="czS-mS-ftS" secondAttribute="trailing" constant="2" id="pLr-uu-Tp6"/>
                             <constraint firstItem="wWq-Zf-OwC" firstAttribute="top" secondItem="czS-mS-ftS" secondAttribute="bottom" constant="20" id="s9R-Du-aro"/>
+                            <constraint firstItem="wWq-Zf-OwC" firstAttribute="top" secondItem="F0J-yd-8Ei" secondAttribute="bottom" constant="20" id="vNB-zQ-aVm"/>
                             <constraint firstItem="3b9-1c-N8J" firstAttribute="top" secondItem="2mH-da-YDB" secondAttribute="bottom" constant="6" id="w3l-NE-3xN"/>
+                            <constraint firstItem="F0J-yd-8Ei" firstAttribute="top" secondItem="9kl-No-sIw" secondAttribute="bottom" constant="8" id="wus-Is-lvD"/>
                         </constraints>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -992,6 +1012,7 @@
                         <outlet property="findOutlet" destination="npt-04-keg" id="POs-d0-G1i"/>
                         <outlet property="interrogationAlert" destination="WFY-dG-iOb" id="E7D-4f-tUe"/>
                         <outlet property="map" destination="wqq-ig-4rP" id="bn9-WY-3jp"/>
+                        <outlet property="mapOptionsButton" destination="582-al-LKh" id="K3n-kH-WD2"/>
                         <outlet property="newDiagram" destination="YCF-FE-eUA" id="g2I-9n-K3W"/>
                         <outlet property="noteAlert" destination="hZ5-DG-Iz6" id="WA4-VQ-nm3"/>
                         <outlet property="saveDiagram" destination="L72-M5-gdo" id="E3S-B7-bXL"/>

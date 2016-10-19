@@ -24,6 +24,7 @@
         visibleMode = -1;
         _containmentReference = nil;
         _associatedComponent = nil;
+        _isRootClass = NO;
     }
     return self;
 }
