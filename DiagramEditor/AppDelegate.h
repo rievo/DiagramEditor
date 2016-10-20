@@ -112,6 +112,8 @@
 
 @property BOOL inMultipeerMode;
 
+@property NSMutableDictionary * enumsDic;
+
 -(int)getOutConnectionsForComponent: (Component *)comp
                              ofType: (NSString * )type;
 -(int)getInConnectionsForComponent: (Component *)comp

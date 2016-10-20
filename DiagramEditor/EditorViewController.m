@@ -123,7 +123,6 @@
         canvasW = 1500;
     }
     
-    
     sharingDiagram = NO;
     
     dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];

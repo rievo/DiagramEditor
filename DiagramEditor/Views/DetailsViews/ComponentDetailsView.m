@@ -21,7 +21,7 @@
 #import "EditorViewController.h"
 #import "DoubleTableViewCell.h"
 #import "IntegerTableViewCell.h"
-
+#import "EnumTableViewCell.h"
 
 @interface ComponentDetailsView ()
 
@@ -456,20 +456,50 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
                 }
                 return iatvc;
             }else{
-                GenericAttributeTableViewCell * gatvc = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
-                if(gatvc == nil){
-                    NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"GenericAttributeTableViewCell"
-                                                                  owner:self
-                                                                options:nil];
-                    gatvc = [nib objectAtIndex:0];
-                    gatvc.nameLabel.text =  [NSString stringWithFormat:@"%@: %@", attr.name, attr.type];//attr.name;
-                    //gatvc.typeLabel.text = attr.type;
-                    gatvc.backgroundColor = [UIColor clearColor];
-                    gatvc.selectionStyle = UITableViewCellSelectionStyleNone;
-                    
-                    
+                
+                //It is an enum?
+                if([dele.enumsDic objectForKey:attr.type] != nil){
+                    NSArray * options = [dele.enumsDic objectForKey:attr.type];
+                    EnumTableViewCell * etvc = [tableView dequeueReusableCellWithIdentifier:@"enumID"];
+                    if(etvc == nil){
+                        NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"EnumTableViewCell"
+                                                                      owner:self
+                                                                    options:nil];
+                        etvc = [nib objectAtIndex:0];
+                        etvc.options = options;
+                        etvc.label.text = attr.name;
+                        etvc.backgroundColor = [UIColor clearColor];
+                        etvc.comp = comp;
+                        etvc.associatedAttribute = attr;
+                        etvc.previewComp  = previewComponent;
+                        if([dele amITheMaster]|| dele.inMultipeerMode == NO){
+                            [etvc.optionsPicker setUserInteractionEnabled:YES];
+                        }else{
+                            [etvc.optionsPicker setUserInteractionEnabled:NO];
+                        }
+                        
+                        [etvc prepare];
+                        etvc.selectionStyle = UITableViewCellSelectionStyleNone;
+                       
+                    }
+                    return etvc;
+                }else{
+                    GenericAttributeTableViewCell * gatvc = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+                    if(gatvc == nil){
+                        NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"GenericAttributeTableViewCell"
+                                                                      owner:self
+                                                                    options:nil];
+                        gatvc = [nib objectAtIndex:0];
+                        gatvc.nameLabel.text =  [NSString stringWithFormat:@"%@: %@", attr.name, attr.type];//attr.name;
+                        //gatvc.typeLabel.text = attr.type;
+                        gatvc.backgroundColor = [UIColor clearColor];
+                        gatvc.selectionStyle = UITableViewCellSelectionStyleNone;
+                        
+                        
+                    }
+                    return gatvc;
                 }
-                return gatvc;
+                
             }
             
             

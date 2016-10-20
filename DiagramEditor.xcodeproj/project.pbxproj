@@ -172,6 +172,8 @@
 		F1C417B81CB66F120075234C /* CustomTableHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = F1C417B71CB66F120075234C /* CustomTableHeader.m */; };
 		F1C417BA1CB66F2D0075234C /* CustomTableHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1C417B91CB66F2D0075234C /* CustomTableHeader.xib */; };
 		F1C6347B1C2842C30072912D /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = F1C6347A1C2842C30072912D /* camera.png */; };
+		F1E763CE1DB8BEBF0099148E /* EnumTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E763CC1DB8BEBF0099148E /* EnumTableViewCell.m */; };
+		F1E763CF1DB8BEBF0099148E /* EnumTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1E763CD1DB8BEBF0099148E /* EnumTableViewCell.xib */; };
 		F1F29C691C64C8F70035F0B6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1F29C681C64C8F70035F0B6 /* AudioToolbox.framework */; };
 		F1FEE70B1CDCA63400FD4E9B /* botarrow.png in Resources */ = {isa = PBXBuildFile; fileRef = F1FEE7071CDCA63400FD4E9B /* botarrow.png */; };
 		F1FEE70C1CDCA63400FD4E9B /* question.png in Resources */ = {isa = PBXBuildFile; fileRef = F1FEE7081CDCA63400FD4E9B /* question.png */; };
@@ -437,6 +439,9 @@
 		F1C417B71CB66F120075234C /* CustomTableHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableHeader.m; sourceTree = "<group>"; };
 		F1C417B91CB66F2D0075234C /* CustomTableHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomTableHeader.xib; sourceTree = "<group>"; };
 		F1C6347A1C2842C30072912D /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
+		F1E763CB1DB8BEBF0099148E /* EnumTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnumTableViewCell.h; sourceTree = "<group>"; };
+		F1E763CC1DB8BEBF0099148E /* EnumTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnumTableViewCell.m; sourceTree = "<group>"; };
+		F1E763CD1DB8BEBF0099148E /* EnumTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EnumTableViewCell.xib; sourceTree = "<group>"; };
 		F1F29C681C64C8F70035F0B6 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		F1FEE7071CDCA63400FD4E9B /* botarrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = botarrow.png; sourceTree = "<group>"; };
 		F1FEE7081CDCA63400FD4E9B /* question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = question.png; sourceTree = "<group>"; };
@@ -684,6 +689,9 @@
 				F128C99A1DAF7C1000288623 /* DoubleTableViewCell.h */,
 				F128C99B1DAF7C1000288623 /* DoubleTableViewCell.m */,
 				F128C99C1DAF7C1000288623 /* DoubleTableViewCell.xib */,
+				F1E763CB1DB8BEBF0099148E /* EnumTableViewCell.h */,
+				F1E763CC1DB8BEBF0099148E /* EnumTableViewCell.m */,
+				F1E763CD1DB8BEBF0099148E /* EnumTableViewCell.xib */,
 			);
 			path = AttributeCells;
 			sourceTree = "<group>";
@@ -1036,6 +1044,7 @@
 				F17B75AD1C22D9CC00AB1B57 /* list.png in Resources */,
 				F1C6347B1C2842C30072912D /* camera.png in Resources */,
 				F18A55E61C845CDD00B134F0 /* NoDraggableClassesView.xib in Resources */,
+				F1E763CF1DB8BEBF0099148E /* EnumTableViewCell.xib in Resources */,
 				F107E4661C722229007DD29E /* ThinkingView.xib in Resources */,
 				F10CC8EA1CBFA332007F2B11 /* master.png in Resources */,
 				F181349C1CBCF169000AE209 /* menu.png in Resources */,
@@ -1083,6 +1092,7 @@
 				F1B77ACF1D81709000753DB0 /* RemovableReference.m in Sources */,
 				F1685EAE1C1831840094097E /* ComponentDetailsView.m in Sources */,
 				F128C9911DABAA0100288623 /* AlertAnnotationView.m in Sources */,
+				F1E763CE1DB8BEBF0099148E /* EnumTableViewCell.m in Sources */,
 				F15865141C85A2CA007D2E75 /* CloudDiagramsExplorer.m in Sources */,
 				F153797D1C91B9EA001D8FFB /* RowSwitchTableViewCell.m in Sources */,
 				F17A93F11CF706E8008AE1EE /* YesOrNoView.m in Sources */,

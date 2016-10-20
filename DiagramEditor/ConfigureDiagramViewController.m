@@ -1509,7 +1509,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     //dele.paletteIttems
     //Para cada item de la paleta, tendré que rellenar el array de atributos
     PaletteItem * pi = nil;
-    
+
     //Pasamos el json a un nsdictionary
     
     
@@ -1643,6 +1643,23 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
         dele.ecoreContent = ecoreContent;
         
         
+        //Parse enums
+        dele.enumsDic = [[NSMutableDictionary alloc] init];
+        
+        NSArray * enums = [jsonDict objectForKey:@"enums"];
+          dele.enumsDic = [[NSMutableDictionary alloc] init];
+        
+        if([enums isKindOfClass:[NSDictionary class]]){
+            enums = [NSArray arrayWithObject:enums];
+        }
+        
+        for(int i = 0; i< enums.count; i++){
+            NSDictionary * temp = [enums objectAtIndex:i];
+            NSString * name = [temp objectForKey:@"name"];
+            NSArray * values = [temp objectForKey:@"values"];
+            
+            [dele.enumsDic setObject:values forKey:name];
+        }
         
         return YES;
     }
