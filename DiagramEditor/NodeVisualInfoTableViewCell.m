@@ -98,6 +98,19 @@
 -(void)showButtonAnimationFinished{
     [photoButton setEnabled:YES];
     showingPhotoButton = YES;
+    
+    //If this is a image, we don't need border and those things
+    [_borderColorPicker setUserInteractionEnabled:NO];
+    [_borderStylePicker setUserInteractionEnabled:NO];
+    [_HeightTextField setEnabled:NO];
+    [_widthTextField setEnabled:NO];
+    [_fillColorPicker setUserInteractionEnabled:NO];
+    
+    [_borderStylePicker setAlpha:0.5];
+    [_borderColorPicker setAlpha:0.5];
+    [_HeightTextField setAlpha:0.5];
+    [_widthTextField setAlpha:0.5];
+    [_fillColorPicker setAlpha:0.5];
 }
 
 -(void)hideImageButtonAnimated:(BOOL)animated{
@@ -115,6 +128,19 @@
                          }
                          completion:^(BOOL finished){
                              [photoButton setHidden:YES];
+                             
+                             //This will be an Icon, enable those properties
+                             [_borderColorPicker setUserInteractionEnabled:YES];
+                             [_borderStylePicker setUserInteractionEnabled:YES];
+                             [_HeightTextField setEnabled:YES];
+                             [_widthTextField setEnabled:YES];
+                             [_fillColorPicker setUserInteractionEnabled:YES];
+                             
+                             [_borderStylePicker setAlpha:1.0];
+                             [_borderColorPicker setAlpha:1.0];
+                             [_HeightTextField setAlpha:1.0];
+                             [_widthTextField setAlpha:1.0];
+                             [_fillColorPicker setAlpha:1.0];
                          }];
     }else{
         [photoButton setHidden:YES];
