@@ -105,34 +105,39 @@
     
     [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object: nil];
     //Check if touch is in some path
-    for(DrawnAlert * da in dele.drawnsArray){
-        if([self isPoint:p withinDistance:30.0 ofPath:da.path.CGPath] == YES){
-            
-            //If I created this alert
-            if([da.who.displayName isEqualToString:dele.myPeerInfo.peerID.displayName]){
-                NSLog(@"TOUCHING");
-                dele.selectedDrawn = da;
-                [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object: nil];
+    
+    //TODO disable this if the user is not showing alerts
+    if(dele.showingAnnotations == YES){
+        for(DrawnAlert * da in dele.drawnsArray){
+            if([self isPoint:p withinDistance:30.0 ofPath:da.path.CGPath] == YES){
                 
-                //TODO: Show delete button
-                dele.yonv = [[[NSBundle mainBundle] loadNibNamed:@"YesOrNoView"
-                                                           owner:self
-                                                         options:nil] objectAtIndex:0];
-                dele.yonv.delegate = self;
-                dele.yonv.al = da;
-                //[dele.yonv setCenter:p];
-                [dele.yonv setFrame:CGRectMake(p.x -dele.yonv.frame.size.width/2,
-                                               p.y -dele.yonv.frame.size.height/2,
-                                               dele.yonv.frame.size.width,
-                                               dele.yonv.frame.size.height)];
-                [self addSubview:dele.yonv];
+                //If I created this alert
+                if([da.who.displayName isEqualToString:dele.myPeerInfo.peerID.displayName]){
+                    NSLog(@"TOUCHING");
+                    dele.selectedDrawn = da;
+                    [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object: nil];
+                    
+                    //TODO: Show delete button
+                    dele.yonv = [[[NSBundle mainBundle] loadNibNamed:@"YesOrNoView"
+                                                               owner:self
+                                                             options:nil] objectAtIndex:0];
+                    dele.yonv.delegate = self;
+                    dele.yonv.al = da;
+                    //[dele.yonv setCenter:p];
+                    [dele.yonv setFrame:CGRectMake(p.x -dele.yonv.frame.size.width/2,
+                                                   p.y -dele.yonv.frame.size.height/2,
+                                                   dele.yonv.frame.size.width,
+                                                   dele.yonv.frame.size.height)];
+                    [self addSubview:dele.yonv];
+                    
+                    
+                    return;
+                }
                 
-            
-                return;
             }
-
         }
     }
+    
 }
 
 

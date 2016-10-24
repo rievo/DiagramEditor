@@ -92,6 +92,7 @@
     
     dele = (AppDelegate *) [UIApplication sharedApplication].delegate;
     
+    dele.window.rootViewController = self;
     
     palettes = [[NSMutableArray alloc] init];
     [palettesTable setDataSource:self];
