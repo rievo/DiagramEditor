@@ -325,6 +325,8 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
                 conn.targetDecorator = connectionToDo.targetDecoratorName;
                 conn.sourceDecorator = connectionToDo.sourceDecoratorName;
                 
+                if(connectionToDo.isLinkPalette == YES)
+                    conn.linkPaletteRefName = connectionToDo.linkPaletteReferenceName;
                 
                 conn.isLinkPalette = usingItem.isLinkPalette;
                 conn.className = connectionToDo.className;
@@ -912,7 +914,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         NSString * referenceName = lp.referenceInClass;
         
         //Searh this reference on class
-        PaletteItem * piSource  = [dele getPaletteItemForClassName:source.className];
+        PaletteItem * piSource  = [dele getPaletteItemForClassName:source.className andRefName:lp.referenceInClass];
         
         
         Reference * ref = [piSource getReferenceForName:referenceName];
@@ -956,7 +958,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         //User may select one of them
         for(LinkPalette * lp in linkPaletteArray){
             //PaletteItem * temp = [dele getPaletteItemForClassName:lp.className andRefName:lp.referenceInClass];
-            PaletteItem * temp = [dele getPaletteItemForClassName:lp.className];
+            PaletteItem * temp = [dele getPaletteItemForClassName:lp.className andRefName:lp.referenceInClass];
             temp.targetDecoratorName = lp.targetDecoratorName;
             temp.sourceDecoratorName = lp.sourceDecoratorName;
             NSDictionary * colorDic = lp.colorDic;

@@ -768,6 +768,7 @@
     
     //Load component details view
     compDetView.comp = temp;
+    compDetView.scroll = scrollView;
     //[compDetView prepare];
     [self showDetailsView];
     
@@ -1608,7 +1609,8 @@
         [writer writeAttribute:@"target" value:[[NSNumber numberWithInt:(int)c.target]description]];
         [writer writeAttribute:@"className" value:c.className];
         if(c.isLinkPalette == true){
-            [writer writeAttribute:@"link" value:c.linkPaletteRefName];
+            if(c.linkPaletteRefName != nil)
+                [writer writeAttribute:@"link" value:c.linkPaletteRefName];
         }
         [writer writeEndElement];
     }

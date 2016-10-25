@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -68,17 +68,29 @@
                                         <constraint firstItem="0yh-dn-1P4" firstAttribute="leading" secondItem="ZhC-sB-fOT" secondAttribute="trailing" constant="4" id="WUr-Ro-Ni8"/>
                                     </constraints>
                                 </view>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VNz-cj-wNo" userLabel="Search">
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="30" id="Bzx-Zt-Eqz"/>
+                                        <constraint firstAttribute="height" constant="30" id="hAu-bU-0rg"/>
+                                    </constraints>
+                                    <state key="normal" image="search.png"/>
+                                    <connections>
+                                        <action selector="showInCanvas:" destination="iN0-l3-epB" eventType="touchUpInside" id="n5s-cv-Yzz"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" red="0.50980395078659058" green="0.56470590829849243" blue="0.67843139171600342" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstItem="2Lp-X2-gES" firstAttribute="leading" secondItem="F5G-Xd-gpG" secondAttribute="trailing" constant="27" id="3Od-tT-J7N"/>
                                 <constraint firstAttribute="trailing" secondItem="0yh-dn-1P4" secondAttribute="trailing" constant="40" id="4wc-lO-KRB"/>
                                 <constraint firstAttribute="trailing" secondItem="2Lp-X2-gES" secondAttribute="trailing" constant="32" id="6n8-JC-vLe"/>
+                                <constraint firstItem="gfp-e9-83Z" firstAttribute="leading" secondItem="VNz-cj-wNo" secondAttribute="trailing" constant="20" id="8TH-vp-dWR"/>
                                 <constraint firstItem="0yh-dn-1P4" firstAttribute="top" secondItem="gfp-e9-83Z" secondAttribute="bottom" constant="16" id="AYf-3U-x5j"/>
                                 <constraint firstItem="XXy-KM-bF0" firstAttribute="top" secondItem="ZhC-sB-fOT" secondAttribute="bottom" constant="30" id="EAq-r0-v8I"/>
                                 <constraint firstItem="XXy-KM-bF0" firstAttribute="top" secondItem="F5G-Xd-gpG" secondAttribute="bottom" constant="16" id="EQM-pi-RK2"/>
                                 <constraint firstItem="2Lp-X2-gES" firstAttribute="top" secondItem="XdL-iG-QHV" secondAttribute="top" constant="56" id="HSA-XZ-zui"/>
                                 <constraint firstItem="ZhC-sB-fOT" firstAttribute="top" secondItem="gfp-e9-83Z" secondAttribute="bottom" constant="16" id="IAG-6Z-SB7"/>
+                                <constraint firstItem="VNz-cj-wNo" firstAttribute="top" secondItem="XdL-iG-QHV" secondAttribute="top" constant="18" id="K4L-XW-J2v"/>
                                 <constraint firstItem="gfp-e9-83Z" firstAttribute="top" secondItem="XdL-iG-QHV" secondAttribute="top" constant="18" id="SQw-UD-kas"/>
                                 <constraint firstItem="F5G-Xd-gpG" firstAttribute="top" secondItem="XdL-iG-QHV" secondAttribute="top" constant="35" id="aIR-9L-hcw"/>
                                 <constraint firstAttribute="width" constant="337" id="djV-pD-UQT"/>
@@ -124,6 +136,7 @@
         </view>
     </objects>
     <resources>
+        <image name="search.png" width="100" height="100"/>
         <image name="trash0.png" width="100" height="100"/>
     </resources>
 </document>

@@ -9,6 +9,7 @@
 #import "CreateGraphicRViewController.h"
 #import "RemovableReference.h"
 #import "PaletteItem.h"
+#import "ConfigureDiagramViewController.h"
 
 @interface CreateGraphicRViewController ()
 
@@ -193,6 +194,10 @@
     
     [textview setText:text];
     
+    NSArray * palettes = [ConfigureDiagramViewController getPalettesForContent:text];
+    Palette * pal = [palettes objectAtIndex:0];
+    [pal setFrame:CGRectMake(20, 100, self.view.frame.size.width - 2*20, pal.frame.size.height)];
+    [self.view addSubview:pal];
 }
 
 

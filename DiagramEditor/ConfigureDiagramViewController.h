@@ -82,6 +82,7 @@
 -(NSString *)extractPaletteNameFromXMLDiagram:(NSString *)cont;
 -(void)parseXMLDiagramWithText:(NSString *)text;
 
++(NSArray *)getPalettesForContent:(NSString *)c;
 
 @property NSString * contentToParse;
 

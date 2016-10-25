@@ -645,4 +645,18 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 }
 
 
+//Center canvas on this element
+- (IBAction)showInCanvas:(id)sender {
+    if(dele.isGeoPalette == NO){
+        [self setHidden:YES];
+        CGRect rectToZoom = CGRectMake(comp.frame.origin.x - (2*comp.frame.size.width),
+                                       comp.frame.origin.y - (2* comp.frame.size.height),
+                                       4*comp.frame.size.width,
+                                       4*comp.frame.size.height);
+        [_scroll zoomToRect:rectToZoom animated:YES];
+    }else{
+    }
+   
+}
+
 @end

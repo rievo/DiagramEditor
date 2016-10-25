@@ -37,6 +37,7 @@
 
 @property Component * comp;
 
+@property UIScrollView * scroll;
 - (void)prepare;
 - (IBAction)closeDetailsViw:(id)sender;
 

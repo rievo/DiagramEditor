@@ -656,8 +656,9 @@
         pi.sourceDecoratorName = resultLP.sourceDecoratorName;
         pi.targetDecoratorName = resultLP.targetDecoratorName;
         pi.lineStyle = resultLP.lineStyle;
-        
+        pi.linkPaletteReferenceName = refName;
         pi.isLinkPalette = true;
+        pi.references = selected.references;
         
         return pi;
     }else{
