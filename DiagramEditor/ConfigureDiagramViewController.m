@@ -955,6 +955,9 @@
                 }
                 
                 item.expandableItems = [[NSMutableArray alloc] init];
+                if(expandableItems.count > 0){
+                    item.isExpandable = YES;
+                }
                 
                 for(NSDictionary * expItem in expandableItems){
                     

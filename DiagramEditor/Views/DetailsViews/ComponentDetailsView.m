@@ -23,6 +23,7 @@
 #import "IntegerTableViewCell.h"
 #import "EnumTableViewCell.h"
 
+
 @interface ComponentDetailsView ()
 
 @end
@@ -654,7 +655,7 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
                                        4*comp.frame.size.width,
                                        4*comp.frame.size.height);
         [_scroll zoomToRect:rectToZoom animated:YES];
-    }else{
+    }else{ //Zoom to localization
     }
    
 }

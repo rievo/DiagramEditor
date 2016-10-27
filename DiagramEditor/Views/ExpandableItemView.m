@@ -279,16 +279,20 @@
     //[self setSelectedPaletteItem:[edges objectAtIndex:indexPath.row]];
     
     if(tableView == table){
+        //TODO: Inheritance
         Component * selected = [lp.instances objectAtIndex:indexPath.row];
         [self showInstanceInfo:selected];
     }
     
 }
-
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self endEditing:YES];
+}
 #pragma UITapGestureRecognizer methods
 -(void)handleTap: (UITapGestureRecognizer *)recog{
     [self setHidden:YES];
     [self removeFromSuperview];
+    
 }
 
 

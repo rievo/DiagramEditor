@@ -331,6 +331,8 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
                 conn.isLinkPalette = usingItem.isLinkPalette;
                 conn.className = connectionToDo.className;
                 
+                conn.references = connectionToDo.references;
+                
                 
                 
                 //conn.className = tempClassName;
