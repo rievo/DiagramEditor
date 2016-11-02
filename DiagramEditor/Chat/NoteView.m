@@ -92,9 +92,9 @@
         
         [viewToIncrust addSubview:iv];
         
-        scrollView.contentSize = CGSizeMake(scrollView.contentSize.width + iv.frame.size.width, scrollView.frame.size.height);
+        scrollView.contentSize = CGSizeMake(scrollView.contentSize.width + iv.frame.size.width + 2*margin, scrollView.frame.size.height);
         
-        [iv setBackgroundColor:[UIColor greenColor]];
+        [iv setBackgroundColor:dele.blue0];
     }
     
     
