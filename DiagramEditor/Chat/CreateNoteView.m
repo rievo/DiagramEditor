@@ -138,6 +138,9 @@
 
 - (IBAction)attachGeoposition:(id)sender {
     
+    //Go to last scroll position
+    [scrollView setContentOffset:CGPointMake(scrollView.frame.size.width*2, 0.0f) animated:YES];
+    
     locationManager = [[CLLocationManager alloc] init];
     
     locationManager.delegate = self;
@@ -282,6 +285,8 @@
     //[preview setBounds:CGRectMake(0, 0, resized.size.width/2, resized.size.height/2)];
     [preview setImage:resized];
     [preview setContentMode:UIViewContentModeScaleAspectFit];
+    
+     [scrollView setContentOffset:CGPointMake(scrollView.frame.size.width*1, 0.0f) animated:YES];
     
     
 }
