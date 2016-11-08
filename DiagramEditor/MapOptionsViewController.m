@@ -166,10 +166,9 @@
             
             MKMapItem * first = [[response mapItems]objectAtIndex:0];
             [self centerMapOnMapItem:first];
-            /*
-            for (MKMapItem *mapItem in [response mapItems]) {
-                NSLog(@"Name: %@, Placemark title: %@", [mapItem name], [[mapItem placemark] title]);
-            }*/
+            
+            
+            [self dismissViewControllerAnimated:YES completion:nil];
         } else {
             NSLog(@"Search Request Error: %@", [error localizedDescription]);
         }

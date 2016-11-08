@@ -102,6 +102,11 @@
 
 - (void)viewDidLoad {
     
+    
+    [super viewDidLoad];
+    
+
+    
     //self.view.translatesAutoresizingMaskIntoConstraints = YES;
     useImageAsIcon = true;
     
@@ -114,7 +119,35 @@
     [chatButton addGestureRecognizer:chatGR];
     
     
-    [super viewDidLoad];
+    //NOTIFICATIONS
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showComponentDetails:)
+                                                 name:@"showCompNot"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(showConnectionDetails:)
+                                                 name:@"showConnNot"
+                                               object:nil];
+    
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self
+                                            selector:@selector(updateMap:)
+                                                name:@"repaintMap"
+                                              object:nil];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self
+                                            selector:@selector(startFlyover:)
+                                                name:@"startFlyover"
+                                              object:nil];
+    
+    
+    compDetView = [[[NSBundle mainBundle] loadNibNamed:@"ComponentDetailsView"
+                                                 owner:self
+                                               options:nil] objectAtIndex:0];
+    
+
     
     
     if([self isIpadPro]){
@@ -168,35 +201,38 @@
         //Si estoy cargando un fichero
         if(dele.loadingADiagram){
             
-            for(Component * comp in dele.components){
-                [canvas addSubview:comp];
-                [comp updateNameLabel];
-            }
-            
-            
-            
-            //Load notes
-            for(Alert * al in dele.notesArray){
-                if(useImageAsIcon == YES){
-                    if(al.attach != nil)
-                        al.image = al.attach;
-                    else{
+    
+                for(Component * comp in dele.components){
+                    [canvas addSubview:comp];
+                    [comp updateNameLabel];
+                }
+                
+                
+                
+                //Load notes
+                for(Alert * al in dele.notesArray){
+                    if(useImageAsIcon == YES){
+                        if(al.attach != nil)
+                            al.image = al.attach;
+                        else{
+                            al.image = noteAlert.image;
+                        }
+                    }else{
                         al.image = noteAlert.image;
                     }
-                }else{
-                    al.image = noteAlert.image;
+                    [canvas addSubview:al];
+                    [al setUserInteractionEnabled:YES];
+                    UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showNoteContent:)];
+                    [al addGestureRecognizer:tapgr];
+                    
+                    UIPanGestureRecognizer * pang = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleNotePan:)];
+                    [al addGestureRecognizer:pang];
                 }
-                [canvas addSubview:al];
-                [al setUserInteractionEnabled:YES];
-                UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showNoteContent:)];
-                [al addGestureRecognizer:tapgr];
                 
-                UIPanGestureRecognizer * pang = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleNotePan:)];
-                [al addGestureRecognizer:pang];
-            }
+                //repaint canvas
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
             
-            //repaint canvas
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+            
         }else{
         }
         
@@ -209,38 +245,20 @@
         drawnsPolylineArray = [[NSMutableArray alloc] init];
         pathCoordinates = [[NSMutableDictionary alloc] init];
         
+        
+        if(dele.loadingADiagram == YES){
+            for(Component * comp in dele.components){
+                [self addComponentAsAnnotationToMap:comp onLatitude:comp.latitude andLongitude:comp.longitude];
+            }
+        }
+
+         [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:self];
+        
     }
     
     
     
     
-    
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showComponentDetails:)
-                                                 name:@"showCompNot"
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(showConnectionDetails:)
-                                                 name:@"showConnNot"
-                                               object:nil];
-    
-    
-    [[NSNotificationCenter defaultCenter]addObserver:self
-                                            selector:@selector(updateMap:)
-                                                name:@"repaintMap"
-                                              object:nil];
-    
-    [[NSNotificationCenter defaultCenter]addObserver:self
-                                            selector:@selector(startFlyover:)
-                                                name:@"startFlyover"
-                                              object:nil];
-    
-    
-    compDetView = [[[NSBundle mainBundle] loadNibNamed:@"ComponentDetailsView"
-                                                 owner:self
-                                               options:nil] objectAtIndex:0];
     
     
     [compDetView setDelegate:self];
@@ -908,7 +926,21 @@
     
 }
 
-
+-(void)addComponentAsAnnotationToMap:(Component *)comp
+                             onLatitude:(float) lat
+                        andLongitude:(float) lon{
+    
+    CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(lat, lon);
+    
+    
+    GeoComponentPointAnnotation * point = [[GeoComponentPointAnnotation alloc] init];
+    point.coordinate = coord;
+    point.component = comp;
+    
+    
+    [map addAnnotation:point];
+    
+}
 
 
 
@@ -1468,9 +1500,16 @@
         temp = [dele.components objectAtIndex:i];
         [writer writeStartElement:@"node"];
         
-        //[writer writeAttribute:@"shape_type" value:temp.shapeType];
-        [writer writeAttribute:@"x" value: [[NSNumber numberWithFloat:temp.center.x]description]];
-        [writer writeAttribute:@"y" value: [[NSNumber numberWithFloat:temp.center.y]description]];
+        if(temp.annotationView == nil){ //Normal canvas
+            [writer writeAttribute:@"isGeoComponent" value: @"false"];
+            [writer writeAttribute:@"x" value: [[NSNumber numberWithFloat:temp.center.x]description]];
+            [writer writeAttribute:@"y" value: [[NSNumber numberWithFloat:temp.center.y]description]];
+        }else{ //GeoPalette
+            [writer writeAttribute:@"isGeoComponent" value: @"true"];
+            [writer writeAttribute:@"lat" value: [[NSNumber numberWithFloat:temp.annotationView.coordinate.latitude]description]];
+            [writer writeAttribute:@"long" value: [[NSNumber numberWithFloat:temp.annotationView.coordinate.longitude]description]];
+        }
+        
         [writer writeAttribute:@"id" value: [[NSNumber numberWithInt:(int)temp ]description]];
         [writer writeAttribute:@"color" value:temp.colorString];
         [writer writeAttribute:@"type" value:temp.type];
@@ -1778,83 +1817,97 @@
 
 
 -(UIImage *)getImageDataFromCanvas{
-    //Get min bound
-    Component * minx = nil;
-    Component * miny = nil;
-    Component * maxx = nil;
-    Component * maxy = nil;
     
-    float minxW, minyW, maxxW, maxyW;
-    
-    for(Component * comp in dele.components){
-        //First round
-        if(minx == nil){
-            minx = comp;
-        }
-        if(miny == nil){
-            miny = comp;
-        }
-        if(maxx == nil){
-            maxx = comp;
-        }
-        if(maxy == nil){
-            maxy = comp;
+    if(dele.isGeoPalette == NO){
+        //Get min bound
+        Component * minx = nil;
+        Component * miny = nil;
+        Component * maxx = nil;
+        Component * maxy = nil;
+        
+        float minxW, minyW, maxxW, maxyW;
+        
+        for(Component * comp in dele.components){
+            //First round
+            if(minx == nil){
+                minx = comp;
+            }
+            if(miny == nil){
+                miny = comp;
+            }
+            if(maxx == nil){
+                maxx = comp;
+            }
+            if(maxy == nil){
+                maxy = comp;
+            }
+            
+            //Let's update this
+            if(comp.center.x < minx.center.x){
+                minx = comp;
+            }
+            if(comp.center.x > maxx.center.x){
+                maxx = comp;
+            }
+            if(comp.center.y < miny.center.y){
+                miny = comp;
+            }
+            if(comp.center.y >maxy.center.y){
+                maxy = comp;
+            }
         }
         
-        //Let's update this
-        if(comp.center.x < minx.center.x){
-            minx = comp;
-        }
-        if(comp.center.x > maxx.center.x){
-            maxx = comp;
-        }
-        if(comp.center.y < miny.center.y){
-            miny = comp;
-        }
-        if(comp.center.y >maxy.center.y){
-            maxy = comp;
-        }
+        minxW = minx.frame.size.width / 2;
+        minyW = miny.frame.size.height / 2;
+        maxxW = maxx.frame.size.width / 2;
+        maxyW = maxy.frame.size.height / 2;
+        
+        float textHeigh = 20;
+        float margin = 15;
+        
+        float scale = [UIScreen mainScreen].scale;
+        
+        //*2 due to retina display
+        CGRect cutRect = CGRectMake(roundf(minx.center.x -minxW-textHeigh- 2*margin)*scale,
+                                    roundf(miny.center.y - minyW - textHeigh- 2*margin)*scale,
+                                    roundf(maxx.center.x-minx.center.x + minxW + maxxW +textHeigh+ 2*margin*2)*scale,
+                                    roundf(maxy.center.y-miny.center.y + minyW + maxyW +textHeigh+ 2*margin*2)*scale);
+        
+        UIGraphicsBeginImageContextWithOptions(canvas.frame.size,
+                                               canvas.opaque,
+                                               0.0);
+        [canvas.layer renderInContext:UIGraphicsGetCurrentContext()];
+        
+        UIImage* image = nil;
+        
+        image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        
+        
+        CGImageRef imgref = image.CGImage;
+        
+        
+        CGImageRef subimage = CGImageCreateWithImageInRect(imgref, cutRect);
+        UIImage * finalImage = [UIImage imageWithCGImage:subimage];
+        
+        //NSData * data = UIImagePNGRepresentation(finalImage);
+        
+        return finalImage;
+
+    }else{
+        return [self getImageFromMap];
     }
     
-    minxW = minx.frame.size.width / 2;
-    minyW = miny.frame.size.height / 2;
-    maxxW = maxx.frame.size.width / 2;
-    maxyW = maxy.frame.size.height / 2;
-    
-    float textHeigh = 20;
-    float margin = 15;
-    
-    float scale = [UIScreen mainScreen].scale;
-    
-    //*2 due to retina display
-    CGRect cutRect = CGRectMake(roundf(minx.center.x -minxW-textHeigh- 2*margin)*scale,
-                                roundf(miny.center.y - minyW - textHeigh- 2*margin)*scale,
-                                roundf(maxx.center.x-minx.center.x + minxW + maxxW +textHeigh+ 2*margin*2)*scale,
-                                roundf(maxy.center.y-miny.center.y + minyW + maxyW +textHeigh+ 2*margin*2)*scale);
-    
-    UIGraphicsBeginImageContextWithOptions(canvas.frame.size,
-                                           canvas.opaque,
-                                           0.0);
-    [canvas.layer renderInContext:UIGraphicsGetCurrentContext()];
-    
-    UIImage* image = nil;
-    
-    image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    
-    
-    CGImageRef imgref = image.CGImage;
-    
-    
-    CGImageRef subimage = CGImageCreateWithImageInRect(imgref, cutRect);
-    UIImage * finalImage = [UIImage imageWithCGImage:subimage];
-    
-    //NSData * data = UIImagePNGRepresentation(finalImage);
-    
-    return finalImage;
 }
 
+-(UIImage *)getImageFromMap{
+    UIGraphicsBeginImageContextWithOptions(dele.map.frame.size, NO, 0.0);
+    [dele.map.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
 
 - (IBAction)exportCanvasToImage:(id)sender {
     
@@ -3703,6 +3756,7 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
         
     }else{
         Component * associated = ((GeoComponentPointAnnotation *)annotation).component;
+        GeoComponentPointAnnotation * gcpa = (GeoComponentPointAnnotation *)annotation;
         
         GeoComponentAnnotationView * pin = [[GeoComponentAnnotationView alloc] initWithAnnotation:annotation component:associated];
         
@@ -3710,6 +3764,7 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
         associated.annotationView = pin;
         
         pin.point = annotation;
+        associated.annotationView.coordinate = gcpa.coordinate;
         
         NSArray * gestureRecog = pin.gestureRecognizers;
         
@@ -3778,7 +3833,6 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
 -(void)updateMap:(NSNotification *)not{
     //Repaint polylines
     
-    NSMutableArray * toRemove = [[NSMutableArray alloc] init];
     
     for (id<MKOverlay> overlayToRemove in map.overlays)
     {

@@ -172,12 +172,18 @@
         }
         
         
+        //for each json class, get their containmet reference
+        
+        
         [table reloadData];
     }
     
     
 
 }
+
+
+
 
 
 

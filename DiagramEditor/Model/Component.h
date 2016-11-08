@@ -92,6 +92,9 @@
 
 @property GeoComponentAnnotationView * annotationView;
 
+@property float latitude;
+@property float longitude;
+
 
 -(CGPoint)getTopAnchorPoint;
 -(CGPoint)getBotAnchorPoint;

@@ -2755,6 +2755,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     float width = [[dic objectForKey:@"_width"]floatValue];
     float height = [[dic objectForKey:@"_height"]floatValue];
     
+   
     
     NSString * dragstr = [dic objectForKey:@"_isDraggable"];
     
@@ -2763,7 +2764,26 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     [temp prepare];
     
     
+    NSString * isGeoCompStr = [dic objectForKey:@"_isGeoComponent"];
+    BOOL isGeoComp = false;
+    if([isGeoCompStr isEqualToString:@"true"]){
+        isGeoComp = true;
+    }else if([isGeoCompStr isEqualToString:@"false"]){
+        isGeoComp = false;
+    }else{
+        isGeoComp = false;
+    }
+    float lat  = 0.0;
+    float longitude = 0.0;
+    if(isGeoComp == true){
+        lat= [[dic objectForKey:@"_lat"]floatValue];
+        longitude = [[dic objectForKey:@"_long"]floatValue];
+        
+        temp.latitude = lat;
+        temp.longitude = longitude;
+    }
     
+
     
     NSString * colorString = [dic objectForKey:@"_color"];
     NSString * type = [dic objectForKey:@"_type"];
@@ -2889,7 +2909,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
             }
             
             [temp.expandableItems addObject:lp];
-            int r =2;
+            
         }
     }
     
@@ -2909,6 +2929,20 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
             
             temp.image = [pi.image copy];
             
+            
+            
+            //Load linkPalettes
+            
+            NSArray * keys = [pi.linkPaletteDic allKeys];
+            temp.linkPaletteDic = [[NSMutableDictionary alloc] init];
+            for(NSString * key in keys){
+                LinkPalette * lp = [pi.linkPaletteDic objectForKey:key];
+                NSData * buffer = [NSKeyedArchiver archivedDataWithRootObject: lp];
+                LinkPalette * extracted =  [NSKeyedUnarchiver unarchiveObjectWithData: buffer];
+                [temp.linkPaletteDic setObject:extracted forKey:key];
+            }
+            
+
             [temp updateNameLabel];
         }
     }

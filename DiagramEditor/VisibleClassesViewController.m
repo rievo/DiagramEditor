@@ -56,6 +56,9 @@
             [hidden addObject:c];
         }
     }
+    
+    //[self fillContainmentReference];
+    
 
 }
 
@@ -276,8 +279,36 @@
      }
  }
 
-
-
-
+/*
+//True ok, false error
+-(BOOL) fillContainmentReference{
+    
+    JsonClass * rclass = nil;
+    
+    for(JsonClass * cl in classesArray){
+        if(cl.isRootClass){
+            rclass = cl;
+            break;
+        }
+    }
+    
+    if(rclass == nil){
+        return false;
+    }else{
+        for(JsonClass * cl in classesArray){
+            if(cl != rclass){
+                //Look cl reference in rclass
+                
+                for(Reference * ref in rclass.references){
+                    if([ref.target isEqualToString:cl.name]){
+                        cl.containmentReference = [NSString stringWithFormat:@"%@,%@", ref.owner, ref.target];
+                    }
+                }
+            }
+        }
+        return true;
+    }
+}
+*/
 
 @end
