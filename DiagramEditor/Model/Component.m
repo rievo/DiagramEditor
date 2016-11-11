@@ -105,7 +105,12 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         [textLayer setFontSize:fontSize];
         textLayer.alignmentMode = kCAAlignmentCenter;
         textLayer.truncationMode = kCATruncationStart;
-        textLayer.backgroundColor = [UIColor clearColor].CGColor;
+        if(dele.isGeoPalette == TRUE){
+            textLayer.backgroundColor = [UIColor whiteColor].CGColor;
+        }else{
+            textLayer.backgroundColor = [UIColor clearColor].CGColor;
+        }
+        
         textLayer.foregroundColor = [UIColor blackColor].CGColor; 
         [self.layer addSublayer:textLayer];
         [textLayer display];
@@ -158,7 +163,13 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
             [textLayer setFontSize:fontSize];
             textLayer.alignmentMode = kCAAlignmentCenter;
             textLayer.truncationMode = kCATruncationStart;
-            textLayer.backgroundColor = [UIColor clearColor].CGColor;
+            if(dele.isGeoPalette == YES){
+                textLayer.backgroundColor = [UIColor whiteColor].CGColor;
+            }else{
+                textLayer.backgroundColor = [UIColor clearColor].CGColor;
+            }
+            
+            
             [self.layer addSublayer:textLayer];
             
         }
@@ -186,6 +197,10 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     
     textLayer.foregroundColor = [UIColor blackColor].CGColor;
     
+    if(dele.isGeoPalette == YES){
+        textLayer.backgroundColor = [UIColor whiteColor].CGColor;
+    }
+    
     
     CGRect rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize, self.frame.size.width - (2*leftMargin),fontSize+5);
     textLayer.frame = rect;
@@ -194,7 +209,12 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     [textLayer setFontSize:fontSize];
     textLayer.alignmentMode = kCAAlignmentCenter;
     textLayer.truncationMode = kCATruncationStart;
-    textLayer.backgroundColor = [UIColor clearColor].CGColor;
+    if(dele.isGeoPalette == YES){
+         textLayer.backgroundColor = [UIColor whiteColor].CGColor;
+    }else{
+         textLayer.backgroundColor = [UIColor clearColor].CGColor;
+    }
+   
     [self.layer addSublayer:textLayer];
     
     

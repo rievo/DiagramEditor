@@ -61,7 +61,7 @@
     
     [mapTypes addObject:@"Standard"];
     [mapTypes addObject:@"Satellite"];
-    [mapTypes addObject:@"Hybryd"];
+    [mapTypes addObject:@"Hybrid"];
     [mapTypes addObject:@"Satellite flyover"];
     [mapTypes addObject:@"Hybrid flyover"];
 }
@@ -95,7 +95,7 @@
         [dele.map setMapType:MKMapTypeStandard];
     } else if([selected isEqualToString:@"Satellite"]){
         [dele.map setMapType:MKMapTypeSatellite];
-    } else if([selected isEqualToString:@"Hybryd"]){
+    } else if([selected isEqualToString:@"Hybrid"]){
         [dele.map setMapType:MKMapTypeHybrid];
     } else if([selected isEqualToString:@"Satellite flyover"]){
         [dele.map setMapType:MKMapTypeSatelliteFlyover];

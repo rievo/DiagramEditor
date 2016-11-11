@@ -254,6 +254,9 @@
 
          [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:self];
         
+        [map setNeedsDisplay];
+        
+        
     }
     
     
