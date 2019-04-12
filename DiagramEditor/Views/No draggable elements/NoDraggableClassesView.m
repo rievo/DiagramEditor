@@ -16,8 +16,9 @@
 @synthesize itemsArray, delegate, connection;
 
 -(void)awakeFromNib{
+    [super awakeFromNib];
     
-    dele = [[UIApplication sharedApplication]delegate];
+    dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
     
     [table setDataSource:self];

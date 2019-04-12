@@ -20,6 +20,8 @@
 
 @property NSMutableArray * paletteItems;
 @property NSString * name;
+@property NSString * extension;
 
-@property UISlider * sliderToChange;
+@property BOOL isGeopalette;
+
 @end

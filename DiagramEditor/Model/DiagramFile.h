@@ -15,6 +15,7 @@
 @property NSString * name;
 @property NSString * content;
 @property UIImage * previewImage;
+@property NSString * paletteExtension;
 
 
 -(void)updatePreviewForString:(NSString *)string;

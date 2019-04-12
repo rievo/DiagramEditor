@@ -21,12 +21,13 @@
     AppDelegate * dele;
     __weak IBOutlet UILabel *classLabel;
     
-    //Component * temp;
-    __weak IBOutlet UITableView *outConnectionsTable;
-    __weak IBOutlet UITableView *attributesTable;
+
+    __weak IBOutlet UITableView *table;
+
     
     NSMutableArray * connections;
     
+    __weak IBOutlet UIView *blurView;
     UITapGestureRecognizer * tapgr;
     id delegate;
     __weak IBOutlet UIView *containerView;
@@ -36,6 +37,7 @@
 
 @property Component * comp;
 
+@property UIScrollView * scroll;
 - (void)prepare;
 - (IBAction)closeDetailsViw:(id)sender;
 

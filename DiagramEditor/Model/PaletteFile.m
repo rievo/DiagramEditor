@@ -10,6 +10,6 @@
 
 @implementation PaletteFile
 
-@synthesize name, content, fromServer;
+@synthesize name, content, fromServer, ecoreURI;
 
 @end

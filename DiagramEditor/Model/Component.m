@@ -10,7 +10,8 @@
 #import "Connection.h"
 #import "Canvas.h"
 #import "PaletteItem.h"
-
+#import "LinkPalette.h"
+#import "ColorPalette.h"
 
 #import "EdgeListView.h"
 #import "EditorViewController.h"
@@ -20,6 +21,7 @@
 #import "HiddenInstancesListView.h"
 
 #import "ClassAttribute.h"
+#import "GeoComponentAnnotationView.h"
 
 #define resizeW 40
 
@@ -32,6 +34,11 @@
 
 #define kMaxScale 2.0
 #define kMinScale 1.0
+
+#define leftMargin 15
+
+#define fontSize 14
+
 
 @implementation Component
 
@@ -52,16 +59,19 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
 
 -(void)prepare{
     
-
+    dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
-    font = [UIFont fontWithName:@"Helvetica" size:10.0];
+    
+    font = [UIFont fontWithName:@"Helvetica" size:fontSize];
     
     [self addTapGestureRecognizer];
     [self addLongPressGestureRecognizer];
-    [self addPanGestureRecognizer];
+    
+    if(dele.isGeoPalette == NO)
+        [self addPanGestureRecognizer];
     
     
-    dele = [[UIApplication sharedApplication]delegate];
+    self.clipsToBounds = NO;
     
     
     self.backgroundColor = [UIColor clearColor];
@@ -70,24 +80,50 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         textLayer = [[CATextLayer alloc] init];
         
         textLayer.foregroundColor = [UIColor clearColor].CGColor;
-        CGRect rect = CGRectMake(0 - self.bounds.size.width /2, 0-20, self.frame.size.width * 2,20);
+        CGRect rect;
+        if([_labelPosition isEqualToString:@"border"]){
+            rect = CGRectMake(leftMargin - self.frame.size.width,
+                              self.frame.size.height/2 - fontSize,
+                              (self.frame.size.width * 2) - (2*leftMargin),
+                              fontSize);
+        }else if([_labelPosition isEqualToString:@"node"]){
+            rect = CGRectMake(leftMargin,
+                              self.frame.size.height/2 - fontSize,
+                              self.frame.size.width - (2*leftMargin),
+                              fontSize);
+        }else{
+            rect = CGRectMake(leftMargin - self.frame.size.width,
+                              self.frame.size.height/2 - fontSize,
+                              (self.frame.size.width * 2) - (2*leftMargin),
+                              fontSize);
+        }
+        // = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize, self.frame.size.width - 2 * leftMargin,fontSize);
         textLayer.frame = rect;
+
         textLayer.contentsScale = [UIScreen mainScreen].scale;
         [textLayer setFont:@"Helvetica-Light"];
-        [textLayer setFontSize:14];
+        [textLayer setFontSize:fontSize];
         textLayer.alignmentMode = kCAAlignmentCenter;
         textLayer.truncationMode = kCATruncationStart;
-        textLayer.backgroundColor = [UIColor clearColor].CGColor;
+        if(dele.isGeoPalette == TRUE){
+            textLayer.backgroundColor = [UIColor whiteColor].CGColor;
+        }else{
+            textLayer.backgroundColor = [UIColor clearColor].CGColor;
+        }
+        
+        textLayer.foregroundColor = [UIColor blackColor].CGColor; 
         [self.layer addSublayer:textLayer];
+        [textLayer display];
+        [self updateNameLabel];
     }else{
         //textLayer.string = name;
         [self updateNameLabel];
     }
-
+    
     
     
     [self setNeedsDisplay];
-
+    
     
 }
 
@@ -96,14 +132,17 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     self = [super initWithFrame:frame];
     if (self) {
         
-        font = [UIFont fontWithName:@"Helvetica" size:10.0];
+        font = [UIFont fontWithName:@"Helvetica" size:fontSize];
+        dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+        
         
         [self addTapGestureRecognizer];
         [self addLongPressGestureRecognizer];
-        [self addPanGestureRecognizer];
+        
+        if(dele.isGeoPalette == NO)
+            [self addPanGestureRecognizer];
         
         
-        dele = [[UIApplication sharedApplication]delegate];
         
         
         self.backgroundColor = [UIColor clearColor];
@@ -117,22 +156,28 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
             textLayer = [[CATextLayer alloc] init];
             
             textLayer.foregroundColor = [UIColor blackColor].CGColor;
-            CGRect rect = CGRectMake(0 - self.bounds.size.width /2, 0-20, self.frame.size.width * 2,20);
+            CGRect rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize, self.frame.size.width - (2*leftMargin),fontSize+5);
             textLayer.frame = rect;
             textLayer.contentsScale = [UIScreen mainScreen].scale;
             [textLayer setFont:@"Helvetica-Light"];
-            [textLayer setFontSize:14];
+            [textLayer setFontSize:fontSize];
             textLayer.alignmentMode = kCAAlignmentCenter;
             textLayer.truncationMode = kCATruncationStart;
-            textLayer.backgroundColor = [UIColor clearColor].CGColor;
+            if(dele.isGeoPalette == YES){
+                textLayer.backgroundColor = [UIColor whiteColor].CGColor;
+            }else{
+                textLayer.backgroundColor = [UIColor clearColor].CGColor;
+            }
+            
+            
             [self.layer addSublayer:textLayer];
-
+            
         }
         
         
         [self setNeedsDisplay];
         
-
+        
         
         
         //Add UIPinch
@@ -145,24 +190,34 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
 }
 
 -(void)fitNameLabel{
-
-        [textLayer removeFromSuperlayer];
-
-        textLayer = [[CATextLayer alloc] init];
-        
-        textLayer.foregroundColor = [UIColor blackColor].CGColor;
-
-        CGRect rect = CGRectMake(0 - self.bounds.size.width /2, 0-20, self.frame.size.width * 2,20);
-        textLayer.frame = rect;
-        textLayer.contentsScale = [UIScreen mainScreen].scale;
-        [textLayer setFont:@"Helvetica-Light"];
-        [textLayer setFontSize:14];
-        textLayer.alignmentMode = kCAAlignmentCenter;
-        textLayer.truncationMode = kCATruncationStart;
-        textLayer.backgroundColor = [UIColor clearColor].CGColor;
-        [self.layer addSublayer:textLayer];
-
-
+    
+    [textLayer removeFromSuperlayer];
+    
+    textLayer = [[CATextLayer alloc] init];
+    
+    textLayer.foregroundColor = [UIColor blackColor].CGColor;
+    
+    if(dele.isGeoPalette == YES){
+        textLayer.backgroundColor = [UIColor whiteColor].CGColor;
+    }
+    
+    
+    CGRect rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize, self.frame.size.width - (2*leftMargin),fontSize+5);
+    textLayer.frame = rect;
+    textLayer.contentsScale = [UIScreen mainScreen].scale;
+    [textLayer setFont:@"Helvetica-Light"];
+    [textLayer setFontSize:fontSize];
+    textLayer.alignmentMode = kCAAlignmentCenter;
+    textLayer.truncationMode = kCATruncationStart;
+    if(dele.isGeoPalette == YES){
+         textLayer.backgroundColor = [UIColor whiteColor].CGColor;
+    }else{
+         textLayer.backgroundColor = [UIColor clearColor].CGColor;
+    }
+   
+    [self.layer addSublayer:textLayer];
+    
+    
 }
 
 
@@ -195,11 +250,11 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
 
 -(void)scale:(UIPinchGestureRecognizer *)gestureRecognizer{
     /*if (pinch.state == UIGestureRecognizerStateBegan)
-        prevPinchScale = 1.0;
-    
-    float thisScale = 1 + (pinch.scale-prevPinchScale);
-    prevPinchScale = pinch.scale;
-    self.transform = CGAffineTransformScale(self.transform, thisScale, thisScale);*/
+     prevPinchScale = 1.0;
+     
+     float thisScale = 1 + (pinch.scale-prevPinchScale);
+     prevPinchScale = pinch.scale;
+     self.transform = CGAffineTransformScale(self.transform, thisScale, thisScale);*/
     if([gestureRecognizer state] == UIGestureRecognizerStateBegan) {
         // Reset the last scale, necessary if there are multiple objects with different scales
         lastScale = [gestureRecognizer scale];
@@ -209,7 +264,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         [gestureRecognizer state] == UIGestureRecognizerStateChanged) {
         
         CGFloat currentScale = [[[gestureRecognizer view].layer valueForKeyPath:@"transform.scale"] floatValue];
-
+        
         
         CGFloat newScale = 1 -  (lastScale - [gestureRecognizer scale]);
         newScale = MIN(newScale, kMaxScale / currentScale);
@@ -234,7 +289,12 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
 
 -  (void)handleLongPress:(UILongPressGestureRecognizer*)sender {
     
-    CGPoint translatedPoint =  [sender locationInView: dele.can];
+    CGPoint translatedPoint;
+    
+    if(dele.isGeoPalette == NO)
+        translatedPoint =  [sender locationInView: dele.can];
+    else
+        translatedPoint = [sender locationInView:dele.map];
     
     
     if (sender.state == UIGestureRecognizerStateEnded) {
@@ -255,24 +315,29 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
             temp = [dele.components objectAtIndex:i];
             //if(temp != self){
             
-            if(CGRectContainsPoint(temp.frame, translatedPoint)){
-                selected = temp;
+            if(dele.isGeoPalette == NO){
+                if(CGRectContainsPoint(temp.frame, translatedPoint)){
+                    selected = temp;
+                }
+            }else{
+                CGPoint pOnMap = [dele.map convertPoint:translatedPoint toView:dele.map];
+                if(CGRectContainsPoint(temp.annotationView.frame, pOnMap)){
+                    selected = temp;
+                }
             }
             //}
         }
         
         if(selected == nil){
             //No hay ningún componente en ese punto, no hacemos nada
+            NSLog(@"No component on this point");
         }else{
-            //Hay un componente, los unimos
-            //Los componentes serán self = selected
-            //Self = source   selected = target
             
-            //TODO:
             NSString * canIMakeConnection = [self checkIntegrityForSource:self
                                                                 andTarget:selected];
             
             if(canIMakeConnection == nil){
+                NSLog(@"canImakeConnection == nil");
                 Connection * conn = [[Connection alloc] init];
                 conn.source = self;
                 conn.target = selected;
@@ -280,22 +345,36 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
                 conn.targetDecorator = connectionToDo.targetDecoratorName;
                 conn.sourceDecorator = connectionToDo.sourceDecoratorName;
                 
-               
+                if(connectionToDo.isLinkPalette == YES)
+                    conn.linkPaletteRefName = connectionToDo.linkPaletteReferenceName;
+                
+                conn.isLinkPalette = usingItem.isLinkPalette;
                 conn.className = connectionToDo.className;
-               
+                
+                conn.references = connectionToDo.references;
+                
+                
+                
                 //conn.className = tempClassName;
                 
                 [conn retrieveAttributesForThisClassName];
-                [conn retrieveConnectionGraphicInfo];
+                [conn retrieveConnectionGraphicInfoWithPaletteItem:usingItem];
                 
                 [dele.connections addObject:conn];
                 
-                [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+                if(dele.isGeoPalette == YES){
+                    [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:nil];
+                }else{
+                    
+                    [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+                }
                 
                 [self showAddReferencePopupForConnection:conn];
             }else if([canIMakeConnection isEqualToString:kNotYet]){
+                NSLog(@"canImakeConnection == knotyet");
                 //Tenemos que esperar a que el usuario seleccione el tipo de conexión
             }else if([canIMakeConnection isEqualToString:kDefaultConnection]){
+                NSLog(@"canImakeConnection == kdefaultconnection");
                 Connection * conn = [[Connection alloc] init];
                 conn.source = self;
                 conn.target = targetTemp;
@@ -304,8 +383,17 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
                 
                 conn.className = kDefaultConnection;
                 
+                [conn retrieveAttributesForThisClassName];
+                [conn retrieveConnectionGraphicInfoWithPaletteItem:usingItem];
+                
                 [dele.connections addObject:conn];
-                 [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+                
+                if(dele.isGeoPalette == YES){
+                    [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:nil];
+                }else{
+                    [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+                }
+                
             }else{
                 NSLog(@"No se ha podido hacer la conexión");
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
@@ -365,12 +453,12 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
                 
                 //TODO: Check if possible connections
                 
-               /* BOOL res = [self checkIntegrityForSource:self andTarget:dele.fingeredComponent];
-                if(res == true){
-                    NSLog(@"Puedor");
-                }else{
-                    NSLog(@"No puedoor");
-                }*/
+                /* BOOL res = [self checkIntegrityForSource:self andTarget:dele.fingeredComponent];
+                 if(res == true){
+                 NSLog(@"Puedor");
+                 }else{
+                 NSLog(@"No puedoor");
+                 }*/
                 break;
             }
             dele.fingeredComponent = nil;
@@ -386,43 +474,53 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
 }
 
 
+-(void)addLineOnMapForConnection:(Connection *)conn{
+    
+}
+
 -(void)handlePanComp:(UIPanGestureRecognizer *)sender{
     
     if([dele amITheMaster] || dele.manager.session.connectedPeers.count == 0){
         
-        CGPoint translatedPoint =  [sender locationInView: dele.can];
         
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
-        
-        if(sender.state == UIGestureRecognizerStateBegan){
+        if(dele.isGeoPalette == NO){
+            CGPoint translatedPoint =  [sender locationInView: dele.can];
             
-        }else if(sender.state == UIGestureRecognizerStateChanged){
-            //NSLog(@"moooved");
-            [dele.can setNeedsDisplay];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
             
-            float halfW;
-            float halfh;
+            if(sender.state == UIGestureRecognizerStateBegan){
+                
+            }else if(sender.state == UIGestureRecognizerStateChanged){
+                //NSLog(@"moooved");
+                [dele.can setNeedsDisplay];
+                
+                float halfW;
+                float halfh;
+                
+                halfW = self.frame.size.width / 2;
+                halfh = self.frame.size.height / 2;
+                
+                
+                if(translatedPoint.x <  halfW)
+                    translatedPoint.x = halfW;
+                if(translatedPoint.x > dele.originalCanvasRect.size.width - halfW)
+                    translatedPoint.x = dele.originalCanvasRect.size.width - halfW;
+                
+                if(translatedPoint.y < halfh)
+                    translatedPoint.y = halfh;
+                if(translatedPoint.y > dele.originalCanvasRect.size.height - halfh)
+                    translatedPoint.y = dele.originalCanvasRect.size.height - halfh;
+                
+                self.center = translatedPoint;
+                
+            }else if(sender.state == UIGestureRecognizerStateEnded){
+                [dele.can setNeedsDisplay];
+            }
             
-            halfW = self.frame.size.width / 2;
-            halfh = self.frame.size.height / 2;
+        }else{
             
-            
-            if(translatedPoint.x <  halfW)
-                translatedPoint.x = halfW;
-            if(translatedPoint.x > dele.originalCanvasRect.size.width - halfW)
-                translatedPoint.x = dele.originalCanvasRect.size.width - halfW;
-            
-            if(translatedPoint.y < halfh)
-                translatedPoint.y = halfh;
-            if(translatedPoint.y > dele.originalCanvasRect.size.height - halfh)
-                translatedPoint.y = dele.originalCanvasRect.size.height - halfh;
-            
-            self.center = translatedPoint;
-            
-        }else if(sender.state == UIGestureRecognizerStateEnded){
-            [dele.can setNeedsDisplay];
         }
-
+        
     }else{
         //I am not the master. I have to ignore this
     }
@@ -443,11 +541,11 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     if([shapeType isEqualToString:@"graphicR:Ellipse"]){
         
         path = [UIBezierPath bezierPathWithOvalInRect:fixed];
-
+        
         [path setLineWidth:lw];
         
         
-
+        
         
     }else if([type isEqualToString:@"graphicR:Edge"]){
         
@@ -457,7 +555,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         [path moveToPoint:CGPointMake(2*lw, rect.size.height /2)];
         [path addLineToPoint:CGPointMake(rect.size.width - 2* lw, rect.size.height /2)];
         
-
+        
     }else if([shapeType isEqualToString:@"graphicR:Diamond"]){ //Diamond
         //fixed.origin.x = fixed.origin.x + 4* lw;
         //fixed.origin.y = fixed.origin.y + 4*lw;
@@ -474,12 +572,12 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         [path addLineToPoint:CGPointMake(fixed.origin.x + 0, fixed.origin.y + fixed.size.height/2)];
         [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width/2, fixed.origin.y + 0)];
         [path closePath];
-
+        
     }else if([shapeType isEqualToString:@"graphicR:Note"]){ //Note
         
         //fixed = CGRectMake(fixed.origin.x + 2*lw, fixed.origin.y + 2*lw, fixed.size.width, fixed.size.height);
         //fixed = self.frame;
-       path = [[UIBezierPath alloc] init];
+        path = [[UIBezierPath alloc] init];
         //[[UIColor blackColor]setStroke];
         [fillColor setFill];
         [path setLineWidth:lw];
@@ -504,7 +602,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width/7 *6, fixed.origin.y + 0)];
         [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width/7 *6, fixed.origin.y + fixed.size.height/7.0)];
         [path closePath];
-
+        
         
         
     }else if([shapeType isEqualToString:@"graphicR:ShapeCompartmentParallelogram"]){ //Parallelogram
@@ -523,7 +621,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width, fixed.origin.y + 0.0)];
         [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width/4, fixed.origin.y + 0)];
         [path closePath];
-
+        
         
     }else if(isImage){
         [image drawInRect:fixed];
@@ -539,7 +637,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width, fixed.origin.y + fixed.size.height)];
         [path addLineToPoint:CGPointMake(fixed.origin.x + fixed.size.width, fixed.origin.y )];
         [path closePath];
-
+        
         
         
     }else{
@@ -615,6 +713,9 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
             text = [text stringByAppendingString:@" "];
         }
     }
+    if (text.length == 0) {
+        text = name;
+    }
     return  text;
 }
 
@@ -629,6 +730,23 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     }
     
     name = text;
+    
+   
+    
+    
+    CGRect rect;
+    
+    if([_labelPosition isEqualToString:@"border"]){
+        rect = CGRectMake(0-self.frame.size.width/2 +leftMargin, 0 - 2*fontSize, (self.frame.size.width * 2) - (2*leftMargin),fontSize*2);
+    }else if([_labelPosition isEqualToString:@"node"]){
+        rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize, self.frame.size.width - (2*leftMargin),fontSize+10);
+    }else{
+        rect = CGRectMake(0-self.frame.size.width/2 +leftMargin ,0 - 2*fontSize, (self.frame.size.width * 2) - (2*leftMargin),fontSize*2);
+    }
+    
+    
+    [textLayer setFrame:rect];
+
     
     //textLayer.string = name;
     textLayer.string = text;
@@ -655,7 +773,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
                            andTarget: (Component *)target
                             withEdge: (PaletteItem *)pi{
     NSString * res = nil;
-    
+    usingItem = nil;
     //Sacamos, de ese tipo, cuántas conexiones pueden salir del source
     //Recorremos las referencias de source, comprobando si el target es del tipo pi.className
     
@@ -666,12 +784,12 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
     NSString * opposite;
     
     connectionToDo = pi;
-
+    
     //pi es el edge
     
     BOOL flagSource = false;
     BOOL flagTarget = false;
-
+    
     
     //Primero buscar la referencia source
     for(Reference * ref in pi.references){
@@ -779,8 +897,8 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         //Puedo hacer la conexión
         return nil;
     }
-
     
+    usingItem = pi;
     
     return res;
 }
@@ -788,87 +906,202 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
 
 -(NSString *)checkIntegrityForSource: (Component *)source
                            andTarget: (Component *)target{
-    //BOOL result = false;
+    
+    //TODO: Fix this
     
     
-    //Miramos cuántos edges tengo en la paleta
+    NSMutableArray * edgesArray = [[NSMutableArray alloc]init];
+    //Hoy many edges do we have? (for this class)
     
-    int edges = 0;
-    PaletteItem * pi = nil;
-    PaletteItem * selectedEdge = nil;
-    
-    for(int i = 0; i< dele.paletteItems.count; i++){
-        pi = [dele.paletteItems objectAtIndex:i];
-        
+    for(PaletteItem * pi in dele.paletteItems){
         if([pi.type isEqualToString:@"graphicR:Edge"]){
-            edges++;
-            selectedEdge = pi; //Solo nos importa pi en el caso de que solo haya uno
+            
+            if([pi sourceMatchesWithComponent:source] && [pi targetMatchesWithComponent:target]){
+                [edgesArray addObject:pi];
+            }
+            
         }
     }
-    NSLog(@"Tengo %d edges", edges);
     
-    //NSString * resultText;
+    //Search linkPalettes
     
-    //Pi será el selected edge
+    NSMutableArray * linkPaletteArray = [[NSMutableArray alloc] init];
     
-    if(edges == 0){
+    
+    //We will use the linkPaletteDic of the source, that is their possible link palettes
+    NSArray * keys = [source.linkPaletteDic allKeys];
+    
+    for(NSString * key in keys){ ////For each key going out from source
+        LinkPalette * lp = [source.linkPaletteDic objectForKey:key]; //Lp = {isExpandableItem, instances, anEReference, lineStyle, paletteName, colorDic, anDiagramEelement, className, referenceInClass, targetDecoratorName, sourceDecoratorName}
+        NSString * referenceName = lp.referenceInClass;
         
-        //There are no edges, just check references
-        for (Reference * ref in self.references) {
-            NSString * targetReference = ref.target; //Con qué clase puedo conectar
+        //Searh this reference on class
+        PaletteItem * piSource  = [dele getPaletteItemForClassName:source.className andRefName:lp.referenceInClass];
+        
+        
+        Reference * ref = [piSource getReferenceForName:referenceName];
+        
+        //piSource.isLinkPalette = true;
+        //piSource.linkPaletteReferenceName = ref.name;
+        //Look for this reference
+        
+        NSString * targetClassName = ref.target; //Target node has the same class?
+        
+        BOOL isKind = [target isComponentOfClass:targetClassName];
+        
+        if(isKind == YES){ //This is possible
+            [linkPaletteArray addObject:lp];
+        }
+    }
+    
+    
+    int possibles = 0;
+    possibles =  possibles + (int)linkPaletteArray.count + (int)edgesArray.count;
+    
+    if(possibles == 0){ //There are no possible connections
+        return @"Error. There are no possible connections between those classes.";
+        
+    }else if(possibles == 1){ //Take if by default
+        //[self checkIntegrityForSource:source andTarget:target withEdge:possibles[0]];
+        if(edgesArray.count > 0){ //It is an edge
+            NSString * result = [self checkIntegrityForSource:source andTarget:target withEdge:edgesArray[0]];
+            connectionToDo = edgesArray[0];
+            return  result;
+        }else{ //It is a linkPalette
+            LinkPalette * lp = [linkPaletteArray objectAtIndex:0];
+            //PaletteItem * selected = [dele getPaletteItemForClassName:lp.className andRefName:lp.referenceInClass];
+            PaletteItem * selected = [dele getPaletteItemForClassName:lp.className andRefName:lp.referenceInClass];
+            usingItem = selected;
+            NSString * result = [self checkIntegrityForSource:source andTarget:target withEdge:selected];
+            return result;
+        }
+    }else{
+        
+        //User may select one of them
+        for(LinkPalette * lp in linkPaletteArray){
+            //PaletteItem * temp = [dele getPaletteItemForClassName:lp.className andRefName:lp.referenceInClass];
+            PaletteItem * temp = [dele getPaletteItemForClassName:lp.className andRefName:lp.referenceInClass];
+            temp.targetDecoratorName = lp.targetDecoratorName;
+            temp.sourceDecoratorName = lp.sourceDecoratorName;
+            NSDictionary * colorDic = lp.colorDic;
+            NSString * colorName = [colorDic objectForKey:@"_name"];
+            temp.lineColorNameString = colorName;
+            temp.lineColor = [ColorPalette colorForString:colorName];
+            temp.dialog = lp.paletteName;
             
-            if([targetReference isEqualToString:target.className] || [target.parentClassArray containsObject:targetReference]){ //Puedo conectar con la clase destino
-                //Puedo hacer la conexión
-                targetTemp = target;
-                return kDefaultConnection;
-            }
+            temp.isLinkPalette = true;
+            temp.linkPaletteReferenceName = lp.referenceInClass;
+            
+            [edgesArray addObject:temp];
         }
         
-        return @"There are no possible references between those two items";
-    
-    }else if(edges == 1){
-        
-        NSString * result = [self checkIntegrityForSource:source andTarget:target withEdge:pi];
-        connectionToDo = selectedEdge;
-        
-        
-        return result;
-        
-        //TODO: Lo recortado en el txt
-        
-    }else{//More than 1 edge
-        sourceTemp = source;
-        targetTemp = target;
         NSLog(@"Showing popup");
         EdgeListView * elv = [[[NSBundle mainBundle] loadNibNamed:@"EdgeListView"
                                                             owner:self
                                                           options:nil] objectAtIndex:0];
         elv.targetComponent = target;
         elv.sourceComponent = source;
+        elv.edges = edgesArray;
+        
+        sourceTemp = source;
+        targetTemp = target;
+        
         
         EditorViewController * evc = dele.evc;
         
-        BOOL result = [elv reloadView];
+        [elv setFrame:evc.view.frame];
+        [evc.view addSubview:elv];
         
-        if(result == true){ //Show possible connections
-            
-            //Do we have just one or more?
-            
-            if(elv.edges.count == 1){
-                connectionToDo = [elv.edges objectAtIndex:0];
-                return nil;
-            }else{
-                [evc.view addSubview:elv];
-                [elv setFrame:evc.view.frame];
-                [elv setDelegate:self];
-                return kNotYet;
-            }
-            
-        }else{ //No possible connections
-            return @"There are no possible connections to do between those classes";
-        }
-       
+        elv.delegate = self;
+        //BOOL result = [elv reloadView];
+        
+        return kNotYet;
+        
     }
+    
+    
+    
+    
+    //Miramos cuántos edges tengo en la paleta
+    /*
+     int edges = 0;
+     PaletteItem * pi = nil;
+     PaletteItem * selectedEdge = nil;
+     
+     for(int i = 0; i< dele.paletteItems.count; i++){
+     pi = [dele.paletteItems objectAtIndex:i];
+     
+     if([pi.type isEqualToString:@"graphicR:Edge"]){
+     edges++;
+     selectedEdge = pi; //Solo nos importa pi en el caso de que solo haya uno
+     }
+     }
+     NSLog(@"Tengo %d edges", edges);*/
+    
+    
+    
+    /*
+     
+     //Pi será el selected edge
+     
+     if(edges == 0){
+     
+     //There are no edges, just check references
+     for (Reference * ref in self.references) {
+     NSString * targetReference = ref.target; //Con qué clase puedo conectar
+     
+     if([targetReference isEqualToString:target.className] || [target.parentClassArray containsObject:targetReference]){ //Puedo conectar con la clase destino
+     //Puedo hacer la conexión
+     targetTemp = target;
+     return kDefaultConnection;
+     }
+     }
+     
+     return @"x possible references between those two items";
+     
+     }else if(edges == 1){
+     
+     NSString * result = [self checkIntegrityForSource:source andTarget:target withEdge:pi];
+     connectionToDo = selectedEdge;
+     
+     
+     return result;
+     
+     //TODO: Lo recortado en el txt
+     
+     }else{//More than 1 edge
+     sourceTemp = source;
+     targetTemp = target;
+     NSLog(@"Showing popup");
+     EdgeListView * elv = [[[NSBundle mainBundle] loadNibNamed:@"EdgeListView"
+     owner:self
+     options:nil] objectAtIndex:0];
+     elv.targetComponent = target;
+     elv.sourceComponent = source;
+     
+     EditorViewController * evc = dele.evc;
+     
+     BOOL result = [elv reloadView];
+     
+     if(result == true){ //Show possible connections
+     
+     //Do we have just one or more?
+     
+     if(elv.edges.count == 1){
+     connectionToDo = [elv.edges objectAtIndex:0];
+     return nil;
+     }else{
+     [evc.view addSubview:elv];
+     [elv setFrame:evc.view.frame];
+     [elv setDelegate:self];
+     return kNotYet;
+     }
+     
+     }else{ //No possible connections
+     return @"There are no possible connections to do between those classes";
+     }
+     
+     }*/
     return @"";
 }
 
@@ -961,7 +1194,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
                          }];
     }
     
-   
+    
 }
 
 #pragma mark Description method
@@ -986,17 +1219,33 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         //TODO: conn.attributes =
         [dele.connections addObject:conn];
         
+        conn.isLinkPalette = pi.isLinkPalette;
+        conn.linkPaletteRefName = pi.linkPaletteReferenceName;
+        
         conn.lineWidth = pi.lineWidth;
         conn.lineStyle = pi.lineStyle;
         conn.lineColorNameString = pi.lineColorNameString;
         conn.lineColor = pi.lineColor;
+        if(conn.lineColorNameString == nil){
+            conn.lineColorNameString = pi.colorString;
+            conn.lineColor = [ColorPalette colorForString:conn.lineColorNameString];
+        }
+        
+        if(conn.lineColor == nil){
+            conn.lineColor = [UIColor redColor];
+        }
+        conn.sourceDecorator = pi.sourceDecoratorName;
+        conn.targetDecorator = pi.targetDecoratorName;
+        
+        [conn retrieveAttributesForThisClassName];
+        //[conn retrieveConnectionGraphicInfo:ni];
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
         
         
         //TODO: Ofrecer aquí lo de los no draggables
         [self showAddReferencePopupForConnection:conn];
-    
+        
         
         
     }else if([result isEqualToString:kNotYet]){
@@ -1045,7 +1294,7 @@ isPossibleToMakeANewAssignation:(BOOL)isPossible{
             [canvas addSubview:hilv];
         }
     }
-
+    
 }
 
 #pragma mark HiddenInstancesListViewDelegate methods
@@ -1066,7 +1315,7 @@ withSelectedComponent:(Component *)comp
         [array addObject:comp];
     }
     
-
+    
     
     [view removeFromSuperview];
     
@@ -1111,8 +1360,13 @@ withSelectedComponent:(Component *)comp
     [coder encodeObject:parentClassArray forKey:@"parentClassArray"];
     
     
+    //LinkPalettes
+    [coder encodeObject:_linkPaletteDic forKey:@"linkPaletteDic"];
+    [coder encodeObject:_expandableItems forKey:@"expandableItems"];
+    [coder encodeBool:self.isExpandable forKey:@"isExpandable"];
     
-
+    
+    
 }
 
 - (id)initWithCoder:(NSCoder *)coder {
@@ -1149,6 +1403,12 @@ withSelectedComponent:(Component *)comp
         self.containerReference  = [coder decodeObjectForKey:@"containerReference"];
         self.parentClassArray  = [coder decodeObjectForKey:@"parentClassArray"];
         
+        
+        self.linkPaletteDic = [coder decodeObjectForKey:@"linkPaletteDic"];
+        self.expandableItems = [coder decodeObjectForKey:@"expandableItems"];
+        
+        self.isExpandable = [coder decodeBoolForKey:@"isExpandable"];
+        
         self.backgroundColor = [UIColor clearColor];
         
         [self setUserInteractionEnabled:YES];
@@ -1159,7 +1419,17 @@ withSelectedComponent:(Component *)comp
         textLayer = [[CATextLayer alloc] init];
         
         textLayer.foregroundColor = [UIColor clearColor].CGColor;
-        CGRect rect = CGRectMake(0 - self.bounds.size.width /2, 0-20, self.frame.size.width * 2,20);
+        
+        CGRect rect;
+        if([_labelPosition isEqualToString:@"node"]){
+            rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize, self.frame.size.width - (2*leftMargin),fontSize+5);
+        }else if([_labelPosition isEqualToString:@"border"]){
+            
+            rect = CGRectMake(leftMargin - self.frame.size.width, self.frame.size.height/2 - fontSize, (self.frame.size.width * 2) - (2*leftMargin),fontSize);
+        }else{
+            rect = CGRectMake(leftMargin - self.frame.size.width, self.frame.size.height/2 - fontSize, (self.frame.size.width * 2) - (2*leftMargin),fontSize+5);
+        }
+        
         textLayer.frame = rect;
         textLayer.contentsScale = [UIScreen mainScreen].scale;
         [textLayer setFont:@"Helvetica-Light"];
@@ -1168,12 +1438,22 @@ withSelectedComponent:(Component *)comp
         textLayer.truncationMode = kCATruncationStart;
         textLayer.backgroundColor = [UIColor clearColor].CGColor;
         [self.layer addSublayer:textLayer];
-
+        
         [self updateNameLabel];
-
+        
     }
     return self;
 }
+
+
+-(BOOL)isComponentOfClass:(NSString *)cname{
+    if([className isEqualToString:cname] || [parentClassArray containsObject:cname]){
+        return  YES;
+    }else{
+        return NO;
+    }
+}
+
 
 
 @end

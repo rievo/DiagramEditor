@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -17,13 +17,6 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eQl-nR-YRz">
                             <rect key="frame" x="53" y="41" width="275" height="314"/>
                             <subviews>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="interactive" text="Text..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="GPl-OJ-GGV">
-                                    <rect key="frame" x="8" y="37" width="259" height="164"/>
-                                    <color key="backgroundColor" red="0.7137255072593689" green="0.74901962280273438" blue="0.81960785388946533" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="textColor" red="0.13333334028720856" green="0.21176470816135406" blue="0.37647059559822083" alpha="1" colorSpace="calibratedRGB"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                </textView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cM1-Gm-vhK">
                                     <rect key="frame" x="148" y="270" width="101" height="38"/>
                                     <color key="backgroundColor" red="0.2274509817" green="0.3058823645" blue="0.47058823700000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -75,30 +68,38 @@
                                     <color key="textColor" red="0.7137255072593689" green="0.74901962280273438" blue="0.81960785388946533" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ymD-MK-eAx">
-                                    <rect key="frame" x="8" y="161" width="74" height="88"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Va-5d-Ntf">
+                                    <rect key="frame" x="170" y="209" width="40" height="40"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="88" id="8qo-Td-O4T"/>
-                                        <constraint firstAttribute="width" constant="74" id="OBb-yh-gt3"/>
+                                        <constraint firstAttribute="width" constant="40" id="iAU-Iu-vY5"/>
+                                        <constraint firstAttribute="height" constant="40" id="nWd-ua-eez"/>
                                     </constraints>
-                                </imageView>
+                                    <state key="normal" image="geoposition.png"/>
+                                    <connections>
+                                        <action selector="attachGeoposition:" destination="iN0-l3-epB" eventType="touchUpInside" id="zOs-ai-224"/>
+                                    </connections>
+                                </button>
+                                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IfJ-w7-LQW">
+                                    <rect key="frame" x="8" y="37" width="259" height="164"/>
+                                    <color key="backgroundColor" red="0.64445112179487185" green="0.14827896078648253" blue="0.16718544842252522" alpha="1" colorSpace="calibratedRGB"/>
+                                </scrollView>
                             </subviews>
                             <color key="backgroundColor" red="0.35686275362968445" green="0.42745098471641541" blue="0.57254904508590698" alpha="0.0" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstItem="Dzd-Wv-bnb" firstAttribute="top" secondItem="ymD-MK-eAx" secondAttribute="bottom" constant="21" id="2xB-GR-Zr4"/>
+                                <constraint firstItem="vx1-GL-bYt" firstAttribute="leading" secondItem="5Va-5d-Ntf" secondAttribute="trailing" constant="17" id="4dc-rn-KhS"/>
                                 <constraint firstItem="eEl-X9-IKL" firstAttribute="top" secondItem="eQl-nR-YRz" secondAttribute="top" constant="8" id="8s8-8b-EBo"/>
-                                <constraint firstItem="GPl-OJ-GGV" firstAttribute="top" secondItem="eEl-X9-IKL" secondAttribute="bottom" constant="8" id="9ze-JQ-bbH"/>
-                                <constraint firstItem="vx1-GL-bYt" firstAttribute="top" secondItem="GPl-OJ-GGV" secondAttribute="bottom" constant="8" id="Cg1-v1-d0e"/>
+                                <constraint firstItem="IfJ-w7-LQW" firstAttribute="leading" secondItem="eQl-nR-YRz" secondAttribute="leading" constant="8" id="Df2-SD-xzo"/>
+                                <constraint firstItem="IfJ-w7-LQW" firstAttribute="top" secondItem="eEl-X9-IKL" secondAttribute="bottom" constant="8" id="EA4-dN-kOc"/>
+                                <constraint firstItem="Dzd-Wv-bnb" firstAttribute="top" secondItem="IfJ-w7-LQW" secondAttribute="bottom" constant="69" id="I08-Lc-PnK"/>
+                                <constraint firstItem="vx1-GL-bYt" firstAttribute="top" secondItem="IfJ-w7-LQW" secondAttribute="bottom" constant="8" id="IJg-bI-Kpz"/>
                                 <constraint firstAttribute="width" constant="275" id="IZb-gc-dem"/>
                                 <constraint firstAttribute="trailing" secondItem="vx1-GL-bYt" secondAttribute="trailing" constant="8" id="L6f-KC-UkY"/>
-                                <constraint firstItem="ymD-MK-eAx" firstAttribute="leading" secondItem="eQl-nR-YRz" secondAttribute="leading" constant="8" id="MWh-xo-4bP"/>
-                                <constraint firstItem="GPl-OJ-GGV" firstAttribute="leading" secondItem="eQl-nR-YRz" secondAttribute="leading" constant="8" id="Vam-Eb-rfU"/>
                                 <constraint firstAttribute="bottom" secondItem="cM1-Gm-vhK" secondAttribute="bottom" constant="6" id="atJ-e3-2bK"/>
                                 <constraint firstItem="eEl-X9-IKL" firstAttribute="centerX" secondItem="eQl-nR-YRz" secondAttribute="centerX" id="dCs-Ia-CBO"/>
                                 <constraint firstAttribute="trailing" secondItem="cM1-Gm-vhK" secondAttribute="trailing" constant="26" id="eKw-lo-8EW"/>
-                                <constraint firstAttribute="trailing" secondItem="GPl-OJ-GGV" secondAttribute="trailing" constant="8" id="fWh-Wy-SDu"/>
+                                <constraint firstAttribute="trailing" secondItem="IfJ-w7-LQW" secondAttribute="trailing" constant="8" id="ft7-ku-z0T"/>
+                                <constraint firstItem="5Va-5d-Ntf" firstAttribute="top" secondItem="IfJ-w7-LQW" secondAttribute="bottom" constant="8" id="oQE-Z0-TqS"/>
                                 <constraint firstAttribute="bottom" secondItem="Dzd-Wv-bnb" secondAttribute="bottom" constant="8" id="ot0-vi-J1R"/>
-                                <constraint firstItem="Dzd-Wv-bnb" firstAttribute="top" secondItem="GPl-OJ-GGV" secondAttribute="bottom" constant="69" id="rhj-gQ-Tma"/>
                                 <constraint firstItem="Dzd-Wv-bnb" firstAttribute="leading" secondItem="eQl-nR-YRz" secondAttribute="leading" constant="25" id="vlo-F1-4sN"/>
                                 <constraint firstAttribute="height" constant="314" id="wgT-ob-xgN"/>
                             </constraints>
@@ -126,13 +127,13 @@
                 <outlet property="background" destination="wUt-7l-m5e" id="hKx-PA-Ukg"/>
                 <outlet property="cameraButton" destination="vx1-GL-bYt" id="cBf-ZJ-wg0"/>
                 <outlet property="container" destination="eQl-nR-YRz" id="VOO-Cb-h17"/>
-                <outlet property="preview" destination="ymD-MK-eAx" id="qZY-DD-qgU"/>
-                <outlet property="textView" destination="GPl-OJ-GGV" id="urQ-7T-56V"/>
+                <outlet property="scrollView" destination="IfJ-w7-LQW" id="zhf-LN-9dV"/>
             </connections>
             <point key="canvasLocation" x="339" y="208.5"/>
         </view>
     </objects>
     <resources>
         <image name="addImage.png" width="100" height="100"/>
+        <image name="geoposition.png" width="100" height="100"/>
     </resources>
 </document>

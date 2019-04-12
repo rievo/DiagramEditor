@@ -17,6 +17,7 @@
 
 
 -(void)awakeFromNib{
+    [super awakeFromNib];
     UITapGestureRecognizer * tapGr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     tapGr.delegate = self;
     [background addGestureRecognizer:tapGr];

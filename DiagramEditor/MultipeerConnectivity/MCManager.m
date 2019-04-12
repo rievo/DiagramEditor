@@ -19,7 +19,7 @@
     self = [super init];
     if (self) {
         
-        dele = [[UIApplication sharedApplication]delegate];
+        dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
         
         
         peerId = [[MCPeerID alloc] initWithDisplayName:[[UIDevice currentDevice] name]];

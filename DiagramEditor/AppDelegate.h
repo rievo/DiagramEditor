@@ -12,8 +12,11 @@
 #import "Constants.h"
 #import "PeerInfo.h"
 #import "TutorialSheet.h"
+#import "Palette.h"
+#import <MapKit/MapKit.h>
 
 
+@class PaletteFile;
 @class Canvas;
 @class Component;
 @class PaletteItem;
@@ -33,7 +36,7 @@
 @property NSMutableDictionary * elementsDictionary;
 
 @property NSMutableArray * paletteItems;
-
+@property BOOL isGeoPalette;
 
 @property UIColor * blue0;
 @property UIColor * blue1;
@@ -42,10 +45,12 @@
 @property UIColor * blue4;
 
 @property Canvas * can;
+@property MKMapView * map;
 @property EditorViewController * evc;
 @property CGRect originalCanvasRect;
 
-@property NSString * currentPaletteFileName;
+@property PaletteFile * currentPaletteFile;
+//@property NSString * currentPaletteFileName;
 @property NSString * subPalette;
 
 
@@ -95,6 +100,20 @@
 
 @property TutorialSheet * tutSheet;
 
+
+@property NSMutableArray * noVisibleItems;
+
+@property NSMutableDictionary * colorDic;
+
+@property Palette * paletteView;
+@property float paletteW;
+@property float paletteH;
+@property NSString * paletteExtension;
+
+@property BOOL inMultipeerMode;
+
+@property NSMutableDictionary * enumsDic;
+
 -(int)getOutConnectionsForComponent: (Component *)comp
                              ofType: (NSString * )type;
 -(int)getInConnectionsForComponent: (Component *)comp
@@ -107,6 +126,7 @@
 
 -(void)recoverInfoFromData: (NSData *)data;
 
+-(PaletteItem *) getPaletteItemForClassName:(NSString *)name andRefName:(NSString *)refName;
 -(PaletteItem *) getPaletteItemForClassName:(NSString *)name;
 
 -(void) completeClassAttribute:(ClassAttribute *)ca
@@ -115,6 +135,7 @@
 -(BOOL)amITheMaster;
 -(BOOL)amITheServer;
 
+-(UIColor*)getColorForPeerWithName:(NSString *) name;
 
 +(NSString *)getBase64StringFromImage:(UIImage *)image;
 +(UIImage *)getImageFromBase64String:(NSString *)string;

@@ -7,6 +7,7 @@
 //
 
 #import "Alert.h"
+#import "AlertAnnotationView.h"
 
 @implementation Alert
 

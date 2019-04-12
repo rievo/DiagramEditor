@@ -25,7 +25,7 @@
 
 
 -(void)prepare{
-    dele = [[UIApplication sharedApplication]delegate];
+    dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
 }
 
 

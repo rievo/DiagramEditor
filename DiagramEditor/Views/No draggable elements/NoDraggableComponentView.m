@@ -15,6 +15,9 @@
 #import "BooleanAttributeTableViewCell.h"
 #import "GenericAttributeTableViewCell.h"
 #import "ReferenceTableViewCell.h"
+#import "DoubleTableViewCell.h"
+#import "IntegerTableViewCell.h"
+#import "EnumTableViewCell.h"
 
 @implementation NoDraggableComponentView
 
@@ -22,6 +25,7 @@
 
 
 -(void)awakeFromNib{
+    [super awakeFromNib];
     UITapGestureRecognizer * tapGr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [background addGestureRecognizer:tapGr];
     [tapGr setDelegate:self];
@@ -33,7 +37,16 @@
     attributesTable.delegate = self;
     attributesTable.dataSource = self;
     
-    dele = [[UIApplication sharedApplication]delegate];
+    dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+    
+    if([dele amITheMaster] || dele.inMultipeerMode == NO){
+        
+        [createInstanceButton setEnabled:YES];
+        [createInstanceButton setAlpha:1.0];
+    }else{
+        [createInstanceButton setEnabled:NO];
+        [createInstanceButton setAlpha:0.5];
+    }
     
     oldFrame = itemInfoGroup.frame;
     outCenter = CGPointMake(container.center.x, background.frame.size.height + itemInfoGroup.frame.size.height);
@@ -190,7 +203,7 @@
             cell.textLabel.text = atr.name;
             //cell.textLabel.text = @"--";
             //Component * comp = [thisArray objectAtIndex:indexPath.row];*/
-            if([[temporalComponent.attributes objectAtIndex:indexPath.row]isKindOfClass:[ClassAttribute class]]){
+            /*if([[temporalComponent.attributes objectAtIndex:indexPath.row]isKindOfClass:[ClassAttribute class]]){
                 
                 ClassAttribute * attr = [temporalComponent.attributes objectAtIndex:indexPath.row];
                 NSString * type = attr.type;
@@ -246,6 +259,164 @@
                 
                 
                 return nil;
+            }*/
+            
+            
+            ClassAttribute * attr = [temporalComponent.attributes objectAtIndex:indexPath.row];
+            NSString * type = attr.type;
+            
+            if([type isEqualToString:@"EString"]){
+                StringAttributeTableViewCell * atvc = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+                
+                if(atvc == nil){
+                    NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"StringAttributeTableViewCell"
+                                                                  owner:self
+                                                                options:nil];
+                    atvc = [nib objectAtIndex:0];
+                    atvc.attributeNameLabel.text = attr.name;
+                    atvc.backgroundColor = [UIColor clearColor];
+                    atvc.comp = temporalComponent;
+                    atvc.associatedAttribute = attr;
+                
+                    
+                    
+                    if([dele amITheMaster] || dele.inMultipeerMode == NO){
+                        [atvc.textField setEnabled:YES];
+                    }else{
+                        [atvc.textField setEnabled:NO];
+                    }
+                    
+                    for(ClassAttribute * atr in temporalComponent.attributes){
+                        if([atr.name isEqualToString:atvc.attributeNameLabel.text]){
+                            atvc.textField.text =  atr.currentValue ;
+                        }
+                    }
+
+                    atvc.selectionStyle = UITableViewCellSelectionStyleNone;
+                }
+                return atvc;
+                
+            }else if([type isEqualToString:@"EBoolean"] || [type isEqualToString:@"EBooleanObject"]){
+                BooleanAttributeTableViewCell * batvc = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+                if(batvc == nil){
+                    NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"BooleanAttributeTableViewCell"
+                                                                  owner:self
+                                                                options:nil];
+                    batvc = [nib objectAtIndex:0];
+                    batvc.nameLabel.text = attr.name;
+                    //batvc.typeLabel.text = attr.type;
+                    batvc.associatedAttribute = attr;
+                    batvc.backgroundColor = [UIColor clearColor];
+                    
+                    if([dele amITheMaster]|| dele.inMultipeerMode == NO){
+                        [batvc.switchValue setEnabled:YES];
+                    }else{
+                        [batvc.switchValue setEnabled:NO];
+                    }
+                    
+                    //Update switch value for this attribute value
+                    if(attr.currentValue == nil){
+                        [batvc.switchValue setOn:NO];
+                    }else if([attr.currentValue isEqualToString: @"false"]){
+                        [batvc.switchValue setOn:NO];
+                    }else if([attr.currentValue isEqualToString:@"true"]){
+                        [batvc.switchValue setOn:YES];
+                    }
+                    
+                    batvc.selectionStyle = UITableViewCellSelectionStyleNone;
+                    
+                }
+                return batvc;
+            }else if([type isEqualToString:@"EDouble"] || [type isEqualToString:@"EFloat"]){
+                
+                DoubleTableViewCell * datvc = [tableView dequeueReusableCellWithIdentifier:@"DoubleCell"];
+                if(datvc == nil){
+                    NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"DoubleTableViewCell"
+                                                                  owner:self
+                                                                options:nil];
+                    datvc = [nib objectAtIndex:0];
+                    datvc.label.text = attr.name;
+                    datvc.associatedAttribute = attr;
+                    datvc.backgroundColor = [UIColor clearColor];
+                    datvc.comp = temporalComponent;
+                    
+                    if([dele amITheMaster]|| dele.inMultipeerMode == NO){
+                        [datvc.textField setEnabled:YES];
+                    }else{
+                        [datvc.textField setEnabled:NO];
+                    }
+                    
+                    //Update textfield value for this attribute value
+                    [datvc.textField setText:attr.currentValue];
+                    datvc.selectionStyle = UITableViewCellSelectionStyleNone;
+                }
+                return  datvc;
+                
+            }else if([type isEqualToString:@"EInt"] || [type isEqualToString:@"EInteger"]){
+                
+                IntegerTableViewCell * iatvc = [tableView dequeueReusableCellWithIdentifier:@"IntCell"];
+                if(iatvc == nil){
+                    NSArray * nib = [[NSBundle mainBundle]loadNibNamed:@"IntegerTableViewCell" owner:self options:nil];
+                    iatvc  = [nib objectAtIndex:0];
+                    iatvc.label.text = attr.name;
+                    iatvc.associatedAttribute = attr;
+                    iatvc.backgroundColor = [UIColor clearColor];
+                    iatvc.comp = temporalComponent;
+                    
+                    if([dele amITheMaster]|| dele.inMultipeerMode == NO){
+                        [iatvc.textField setEnabled:YES];
+                    }else{
+                        [iatvc.textField setEnabled:NO];
+                    }
+                    [iatvc.textField setText:attr.currentValue];
+                    iatvc.selectionStyle = UITableViewCellSelectionStyleNone;
+                }
+                return iatvc;
+            }else{
+                
+                //It is an enum?
+                if([dele.enumsDic objectForKey:attr.type] != nil){
+                    NSArray * options = [dele.enumsDic objectForKey:attr.type];
+                    EnumTableViewCell * etvc = [tableView dequeueReusableCellWithIdentifier:@"enumID"];
+                    if(etvc == nil){
+                        NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"EnumTableViewCell"
+                                                                      owner:self
+                                                                    options:nil];
+                        etvc = [nib objectAtIndex:0];
+                        etvc.options = options;
+                        etvc.label.text = attr.name;
+                        etvc.backgroundColor = [UIColor clearColor];
+                        etvc.comp = temporalComponent;
+                        etvc.associatedAttribute = attr;
+                
+                        if([dele amITheMaster]|| dele.inMultipeerMode == NO){
+                            [etvc.optionsPicker setUserInteractionEnabled:YES];
+                        }else{
+                            [etvc.optionsPicker setUserInteractionEnabled:NO];
+                        }
+                        
+                        [etvc prepare];
+                        etvc.selectionStyle = UITableViewCellSelectionStyleNone;
+                        
+                    }
+                    return etvc;
+                }else{
+                    GenericAttributeTableViewCell * gatvc = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+                    if(gatvc == nil){
+                        NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"GenericAttributeTableViewCell"
+                                                                      owner:self
+                                                                    options:nil];
+                        gatvc = [nib objectAtIndex:0];
+                        gatvc.nameLabel.text =  [NSString stringWithFormat:@"%@: %@", attr.name, attr.type];//attr.name;
+                        //gatvc.typeLabel.text = attr.type;
+                        gatvc.backgroundColor = [UIColor clearColor];
+                        gatvc.selectionStyle = UITableViewCellSelectionStyleNone;
+                        
+                        
+                    }
+                    return gatvc;
+                }
+                
             }
 
         }
@@ -270,15 +441,15 @@
     
     if(tableView == attributesTable){
         if([[temporalComponent.attributes objectAtIndex:indexPath.row] isKindOfClass:[ClassAttribute class]]){
-            return 35;
+            return 45;
         }else{
             return 0;
         }
     }else{
-        return 35;
+        return 45;
     }
     
-    return 35;
+    return 45;
 }
 
 

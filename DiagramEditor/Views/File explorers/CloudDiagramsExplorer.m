@@ -19,6 +19,7 @@
 
 -(void)awakeFromNib{
     
+    [super awakeFromNib];
     
     UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [background addGestureRecognizer:tapgr];
@@ -41,7 +42,7 @@
    
     [collection registerNib:[UINib nibWithNibName:@"CloudFileCollectionViewCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:@"Cell"];
     
-    dele = [[UIApplication sharedApplication]delegate];
+    dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
 }
 
@@ -75,6 +76,7 @@
                      df.name = [fileDic objectForKey:@"name"];
                      df.dateString = [fileDic objectForKey:@"dateString"];
                      df.content = [fileDic objectForKey:@"content"];
+                     df.paletteExtension = [fileDic objectForKey:@"paletteExtension"];
                      
                      [df updatePreviewForString:[fileDic objectForKey:@"imageString"]];
                      [filesArray addObject:df];

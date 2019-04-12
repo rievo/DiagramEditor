@@ -12,7 +12,7 @@
 #import "Canvas.h"
 #import "ComponentDetailsView.h"
 #import "ConnectionDetailsView.h"
-#import "SaveNameView.h"
+
 #import "SureView.h"
 #import "EdgeListView.h"
 #import "SessionUsersView.h"
@@ -21,6 +21,7 @@
 @class Palette;
 @class PaletteItem;
 @class ComponentDetailsView;
+@class NoteView;
 
 #import "DrawingView.h"
 
@@ -31,16 +32,17 @@
 UIGestureRecognizerDelegate,
 UIScrollViewDelegate,
 ComponentDetailsViewDelegate,
-SaveNameDelegate,
 ConnectionDetailsViewDelegate,
 SureViewDelegate,
 EdgeListDelegate,
 MCBrowserViewControllerDelegate,
 CreateNoteViewDelegate,
-DrawingViewDelegate
+DrawingViewDelegate,
+MKMapViewDelegate
 >{
     AppDelegate * dele;
-    __weak IBOutlet Palette *palette;
+
+    Palette *palette;
     
     PaletteItem * tempIcon;
     __weak IBOutlet UIButton *newDiagram;
@@ -65,7 +67,7 @@ DrawingViewDelegate
     UIView * containerView;
     
     UIView * saveBackgroundBlackView;
-    SaveNameView * snv;
+
     
     NSString * textToSave;
     NSString * oldFileName;
@@ -142,6 +144,23 @@ DrawingViewDelegate
     float originalSheetHeight;
     __weak IBOutlet UIButton *findOutlet;
     __weak IBOutlet UIButton *changePaletteOutlet;
+    
+    CreateNoteView * tempCreateNote;
+    NoteView * tempNoteView;
+    
+    UIView * grayView;
+    IBOutlet MKMapView *map;
+    
+    NSMutableArray * camerasArray;
+    NSTimer * flyoverTimer;
+    int componentIndexFlyover;
+    
+    NSMutableDictionary * connOverlayDic;
+    
+    
+    IBOutlet UIButton *mapOptionsButton;
+    NSMutableArray * drawnsPolylineArray;
+    NSMutableDictionary * pathCoordinates;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 

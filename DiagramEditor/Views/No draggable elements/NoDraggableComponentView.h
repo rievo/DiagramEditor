@@ -33,6 +33,7 @@
     
     Component * temporalComponent;
     __weak IBOutlet UILabel *instancesCountLabel;
+    IBOutlet UIButton *createInstanceButton;
 }
 
 - (IBAction)addCurrentNode:(id)sender;

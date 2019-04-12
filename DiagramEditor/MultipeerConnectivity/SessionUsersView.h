@@ -23,6 +23,6 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *table;
 -(void)prepare;
-
+-(void)reload;
 
 @end

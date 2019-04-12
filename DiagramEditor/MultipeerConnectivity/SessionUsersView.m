@@ -11,19 +11,18 @@
 #import "MCManager.h"
 #import "Constants.h"
 #import "PeerInfo.h"
+#import "SessionUserCell.h"
 
 @implementation SessionUsersView
 
 @synthesize table;
 
--(void)awakeFromNib{
-
+-(void)reload{
+    //Reload table
+    [self recoverUsersFromAppDelegateSession];
 }
-
-
-
 -(void)recoverUsersFromAppDelegateSession{
-    dele = [[UIApplication sharedApplication]delegate];
+    dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     NSArray * peers = dele.manager.session.connectedPeers;
     
     usersArray = [[NSMutableArray alloc] init];
@@ -126,6 +125,45 @@
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *MyIdentifier = @"cellUser";
+    SessionUserCell * cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+    
+    
+    NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"SessionUserCell"
+                                                  owner:self
+                                                options:nil];
+    cell = [nib objectAtIndex:0];
+    
+    MCPeerID * peer = [usersArray objectAtIndex:indexPath.row];
+    NSString * text = peer.displayName;
+    
+    cell.backgroundColor = [UIColor clearColor];
+    cell.nameLabel.text = text;
+    
+    
+    UIColor * color = [dele getColorForPeerWithName:peer.displayName];
+    //UIColor * color = [dele.colorDic objectForKey:peer.displayName];
+    
+    if(color == nil){
+        cell.colorView.backgroundColor = [UIColor redColor];
+    }else{
+        cell.colorView.backgroundColor = color;
+    }
+    
+    if(peer  == dele.serverId.peerID){
+        cell.colorView.backgroundColor = dele.myColor;
+        cell.serverLabel.text = @"(S)";
+    }else{
+        cell.serverLabel.text = @"";
+    }
+    
+    if(peer.displayName == dele.currentMasterId.peerID.displayName){
+        cell.masterLabel.text = @"(M)";
+    }else{
+        cell.masterLabel.text = @"";
+    }
+    
+    return cell;
+    /*
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
     MCPeerID * peer = [usersArray objectAtIndex:indexPath.row];
@@ -158,7 +196,7 @@
     
     //[cells setObject:cell forKey:indexPath];
     //}
-    return cell;
+    return cell;*/
 }
 
 
@@ -262,6 +300,9 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
                                                        object:nil
                                                      userInfo:dic];
     [table endEditing:YES];
+    
+    //Reload table
+    [self recoverUsersFromAppDelegateSession];
 }
 
 

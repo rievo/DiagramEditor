@@ -14,6 +14,7 @@
 @synthesize textField, attributeNameLabel, comp, detailsPreview, associatedAttribute;
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     // Initialization code
     
     //Si tiene ya valor dado este atributo, se lo damos al texto

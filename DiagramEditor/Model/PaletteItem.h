@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @class Component;
-
+@class Reference;
 
 @interface PaletteItem : UIView <NSCoding>
 
@@ -24,6 +24,9 @@
 @property BOOL isImage;
 @property BOOL isDragable;
 
+
+@property BOOL isLinkPalette;
+@property NSString * linkPaletteReferenceName;
 
 //Edge
 @property NSNumber * lineWidth;
@@ -71,8 +74,15 @@
 
 @property NSMutableArray * labelsAttributesArray;
 
+@property NSMutableDictionary * linkPaletteDic;
+
+@property NSString * labelPosition;
+
+@property BOOL isExpandable;
+@property NSMutableArray * expandableItems;
 
 -(Component *)getComponentForThisPaletteItem;
+-(Reference *)getReferenceForName:(NSString *)name;
 
 -(void)updatePath: (UIBezierPath *)line
          forStyle: (NSString *)style;
@@ -80,4 +90,9 @@
 
 -(NSString *)getSourceClassName;
 -(NSString *)getTargetClassName;
+
+-(BOOL)isPaletteItemOfClass:(NSString *)cname;
+
+-(BOOL)targetMatchesWithComponent:(Component *)targetNode;
+-(BOOL)sourceMatchesWithComponent:(Component *)source;
 @end

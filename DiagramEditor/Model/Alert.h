@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 #import "Component.h"
+@class AlertAnnotationView;
 
 @interface Alert : UIImageView<NSCoding>
 
@@ -18,8 +20,11 @@
 @property NSDate * date;
 @property UIImage * attach;
 @property Component * associatedComponent;
+@property CLLocation * location;
 
 @property NSString * aCId;
 @property int identifier;
+
+@property AlertAnnotationView * associatedAnnotationView;
 
 @end

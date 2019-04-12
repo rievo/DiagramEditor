@@ -24,6 +24,7 @@
 
 
 -(void)awakeFromNib{
+    [super awakeFromNib];
     UITapGestureRecognizer * tapGr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [background addGestureRecognizer:tapGr];
 }
@@ -33,7 +34,7 @@
     
     [classesTable reloadData];
     
-    dele = [[UIApplication sharedApplication]delegate];
+    dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
 }
 

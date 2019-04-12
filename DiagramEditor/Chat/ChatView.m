@@ -23,25 +23,13 @@
 static const CGFloat KEYBOARD_ANIMATION_DURATION = 0.3;
 
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
-
--(void)awakeFromNib{
-    
-}
-
 - (IBAction)sendMessage:(id)sender {
     [self sendMessageAndClear];
 }
 
 -(void)prepare{
     
-    dele = [[UIApplication sharedApplication]delegate];
+    dele =(AppDelegate *) [[UIApplication sharedApplication]delegate];
     
     //tf.delegate = self;
     dele.messagesArray = [[NSMutableArray alloc] init];
@@ -52,7 +40,7 @@ static const CGFloat KEYBOARD_ANIMATION_DURATION = 0.3;
 
     dic = [[NSMutableDictionary alloc] init];
     
-    dele = [[UIApplication sharedApplication]delegate];
+    dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
     whoFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:9.0];
     bodyFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:11.0];
@@ -261,60 +249,11 @@ static const CGFloat KEYBOARD_ANIMATION_DURATION = 0.3;
 
 }
 
-/*
-+ (CGFloat)heightWithText:(NSString *)text
-{
-    SizingLabel.text = text;
-    CGSize labelSize = [SizingLabel sizeThatFits:CGSizeMake(LABEL_WIDTH, CGFLOAT_MAX)];
-    
-    return (TOP_MARGIN + labelSize.height + BOTTOM_MARGIN);
-}*/
 
 #pragma mark UITextView
 
 -(void)textViewDidBeginEditing:(UITextView *)textView{
-    /*CGRect textFieldRect =[self convertRect:textView.bounds fromView:textView];
-    CGRect viewRect =[self convertRect:self.bounds fromView:self];
-    CGFloat midline = textFieldRect.origin.y + 0.5 * textFieldRect.size.height;
-    CGFloat numerator =
-    midline - viewRect.origin.y
-    - MINIMUM_SCROLL_FRACTION * viewRect.size.height;
-    CGFloat denominator =
-    (MAXIMUM_SCROLL_FRACTION - MINIMUM_SCROLL_FRACTION)
-    * viewRect.size.height;
-    CGFloat heightFraction = numerator / denominator;
-    
-    if (heightFraction < 0.0)
-    {
-        heightFraction = 0.0;
-    }
-    else if (heightFraction > 1.0)
-    {
-        heightFraction = 1.0;
-    }
-    
-    UIInterfaceOrientation orientation =
-    [[UIApplication sharedApplication] statusBarOrientation];
-    if (orientation == UIInterfaceOrientationPortrait ||
-        orientation == UIInterfaceOrientationPortraitUpsideDown)
-    {
-        animatedDistance = floor(PORTRAIT_KEYBOARD_HEIGHT * heightFraction);
-    }
-    else
-    {
-        animatedDistance = floor(LANDSCAPE_KEYBOARD_HEIGHT * heightFraction);
-    }
-    
-    CGRect viewFrame = self.frame;
-    viewFrame.origin.y -= animatedDistance;
-    
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationBeginsFromCurrentState:YES];
-    [UIView setAnimationDuration:KEYBOARD_ANIMATION_DURATION];
-    
-    [self setFrame:viewFrame];
-    
-    [UIView commitAnimations];*/
+
 }
 
 

@@ -12,9 +12,10 @@
 @class AppDelegate;
 @class Palette;
 #import "CloudDiagramsExplorer.h"
+#import "SlideMenuView.h"
+@class PaletteFile;
 
-
-@interface ConfigureDiagramViewController : UIViewController<UIScrollViewDelegate, UIGestureRecognizerDelegate, UITableViewDataSource, UITableViewDelegate, PasteViewDelegate, ExploreFilesDelegate, CloudDiagramsExplorer>{
+@interface ConfigureDiagramViewController : UIViewController<UIScrollViewDelegate, UIGestureRecognizerDelegate, UITableViewDataSource, UITableViewDelegate, PasteViewDelegate, ExploreFilesDelegate, CloudDiagramsExplorer, SlideMenuDelegate>{
     NSDictionary * configuration;
     AppDelegate * dele;
     __weak IBOutlet UIScrollView *scrollView;
@@ -27,6 +28,8 @@
     
     __weak IBOutlet UITableView *filesTable;
     NSMutableArray * filesArray; //Server and local palettes
+    NSMutableArray * serverPalettes;
+    NSMutableArray * localPalettes;
     
     
     __weak IBOutlet UITableView *palettesTable;
@@ -58,10 +61,17 @@
     
     BOOL doingTutorial;
     UIVisualEffectView *blurEffectView;
-    __weak IBOutlet UIView * myInfo;
+    
+    __weak IBOutlet UIButton *infoButton;
+    
+    
+    SlideMenuView * menu;
+    UIVisualEffectView * blurMenuView;
+    
+    UIRefreshControl *refreshControl;
 }
 
-@property NSString * tempPaletteFile;
+@property PaletteFile * tempPaletteFile;
 
 
 - (IBAction)cancelSubpaletteSelection:(id)sender;
@@ -72,6 +82,7 @@
 -(NSString *)extractPaletteNameFromXMLDiagram:(NSString *)cont;
 -(void)parseXMLDiagramWithText:(NSString *)text;
 
++(NSArray *)getPalettesForContent:(NSString *)c;
 
 @property NSString * contentToParse;
 

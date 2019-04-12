@@ -16,6 +16,13 @@
 #import "ClassAttribute.h"
 #import "Reference.h"
 #import "ReferenceTableViewCell.h"
+#import "LinkPalette.h"
+#import "ExpandableItemView.h"
+#import "EditorViewController.h"
+#import "DoubleTableViewCell.h"
+#import "IntegerTableViewCell.h"
+#import "EnumTableViewCell.h"
+
 
 @interface ComponentDetailsView ()
 
@@ -27,6 +34,7 @@
 
 
 -(void)awakeFromNib{
+    [super awakeFromNib];
     tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                     action:@selector(handleTap:)];
     [tapgr setDelegate:self];
@@ -40,8 +48,8 @@
     
     
     
-    outConnectionsTable.delegate = self;
-    outConnectionsTable.dataSource = self;
+    table.delegate = self;
+    table.dataSource = self;
     
     //remove all subviews from previewcomponentView
     NSArray *vtr = [previewComponentView subviews];
@@ -60,8 +68,12 @@
     frame.size.height = previewComponentView.frame.size.height;
     [previewComponent setFrame:frame];
     
+    [previewComponentView setBounds:comp.bounds];
+    [previewComponent setBounds:comp.bounds];
+    
     [previewComponentView addSubview:previewComponent];
     
+    previewComponent.textLayer = nil;
     [previewComponent prepare];
     [previewComponent updateNameLabel];
 
@@ -83,7 +95,7 @@
     
     [previewComponent setNeedsDisplay];
     
-    dele = [[UIApplication sharedApplication]delegate];
+    dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
     NSArray * parsedArr = [comp.type componentsSeparatedByString:@":"];
     typeLabel.text = [parsedArr objectAtIndex:parsedArr.count-1];
@@ -98,26 +110,14 @@
     
     
     
-    [attributesTable setDelegate:self];
-    [attributesTable setDataSource:self];
-    [attributesTable reloadData];
-    
-    
-    @try {
-        [outConnectionsTable reloadData];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"%@", exception);
-    }
-    @finally {
-    }
-    
     
     //[previewComponent setNeedsDisplay];
     
     classLabel.text = comp.className;
     
     //Tap to close
+    
+    [table reloadData];
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -145,7 +145,7 @@
             [connections addObject:tc];
     }
     
-    [outConnectionsTable reloadData];
+    [table reloadData];
 }
 
 
@@ -216,28 +216,107 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;    //count of section
+    if(comp.isExpandable == YES){
+        int count = 2;
+        
+        count = count + (int)comp.expandableItems.count;
+        /*NSArray * keys = [comp.linkPaletteDic allKeys];
+        for(NSString * key in keys){
+            LinkPalette * lp = [comp.linkPaletteDic objectForKey:key];
+            if(lp.isExpandableItem == YES){
+                count ++;
+            }
+        }*/
+        return count;
+    }else
+        return 2;    //0-> Attributes   1->Out connections
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if(tableView == attributesTable){
+    
+    if(section == 0){
         return comp.attributes.count;
-    }else if(tableView == outConnectionsTable){
+    }else if(section == 1){
         return connections.count;
-    }else return 0;
+    }else{
+        return 1;
+    }
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if(section == 0){
+        return @"Attributes";
+    }else if(section == 1){
+        return @"Out connections";
+    }else{
+        int index = (int)section -2;
+        LinkPalette * lp = comp.expandableItems[index];
+        return [NSString stringWithFormat:@"Expandable item %d", lp.expandableIndex];
+    }
 
+}
+
+-(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+
+    
+    
+    if(indexPath.section >= 1){ //Attributes section
+        return YES;
+    }else{
+        return NO;
+    }
+    /*if(indexPath.section == 0){ //Attributes
+        return NO;
+    }else{
+        if(connections.count == 0){
+            return YES;
+        }else{
+            if(indexPath.section == 1){
+                return YES;
+            }else{
+                return NO;
+            }
+        }
+    }*/
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.section > 1){ //It is a ExpandableItem
+        int index = (int)indexPath.section -2;
+        LinkPalette * lp = comp.expandableItems[index];
+        ExpandableItemView * eiv = [[[NSBundle mainBundle] loadNibNamed:@"ExpandableItemView"
+                                              owner:self
+                                            options:nil] objectAtIndex:0];
+        
+        
+        [eiv prepare];
+        eiv.lp = lp;
+        eiv.comp = comp;
+        [eiv setTitle:lp.paletteName];
+        
+        [eiv setFrame:dele.evc.view.frame];
+        
+        [dele.evc.view addSubview:eiv];
+        
+    }else if(indexPath.section == 1){
+        
+            Connection * conn = [connections objectAtIndex:indexPath.row];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"showConnNot" object: conn];
+    }
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
 cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 {
-    static NSString *MyIdentifier = @"MyIdentifier";
+    
     
     UITableViewCell *cell;
     
-    if(tableView == outConnectionsTable){
+    if(indexPath.section == 1){
+        static NSString *MyIdentifier = @"outCellID";
         
         Connection * c = [connections objectAtIndex:indexPath.row];
         
@@ -252,9 +331,11 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
         cell.textLabel.adjustsFontSizeToFitWidth = YES;
         cell.textLabel.minimumScaleFactor = 0.5;
         cell.textLabel.text = [NSString stringWithFormat:@"Name: %@",c.className];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
         
-    }else if(tableView == attributesTable){
+    }else if(indexPath.section == 0){
+        static NSString *MyIdentifier = @"AttrCellID";
         
         //Check component type
         
@@ -278,6 +359,11 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
                     atvc.detailsPreview = previewComponent;
                     
                     
+                    if([dele amITheMaster] || dele.inMultipeerMode == NO){
+                        [atvc.textField setEnabled:YES];
+                    }else{
+                        [atvc.textField setEnabled:NO];
+                    }
                     
                     for(ClassAttribute * atr in comp.attributes){
                         if([atr.name isEqualToString:atvc.attributeNameLabel.text]){
@@ -290,6 +376,7 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 
                     
                     //atvc.typeLabel.text = attr.type;
+                    atvc.selectionStyle = UITableViewCellSelectionStyleNone;
                 }
                 return atvc;
                 
@@ -305,6 +392,12 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
                     batvc.associatedAttribute = attr;
                     batvc.backgroundColor = [UIColor clearColor];
                     
+                    if([dele amITheMaster]|| dele.inMultipeerMode == NO){
+                        [batvc.switchValue setEnabled:YES];
+                    }else{
+                        [batvc.switchValue setEnabled:NO];
+                    }
+                    
                     //Update switch value for this attribute value
                     if(attr.currentValue == nil){
                         [batvc.switchValue setOn:NO];
@@ -314,20 +407,100 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
                         [batvc.switchValue setOn:YES];
                     }
                     
+                    batvc.selectionStyle = UITableViewCellSelectionStyleNone;
+                    
                 }
                 return batvc;
-            }else{
-                GenericAttributeTableViewCell * gatvc = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
-                if(gatvc == nil){
-                    NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"GenericAttributeTableViewCell"
+            }else if([type isEqualToString:@"EDouble"] || [type isEqualToString:@"EFloat"]){
+                
+                DoubleTableViewCell * datvc = [tableView dequeueReusableCellWithIdentifier:@"DoubleCell"];
+                if(datvc == nil){
+                    NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"DoubleTableViewCell"
                                                                   owner:self
                                                                 options:nil];
-                    gatvc = [nib objectAtIndex:0];
-                    gatvc.nameLabel.text =  [NSString stringWithFormat:@"%@: %@", attr.name, attr.type];//attr.name;
-                    //gatvc.typeLabel.text = attr.type;
-                    gatvc.backgroundColor = [UIColor clearColor];
+                    datvc = [nib objectAtIndex:0];
+                    datvc.label.text = attr.name;
+                    datvc.associatedAttribute = attr;
+                    datvc.backgroundColor = [UIColor clearColor];
+                    datvc.comp = comp;
+                    
+                    if([dele amITheMaster]|| dele.inMultipeerMode == NO){
+                        [datvc.textField setEnabled:YES];
+                    }else{
+                        [datvc.textField setEnabled:NO];
+                    }
+                    
+                    //Update textfield value for this attribute value
+                    [datvc.textField setText:attr.currentValue];
+                    datvc.selectionStyle = UITableViewCellSelectionStyleNone;
                 }
-                return gatvc;
+                return  datvc;
+ 
+            }else if([type isEqualToString:@"EInt"] || [type isEqualToString:@"EInteger"]){
+                
+                IntegerTableViewCell * iatvc = [tableView dequeueReusableCellWithIdentifier:@"IntCell"];
+                if(iatvc == nil){
+                    NSArray * nib = [[NSBundle mainBundle]loadNibNamed:@"IntegerTableViewCell" owner:self options:nil];
+                    iatvc  = [nib objectAtIndex:0];
+                    iatvc.label.text = attr.name;
+                    iatvc.associatedAttribute = attr;
+                    iatvc.backgroundColor = [UIColor clearColor];
+                    iatvc.comp = comp;
+                    
+                    if([dele amITheMaster]|| dele.inMultipeerMode == NO){
+                        [iatvc.textField setEnabled:YES];
+                    }else{
+                        [iatvc.textField setEnabled:NO];
+                    }
+                    [iatvc.textField setText:attr.currentValue];
+                    iatvc.selectionStyle = UITableViewCellSelectionStyleNone;
+                }
+                return iatvc;
+            }else{
+                
+                //It is an enum?
+                if([dele.enumsDic objectForKey:attr.type] != nil){
+                    NSArray * options = [dele.enumsDic objectForKey:attr.type];
+                    EnumTableViewCell * etvc = [tableView dequeueReusableCellWithIdentifier:@"enumID"];
+                    if(etvc == nil){
+                        NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"EnumTableViewCell"
+                                                                      owner:self
+                                                                    options:nil];
+                        etvc = [nib objectAtIndex:0];
+                        etvc.options = options;
+                        etvc.label.text = attr.name;
+                        etvc.backgroundColor = [UIColor clearColor];
+                        etvc.comp = comp;
+                        etvc.associatedAttribute = attr;
+                        etvc.previewComp  = previewComponent;
+                        if([dele amITheMaster]|| dele.inMultipeerMode == NO){
+                            [etvc.optionsPicker setUserInteractionEnabled:YES];
+                        }else{
+                            [etvc.optionsPicker setUserInteractionEnabled:NO];
+                        }
+                        
+                        [etvc prepare];
+                        etvc.selectionStyle = UITableViewCellSelectionStyleNone;
+                       
+                    }
+                    return etvc;
+                }else{
+                    GenericAttributeTableViewCell * gatvc = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+                    if(gatvc == nil){
+                        NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"GenericAttributeTableViewCell"
+                                                                      owner:self
+                                                                    options:nil];
+                        gatvc = [nib objectAtIndex:0];
+                        gatvc.nameLabel.text =  [NSString stringWithFormat:@"%@: %@", attr.name, attr.type];//attr.name;
+                        //gatvc.typeLabel.text = attr.type;
+                        gatvc.backgroundColor = [UIColor clearColor];
+                        gatvc.selectionStyle = UITableViewCellSelectionStyleNone;
+                        
+                        
+                    }
+                    return gatvc;
+                }
+                
             }
             
             
@@ -345,11 +518,35 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
                 rtvc.minLabel.text = [ref.min description];
                 rtvc.maxLabel.text = [ref.max description];
                 [rtvc.containmentSwitch setOn:ref.containment];
+                rtvc.selectionStyle = UITableViewCellSelectionStyleNone;
             }
             
             //[rtvc setHidden:YES];
             return rtvc;
         }
+    }else{
+        //Expandable item
+        int index = (int)indexPath.section -2;
+        LinkPalette * lp = comp.expandableItems[index];
+        NSString *MyIdentifier = [NSString stringWithFormat:@"ExpItemId%d",lp.expandableIndex];
+        
+       
+        
+        cell= [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+        
+        if (cell == nil)
+        {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                          reuseIdentifier:MyIdentifier] ;
+        }
+        cell.backgroundColor = [UIColor clearColor];
+        cell.textLabel.adjustsFontSizeToFitWidth = YES;
+        cell.textLabel.minimumScaleFactor = 0.5;
+        cell.textLabel.textColor = dele.blue4;
+        cell.textLabel.text = [NSString stringWithFormat:@"%@",lp.paletteName];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+
     }
     
     
@@ -358,23 +555,23 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
     return cell;
 }
 
-
+/*
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    if(tableView == outConnectionsTable)
+    if(indexPath.section == 1)
         return YES;
     else
         return NO;
 }
-
+*/
 
 
 //Hide references
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
-    if(tableView == outConnectionsTable){
+    if(indexPath.section == 1){
         return 47;
-    }else if(tableView == attributesTable){
+    }else if(indexPath.section == 0){
         if([[comp.attributes objectAtIndex:indexPath.row] isKindOfClass:[Reference class]]){
             return 0;
         }else{
@@ -390,24 +587,42 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if(tableView == outConnectionsTable){
+    if(indexPath.section == 1){
         if (editingStyle == UITableViewCellEditingStyleDelete) {
             //add code here for when you hit delete
             Connection * toDelete = [connections objectAtIndex:indexPath.row];
             
             [dele.connections removeObject:toDelete];
             
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:nil];
             [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+            
+            
             [self updateLocalConenctions];
         }
     }
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    // [[NSNotificationCenter defaultCenter]postNotificationName:@"showConnNot" object: conn];
-    if(tableView == outConnectionsTable){
-        Connection * conn = [connections objectAtIndex:indexPath.row];
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"showConnNot" object: conn];
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
+{
+    // Background color
+
+    
+    // Text Color
+    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+    [header.textLabel setTextColor:dele.blue3];
+    
+    // Another way to set the background color
+    // Note: does not preserve gradient effect of original header
+     header.contentView.tintColor = dele.blue3;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if ([tableView.dataSource tableView:tableView numberOfRowsInSection:section] == 0) {
+        return 0;
+    } else {
+        // whatever height you'd want for a real section header
+        return 20;
     }
 }
 
@@ -423,12 +638,26 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 {
     
     [self endEditing:YES];
-    if (touch.view != background) { // accept only touchs on superview, not accept touchs on subviews
+    if (touch.view != background || touch.view != blurView) { // accept only touchs on superview, not accept touchs on subviews
         return NO;
     }
     
     return YES;
 }
 
+
+//Center canvas on this element
+- (IBAction)showInCanvas:(id)sender {
+    if(dele.isGeoPalette == NO){
+        [self setHidden:YES];
+        CGRect rectToZoom = CGRectMake(comp.frame.origin.x - (2*comp.frame.size.width),
+                                       comp.frame.origin.y - (2* comp.frame.size.height),
+                                       4*comp.frame.size.width,
+                                       4*comp.frame.size.height);
+        [_scroll zoomToRect:rectToZoom animated:YES];
+    }else{ //Zoom to localization
+    }
+   
+}
 
 @end

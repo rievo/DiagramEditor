@@ -29,6 +29,7 @@
 
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [background addGestureRecognizer:tapgr];
     [tapgr setDelegate:self];
@@ -53,7 +54,7 @@
 
 - (IBAction)removeThisConnection:(id)sender {
     
-    AppDelegate * dele = [[UIApplication sharedApplication] delegate];
+    AppDelegate * dele = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [dele.connections removeObject:self.connection];
     [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
     [self closeConnectionDetailsView];
@@ -97,6 +98,8 @@
     }
     
     //[attributesTable reloadData];
+    
+    classLabel.text = connection.className;
     
     
     sourceComponentViewContainer.backgroundColor = [UIColor clearColor];
@@ -185,6 +188,21 @@
         
     }
 }
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    CustomTableHeader * head = [[[NSBundle mainBundle]loadNibNamed:@"CustomTableHeader" owner:self options:nil]objectAtIndex:0];
+    if(section == 0){ //Attributes
+        return head.bounds.size.height;
+    }else if(section == 1){ //Instances
+        if(associatedComponentsArray.count == 0){
+            return 0;
+        }else{
+            return head.bounds.size.height;
+        }
+    }else{
+        return 0;
+    }
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
@@ -195,9 +213,9 @@
         else
             return attributesArray.count;
     }else if(section == 1){ //Instances
-        if(instancesCollapsed == YES)
-            return 0;
-        else
+        //if(instancesCollapsed == YES)
+        //    return 0;
+        //else
             return  associatedComponentsArray.count;
     }else{
         return 0;
@@ -220,8 +238,91 @@
     UITableViewCell *cell = nil;
     
     if(indexPath.section == 0){ //Attributes
+        static NSString *MyIdentifier = @"AttrCellID";
         
-        return nil;
+        //Check component type
+        
+        if([[connection.attributes objectAtIndex:indexPath.row]isKindOfClass:[ClassAttribute class]]){
+            
+            ClassAttribute * attr = [connection.attributes objectAtIndex:indexPath.row];
+            NSString * type = attr.type;
+            
+            if([type isEqualToString:@"EString"]){
+                StringAttributeTableViewCell * atvc = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+                
+                if(atvc == nil){
+                    NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"StringAttributeTableViewCell"
+                                                                  owner:self
+                                                                options:nil];
+                    atvc = [nib objectAtIndex:0];
+                    atvc.attributeNameLabel.text = attr.name;
+                    atvc.backgroundColor = [UIColor clearColor];
+                    //atvc.comp = connection;
+                    atvc.associatedAttribute = attr;
+                    //atvc.detailsPreview = previewComponent;
+                    
+                    
+                    
+                    for(ClassAttribute * atr in connection.attributes){
+                        if([atr.name isEqualToString:atvc.attributeNameLabel.text]){
+                            atvc.textField.text =  atr.currentValue ;
+                        }
+                    }
+                    //[comp updateNameLabel];
+                    //[previewComponent updateNameLabel];
+                    //[previewComponent updateNameLabel];
+                    
+                    
+                    //atvc.typeLabel.text = attr.type;
+                    atvc.selectionStyle = UITableViewCellSelectionStyleNone;
+                }
+                return atvc;
+                
+            }else if([type isEqualToString:@"EBoolean"] || [type isEqualToString:@"EBooleanObject"]){
+                BooleanAttributeTableViewCell * batvc = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+                if(batvc == nil){
+                    NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"BooleanAttributeTableViewCell"
+                                                                  owner:self
+                                                                options:nil];
+                    batvc = [nib objectAtIndex:0];
+                    batvc.nameLabel.text = attr.name;
+                    //batvc.typeLabel.text = attr.type;
+                    batvc.associatedAttribute = attr;
+                    batvc.backgroundColor = [UIColor clearColor];
+                    
+                    //Update switch value for this attribute value
+                    if(attr.currentValue == nil){
+                        [batvc.switchValue setOn:NO];
+                    }else if([attr.currentValue isEqualToString: @"false"]){
+                        [batvc.switchValue setOn:NO];
+                    }else if([attr.currentValue isEqualToString:@"true"]){
+                        [batvc.switchValue setOn:YES];
+                    }
+                    
+                    batvc.selectionStyle = UITableViewCellSelectionStyleNone;
+                    
+                }
+                return batvc;
+            }else{
+                GenericAttributeTableViewCell * gatvc = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];
+                if(gatvc == nil){
+                    NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"GenericAttributeTableViewCell"
+                                                                  owner:self
+                                                                options:nil];
+                    gatvc = [nib objectAtIndex:0];
+                    gatvc.nameLabel.text =  [NSString stringWithFormat:@"%@: %@", attr.name, attr.type];//attr.name;
+                    //gatvc.typeLabel.text = attr.type;
+                    gatvc.backgroundColor = [UIColor clearColor];
+                    gatvc.selectionStyle = UITableViewCellSelectionStyleNone;
+                }
+                return gatvc;
+            }
+            
+            
+            
+            return nil;
+        }
+        //return nil;
         
     }else if(indexPath.section == 1){ //Instances
         Component * c = [associatedComponentsArray objectAtIndex:indexPath.row];
@@ -320,14 +421,22 @@
         }
         
     }else if(section == 1){ //Instances
-        head.sectionNameLabel.text = @"References";
-        head.countLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)associatedComponentsArray.count];
-        if(instancesCollapsed == true){
-            head.openCloseOutlet.image  = [UIImage imageNamed:@"rightArrow"];
-            
+        
+        if(associatedComponentsArray.count == 0){
+            return nil;
         }else{
-            head.openCloseOutlet.image  = [UIImage imageNamed:@"upArrowBlack"];
+            head.sectionNameLabel.text = @"References";
+            head.countLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)associatedComponentsArray.count];
+            if(instancesCollapsed == true){
+                head.openCloseOutlet.image  = [UIImage imageNamed:@"rightArrow"];
+                
+            }else{
+                head.openCloseOutlet.image  = [UIImage imageNamed:@"upArrowBlack"];
+            }
         }
+
+    
+        
     }else{
         
     }

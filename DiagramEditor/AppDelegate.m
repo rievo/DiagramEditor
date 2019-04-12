@@ -18,6 +18,7 @@
 #import "Alert.h"
 #import "YesOrNoView.h"
 #import "ColorPalette.h"
+#import "LinkPalette.h"
 
 @interface AppDelegate ()
 
@@ -25,7 +26,7 @@
 
 @implementation AppDelegate
 
-@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFileName, subPalette, graphicR, evc, blue0, blue1, blue2, elementsDictionary, manager, ecoreContent, loadingADiagram, fingeredComponent, serverId, currentMasterId, myPeerInfo, myUUIDString, chat, notesArray, drawnsArray, missedServerAttemps, editorTutorialStatus, configureTutorialStatus, shouldShowConfigureTutorial, shouldShowEditorTutorial;
+@synthesize components, connections, paletteItems, blue4, blue3, originalCanvasRect, currentPaletteFile, subPalette, graphicR, evc, blue0, blue1, blue2, elementsDictionary, manager, ecoreContent, loadingADiagram, fingeredComponent, serverId, currentMasterId, myPeerInfo, myUUIDString, chat, notesArray, drawnsArray, missedServerAttemps, editorTutorialStatus, configureTutorialStatus, shouldShowConfigureTutorial, shouldShowEditorTutorial, colorDic;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -34,21 +35,31 @@
     
     paletteItems = [[NSMutableArray alloc] init];
     
+    _paletteH = -1;
+    _paletteW = -1;
+    
     blue0 = [[UIColor alloc]initWithRed:91.0/256.0 green:109.0/256.0 blue:146.0/256.0 alpha:1.0];
     blue1 = [[UIColor alloc]initWithRed:182/256.0 green:191/256.0 blue:209/256.0 alpha:1.0];
     blue2 = [[UIColor alloc]initWithRed:130/256.0 green:144/256.0 blue:173/256.0 alpha:1.0];
     blue3 = [[UIColor alloc]initWithRed:58/256.0 green:78/256.0 blue:120/256.0 alpha:1.0];
     blue4 = [[UIColor alloc]initWithRed:34/256.0 green:54/256.0 blue:96/256.0 alpha:1.0];
     
+    _inMultipeerMode = NO;
+    
+    colorDic = [[NSMutableDictionary alloc] init];
+    
     //_myColor = [UIColor blackColor];
     _myColor = [[ColorPalette colorArray]objectAtIndex:0];
+    
+    if(myPeerInfo.peerID.displayName != nil)
+        [colorDic setObject:_myColor forKey:myPeerInfo.peerID.displayName];
     
     _showingAnnotations = NO;
     _selectedDrawn = nil;
     
     missedServerAttemps = 0;
     
-    currentPaletteFileName = nil;
+    currentPaletteFile = nil;
     subPalette = nil;
     graphicR = nil;
     evc = nil;
@@ -114,6 +125,9 @@
     NSString * editor= [[NSUserDefaults standardUserDefaults]objectForKey:@"editorTutorialStatus"];
     NSString * configure= [[NSUserDefaults standardUserDefaults]objectForKey:@"configureTutorialStatus"];
     
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(goToRootViewController:) name:@"goToRootViewController" object:nil];
+    
     if(editor == nil){
         shouldShowEditorTutorial = YES;
     }else{
@@ -143,6 +157,9 @@
     NSString * msg = [dataDic objectForKey:@"msg"];
     
     if([msg isEqualToString:kInitialInfoFromServer]){ //First message
+        
+        _inMultipeerMode = YES;
+        
         //Replace all
         NSData * appDeleData = [dataDic objectForKey:@"data"];
         NSDictionary * dic = [NSKeyedUnarchiver unarchiveObjectWithData:appDeleData];
@@ -150,7 +167,7 @@
         //NSLog(@"-> %@",[[dic allKeys]description]);
         self.components = [dic objectForKey:@"components"];
         self.connections = [dic objectForKey:@"connections"];
-        self.currentPaletteFileName = [dic objectForKey:@"currPalFilNam"];
+        //self.currentPaletteFileName = [dic objectForKey:@"currPalFilNam"];
         self.paletteItems = [dic objectForKey:@"paletteItems"];
         self.subPalette = [dic objectForKey:@"subpalette"];
         self.elementsDictionary = [dic objectForKey:@"elementsDictionary"];
@@ -160,6 +177,8 @@
         
         self.notesArray = [dic objectForKey:@"notesArray"];
         self.drawnsArray = [dic objectForKey:@"drawnsArray"];
+        
+        self.noVisibleItems = [dic objectForKey:@"noVisibleItems"];
         
         loadingADiagram = YES;
         
@@ -213,6 +232,8 @@
             
             for(int i = 0; i< components.count; i++){
                 [self.can addSubview: [components objectAtIndex:i]];
+                Component * t = [components objectAtIndex:i];
+                t.textLayer = nil;
                 [[components objectAtIndex:i]prepare];
             }
             
@@ -366,6 +387,11 @@
         }else{ //Somebody is the new master
             NSLog(@"I'm not the receiver, just ignore this");
         }
+        
+        if([self amITheServer]){
+            UIColor * newColor = [dataDic objectForKey:@"color"];
+            [colorDic setObject:newColor forKey:who.displayName];
+        }
     }else if([msg isEqualToString:kNewDrawn]){
         
         DrawnAlert * da = [dataDic objectForKey:@"drawn"];
@@ -494,8 +520,8 @@
         [dic setObject:elementsDictionary forKey:@"elementsDictionary"];
     if(paletteItems != nil)
         [dic setObject:paletteItems forKey:@"paletteItems"];
-    if(currentPaletteFileName != nil)
-        [dic setObject:currentPaletteFileName forKey:@"currPalFilNam"];
+    //if(currentPaletteFileName != nil)
+    //    [dic setObject:currentPaletteFileName forKey:@"currPalFilNam"];
     if(subPalette != nil)
         [dic setObject:subPalette forKey:@"subpalette"];
     if(graphicR != nil)
@@ -516,6 +542,10 @@
     //Drawns
     if(drawnsArray != nil)
         [dic setObject:drawnsArray forKey:@"drawnsArray"];
+    
+    //No visible classes
+    if(_noVisibleItems != nil)
+        [dic setObject:_noVisibleItems forKey:@"noVisibleItems"];
     
     
     NSData * data = [NSKeyedArchiver archivedDataWithRootObject:dic];
@@ -561,7 +591,7 @@
     connections  = [myDictionary objectForKey:@"connections"];
     elementsDictionary  = [myDictionary objectForKey:@"elementsDictionary"];
     paletteItems = [myDictionary objectForKey:@"paletteItems"];
-    currentPaletteFileName  = [myDictionary objectForKey:@"currPalFilNam"];
+    //currentPaletteFileName  = [myDictionary objectForKey:@"currPalFilNam"];
     subPalette = [myDictionary objectForKey:@"subpalette"];
     graphicR = [myDictionary objectForKey:@"graphicR"];
     serverId = [myDictionary objectForKey:@"serverId"];
@@ -570,12 +600,74 @@
     NSLog(@"\n--------------------\nEl master es %@\n--------------------\n", currentMasterId.peerID.displayName);
 }
 
+
 -(PaletteItem *) getPaletteItemForClassName:(NSString *)name{
     for(PaletteItem * pi in paletteItems){
-        if([pi.className isEqualToString:@"name"]){
+        if([pi.className isEqualToString:name]){
             return  pi;
         }
     }
+    
+    for(PaletteItem * pi in _noVisibleItems){
+        if([pi.className isEqualToString:name]){
+            return pi;
+        }
+    }
+    
+    return nil;
+}
+
+//Should return a PaletteItem of the class \(name) and the reference \(refName) inside this class
+-(PaletteItem *) getPaletteItemForClassName:(NSString *)name andRefName:(NSString *)refName{
+    
+    PaletteItem * selected= nil;
+    
+    for(PaletteItem * pi in paletteItems){
+        if([pi.className isEqualToString:name]){
+            selected = pi;
+        }
+    }
+    
+    for(PaletteItem * pi in _noVisibleItems){
+        if([pi.className isEqualToString:name]){
+            selected = pi;
+        }
+    }
+    /*
+    Reference * ref = nil;
+    if(selected != nil){ //We have the class. Look for this ref
+        for(Reference * r in selected.references){
+            if([r.name isEqualToString:refName]){
+                ref = r;
+            }
+        }
+    }*/
+    
+    
+    LinkPalette * resultLP = [selected.linkPaletteDic objectForKey:refName];
+    
+    if(resultLP != nil){
+        
+        PaletteItem * pi = [[PaletteItem alloc] init];
+        pi.type = nil;
+        pi.lineColorNameString = [resultLP.colorDic objectForKey:@"_name"];
+        pi.lineColor = [ColorPalette colorForString:pi.lineColorNameString];
+        pi.className = resultLP.className;
+        pi.sourceDecoratorName = resultLP.sourceDecoratorName;
+        pi.targetDecoratorName = resultLP.targetDecoratorName;
+        pi.lineStyle = resultLP.lineStyle;
+        pi.linkPaletteReferenceName = refName;
+        pi.isLinkPalette = true;
+        pi.references = selected.references;
+        
+        return pi;
+    }else{
+        return nil;
+    }
+        
+    /*if(ref != nil){
+        NSLog(@"We have the reference, let's make a Palette item for it");
+    }*/
     
     return nil;
 }
@@ -649,6 +741,10 @@
 
 }*/
 
+-(void)goToRootViewController:(NSNotification *)notification{
+    [self.window.rootViewController dismissViewControllerAnimated:NO completion:nil];
+}
+
 -(void)handleConnectedtimer{
     missedServerAttemps = missedServerAttemps +1;
     
@@ -662,6 +758,19 @@
                                                             object:nil
                                                           userInfo:nil];
     }
+}
+
+-(UIColor*)getColorForPeerWithName:(NSString *) name{
+    
+    NSArray * keys  = [colorDic allKeys];
+    
+    for(MCPeerID * pid in keys){
+        if([pid.displayName isEqualToString:name]){
+            return [colorDic objectForKey:pid];
+        }
+    }
+    
+    return [UIColor blackColor];
 }
 
 #pragma mark Encode / decode base64

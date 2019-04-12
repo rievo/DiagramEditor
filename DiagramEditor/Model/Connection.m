@@ -12,7 +12,7 @@
 #import "PaletteItem.h"
 #import "ColorPalette.h"
 #import "ClassAttribute.h"
-
+#import "LinkPalette.h"
 #import "Constants.h"
 
 @implementation Connection
@@ -53,31 +53,40 @@
 }
 
 -(void)retrieveAttributesForThisClassName{
-    AppDelegate * dele = [[UIApplication sharedApplication]delegate];
+    AppDelegate * dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
     for(PaletteItem * pi in dele.paletteItems){
         if([pi.className isEqualToString:className]){ //Match, retrieve attributes
             
-            NSData * buffer = [ NSKeyedArchiver archivedDataWithRootObject:pi.references];
+            NSData * buffer = [ NSKeyedArchiver archivedDataWithRootObject:pi.attributes];
             NSMutableArray * refs = [NSKeyedUnarchiver unarchiveObjectWithData:buffer];
-            references = refs;
+            attributes = refs;
             break;
         }
     }
 }
 
--(void)retrieveConnectionGraphicInfo{
-    AppDelegate * dele = [[UIApplication sharedApplication]delegate];
+-(void)retrieveConnectionGraphicInfoWithPaletteItem: (PaletteItem *) p{
+    AppDelegate * dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
-    for(PaletteItem * pi in dele.paletteItems){
-        if([pi.className isEqualToString:className]){ //Match, retrieve attributes
-            self.lineColor = pi.lineColor;
-            self.lineWidth = pi.lineWidth;
-            self.lineColorNameString = pi.lineColorNameString;
-            self.lineStyle = pi.lineStyle;
-            break;
+    
+    if(_isLinkPalette == true){
+        self.lineColor = p.lineColor;
+        self.lineWidth = p.lineWidth;
+        self.lineColorNameString = p.lineColorNameString;
+        self.lineStyle = p.lineStyle;
+    }else{
+        for(PaletteItem * pi in dele.paletteItems){
+            if([pi.className isEqualToString:className]){ //Match, retrieve attributes
+                self.lineColor = pi.lineColor;
+                self.lineWidth = pi.lineWidth;
+                self.lineColorNameString = pi.lineColorNameString;
+                self.lineStyle = pi.lineStyle;
+                break;
+            }
         }
     }
+    
 }
 
 
